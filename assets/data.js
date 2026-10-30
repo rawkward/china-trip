@@ -1,116 +1,121 @@
 window.TRIP_PHOTOS = {
   "Hong Kong": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Hong_Kong_Harbour_Night_2019-06-11.jpg/1200px-Hong_Kong_Harbour_Night_2019-06-11.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "src": "assets/img/hong-kong.jpg",
     "page": "https://commons.wikimedia.org/wiki/File:Hong_Kong_Harbour_Night_2019-06-11.jpg",
     "description": "Special administrative region of China"
   },
   "Victoria Peak": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/High_West_and_Victoria_Peak_from_Victoria_Gap_%28crop1%29.jpg/1200px-High_West_and_Victoria_Peak_from_Victoria_Gap_%28crop1%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "src": "assets/img/victoria-peak.jpg",
     "page": "https://en.wikipedia.org/wiki/Victoria_Peak",
     "description": "Hill in Hong Kong"
   },
   "Hong Kong Disneyland": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Disneyland_Hong_Kong_-_Sleeping_Beauty_Castle_IMG_5412.JPG/1200px-Disneyland_Hong_Kong_-_Sleeping_Beauty_Castle_IMG_5412.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "src": "assets/img/hong-kong-disneyland.jpg",
     "page": "https://commons.wikimedia.org/wiki/Disneyland_Hong_Kong_-_Sleeping_Beauty_Castle_IMG_5412.JPG",
     "description": "Theme park on Lantau Island, Hong Kong"
   },
   "Tian Tan Buddha": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Tian_Tan_Buddha_2023081302.jpg/1200px-Tian_Tan_Buddha_2023081302.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "src": "assets/img/tian-tan-buddha.jpg",
     "page": "https://en.wikipedia.org/wiki/The_Big_Buddha_(Hong_Kong)",
     "description": "Large bronze statue of Buddha"
   },
   "Victoria Harbour": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Hong_Kong_Harbour_Night_2019-06-11.jpg/1200px-Hong_Kong_Harbour_Night_2019-06-11.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "src": "assets/img/victoria-harbour.jpg",
     "page": "https://commons.wikimedia.org/wiki/File:Hong_Kong_Harbour_Night_2019-06-11.jpg",
     "description": "Harbour in Hong Kong"
   },
-  "M+": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/WKCD_M%2B%2C_2021.11.jpg/1200px-WKCD_M%2B%2C_2021.11.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "page": "https://en.wikipedia.org/wiki/M%2B",
-    "description": "Art museum in West Kowloon Cultural District, Hong Kong"
+  "M+ (museum)": {
+    "src": null,
+    "page": null,
+    "description": "M+ (museum)"
   },
   "Chongqing": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/September_2025_in_Chongqing_05.jpg/1200px-September_2025_in_Chongqing_05.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "src": "assets/img/chongqing.jpg",
     "page": "https://en.wikipedia.org/wiki/Chongqing",
     "description": "Municipality in Southwestern China"
   },
   "Ciqikou": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/%E4%BA%BA%E5%A4%B4%E6%94%92%E5%8A%A8%E7%9A%84%E7%A3%81%E5%99%A8%E5%8F%A3.jpg/1200px-%E4%BA%BA%E5%A4%B4%E6%94%92%E5%8A%A8%E7%9A%84%E7%A3%81%E5%99%A8%E5%8F%A3.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "src": "assets/img/ciqikou.jpg",
     "page": "https://en.wikipedia.org/wiki/Ciqikou%2C_Chongqing",
     "description": "Town in Chongqing, China"
   },
   "Three Gorges Museum": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fe/%E9%87%8D%E5%BA%86%E4%B8%AD%E5%9B%BD%E4%B8%89%E5%B3%A1%E5%8D%9A%E7%89%A9%E9%A6%86_-_panoramio.jpg/1200px-%E9%87%8D%E5%BA%86%E4%B8%AD%E5%9B%BD%E4%B8%89%E5%B3%A1%E5%8D%9A%E7%89%A9%E9%A6%86_-_panoramio.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "src": "assets/img/three-gorges-museum.jpg",
     "page": "https://en.wikipedia.org/wiki/Three_Gorges_Museum",
     "description": "Museum in Chongqing, China"
   },
   "Chongqing Zoo": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Main_entrance%2C_Chongqing_Zoo%2C_China.JPG/1200px-Main_entrance%2C_Chongqing_Zoo%2C_China.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "src": "assets/img/chongqing-zoo.jpg",
     "page": "https://en.wikipedia.org/wiki/Chongqing_Zoo",
     "description": "Zoo in Chongqing, China"
   },
   "Liziba station": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/%E6%9D%8E%E5%AD%90%E5%9D%9D%E7%AB%99%E8%BD%BB%E8%BD%A8%E7%A9%BF%E6%A5%BC_0023.png/1200px-%E6%9D%8E%E5%AD%90%E5%9D%9D%E7%AB%99%E8%BD%BB%E8%BD%A8%E7%A9%BF%E6%A5%BC_0023.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "src": "assets/img/liziba-station.jpg",
     "page": "https://en.wikipedia.org/wiki/Liziba_station",
     "description": "Metro station in Chongqing, China"
   },
   "Eling Park": {
-    "src": "https://upload.wikimedia.org/wikipedia/commons/1/17/K%C3%BCnstler_im_Eling_Park%2C_Chongqing.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "src": "assets/img/eling-park.jpg",
     "page": "https://en.wikipedia.org/wiki/Eling_Park",
     "description": "Park in Chongqing, China"
   },
   "Hongya Cave": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/64/202308_Hongya_Cave_at_night_from_Qiansimen_Bridge.jpg/1200px-202308_Hongya_Cave_at_night_from_Qiansimen_Bridge.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "src": "assets/img/hongya-cave.jpg",
     "page": "https://en.wikipedia.org/wiki/Hongya_Cave",
     "description": "Building complex in Chongqing, China"
   },
   "Three Natural Bridges": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/Wulongtianshengsanqiao.JPG/1200px-Wulongtianshengsanqiao.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "src": "assets/img/three-natural-bridges.jpg",
     "page": "https://en.wikipedia.org/wiki/Three_Natural_Bridges",
     "description": "Set of natural bridges in China"
   },
   "Wulong Karst": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/Wulongtianshengsanqiao.JPG/1200px-Wulongtianshengsanqiao.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-    "page": "https://en.wikipedia.org/wiki/Three_Natural_Bridges",
-    "description": "Set of natural bridges in China"
+    "src": "assets/img/three-natural-bridges.jpg",
+    "page": "https://en.wikipedia.org/wiki/Wulong_Karst",
+    "description": "Karst landscape in China"
   },
   "Jinyun Mountain": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/Jinyun_Mountain.JPG/1200px-Jinyun_Mountain.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "src": "assets/img/jinyun-mountain.jpg",
     "page": "https://commons.wikimedia.org/wiki/File:Jinyun_Mountain.JPG",
     "description": "Jinyun Mountain"
   },
   "Beibei District": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/Government_building_in_Beibei%2C_Chongqing.JPG/1200px-Government_building_in_Beibei%2C_Chongqing.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "src": "assets/img/beibei-district.jpg",
     "page": "https://en.wikipedia.org/wiki/Beibei%2C_Chongqing",
     "description": "District in Chongqing, People's Republic of China"
   },
   "Chengdu": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/%E9%9B%AA%E5%B1%B1%E4%B8%8B%E7%9A%84%E6%88%90%E9%83%BD%E5%B8%82%E5%A4%A9%E9%99%85%E7%BA%BF_Chengdu_skyline_with_snow_capped_mountains.jpg/1200px-%E9%9B%AA%E5%B1%B1%E4%B8%8B%E7%9A%84%E6%88%90%E9%83%BD%E5%B8%82%E5%A4%A9%E9%99%85%E7%BA%BF_Chengdu_skyline_with_snow_capped_mountains.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "src": "assets/img/chengdu.jpg",
     "page": "https://en.wikipedia.org/wiki/Chengdu",
     "description": "Capital of Sichuan, China"
   },
   "Leshan Giant Buddha": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/36275-Leshan_%2849067653383%29.jpg/1200px-36275-Leshan_%2849067653383%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "src": "assets/img/leshan-giant-buddha.jpg",
     "page": "https://en.wikipedia.org/wiki/Leshan_Giant_Buddha",
     "description": "Monumental sculpture"
   },
   "Dazu Rock Carvings": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Dazu_2007_685_full_view.jpg/1200px-Dazu_2007_685_full_view.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "src": "assets/img/dazu-rock-carvings.jpg",
     "page": "https://en.wikipedia.org/wiki/Dazu_Rock_Carvings",
     "description": "UNESCO World Heritage Site in Chongqing, China"
   },
   "Zhangjiajie": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/1_tianzishan_wulingyuan_zhangjiajie_2012.jpg/1200px-1_tianzishan_wulingyuan_zhangjiajie_2012.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "src": "assets/img/zhangjiajie.jpg",
     "page": "https://en.wikipedia.org/wiki/Zhangjiajie",
     "description": "City in Hunan, China"
   },
   "Furong Town": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/1_furong_aerial_panorama_2017.jpg/1200px-1_furong_aerial_panorama_2017.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "src": "assets/img/furong-town.jpg",
     "page": "https://commons.wikimedia.org/wiki/File:1_furong_aerial_panorama_2017.jpg",
     "description": "Furong Town"
   },
+  "M+": {
+    "src": "assets/img/m.jpg",
+    "page": "https://en.wikipedia.org/wiki/M%2B",
+    "description": "Art museum in West Kowloon Cultural District, Hong Kong"
+  },
   "Macau": {
-    "src": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Macau_Skyline_%283777497332%29.jpg/1200px-Macau_Skyline_%283777497332%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "src": "assets/img/macau.jpg",
     "page": "https://commons.wikimedia.org/wiki/File:Macau_Skyline_(3777497332).jpg",
     "description": "Macau"
   }

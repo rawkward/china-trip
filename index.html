@@ -242,7 +242,7 @@ footer a{color:var(--muted)}
   </section>
 
   <footer>
-    <p>Черновик · даты и маршрут не финальные. Фото — Wikimedia Commons (по клику на изображение открывается источник). Карта — OpenStreetMap / CARTO. Собрано автоматически, версия 1.</p>
+    <p>Черновик · даты и маршрут не финальные. Фото — Wikimedia Commons (по клику на изображение открывается источник). Карта — OpenStreetMap. Собрано автоматически, версия 1.</p>
   </footer>
 
 </div>
@@ -508,9 +508,9 @@ let markerRegistry = []; // {k, marker, days, city}
 function initMap(){
   if(typeof L === "undefined"){ document.getElementById("map").innerHTML = '<div style="padding:30px;text-align:center;color:#6f675d">Карта не загрузилась (нет Leaflet).</div>'; return; }
   map = L.map("map", {scrollWheelZoom:true}).setView([26.5, 108.5], 5);
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
-    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
-    subdomains:"abcd", maxZoom:19
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom:19
   }).addTo(map);
 
   // build marker registry from days
