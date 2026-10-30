@@ -1,0 +1,401 @@
+{
+  "jiefangbei": {
+    "file": "assets/img/places/jiefangbei.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Jiefangbei_CBD_31323-Chongqing_(45436205655).jpg",
+    "title": "File:Jiefangbei CBD 31323-Chongqing (45436205655).jpg",
+    "artist": "xiquinhosilva",
+    "license": "CC BY 2.0",
+    "query": "Jiefangbei Chongqing monument",
+    "alt": [
+      "File:Jiefangbei night.jpg",
+      "File:Jiefangbei square in Chongqing in 1988.jpg",
+      "File:Chongqing - Jiefangbei.jpg"
+    ]
+  },
+  "yangtze_cableway": {
+    "file": "assets/img/places/yangtze_cableway.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:SIK_03-056621_Yangtze_River_Cableway.tiff",
+    "title": "File:SIK 03-056621 Yangtze River Cableway.tiff",
+    "artist": "de:Hans-Peter Bärtschi",
+    "license": "CC BY-SA 4.0",
+    "query": "Yangtze River Cableway Chongqing",
+    "alt": [
+      "File:重庆长江索道 - Chongqing Yangtze River Cableway - 2015.04 - panoramio.jpg",
+      "File:SIK 03-056623 Yangtze River Cableway.tiff",
+      "File:SIK 03-057136 Yangtze River Cableway.tiff"
+    ]
+  },
+  "longshuixia": {
+    "file": "assets/img/places/longshuixia.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:%E9%BE%99%E6%B0%B4%E5%B3%A1%E5%9C%B0%E7%BC%9D%E6%99%AF%E5%8C%BA%E5%87%BA%E5%8F%A3_-_Exit_of_Longshuixia_Canyon_Scenic_Area_-_2015.04_-_panoramio.jpg",
+    "title": "File:龙水峡地缝景区出口 - Exit of Longshuixia Canyon Scenic Area - 2015.04 - panoramio.jpg",
+    "artist": "rheins",
+    "license": "CC BY 3.0",
+    "query": "Longshuixia Wulong",
+    "alt": [
+      "File:龙水峡地缝 - Longshuixia Canyon - 2015.04 - panoramio.jpg",
+      "File:龙水峡地缝 - Longshuixia Canyon - 2015.04 - panoramio (1).jpg",
+      "File:龙水峡地缝 - Longshuixia Canyon - 2015.04 - panoramio (2).jpg"
+    ]
+  },
+  "yau_ma_tei": {
+    "file": "assets/img/places/yau_ma_tei.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:HK_YMT_%E6%B2%B9%E9%BA%BB%E5%9C%B0_Yau_Ma_Tei_%E4%B8%8A%E6%B5%B7%E8%A1%97_225_Shanghai_Street_HKJC_Hong_Kong_Jockey_Club_Kansu_Street_July_2024_R12S_01.jpg",
+    "title": "File:HK YMT 油麻地 Yau Ma Tei 上海街 225 Shanghai Street HKJC Hong Kong Jockey Club Kansu Street July 2024 R12S 01.jpg",
+    "artist": "SUNWHEAIW Shengaou",
+    "license": "CC0",
+    "query": "Yau Ma Tei Hong Kong street",
+    "alt": [
+      "File:HK YMT 油麻地 Yau Ma Tei 上海街 225 Shanghai Street HKJC Hong Kong Jockey Club Kansu Street July 2024 R12S 02.jpg",
+      "File:Yau Ma Tei, Hong Kong - panoramio (5).jpg",
+      "File:Hong Kong night street 2.jpg"
+    ]
+  },
+  "temple_street": {
+    "file": "assets/img/places/temple_street.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Mercado_en_Temple_St.,_Hong_Kong,_2013-08-11,_DD_01.JPG",
+    "title": "File:Mercado en Temple St., Hong Kong, 2013-08-11, DD 01.JPG",
+    "artist": "Diego Delso",
+    "license": "CC BY-SA 3.0",
+    "query": "Temple Street night market Hong Kong",
+    "alt": [
+      "File:Mercado en Temple St., Hong Kong, 2013-08-11, DD 02.JPG",
+      "File:Mercado en Temple St., Hong Kong, 2013-08-11, DD 04.JPG",
+      "File:Mercado en Temple St., Hong Kong, 2013-08-11, DD 05.JPG"
+    ]
+  },
+  "avenue_of_stars": {
+    "file": "assets/img/places/avenue_of_stars.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:2024-12-27_Avenue_of_Stars,_Hong_Kong.jpg",
+    "title": "File:2024-12-27 Avenue of Stars, Hong Kong.jpg",
+    "artist": "Alexkom000",
+    "license": "CC BY 4.0",
+    "query": "Avenue of Stars Hong Kong",
+    "alt": [
+      "File:Avenue of Stars in Hong Kong(2).jpg",
+      "File:View from Avenue of Stars, Hong Kong, 2006 (02).jpg",
+      "File:Estatua de Galardones de Cine, Hong Kong, 2013-08-11, DD 01.JPG"
+    ]
+  },
+  "central_hk": {
+    "file": "assets/img/places/central_hk.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Central-Mid-Levels_escalators_-_Hong_Kong_(16968991972).jpg",
+    "title": "File:Central-Mid-Levels escalators - Hong Kong (16968991972).jpg",
+    "artist": "Robin Hickmott",
+    "license": "CC BY-SA 2.0",
+    "query": "Central Mid-Levels escalator Hong Kong",
+    "alt": [
+      "File:HK Central 嵐舒 LUSH Fresh Handmade Cosmetics Asia Hong Kong 21 Lyndhurst Terrace Central-Mid-Levels escalators interior Jan-2016 DSC.JPG",
+      "File:Central-Mid-levels escalator.jpg",
+      "File:Inside the Central-Mid-Levels escalators.jpg"
+    ]
+  },
+  "ngong_ping": {
+    "file": "assets/img/places/ngong_ping.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Ngong_Ping_360_Cable_Car_29-01-2015(2).jpg",
+    "title": "File:Ngong Ping 360 Cable Car 29-01-2015(2).jpg",
+    "artist": "LN9267",
+    "license": "CC BY-SA 4.0",
+    "query": "Ngong Ping 360 cable car",
+    "alt": [
+      "File:Ngong Ping 360 Cable Car 29-01-2015(5).jpg",
+      "File:Ngong Ping 360 Cable Car 29-01-2015(6).jpg",
+      "File:Ngong Ping 360 Cable Car 29-01-2015(7).jpg"
+    ]
+  },
+  "tai_o": {
+    "file": "assets/img/places/tai_o.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Tai_O_stilt_houses_01.jpg",
+    "title": "File:Tai O stilt houses 01.jpg",
+    "artist": "Underwaterbuffalo",
+    "license": "CC BY-SA 4.0",
+    "query": "Tai O stilt houses",
+    "alt": [
+      "File:Tai O stilt houses 02.jpg",
+      "File:Tai O stilt houses 03.jpg",
+      "File:Tai O stilt houses 04.jpg"
+    ]
+  },
+  "mong_kok": {
+    "file": "assets/img/places/mong_kok.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:1_mong_kok_hong_kong_night_2011.JPG",
+    "title": "File:1 mong kok hong kong night 2011.JPG",
+    "artist": "chensiyuan",
+    "license": "CC BY-SA 4.0",
+    "query": "Mong Kok Hong Kong street night",
+    "alt": [
+      "File:Busy Mong Kok. Hong Kong. (39703519610).jpg",
+      "File:HK MK Mong Kok 562 Nathan Road Hamilton Street night January 2023 Px3 01.jpg",
+      "File:HK Mong Kok Midnight Argyle Street Hong Lok Street Sept 2018 IX2 02.jpg"
+    ]
+  },
+  "central_harbourfront": {
+    "file": "assets/img/places/central_harbourfront.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Central_Harbourfront_Event_Space,_Hong_Kong.jpg",
+    "title": "File:Central Harbourfront Event Space, Hong Kong.jpg",
+    "artist": "Msiuurjcos",
+    "license": "CC BY-SA 4.0",
+    "query": "Central Harbourfront Hong Kong",
+    "alt": [
+      "File:Central Harbourfront Event Space, Hong Kong 2016.jpg",
+      "File:Central Harbourfront in Hong Kong damaged by Typhoon Mangkhut (2018).jpg",
+      "File:HK 中環 Central 民耀街 Man Yiu Street 恒基地產 Henderson Land Development Central Yards 行人天橋 footbridge view Harbourfront Event Space n Hong Kong Observation Wheel March 2026 N13P 03.jpg"
+    ]
+  },
+  "tsim_sha_tsui": {
+    "file": "assets/img/places/tsim_sha_tsui.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Causeway_Bay_%26_Wan_Chai_viewed_from_Tsim_Sha_Tsui_Promenade.jpg",
+    "title": "File:Causeway Bay & Wan Chai viewed from Tsim Sha Tsui Promenade.jpg",
+    "artist": "Ceeseven",
+    "license": "CC BY-SA 4.0",
+    "query": "Tsim Sha Tsui promenade skyline",
+    "alt": [
+      "File:HK TST 尖沙咀東海濱 Tsim Sha Tsui East Waterfront Promenade 梳士巴利道 Salisbury Road buildings March 2020 SS2 11.jpg",
+      "File:Ring number 11, Tsim Sha Tsui East promenade (30775876286).jpg",
+      "File:The Avenue of the Stars And the Tsim Sha Tsui Promenade... (19424936394).jpg"
+    ]
+  },
+  "nanshan_cq": {
+    "file": "assets/img/places/nanshan_cq.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Chongqing_Art_Museum_Night.jpg",
+    "title": "File:Chongqing Art Museum Night.jpg",
+    "artist": "Buglord",
+    "license": "CC BY-SA 4.0",
+    "query": "Chongqing Night Yuzhong",
+    "alt": [
+      "File:Chongqing Art Museum Night.jpg",
+      "File:Chongqing Night Yuzhong.jpg",
+      "File:Night view of YUZHONG - panoramio.jpg"
+    ]
+  },
+  "fairy_mountain": {
+    "file": "assets/img/places/fairy_mountain.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:%E6%AD%A6%E9%9A%86_%E4%BB%99%E5%A5%B3%E5%B1%B1%E5%85%A8%E6%99%AF_01.jpg",
+    "title": "File:武隆 仙女山全景 01.jpg",
+    "artist": "Liuxingy",
+    "license": "CC BY-SA 4.0",
+    "query": "武隆 仙女山全景 01",
+    "alt": []
+  },
+  "lhasa": {
+    "file": "assets/img/places/lhasa.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Lhasa,_Tibet.jpg",
+    "title": "File:Lhasa, Tibet.jpg",
+    "artist": "Jesse Allen",
+    "license": "Public domain",
+    "query": "Lhasa city Potala view",
+    "alt": [
+      "File:Lhasa - Potála - panoramio.jpg",
+      "File:Lhasa - panoramio (2).jpg",
+      "File:Lhasa from the Pabonka Monastery.JPG"
+    ]
+  },
+  "potala_palace": {
+    "file": "assets/img/places/potala_palace.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Courtyard_of_the_Potala_Palace_in_Lhasa,_Tibet.jpg",
+    "title": "File:Courtyard of the Potala Palace in Lhasa, Tibet.jpg",
+    "artist": "Jan Kranendonk (https://www.jankranendonk.nl)",
+    "license": "CC BY-SA 4.0",
+    "query": "Potala Palace Lhasa",
+    "alt": [
+      "File:Detail of the Potala Palace in Lhasa, Tibet.jpg",
+      "File:Inside the Potala Palace in Lhasa, Tibet.jpg",
+      "File:Potala.jpg"
+    ]
+  },
+  "barkhor": {
+    "file": "assets/img/places/barkhor.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:An_elderly_Tibetan_women_holding_a_prayer_wheel_on_Lhasa,_Barkhor.jpg",
+    "title": "File:An elderly Tibetan women holding a prayer wheel on Lhasa, Barkhor.jpg",
+    "artist": "Luca Galuzzi (Lucag)",
+    "license": "CC BY-SA 2.5",
+    "query": "Barkhor street Lhasa",
+    "alt": [
+      "File:Lhasa, Barkhor 1999 02.jpg",
+      "File:Barkhor Street, Lhasa, Tibet.jpg",
+      "File:Barkhor Street, Lhasa.jpg"
+    ]
+  },
+  "sera_monastery": {
+    "file": "assets/img/places/sera_monastery.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Cooking_at_Sera_Monastery,_Lhasa._1993.jpg",
+    "title": "File:Cooking at Sera Monastery, Lhasa. 1993.jpg",
+    "artist": "John Hill",
+    "license": "CC BY-SA 4.0",
+    "query": "Sera Monastery Lhasa",
+    "alt": [
+      "File:Lhasa - Sera Monastery - panoramio (1).jpg",
+      "File:Tibet - Lhasa - Sera Monastery - 6385045629.jpg",
+      "File:Tibetan buddhist monk listens during debating practice at Sera Monastery, Lhasa, Tibet in 2007 (cropped).JPG"
+    ]
+  },
+  "norbulingka": {
+    "file": "assets/img/places/norbulingka.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Lhasa,_Norbulingka_1999_01.jpg",
+    "title": "File:Lhasa, Norbulingka 1999 01.jpg",
+    "artist": "LBM1948",
+    "license": "CC BY-SA 4.0",
+    "query": "Norbulingka Lhasa",
+    "alt": [
+      "File:Lhasa, Norbulingka 1999 03.jpg",
+      "File:Lhasa, Norbulingka 1999 05.jpg",
+      "File:Lhasa, Norbulingka 1999 06.jpg"
+    ]
+  },
+  "senado_square": {
+    "file": "assets/img/places/senado_square.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Macau_-_Senado_Square.jpg",
+    "title": "File:Macau - Senado Square.jpg",
+    "artist": "kewl",
+    "license": "CC BY 2.0",
+    "query": "Senado Square Macau",
+    "alt": [
+      "File:Light and shadow (in Macau).jpg",
+      "File:Senado Square, Macau (5235016236).jpg",
+      "File:Senado Square, Macau - 20101117.jpg"
+    ]
+  },
+  "st_pauls": {
+    "file": "assets/img/places/st_pauls.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:The_Ruins_of_St._Paul%27s_in_Macau.jpg",
+    "title": "File:The Ruins of St. Paul's in Macau.jpg",
+    "artist": "BenjPhoto",
+    "license": "CC BY-SA 4.0",
+    "query": "Ruins of St. Paul's Macau",
+    "alt": [
+      "File:Na Tcha Temple and the Ruins of St. Paul's.jpg",
+      "File:Restos de la Catedral de San Pablo, Macao, 2013-08-08, DD 34.jpg",
+      "File:Ruins of St. Paul's - Macau (2017).jpg"
+    ]
+  },
+  "jokhang": {
+    "file": "assets/img/places/jokhang.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:An_elderly_Tibetan_women_holding_a_prayer_wheel_on_Lhasa,_Barkhor.jpg",
+    "title": "File:An elderly Tibetan women holding a prayer wheel on Lhasa, Barkhor.jpg",
+    "artist": "Luca Galuzzi (Lucag)",
+    "license": "CC BY-SA 2.5",
+    "query": "Jokhang Temple Lhasa",
+    "alt": [
+      "File:Buddhist icons on the roof of the Jokhang temple in Lhasa, Tibet.jpg",
+      "File:Jokhang Temple frontal view.jpg",
+      "File:Jokhang Temple in Tibet.jpg"
+    ]
+  },
+  "taipa": {
+    "file": "assets/img/places/taipa.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:MC_Macau_%E6%B0%B9%E4%BB%94_Taipa_%E5%9C%B0%E5%A0%A1%E8%A1%97_Rua_do_Regedor_old_town_night_November_2023_R12S_41.jpg",
+    "title": "File:MC Macau 氹仔 Taipa 地堡街 Rua do Regedor old town night November 2023 R12S 41.jpg",
+    "artist": "Kamfutiam Georgez",
+    "license": "CC0",
+    "query": "Taipa Macau old village",
+    "alt": [
+      "File:Macau Taipa-Village.jpg",
+      "File:Taipa Old Town decoration 01-02-2023(1).jpg",
+      "File:Taipa Old Town decoration 01-02-2023(2).jpg"
+    ]
+  },
+  "venetian_macau": {
+    "file": "assets/img/places/venetian_macau.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Cirque_du_Soleil_ad_Venetian_Casino,_Macao.JPG",
+    "title": "File:Cirque du Soleil ad Venetian Casino, Macao.JPG",
+    "artist": "John Hill",
+    "license": "CC BY-SA 3.0",
+    "query": "Venetian Macao casino",
+    "alt": [
+      "File:Macau Venetian Macao Casino 18-years 1.jpg",
+      "File:The Venetian Macao.jpg",
+      "File:Venetian Macao Casino Area.jpg"
+    ]
+  },
+  "guia_fortress": {
+    "file": "assets/img/places/guia_fortress.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Capela_de_Nossa_Senhora_da_Guia_and_Macau_Guia_Lighthouse_22-02-2023(1).jpg",
+    "title": "File:Capela de Nossa Senhora da Guia and Macau Guia Lighthouse 22-02-2023(1).jpg",
+    "artist": "LN9267",
+    "license": "CC BY-SA 4.0",
+    "query": "Guia Fortress Macau lighthouse",
+    "alt": [
+      "File:Capela de Nossa Senhora da Guia and Macau Guia Lighthouse 22-02-2023(2).jpg",
+      "File:Guia Fortress 23-02-2024(9).jpg",
+      "File:Guia Fortress Lighthouse.jpg"
+    ]
+  },
+  "sai_kung": {
+    "file": "assets/img/places/sai_kung.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:HK_SKD_Sai_Kung_%E5%AF%B6%E7%90%B3_Po_Lam_MCP_One_Shopping_Mall_shop_%E6%B5%B7%E6%B8%AF%E9%85%92%E5%AE%B6_Victoria_Harbour_Restaurant_seafood_big_crabs_August_2026_N13P_09.jpg",
+    "title": "File:HK SKD Sai Kung 寶琳 Po Lam MCP One Shopping Mall shop 海港酒家 Victoria Harbour Restaurant seafood big crabs August 2026 N13P 09.jpg",
+    "artist": "BaiyuenPlennra Guumz",
+    "license": "CC0",
+    "query": "Sai Kung Hong Kong harbour",
+    "alt": [
+      "File:Sai Kung Town Harbour 01.jpg",
+      "File:Sai Kung Town Harbour 02.jpg",
+      "File:Sai Kung Town Harbour 03.jpg"
+    ]
+  },
+  "panda_base": {
+    "file": "assets/img/places/panda_base.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Chengdu-pandas-d10.jpg",
+    "title": "File:Chengdu-pandas-d10.jpg",
+    "artist": "Colegota",
+    "license": "CC BY-SA 2.5 es",
+    "query": "Giant panda Chengdu",
+    "alt": [
+      "File:Chengdu Research Base of Giant Panda Breeding, 201907, 01.jpg",
+      "File:Chengdu Research Base of Giant Panda Breeding, 201907, 02.jpg",
+      "File:Chengdu Research Base of Giant Panda Breeding, 201907, 06.jpg"
+    ]
+  },
+  "sanxingdui": {
+    "file": "assets/img/places/sanxingdui.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Ancient_Shu_Altar_Reconstruction,_Sanxingdui_Museum.jpg",
+    "title": "File:Ancient Shu Altar Reconstruction, Sanxingdui Museum.jpg",
+    "artist": "Gary Todd",
+    "license": "CC0",
+    "query": "Sanxingdui museum",
+    "alt": [
+      "File:Bronze Gallery Diorama, Sanxingdui Museum.jpg",
+      "File:Floral Arrangement Shaped Like Bronze Mask, Sanxingdui Museum.jpg",
+      "File:Gallery 2, Sanxingdui Museum.jpg"
+    ]
+  },
+  "fenghuang": {
+    "file": "assets/img/places/fenghuang.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Tuo_River_in_Fenghuang_County,_Hunan,_China1.jpg",
+    "title": "File:Tuo River in Fenghuang County, Hunan, China1.jpg",
+    "artist": "Huangdan2060",
+    "license": "CC0",
+    "query": "Fenghuang ancient town Tuo river",
+    "alt": [
+      "File:Tuo River in Fenghuang County, Hunan, China11.jpg",
+      "File:Tuo River in Fenghuang County, Hunan, China4.jpg",
+      "File:Tuo River in Fenghuang County, Hunan, China5.jpg"
+    ]
+  },
+  "grand_canyon": {
+    "file": "assets/img/places/grand_canyon.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Glass_Bridge_in_Zhangjiajie_China.jpg",
+    "title": "File:Glass Bridge in Zhangjiajie China.jpg",
+    "artist": "אביהוד",
+    "license": "CC BY-SA 4.0",
+    "query": "Zhangjiajie Grand Canyon glass bridge",
+    "alt": [
+      "File:ZhangjiajieGlassByHighestBridges.jpg",
+      "File:Zhangjiajie Glass Bridge 08.jpg",
+      "File:Zhangjiajie Glass Bridge 20190726.jpg"
+    ]
+  },
+  "tianmen": {
+    "file": "assets/img/places/tianmen.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Tianmen_Mountain_38192-Zhangjiajie_(48757754852).jpg",
+    "title": "File:Tianmen Mountain 38192-Zhangjiajie (48757754852).jpg",
+    "artist": "xiquinhosilva",
+    "license": "CC BY 2.0",
+    "query": "Tianmen Mountain Heaven's Gate Zhangjiajie",
+    "alt": [
+      "File:Tianmen Mountain 38215-Zhangjiajie (48757755772).jpg",
+      "File:Tianmen Mountain 38218-Zhangjiajie (48757756147).jpg",
+      "File:Tianmen Mountain 38265-Zhangjiajie (48757757187).jpg"
+    ]
+  }
+}

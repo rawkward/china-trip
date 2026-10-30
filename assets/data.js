@@ -321,4 +321,24 @@ window.TRIP_PLACES = {
     "lat": 29.2289158,
     "lon": 107.9033277
   }
+,
+  "fenghuang": {"name": "Fenghuang Ancient Town", "lat": 27.9486, "lon": 109.5984},
+  "grand_canyon": {"name": "Zhangjiajie Grand Canyon", "lat": 29.304, "lon": 110.449},
+  "tianmen": {"name": "Tianmen Mountain", "lat": 29.0513, "lon": 110.475},
+  "lhasa": {"name": "Lhasa", "lat": 29.652, "lon": 91.1721},
+  "potala_palace": {"name": "Potala Palace", "lat": 29.6578, "lon": 91.117},
+  "jokhang": {"name": "Jokhang Temple", "lat": 29.653, "lon": 91.1319},
+  "barkhor": {"name": "Barkhor Street", "lat": 29.6536, "lon": 91.133},
+  "sera_monastery": {"name": "Sera Monastery", "lat": 29.7031, "lon": 91.1333},
+  "norbulingka": {"name": "Norbulingka", "lat": 29.656, "lon": 91.098},
+  "macau": {"name": "Macau", "lat": 22.1987, "lon": 113.5439},
+  "senado_square": {"name": "Senado Square", "lat": 22.1936, "lon": 113.5395},
+  "st_pauls": {"name": "Ruins of St. Paul's", "lat": 22.1976, "lon": 113.5407},
+  "taipa": {"name": "Taipa", "lat": 22.1575, "lon": 113.557},
+  "venetian_macau": {"name": "The Venetian Macao", "lat": 22.1476, "lon": 113.5605},
+  "guia_fortress": {"name": "Guia Fortress", "lat": 22.198, "lon": 113.5444},
+  "sai_kung": {"name": "Sai Kung", "lat": 22.3819, "lon": 114.271},
+  "panda_base": {"name": "Chengdu Panda Base", "lat": 30.733, "lon": 104.145},
+  "sanxingdui": {"name": "Sanxingdui Museum", "lat": 31.0, "lon": 104.2},
+  "disneyland": {"name": "Hong Kong Disneyland", "lat": 22.313, "lon": 114.041}
 };

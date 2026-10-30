@@ -1,0 +1,309 @@
+window.TRIP_ITINERARY = (function(){
+"use strict";
+
+const CITIES = {
+  hk:  {label:"Гонконг",     color:"#0f766e"},
+  cq:  {label:"Чунцин",      color:"#c2410c"},
+  wl:  {label:"Улун",        color:"#4d7c0f"},
+  bb:  {label:"Бэйбэй",      color:"#b45309"},
+  cd:  {label:"Чэнду",       color:"#7c3aed"},
+  zjj: {label:"Чжанцзяцзе",  color:"#0e7490"},
+  fh:  {label:"Фэнхуан",     color:"#b91c1c"},
+  fr:  {label:"Фужун",       color:"#a16207"},
+  ls:  {label:"Лхаса",       color:"#6d28d9"},
+  mc:  {label:"Макао",       color:"#047857"},
+};
+
+const DATES = [
+  "27.11 · пт","28.11 · сб","29.11 · вс","30.11 · пн","01.12 · вт","02.12 · ср","03.12 · чт",
+  "04.12 · пт","05.12 · сб","06.12 · вс","07.12 · пн","08.12 · вт","09.12 · ср","10.12 · чт",
+];
+
+/* ==================== ЧУНЦИН ==================== */
+
+const CQ_ARRIVAL = {city:"cq", title:"Прилёт в Чунцин", sub:"Ночной перелёт из Москвы → утро в Чунцине", places:[
+  {k:"chongqing", name:"Прилёт в аэропорт Цзянбэй", tag:"transport", note:"Прямой ночной рейс из Москвы"},
+  {k:"jiefangbei", name:"Заселение, Цзефанбэй", tag:"hotel", note:"Отель в центре — пешком до набережной"},
+  {k:"hongya_cave", name:"Хунъядун", tag:"sight", note:"Подсветку включают к сумеркам, около 18:30"},
+  {k:"jiefangbei", name:"Первый хотпот", tag:"food", note:"Просить «вэйла» — средняя острота", cost:"¥120–150"},
+]};
+
+const CQ_RAILS = {city:"cq", title:"Чунцин: рельсы и виды", sub:"Лицзыба, канатка через Янцзы, смотровые", places:[
+  {k:"liziba", name:"Лицзыба", tag:"sight", note:"Монорельс сквозь жилой дом, смотровая на платформе"},
+  {k:"eling", name:"Парк Элин", tag:"sight", note:"Бесплатно, вид на город и реку"},
+  {k:"jiefangbei", name:"Обед: лапша сяомянь", tag:"food", note:"", cost:"¥12–15"},
+  {k:"yangtze_cableway", name:"Канатка через Янцзы", tag:"sight", note:"Зимой работает до 21:00", cost:"¥30 / ¥50"},
+  {k:"nanshan_cq", name:"Смотровая Наньшань", tag:"sight", note:"Лучше к закату — весь город в подсветке", cost:"¥30"},
+  {k:"hongya_cave", name:"Хотпот 珮姐 (Peijie)", tag:"food", note:"В очередь к 17:30", cost:"¥120–150"},
+  {k:"jiefangbei", name:"Дрон-шоу «Синьюнь Чунцин»", tag:"sight", note:"Субботы в 20:30 над двумя реками: смотреть с Наньбинь-роуд или Чаотяньмэня. Расписание на ноябрь публикуют за 1–2 недели"},
+]};
+
+const CQ_CIQIKOU = {city:"cq", title:"Чунцин: Цикоу и панды", sub:"Старый город с утра, зоопарк с пандами, вечерний хотпот", places:[
+  {k:"ciqikou", name:"Цикоу (старый город)", tag:"sight", note:"Бесплатно, приходить к 8:30 — до толпы"},
+  {k:"chongqing_zoo", name:"Зоопарк с пандами", tag:"sight", note:"", cost:"¥25"},
+  {k:"nanshan_cq", name:"Смотровая Наньшань", tag:"sight", note:"Лучше к закату", cost:"¥30"},
+  {k:"hongya_cave", name:"Хотпот в пещере 洞亭", tag:"food", note:"", cost:"¥100–130"},
+]};
+
+/* ==================== ФЭНХУАН И ФУЖУН ==================== */
+
+const FENGHUANG_ARRIVE = {city:"fh", title:"Чунцин → Фэнхуан", sub:"Поезд через Хуайхуа, вечерняя подсветка старого города", places:[
+  {k:"chongqing", name:"Поезд Чунцин-Запад → Фэнхуан", tag:"transport", note:"3 ч 50 – 4 ч 15, ~5 рейсов в день", cost:"¥311–339"},
+  {k:"fenghuang", name:"Заселение в старом городе", tag:"hotel", note:"Гостевой дом у реки Томэнь (沱江), с балконом"},
+  {k:"fenghuang", name:"Набережная Томэна и мост Хунцяо", tag:"sight", note:"Подсветку включают около 18:30 — это главное время"},
+  {k:"fenghuang", name:"Ужин: кислый суп с рыбой", tag:"food", note:"Мяоская кухня, острота по запросу", cost:"¥60–90"},
+]};
+
+const FURONG_ARRIVE = {city:"fr", title:"Фэнхуан → Фужун", sub:"«Городок на водопаде», ночёвка с видом на воду", places:[
+  {k:"fenghuang", name:"Утро в Фэнхуане: рынок и переулки", tag:"sight", note:"До 10:00 почти нет групп — лучшее время для фото"},
+  {k:"furong", name:"Поезд Фэнхуан → Фужунчжэнь", tag:"transport", note:"Около 40 минут, станция в 15 мин от старого города"},
+  {k:"furong", name:"Отель с видом на водопад", tag:"hotel", note:"Номера с балконом напротив водопада — бронировать сильно заранее"},
+  {k:"furong", name:"Водопад и старый город", tag:"sight", note:"Вход в город платный, билет действует сутки", cost:"¥80–108"},
+]};
+
+const FURONG_BACK = {city:"wl", title:"Фужун → Чунцин → Улун", sub:"Переездной день: поезд, метро, поезд до Улуна", places:[
+  {k:"furong", name:"Утро у водопада без людей", tag:"sight", note:"До 9:00 город почти пустой"},
+  {k:"furong", name:"Поезд Фужунчжэнь → Чунцин-Запад", tag:"transport", note:"4–4,5 часа с пересадкой в Чжанцзяцзе-Западном", cost:"~¥340"},
+  {k:"wulong", name:"Поезд Чунцин-Север → Улун", tag:"transport", note:"1,5–2 часа, билеты за 14 дней", cost:"¥25"},
+  {k:"fairy_mountain", name:"Заселение в Сяньнюйшане", tag:"hotel", note:"Гестхаус ближе к парку — утром не ехать через город"},
+]};
+
+const WULONG_DAY = {city:"wl", title:"Улун: Три моста и ущелье", sub:"Тяньшэн саньцяо и Луншуйся за один день", places:[
+  {k:"three_natural_bridges", name:"Тяньшэн саньцяо (Три природных моста)", tag:"sight", note:"Снимали «Трансформеры: Эпоха истребления» (2014) и «Проклятие золотого цветка»; «Аватар» тут ни при чём — его снимали в Чжанцзяцзе. 2–3 часа, утром меньше групп", cost:"¥125"},
+  {k:"longshuixia", name:"Ущелье Луншуйся", tag:"sight", note:"Вход в 10 минутах от Трёх мостов, вниз по лестницам и мосткам", cost:"¥85"},
+  {k:"furong_cave", name:"Пещера Фужун — если останутся силы", tag:"sight", note:"Сталактиты и подземное озеро с подсветкой; 30–40 минут в сторону Цзянкоу", cost:"¥120"},
+]};
+
+const WULONG_OUT = {city:"wl", title:"Улун → Чунцин → Гонконг", sub:"Утренний поезд, вечерний перелёт в Гонконг", places:[
+  {k:"wulong", name:"Улун → Чунцин-Север", tag:"transport", note:"Поезд 1,5–2 часа, брать утренний"},
+  {k:"chongqing", name:"Аэропорт Цзянбэй, перелёт в Гонконг", tag:"transport", note:"2 ч 15 мин; из Улуна до аэропорта с запасом 4 часа"},
+  {k:"temple_street", name:"Заселение и ужин на Temple Street", tag:"food", note:"Глиняный горшок с рисом в Hing Kee", cost:"HK$80"},
+]};
+
+/* ==================== ЧЭНДУ И ТИБЕТ ==================== */
+
+const CD_ARRIVE = {city:"cd", title:"Прилёт в Чэнду", sub:"Переулок Куаньчжайсян, чайные, первая ночь", places:[
+  {k:"chengdu", name:"Перелёт Москва → Чэнду", tag:"transport", note:"Ночной рейс, утро в Чэнду"},
+  {k:"chengdu", name:"Заселение, Куаньчжайсян", tag:"hotel", note:"Переулок с чайными и уличной едой"},
+  {k:"chengdu", name:"Чайная с бамбуковыми стульями", tag:"food", note:"Сидеть час-два — местная норма", cost:"¥40"},
+]};
+
+const CD_PANDA = {city:"cd", title:"Чэнду: панды и Саньсиндуй", sub:"Ранний слот к пандам, бронза бронзового века", places:[
+  {k:"panda_base", name:"Парк панд (утро)", tag:"sight", note:"Слот 7:30–8:00, билеты онлайн за 14 дней", cost:"¥55"},
+  {k:"sanxingdui", name:"Музей Саньсиндуй (Гуанхань)", tag:"sight", note:"Электричка ~1 час, бронзовые маски и дерево", cost:"¥72"},
+  {k:"chengdu", name:"Хотпот по-чэндуски", tag:"food", note:"Мягче чунцинского", cost:"¥100–140"},
+]};
+
+const LHASA_ARRIVE = {city:"ls", title:"Чэнду → Лхаса", sub:"Перелёт 2 ч 15, акклиматизация, Баркхор", places:[
+  {k:"lhasa", name:"Перелёт Чэнду → Лхаса", tag:"transport", note:"2 ч 15, слева по борту Гималаи; пермит оформляет агентство", cost:"от ¥900"},
+  {k:"barkhor", name:"Баркхор: первый круг", tag:"sight", note:"Высота 3 650 м — идти медленно, пить воду, не подниматься на Поталу в первый день"},
+  {k:"lhasa", name:"Тибетский чай с маслом", tag:"food", note:"Обязательный ритуал акклиматизации", cost:"¥30"},
+]};
+
+const LHASA_POTALA = {city:"ls", title:"Лхаса: Потала и Джоканг", sub:"Дворец на холме, главный храм, вечерний Баркхор", places:[
+  {k:"potala_palace", name:"Дворец Потала", tag:"sight", note:"Билеты по времени, очередь с паспортом; 2–3 часа", cost:"¥200"},
+  {k:"jokhang", name:"Храм Джоканг", tag:"sight", note:"Самый почитаемый храм Тибета, рядом площадь", cost:"¥85"},
+  {k:"barkhor", name:"Баркхор вечером", tag:"sight", note:"Паломники идут по кругу, лучший свет для фото"},
+]};
+
+const LHASA_SERA = {city:"ls", title:"Лхаса: Сэра и Норбулинка", sub:"Дебаты монахов, летний дворец далай-лам", places:[
+  {k:"sera_monastery", name:"Монастырь Сэра", tag:"sight", note:"Дебаты монахов около 15:00 — главное зрелище", cost:"¥50"},
+  {k:"norbulingka", name:"Норбулинка", tag:"sight", note:"Летний дворец и парк, спокойная прогулка", cost:"¥60"},
+  {k:"lhasa", name:"Тибетский ужин", tag:"food", note:"Момо и тьяк-мясо", cost:"¥100"},
+]};
+
+const LHASA_BACK = {city:"cd", title:"Лхаса → Чэнду", sub:"Перелёт, вечер в городе", places:[
+  {k:"lhasa", name:"Перелёт Лхаса → Чэнду", tag:"transport", note:"2 ч 15, утром"},
+  {k:"chengdu", name:"Прогулка по Цзиньли", tag:"sight", note:"Улица с фонарями и едой, вход ¥0–50"},
+  {k:"chengdu", name:"Последний хотпот", tag:"food", note:"", cost:"¥100–140"},
+]};
+
+const CD_TO_HK = {city:"hk", title:"Чэнду → Гонконг", sub:"Перелёт, заселение, вечер на Temple Street", places:[
+  {k:"chengdu", name:"Перелёт Чэнду → Гонконг", tag:"transport", note:"2 ч 40, дневной"},
+  {k:"yau_ma_tei", name:"Заселение, Jordan / Yau Ma Tei", tag:"hotel", note:"Метро 15 мин до набережной"},
+  {k:"temple_street", name:"Ужин на Temple Street", tag:"food", note:"Глиняный горшок с рисом в Hing Kee", cost:"HK$80"},
+]};
+
+/* ==================== ЧЖАНЦЗЯЦЗЕ ==================== */
+
+const ZJJ_ARRIVE = {city:"zjj", title:"Чунцин → Чжанцзяцзе", sub:"Поезд, заселение в Улинъюане", places:[
+  {k:"zhangjiajie", name:"Поезд Чунцин-Запад → Чжанцзяцзе-Запад", tag:"transport", note:"Около 3 ч 15 или самолёт 1 час", cost:"¥180"},
+  {k:"zhangjiajie", name:"Заселение, Улинъюань", tag:"hotel", note:"Жить ближе к восточным воротам парка"},
+]};
+
+const ZJJ_YUANJIAJIE = {city:"zjj", title:"Юаньцзяцзе: парк «Аватар»", sub:"Лифт Байлун, мост Первого кадра, тропы", places:[
+  {k:"zhangjiajie", name:"Лифт Байлун + мост Первого кадра", tag:"sight", note:"Билет в парк на 4 дня, очереди с 9:00; именно эти горы снимали в «Аватаре»", cost:"¥227"},
+  {k:"zhangjiajie", name:"Тропа Цзиньбяньси", tag:"sight", note:"5 км по ручью, зимой скользко"},
+]};
+
+const ZJJ_CANYON = {city:"zjj", title:"Большой каньон и стеклянный мост", sub:"Тот самый подвесной мост над ущельем", places:[
+  {k:"grand_canyon", name:"Стеклянный мост Чжанцзяцзе", tag:"sight", note:"415 м над ущельем, 300 м в длину; билет на вход в каньон и мост — один", cost:"¥178–296"},
+  {k:"grand_canyon", name:"Прогулка по дну каньона", tag:"sight", note:"Ручей, водопады, 2–3 часа вниз и по мосткам"},
+  {k:"zhangjiajie", name:"Вечер в Улинъюане", tag:"food", note:"Уличные шашлычки у реки", cost:"¥60–90"},
+  {k:"tianmen", name:"Мюзикл «Тяньмэнь Хусянь»", tag:"sight", note:"Открытая сцена у подножия Тяньмэня, 20:20–22:00, световые эффекты. Тот самый «лазер» — это он, а не шоу на горе", cost:"¥238"},
+]};
+
+const ZJJ_TIANMEN = {city:"zjj", title:"Тяньмэньшань и дорога в Чунцин", sub:"Канатка к «Небесным вратам», стеклянная тропа", places:[
+  {k:"tianmen", name:"Канатка на Тяньмэньшань", tag:"sight", note:"Самая длинная в мире, 7,5 км; билет включает канатки и автобус", cost:"¥278"},
+  {k:"tianmen", name:"Стеклянная тропа и 999 ступеней", tag:"sight", note:"Спуск по ступеням к арке; скользко в сырость"},
+  {k:"zhangjiajie", name:"Поезд Чжанцзяцзе → Чунцин", tag:"transport", note:"Вечерний, 3 ч 15 — ночёвка у аэропорта"},
+]};
+
+const ZJJ_TO_HK = {city:"hk", title:"Чунцин → Гонконг", sub:"Утренний перелёт, заселение, вечер в Ковлуне", places:[
+  {k:"chongqing", name:"Перелёт Чунцин → Гонконг", tag:"transport", note:"2 ч 15, утренний"},
+  {k:"yau_ma_tei", name:"Заселение, Jordan / Yau Ma Tei", tag:"hotel", note:"Метро 15 мин до набережной"},
+  {k:"temple_street", name:"Temple Street вечером", tag:"food", note:"", cost:"HK$80"},
+]};
+
+/* ==================== ГОНКОНГ (общие дни) ==================== */
+
+const HK_KOWLOON = {city:"hk", title:"Ковлун: M+ и набережная", sub:"Музеи, Avenue of Stars, вечерний свет", places:[
+  {k:"tsim_sha_tsui", name:"Музей M+", tag:"sight", note:"Закрыт по понедельникам", cost:"HK$190"},
+  {k:"tsim_sha_tsui", name:"Музей искусств Гонконга", tag:"sight", note:"Бесплатно"},
+  {k:"avenue_of_stars", name:"Avenue of Stars + паром Star Ferry", tag:"sight", note:"", cost:"~HK$5"},
+  {k:"victoria_harbour", name:"Symphony of Lights", tag:"sight", note:"20:00, набережная гавани"},
+]};
+
+const HK_CENTRAL = {city:"hk", title:"Централ и Пик", sub:"Эскалатор, арт-кварталы, храм, вершина", places:[
+  {k:"central_hk", name:"Эскалатор Central–Mid-Levels", tag:"sight", note:"Самый длинный крытый эскалатор в мире"},
+  {k:"central_hk", name:"PMQ + Tai Kwun", tag:"sight", note:"Арт-кварталы, вход бесплатный"},
+  {k:"central_hk", name:"Храм Man Mo", tag:"sight", note:"Бесплатно"},
+  {k:"victoria_peak", name:"Пик (Victoria Peak)", tag:"sight", note:"Трамвай Peak Tram, лучше к закату", cost:"HK$116"},
+  {k:"central_hk", name:"Еда: Lan Fong Yuen / Mak's Noodle", tag:"food", note:"", cost:"~HK$60"},
+]};
+
+const HK_LANTAU = {city:"hk", title:"Лантау: Будда и Tai O", sub:"Канатка, Большой Будда, свайная деревня", places:[
+  {k:"ngong_ping", name:"Канатка Ngong Ping 360", tag:"transport", note:"Туда-обратно, онлайн дешевле", cost:"HK$295"},
+  {k:"tian_tan_buddha", name:"Большой Будда (Tian Tan)", tag:"sight", note:"268 ступеней к статуе"},
+  {k:"tai_o", name:"Деревня Tai O", tag:"sight", note:"Свайные дома, морепродукты, лодки"},
+]};
+
+const HK_DISNEY = {city:"hk", title:"Диснейленд", sub:"Понедельник — низкий тариф и короткие очереди", places:[
+  {k:"disneyland", name:"Гонконгский Диснейленд", tag:"sight", note:"С 20 ноября полный рождественский декор", cost:"HK$639"},
+]};
+
+const HK_SAIKUNG = {city:"hk", title:"Сайкунг и море", sub:"Рыбный рынок, лодки, морепродукты", places:[
+  {k:"sai_kung", name:"Набережная и рынок Сайкунга", tag:"sight", note:"Лодки к островам, 1–2 часа на воде", cost:"HK$150"},
+  {k:"sai_kung", name:"Обед из морепродуктов", tag:"food", note:"Выбрать в аквариуме, готовят рядом", cost:"HK$250–400"},
+]};
+
+const HK_SHOP = {city:"hk", title:"Шоппинг", sub:"Causeway Bay и Mong Kok, рождественские витрины", places:[
+  {k:"mong_kok", name:"Causeway Bay + Harbour City", tag:"shopping", note:"Витрины с 20.11"},
+  {k:"mong_kok", name:"Mong Kok: рынки и мелочи", tag:"shopping", note:"Женщинам обычно заходит больше, чем моллы"},
+  {k:"tsim_sha_tsui", name:"Прощальный ужин Yardbird / Ho Lee Fook", tag:"food", note:"", cost:"HK$600–700"},
+]};
+
+const HK_FREE = {city:"hk", title:"Свободный день в Гонконге", sub:"Без плана: рынки, чайные, набережная", places:[
+  {k:"central_hk", name:"Централ без спешки", tag:"sight", note:"Чайная, книжный, галереи"},
+  {k:"victoria_harbour", name:"Вечер на набережной", tag:"sight", note:"Tsim Sha Tsui, вид на остров"},
+]};
+
+const HK_DEPART = {city:"hk", title:"Вылет домой", sub:"Ночной рейс, дома 11 декабря", places:[
+  {k:"hongkong", name:"Ночной рейс Гонконг → Москва", tag:"transport", note:"Дома 11.12, отдых 12–13.12, на работу 14.12"},
+]};
+
+/* фестивальные дни — только в первом варианте */
+const HK_FEST_ARRIVE = {city:"hk", title:"Перелёт в Гонконг", sub:"Чунцин → Гонконг, заселение, вечер в Ковлуне", places:[
+  {k:"chongqing", name:"Перелёт Чунцин → Гонконг", tag:"transport", note:"2 ч 15"},
+  {k:"yau_ma_tei", name:"Заселение, Jordan / Yau Ma Tei", tag:"hotel", note:"До Central Harbourfront — метро 15 мин"},
+  {k:"temple_street", name:"Ужин на Temple Street", tag:"food", note:"Глиняный горшок с рисом в Hing Kee", cost:"HK$80"},
+  {k:"central_harbourfront", name:"Clockenflap: по желанию, 2–3 часа", tag:"optional", note:"Ответвление на вечер: зайти на конкретные группы, полный день не берём — главный день 6.12", cost:"билет"},
+]};
+
+const HK_FEST_KOWLOON = {city:"hk", title:"Ковлун: M+ и набережная", sub:"Музеи, Avenue of Stars, вечерний свет", places:[
+  {k:"tsim_sha_tsui", name:"Музей M+", tag:"sight", note:"Закрыт по понедельникам — поэтому суббота", cost:"HK$190"},
+  {k:"tsim_sha_tsui", name:"Музей искусств Гонконга", tag:"sight", note:"Бесплатно"},
+  {k:"avenue_of_stars", name:"Avenue of Stars + Star Ferry", tag:"sight", note:"", cost:"~HK$5"},
+  {k:"victoria_harbour", name:"Symphony of Lights", tag:"sight", note:"20:00, набережная гавани"},
+  {k:"central_harbourfront", name:"Clockenflap: по желанию, вечер", tag:"optional", note:"Если понравилось 4.12 — зайти на пару сетов; иначе вечер свободен", cost:"билет"},
+]};
+
+const HK_FEST_MAIN = {city:"hk", title:"Clockenflap: главный день", sub:"6 декабря — закрытие фестиваля. Дата зафиксирована", places:[
+  {k:"central_harbourfront", name:"Clockenflap: день 3, закрытие", tag:"festival", note:"Сцены с полудня до 23:00, расписание за месяц на clockenflap.com", cost:"билет"},
+  {k:"central_hk", name:"Обед в Централе до открытия", tag:"food", note:"", cost:"~HK$80"},
+  {k:"victoria_harbour", name:"Обратно через Star Ferry", tag:"transport", note:"Последний паром около 23:00 — проверить в день фестиваля"},
+]};
+
+/* ==================== МАКАО ==================== */
+
+const MACAU_ARRIVE = {city:"mc", title:"Гонконг → Макао", sub:"Паром 1 час, Сенадо-сквер, руины Св. Павла", places:[
+  {k:"macau", name:"Паром Гонконг → Макао", tag:"transport", note:"1 час из Kowloon / Sheung Wan, каждые 15–30 мин", cost:"HK$160–200"},
+  {k:"senado_square", name:"Сенадо-сквер и старый город", tag:"sight", note:"Португальская плитка, собор, улочки — всё пешком"},
+  {k:"st_pauls", name:"Руины собора Св. Павла", tag:"sight", note:"Главная открытка Макао, к вечеру меньше людей"},
+  {k:"macau", name:"Ужин: португальская кухня", tag:"food", note:"Африканская курица, треска", cost:"MOP 200–300"},
+]};
+
+const MACAU_CITY = {city:"mc", title:"Макао: крепость, центр, казино", sub:"Гуя, Венетка, Тайпа", places:[
+  {k:"guia_fortress", name:"Крепость Гуя и маяк", tag:"sight", note:"Самый высокий холм, вид на весь город", cost:"бесплатно"},
+  {k:"venetian_macau", name:"Венетка и Котай", tag:"sight", note:"Каналы под крышей, шоппинг, вечерняя подсветка"},
+  {k:"taipa", name:"Тайпа: старые дома и еда", tag:"food", note:"Минчи (葡挞) и местные кондитерские", cost:"MOP 60–100"},
+]};
+
+const MACAU_BACK = {city:"mc", title:"Макао → Гонконг", sub:"Утро в Колоане, паром обратно", places:[
+  {k:"macau", name:"Колоан: деревня и пляж", tag:"sight", note:"Тихая португальская часть, кофе на набережной"},
+  {k:"macau", name:"Паром обратно в Гонконг", tag:"transport", note:"Вечерний, 1 час", cost:"HK$160–200"},
+]};
+
+const HK_SHOP2 = {city:"hk", title:"Шоппинг и прощальный ужин", sub:"Causeway Bay, Harbour City, вечер с видом", places:[
+  {k:"mong_kok", name:"Causeway Bay + Harbour City", tag:"shopping", note:"Рождественские витрины"},
+  {k:"tsim_sha_tsui", name:"Прощальный ужин с видом на гавань", tag:"food", note:"Бронировать за неделю", cost:"HK$600–700"},
+]};
+
+const HK_FEST_ARRIVE_NOFEST_PLACEHOLDER = {city:"hk", title:"Прилёт в Гонконг", sub:"Заселение в Джордане, вечер на Temple Street", places:[
+  {k:"hongkong", name:"Перелёт Москва → Гонконг", tag:"transport", note:"Прямой ночной рейс"},
+  {k:"yau_ma_tei", name:"Заселение, Jordan / Yau Ma Tei", tag:"hotel", note:"Метро 15 мин до набережной"},
+  {k:"temple_street", name:"Ужин на Temple Street", tag:"food", note:"Глиняный горшок с рисом в Hing Kee", cost:"HK$80"},
+]};
+
+const MACAU_TAIPA = {city:"mc", title:"Макао: Тайпа и Котай", sub:"Старые дома, кондитерские, вечерние казино", places:[
+  {k:"taipa", name:"Тайпа: улицы и кондитерские", tag:"sight", note:"Минчи и местные сладости, португальские фасады"},
+  {k:"venetian_macau", name:"Котай вечером", tag:"sight", note:"Каналы под крышей и подсветка — бесплатно зайти"},
+]};
+
+/* ==================== ВАРИАНТЫ ==================== */
+
+const VARIANTS = [
+  {
+    id:"fest-cq", title:"Фестиваль + Чунцин, Фэнхуан и Улун", photo:"Chongqing", main:true,
+    china:[CQ_ARRIVAL, CQ_RAILS, FENGHUANG_ARRIVE, FURONG_ARRIVE, FURONG_BACK, WULONG_DAY, WULONG_OUT],
+    hk:[HK_FEST_ARRIVE, HK_FEST_KOWLOON, HK_FEST_MAIN, HK_CENTRAL, HK_LANTAU, HK_SHOP, HK_DEPART],
+    cities:["Чунцин 2 ночи","Фэнхуан 1","Фужун 1","Улун 2","Гонконг 6 + фестиваль"],
+    summary:"Основной вариант: Чунцин, два старых города Хунани с ночёвкой у водопада, Улун и финал — Clockenflap 4–6.12.",
+    pros:["Clockenflap 6.12 — финал поездки","Фэнхуан и Фужун ночью — самая красивая подсветка","Бэйбэй не нужен: спа заменяет ночь у водопада"],
+    cons:["Переездной день Фужун → Улун (около 7 часов)","На Гонконг 6 ночей","Фэнхуан — туристическое место, к 11:00 много групп"],
+    budget:"Бюджет: средний+",
+  },
+  {
+    id:"chengdu-tibet", title:"Чэнду и Тибет", photo:"Chengdu",
+    china:[CD_ARRIVE, CD_PANDA, LHASA_ARRIVE, LHASA_POTALA, LHASA_SERA, LHASA_BACK, CD_TO_HK],
+    hk:[HK_KOWLOON, HK_CENTRAL, HK_LANTAU, HK_DISNEY, HK_SHOP, HK_FREE, HK_DEPART],
+    cities:["Чэнду 3 ночи","Лхаса 3","Гонконг 6"],
+    summary:"Панды и бронза Саньсиндуя, потом Лхаса. Без фестиваля: Гонконг спокойный, с Диснейлендом.",
+    pros:["Потала, Джоканг и монастыри","Панды утром, пока не жарко","Гонконг без толп фестиваля"],
+    cons:["Тибет: нужен пермит и обязательный гид (агентство, ~¥600–900 с человека)","Высота 3 650 м — первый день только гулять","Ноябрь в Лхасе: −8…+12, сухо, ветер"],
+    budget:"Бюджет: выше среднего",
+  },
+  {
+    id:"zhangjiajie", title:"Чжанцзяцзе", photo:"Zhangjiajie",
+    china:[CQ_ARRIVAL, CQ_RAILS, ZJJ_ARRIVE, ZJJ_YUANJIAJIE, ZJJ_CANYON, ZJJ_TIANMEN, ZJJ_TO_HK],
+    hk:[HK_KOWLOON, HK_CENTRAL, HK_LANTAU, HK_DISNEY, HK_SHOP, HK_FREE, HK_DEPART],
+    cities:["Чунцин 2 ночи","Чжанцзяцзе 3","Гонконг 6"],
+    summary:"Горы «Аватара», стеклянный мост Большого каньона и Тяньмэньшань. Без фестиваля.",
+    pros:["Юаньцзяцзе, Большой каньон и Тяньмэнь за одну поездку","Билет в парк действует 4 дня","Самые сильные фото"],
+    cons:["В начале декабря вершины часто в облаках","Холоднее, канатки зимой на профилактике","Почти нет дня отдыха перед Гонконгом"],
+    budget:"Бюджет: средний",
+  },
+  {
+    id:"hk-macau", title:"Гонконг и Макао", photo:"Hong Kong",
+    china:[],
+    hk:[HK_FEST_ARRIVE_NOFEST_PLACEHOLDER, HK_KOWLOON, HK_CENTRAL, HK_LANTAU, HK_DISNEY, HK_SAIKUNG, HK_SHOP, MACAU_ARRIVE, MACAU_CITY, MACAU_TAIPA, MACAU_BACK, HK_FREE, HK_SHOP2, HK_DEPART],
+    cities:["Гонконг 10 ночей","Макао 3"],
+    summary:"Две недели без переездов по Китаю: Гонконг, три дня в Макао и снова Гонконг. Спокойный темп, много еды и шоппинга.",
+    pros:["Нет внутренних перелётов и поездов","Макао — другой мир в часе парома","Времени на шоппинг больше, чем в любом другом варианте"],
+    cons:["Нет гор и старых городов материкового Китая","Гонконг дороже по отелям","Фестиваля в этом варианте нет"],
+    budget:"Бюджет: выше среднего",
+  },
+];
+
+return {CITIES, DATES, VARIANTS, HK_DEPART};
+})();

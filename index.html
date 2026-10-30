@@ -156,6 +156,27 @@ hr.rule{border:0; border-top:1px solid var(--line); margin:0}
 footer{border-top:1px solid var(--line); padding:26px 0 40px; color:var(--muted); font-size:.8rem}
 footer a{color:var(--muted)}
 
+/* carousel */
+.carousel{position:relative; background:var(--bg2); border-bottom:1px solid var(--line)}
+.cwrap{position:relative}
+.cslide{display:none; margin:0}
+.cslide.active{display:block}
+.cslide img{width:100%; height:210px; object-fit:cover; display:block}
+.cslide figcaption{display:flex; justify-content:space-between; gap:10px; align-items:baseline; padding:8px 14px; background:#fff; border-bottom:1px solid var(--line); font-size:.82rem}
+.cslide .cname{font-weight:600}
+.cslide .ccost{color:var(--accent); font-weight:600; white-space:nowrap}
+.cbtn{position:absolute; top:50%; transform:translateY(-50%); width:34px; height:34px; border-radius:50%; border:0; background:rgba(28,25,23,.62); color:#fff; font-size:22px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:2}
+.cbtn.prev{left:10px}
+.cbtn.next{right:10px}
+.cbtn:hover{background:var(--accent)}
+.cfoot{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:8px 14px; background:#fff}
+.cdots{display:flex; gap:5px; flex-wrap:wrap}
+.cdot{width:7px; height:7px; border-radius:50%; border:0; background:#d8d2c8; cursor:pointer; padding:0}
+.cdot.on{background:var(--accent)}
+.ccount{font-size:.72rem; color:var(--muted); font-variant-numeric:tabular-nums}
+.stop[data-slide]{cursor:pointer}
+.stop[data-slide]:hover .nm{color:var(--accent)}
+
 @media (max-width:940px){
   .vgrid{grid-template-columns:1fr}
   .itinerary{grid-template-columns:1fr}
@@ -182,9 +203,9 @@ footer a{color:var(--muted)}
 <div class="wrap">
 
   <section class="hero" id="overview">
-    <div class="date-chip">26.11 – 11.12.2026 · Clockenflap 4–6.12 зафиксирован</div>
+    <div class="date-chip">27.11 – 10.12.2026 · основной вариант — с Clockenflap 4–6.12</div>
     <h1>Поездка в Китай вдвоём</h1>
-    <p class="lede">14 дней: Чунцин, Улун и Бэйбэй, а финал — Гонконг с фестивалем Clockenflap 4–6 декабря. Гонконг и фестиваль стоят во всех трёх вариантах, отличается только китайская часть. Выберите карточку — план по дням и карта ниже перестроятся.</p>
+    <p class="lede">14 дней, четыре сценария. Основной — Чунцин, старые города Хунани и Улун с финалом на Clockenflap. Остальные: Чэнду с Тибетом, Чжанцзяцзе и чистая связка Гонконг + Макао. Выберите карточку — план по дням и карта ниже перестроятся.</p>
     <div class="routesummary" id="routesummary"></div>
   </section>
 
@@ -193,13 +214,13 @@ footer a{color:var(--muted)}
   <section id="variants">
     <div class="head">
       <div>
-        <div class="eyebrow">Гонконг и фестиваль зафиксированы</div>
-        <h2>Три варианта маршрута</h2>
-        <p class="muted small">Clockenflap 4–6.12 и Гонконг есть в каждом варианте — отличается только китайская часть. Клик по карточке перестраивает план по дням и карту ниже.</p>
+        <div class="eyebrow">Четыре сценария на одни и те же даты</div>
+        <h2>Четыре варианта маршрута</h2>
+        <p class="muted small">Фестиваль Clockenflap 4–6.12 есть только в первом варианте — он основной. Клик по карточке перестраивает план по дням и карту ниже.</p>
       </div>
     </div>
     <div class="vgrid" id="variantGrid"></div>
-    <p class="variant-note" id="variantNote">Сейчас открыт вариант «Фестиваль + Чжанцзяцзе». Клик по другой карточке перестроит план и карту.</p>
+    <p class="variant-note" id="variantNote">Сейчас открыт основной вариант. Клик по другой карточке перестроит план и карту.</p>
   </section>
 
   <hr class="rule">
@@ -263,12 +284,14 @@ footer a{color:var(--muted)}
   </section>
 
   <footer>
-    <p>Версия 3 · 30.10.2026. Раздел «Экскурсии — примеры»: тур по Улуну с Trip.com с ценой и разбором, стоит ли он денег. Гонконг и Clockenflap (4–6.12) зафиксированы, китайская часть — в трёх вариантах. Фото — Wikimedia Commons (по клику на изображение открывается источник). Карта — OpenStreetMap. Даты перелёта ещё уточняются.</p>
+    <p>Версия 4 · 30.10.2026. Четыре варианта маршрута, карусель фото у каждого дня, Фэнхуан и Фужун вместо Цикоу и Бэйбэя. Фото — Wikimedia Commons (клик по фото открывает источник). Карта — OpenStreetMap. Даты перелёта ещё уточняются.</p>
   </footer>
 
 </div>
 
 <script src="assets/data.js"></script>
+<script src="assets/itinerary.js"></script>
+<script src="assets/place_photos.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 "use strict";
@@ -276,209 +299,27 @@ const PHOTOS = window.TRIP_PHOTOS || {};
 const PLACES = window.TRIP_PLACES || {};
 
 /* ---------- справочники ---------- */
-const CITIES = {
-  hk:  {label:"Гонконг",    color:"#0f766e"},
-  cq:  {label:"Чунцин",     color:"#c2410c"},
-  wl:  {label:"Улун",       color:"#4d7c0f"},
-  bb:  {label:"Бэйбэй",     color:"#b45309"},
-  cd:  {label:"Чэнду",      color:"#7c3aed"},
-  zjj: {label:"Чжанцзяцзе", color:"#0e7490"},
-};
+const TRIP = window.TRIP_ITINERARY;
+const CITIES = TRIP.CITIES;
+const DATES = TRIP.DATES;
+const VARIANTS = TRIP.VARIANTS;
+const PLACE_PHOTOS = window.TRIP_PLACE_PHOTOS || {};
 
 const TAGS = {
-  sight:"📍", food:"🍜", transport:"🚄", hotel:"🛏️", shopping:"🛍️", spa:"♨️", festival:"🎪",
+  sight:"📍", food:"🍜", transport:"🚄", hotel:"🛏️", shopping:"🛍️", spa:"♨️", festival:"🎪", optional:"🎧",
 };
-
-const DATES = [
-  "27.11 · пт","28.11 · сб","29.11 · вс","30.11 · пн","01.12 · вт","02.12 · ср","03.12 · чт",
-  "04.12 · пт","05.12 · сб","06.12 · вс","07.12 · пн","08.12 · вт","09.12 · ср","10.12 · чт",
-];
-
-/* ---------- китайская часть маршрута: 7 дней, 27.11 – 03.12 ---------- */
-
-const CQ_ARRIVAL = {city:"cq", title:"Прилёт в Чунцин", sub:"Ночной перелёт из Москвы → утро в Чунцине", photo:"Chongqing", places:[
-  {k:"chongqing", name:"Прилёт в аэропорт Цзянбэй", tag:"transport", note:"Прямой ночной рейс из Москвы"},
-  {k:"jiefangbei", name:"Заселение, Цзефанбэй", tag:"hotel", note:"Отель в центре — пешком до набережной"},
-  {k:"hongya_cave", name:"Хунъядун", tag:"sight", note:"Подсветку включают к сумеркам, около 18:30"},
-  {k:"jiefangbei", name:"Первый хотпот", tag:"food", note:"Просить «вэйла» — средняя острота", cost:"¥120–150"},
-]};
-
-const CQ_RAILS = {city:"cq", title:"Чунцин: рельсы и виды", sub:"Лицзыба, канатка через Янцзы, смотровые", photo:"Liziba station", places:[
-  {k:"liziba", name:"Лицзыба", tag:"sight", note:"Монорельс сквозь жилой дом, смотровая на платформе"},
-  {k:"eling", name:"Парк Элин", tag:"sight", note:"Бесплатно, вид на город и реку"},
-  {k:"jiefangbei", name:"Обед: лапша сяомянь", tag:"food", note:"", cost:"¥12–15"},
-  {k:"yangtze_cableway", name:"Канатка через Янцзы", tag:"sight", note:"Зимой работает до 21:00", cost:"¥30 / ¥50"},
-  {k:"jiefangbei", name:"Смотровые: Raffles City и Куйсинлоу", tag:"sight", note:"В Куйсинлоу выход с 22-го этажа прямо на улицу"},
-  {k:"hongya_cave", name:"Хотпот 珮姐 (Peijie)", tag:"food", note:"В очередь к 17:30", cost:"¥120–150"},
-]};
-
-const CQ_MUSEUMS = {city:"cq", title:"Чунцин: Цикоу и музеи", sub:"Старый город с утра, музеи, зоопарк с пандами", photo:"Ciqikou", places:[
-  {k:"ciqikou", name:"Цикоу (старый город)", tag:"sight", note:"Бесплатно, приходить к 8:30 — до толпы"},
-  {k:"three_gorges_museum", name:"Музей Трёх ущелий", tag:"sight", note:"Бесплатно, закрыт по понедельникам"},
-  {k:"chongqing_zoo", name:"Зоопарк с пандами", tag:"sight", note:"", cost:"¥25"},
-  {k:"nanshan_cq", name:"Смотровая Наньшань", tag:"sight", note:"Лучше к закату", cost:"¥30"},
-  {k:"hongya_cave", name:"Хотпот в пещере 洞亭", tag:"food", note:"", cost:"¥100–130"},
-]};
-
-const WULONG_ARRIVE = {city:"wl", title:"Улун: ущелье Луншуйся", sub:"Поезд из Чунцина, заселение, ущелье", photo:"Wulong Karst", places:[
-  {k:"wulong", name:"Поезд Чунцин-Север → Улун", tag:"transport", note:"1,5–2 часа"},
-  {k:"wulong", name:"Автобус до Сяньнюйшань", tag:"transport", note:"40 минут, заселение в гестхаусе"},
-  {k:"longshuixia", name:"Ущелье Луншуйся", tag:"sight", note:"", cost:"¥85"},
-]};
-
-const WULONG_BRIDGES = {city:"wl", title:"Улун: Три моста и пещера Фужун", sub:"Тяньшэн саньцяо и пещера с подсветкой; Сяньнюйшань — ответвлением", photo:"Furong Cave", places:[
-  {k:"three_natural_bridges", name:"Тяньшэн саньцяо (Три природных моста)", tag:"sight", note:"Кадры «Аватара», 2–3 часа; утром меньше групп", cost:"¥125"},
-  {k:"furong_cave", name:"Пещера Фужун (芙蓉洞)", tag:"sight", note:"Сталактиты, занавеси и подземное озеро с подсветкой; 30–40 минут от Улуна в сторону Цзянкоу", cost:"¥120"},
-  {k:"fairy_mountain", name:"Сяньнюйшань (гора Феи) — ответвление", tag:"sight", note:"По желанию: вместо пещеры, если хочется лугов и воздуха. Поезд ¥25 + вход ¥50", cost:"¥75"},
-]};
-
-const BEIBEI_ARRIVE = {city:"bb", title:"Улун → Бэйбэй", sub:"Дорога, метро, спа-отель", photo:"Beibei District", places:[
-  {k:"wulong", name:"Улун → Чунцин-Север", tag:"transport", note:"Поезд 1,5–2 часа"},
-  {k:"beibei", name:"Метро линия 6 до Бэйбэя", tag:"transport", note:"40 минут от центра"},
-  {k:"beibei", name:"Отель с горячими источниками", tag:"spa", note:"Заселение, вечер в бассейне"},
-]};
-
-const BEIBEI_SPA = {city:"bb", title:"Бэйбэй: гора и источники", sub:"Цзиньюньшань и спа — день не экономим", photo:"Jinyun Mountain", places:[
-  {k:"jinyun_mountain", name:"Цзиньюньшань", tag:"sight", note:"Бамбук, тропы, храм; 2–3 часа от Бэйбэя"},
-  {k:"beibei", name:"Горячие источники + массаж", tag:"spa", note:"Главный день отдыха поездки"},
-]};
-
-const CHINA_CQ = [CQ_ARRIVAL, CQ_RAILS, CQ_MUSEUMS, WULONG_ARRIVE, WULONG_BRIDGES, BEIBEI_ARRIVE, BEIBEI_SPA];
-
-const CHINA_CHENGDU = [
-  CQ_ARRIVAL,
-  CQ_RAILS,
-  {city:"cq", title:"Чунцин: Цикоу и музеи", sub:"Старый город, музеи, вечерний хотпот", photo:"Ciqikou", places:[
-    {k:"ciqikou", name:"Цикоу (старый город)", tag:"sight", note:"К 8:30, до толпы"},
-    {k:"three_gorges_museum", name:"Музей Трёх ущелий", tag:"sight", note:"Бесплатно, закрыт по понедельникам"},
-    {k:"chongqing_zoo", name:"Зоопарк с пандами", tag:"sight", note:"", cost:"¥25"},
-    {k:"hongya_cave", name:"Прощальный хотпот в Чунцине", tag:"food", note:"", cost:"¥120–150"},
-  ]},
-  {city:"cd", title:"Поезд в Чэнду", sub:"Смена города, переулок Куаньчжайсян, чайные", photo:"Chengdu", places:[
-    {k:"chengdu", name:"Поезд Чунцин-Север → Чэнду-Вост.", tag:"transport", note:"1,5–2 часа, брать за 14 дней"},
-    {k:"chengdu", name:"Заселение, Куаньчжайсян", tag:"hotel", note:"Переулок с чайными и уличной едой"},
-    {k:"chengdu", name:"Чайная с бамбуковыми стульями", tag:"food", note:"Сидеть час-два — местная норма", cost:"¥40"},
-  ]},
-  {city:"cd", title:"Чэнду: панды", sub:"Ранний слот к пандам, музей Саньсиндуй", photo:"Chengdu", places:[
-    {k:"chengdu", name:"Парк панд (утро)", tag:"sight", note:"Слот 7:30–8:00, билеты онлайн за 14 дней", cost:"¥55"},
-    {k:"chengdu", name:"Музей Саньсиндуй (Гуанхань)", tag:"sight", note:"Электричка ~1 час", cost:"¥72"},
-    {k:"chengdu", name:"Хотпот по-чэндуски", tag:"food", note:"Мягче чунцинского", cost:"¥100–140"},
-  ]},
-  {city:"cd", title:"Лэшань: Большой Будда", sub:"Поезд до Лэшаня, статуя, возвращение", photo:"Leshan Giant Buddha", places:[
-    {k:"leshan", name:"Большой Будда в Лэшане", tag:"sight", note:"Поезд 1 час; у статуи 3–4 часа с очередью", cost:"¥80"},
-    {k:"chengdu", name:"Возвращение в Чэнду, ужин", tag:"food", note:"Улица Цзиньли, если останутся силы"},
-  ]},
-  {city:"bb", title:"Чэнду → Бэйбэй", sub:"Поезд назад в Чунцин, спа-отель в Бэйбэе", photo:"Beibei District", places:[
-    {k:"chengdu", name:"Поезд Чэнду → Чунцин", tag:"transport", note:"1,5–2 часа, затем метро до Бэйбэя"},
-    {k:"beibei", name:"Спа-отель, горячие источники", tag:"spa", note:"Вечер отдыха после переездов"},
-  ]},
-];
-
-const CHINA_ZJJ = [
-  CQ_ARRIVAL,
-  CQ_RAILS,
-  CQ_MUSEUMS,
-  {city:"zjj", title:"Чжанцзяцзе: переезд", sub:"Поезд или самолёт, заседание в Улинъюане", photo:"Zhangjiajie", places:[
-    {k:"zhangjiajie", name:"Чунцин → Чжанцзяцзе", tag:"transport", note:"Поезд 4,5–5 часов или самолёт 1 час"},
-    {k:"zhangjiajie", name:"Заселение, Улинъюань", tag:"hotel", note:"Жить ближе к восточным воротам парка"},
-  ]},
-  {city:"zjj", title:"Юаньцзяцзе: парк «Аватар»", sub:"Лифт Байлун, мост Первого кадра, тропы", photo:"Zhangjiajie", places:[
-    {k:"zhangjiajie", name:"Лифт Байлун + мост Первого кадра", tag:"sight", note:"Билет в парк на 4 дня, очереди с 9:00", cost:"¥225"},
-    {k:"zhangjiajie", name:"Тропа Цзиньбяньси", tag:"sight", note:"5 км по ручью, зимой скользко"},
-  ]},
-  {city:"zjj", title:"Тяньмэньшань", sub:"Канатка, стеклянная дорога, 999 ступеней", photo:"Zhangjiajie", places:[
-    {k:"zhangjiajie", name:"Тяньмэньшань", tag:"sight", note:"Самая длинная канатка; стеклянная тропа отдельно", cost:"¥258"},
-    {k:"furong", name:"Фужун (по желанию)", tag:"sight", note:"1,5 часа автобусом, красивее с подсветкой вечером", cost:"¥80"},
-  ]},
-  {city:"cq", title:"Возврат в Чунцин", sub:"Дорога, ночёвка у аэропорта, прощальный хотпот", photo:"Chongqing", places:[
-    {k:"zhangjiajie", name:"Чжанцзяцзе → Чунцин", tag:"transport", note:"Поезд или самолёт, вечером на месте"},
-    {k:"chongqing", name:"Ночёвка рядом с аэропортом Цзянбэй", tag:"hotel", note:"Утром вылет в Гонконг"},
-    {k:"jiefangbei", name:"Прощальный хотпот", tag:"food", note:"", cost:"¥100–150"},
-  ]},
-];
-
-/* ---------- Гонконг: 7 дней, 04.12 – 10.12, одинаково во всех вариантах ---------- */
-
-const HK_DAYS = [
-  {city:"hk", title:"Перелёт в Гонконг + Clockenflap, день 1", sub:"Чунцин → Гонконг, заселение, вечер на фестивале", photo:"Hong Kong", places:[
-    {k:"chongqing", name:"Перелёт Чунцин → Гонконг", tag:"transport", note:"2 ч 15 мин; из Бэйбэя до аэропорта 50–60 мин, выезжать с запасом"},
-    {k:"yau_ma_tei", name:"Заселение, Jordan / Yau Ma Tei", tag:"hotel", note:"Отсюда пешком до Central Harbourfront не дойти — метро 15 мин"},
-    {k:"central_harbourfront", name:"Clockenflap: день 1", tag:"festival", note:"Если берём 3-дневный билет — идём в первый же вечер", cost:"билет"},
-    {k:"temple_street", name:"Ужин на Temple Street", tag:"food", note:"Глиняный горшок с рисом в Hing Kee", cost:"HK$80"},
-  ]},
-  {city:"hk", title:"Ковлун: M+ и набережная", sub:"Музеи, Avenue of Stars, вечерний свет", photo:"M+", places:[
-    {k:"tsim_sha_tsui", name:"Музей M+", tag:"sight", note:"Закрыт по понедельникам — поэтому ставим на субботу", cost:"HK$190"},
-    {k:"tsim_sha_tsui", name:"Музей искусств Гонконга", tag:"sight", note:"Бесплатно"},
-    {k:"avenue_of_stars", name:"Avenue of Stars + паром Star Ferry", tag:"sight", note:"", cost:"~HK$5"},
-    {k:"central_harbourfront", name:"Clockenflap: день 2", tag:"festival", note:"Вместо музеев — если берём 3-дневный билет", cost:"билет"},
-    {k:"victoria_harbour", name:"Symphony of Lights", tag:"sight", note:"20:00, набережная гавани"},
-  ]},
-  {city:"hk", title:"Clockenflap: главный день", sub:"6 декабря — закрытие фестиваля. Дата зафиксирована", photo:"Clockenflap", places:[
-    {k:"central_harbourfront", name:"Clockenflap: день 3, закрытие", tag:"festival", note:"Центральная дата поездки. Сцены с полудня до 23:00, расписание — на clockenflap.com за месяц", cost:"билет"},
-    {k:"central_hk", name:"Обед в Централе до открытия", tag:"food", note:"", cost:"~HK$80"},
-    {k:"victoria_harbour", name:"Обратно через Star Ferry", tag:"transport", note:"Последний паром около 23:00 — проверить в день фестиваля"},
-  ]},
-  {city:"hk", title:"Централ и Пик", sub:"Спокойный день после фестиваля", photo:"Victoria Peak", places:[
-    {k:"central_hk", name:"Эскалатор Central–Mid-Levels", tag:"sight", note:"Самый длинный крытый эскалатор в мире"},
-    {k:"central_hk", name:"PMQ + Tai Kwun", tag:"sight", note:"Арт-кварталы, вход бесплатный"},
-    {k:"central_hk", name:"Храм Man Mo", tag:"sight", note:"Бесплатно"},
-    {k:"victoria_peak", name:"Пик (Victoria Peak)", tag:"sight", note:"Трамвай Peak Tram, лучше к закату", cost:"HK$116"},
-    {k:"central_hk", name:"Еда: Lan Fong Yuen / Mak's Noodle", tag:"food", note:"", cost:"~HK$60"},
-  ]},
-  {city:"hk", title:"Лантау: Будда и Tai O", sub:"Канатка, Большой Будда, свайная деревня", photo:"Tian Tan Buddha", places:[
-    {k:"ngong_ping", name:"Канатка Ngong Ping 360", tag:"transport", note:"Туда-обратно, онлайн дешевле", cost:"HK$295"},
-    {k:"tian_tan_buddha", name:"Большой Будда (Tian Tan)", tag:"sight", note:""},
-    {k:"tai_o", name:"Деревня Tai O", tag:"sight", note:"Свайные дома, морепродукты"},
-  ]},
-  {city:"hk", title:"Шоппинг и прощальный ужин", sub:"Causeway Bay, Harbour City, вечер с видом", photo:"Victoria Harbour", places:[
-    {k:"mong_kok", name:"Causeway Bay + Harbour City", tag:"shopping", note:"Рождественские витрины с 20.11"},
-    {k:"mong_kok", name:"Mong Kok: рынки и мелочи", tag:"shopping", note:"Женщинам обычно заходит больше, чем моллы"},
-    {k:"tsim_sha_tsui", name:"Прощальный ужин Yardbird / Ho Lee Fook", tag:"food", note:"", cost:"HK$600–700"},
-  ]},
-  {city:"hk", title:"Вылет домой", sub:"Ночной рейс, дома 11 декабря", photo:"Hong Kong", places:[
-    {k:"hongkong", name:"Ночной рейс Гонконг → Москва", tag:"transport", note:"Дома 11.12, отдых 12–13.12, на работу 14.12"},
-  ]},
-];
-
-/* ---------- варианты ---------- */
-
-const VARIANTS = [
-  {
-    id:"fest-cq", title:"Фестиваль + Чунцин", photo:"Chongqing", china:CHINA_CQ,
-    cities:["Чунцин 3 ночи","Улун 2","Бэйбэй 2","Гонконг 6 + фестиваль"],
-    summary:"Базовый вариант: Чунцин, Улун и Бэйбэй в начале, Гонконг с Clockenflap — финалом. Три сегмента перелёта, без возвратов.",
-    pros:["Clockenflap 6.12 — финал поездки","Москва–Чунцин и Гонконг–Москва напрямую","Природа и спа до городской суеты"],
-    cons:["Гонконг в конце — отели дороже из-за праздников","На Гонконг всего 6 ночей"],
-    budget:"Бюджет: средний+",
-  },
-  {
-    id:"fest-chengdu", title:"Фестиваль + Чунцин + Чэнду", photo:"Chengdu", china:CHINA_CHENGDU,
-    cities:["Чунцин 3","Чэнду 3","Бэйбэй 1","Гонконг 6 + фестиваль"],
-    summary:"Без Улуна: вместо ущелья — Чэнду с пандами и Лэшанем. Больше городов, меньше природы, переездов столько же.",
-    pros:["Панды и Большой Будда","Чэнду — еда и чайные","Один переезд вместо двух в Улуне"],
-    cons:["Нет ущелья Луншуйся и Трёх мостов","Бэйбэй урезан до одной ночи","Больше поездов внутри Китая"],
-    budget:"Бюджет: средний+",
-  },
-  {
-    id:"fest-zjj", title:"Фестиваль + Чжанцзяцзе", photo:"Zhangjiajie", china:CHINA_ZJJ,
-    cities:["Чунцин 3","Чжанцзяцзе 3","1 ночь у аэропорта","Гонконг 6 + фестиваль"],
-    summary:"Вместо Улуна и Бэйбэя — горы «Аватара». Максимальный вау-эффект и самый рваный темп, без спа-дня.",
-    pros:["Пейзажи Юаньцзяцзе и Тяньмэньшаня","Билет в парк действует 4 дня","Сильные фото"],
-    cons:["В начале декабря вершины часто в облаках","Холоднее, канатки на профилактике","Нет дня отдыха и спа перед фестивалем"],
-    budget:"Бюджет: средний",
-  },
-];
 
 /* ---------- сборка дней под выбранный вариант ---------- */
 function buildDays(variant){
-  return variant.china.concat(HK_DAYS).map(function(d, i){
+  if(!variant) return [];
+  return (variant.china || []).concat(variant.hk || []).map(function(d, i){
     return Object.assign({}, d, {n:i+1, date:DATES[i]});
   });
 }
 
 let activeId = "";
-try { activeId = localStorage.getItem("china-trip-variant-v2") || ""; } catch(e){}
-if(!VARIANTS.some(function(v){ return v.id === activeId; })) activeId = "fest-zjj";
+try { activeId = localStorage.getItem("china-trip-variant-v3") || ""; } catch(e){}
+if(!VARIANTS.some(function(v){ return v.id === activeId; })) activeId = (VARIANTS.filter(function(v){ return v.main; })[0] || VARIANTS[0]).id;
 let currentVariant = VARIANTS.filter(function(v){ return v.id === activeId; })[0];
 let days = buildDays(currentVariant);
 
@@ -532,24 +373,46 @@ function renderVariants(){
   }).join("");
 }
 
-/* ---------- рендер: дни ---------- */
-function dayPhoto(key){
-  const p = PHOTOS[key];
-  const src = p && p.src ? p.src : "";
-  const page = p && p.page ? p.page : "";
-  const wrapped = src
-    ? (page ? '<a href="' + page + '" target="_blank" rel="noopener"><img src="' + src + '" alt="' + key + '" loading="lazy" decoding="async"></a>'
-            : '<img src="' + src + '" alt="' + key + '" loading="lazy" decoding="async">')
+/* ---------- рендер: дни и карусель фото ---------- */
+
+function renderCarousel(d){
+  const slides = [];
+  d.places.forEach(function(p){
+    const ph = PLACE_PHOTOS[p.k];
+    if(ph && ph.src) slides.push({p:p, ph:ph});
+  });
+  if(!slides.length) return "";
+  const figs = slides.map(function(s, i){
+    const img = s.ph.page
+      ? '<a href="' + s.ph.page + '" target="_blank" rel="noopener"><img src="' + s.ph.src + '" alt="' + s.p.name + '" loading="lazy" decoding="async"></a>'
+      : '<img src="' + s.ph.src + '" alt="' + s.p.name + '" loading="lazy" decoding="async">';
+    return '<figure class="cslide' + (i === 0 ? ' active' : '') + '">' + img +
+      '<figcaption><span class="cname">' + s.p.name + '</span>' +
+      (s.p.cost ? '<span class="ccost">' + s.p.cost + '</span>' : '') + '</figcaption></figure>';
+  }).join("");
+  const dots = slides.map(function(s, i){
+    return '<button class="cdot' + (i === 0 ? ' on' : '') + '" data-i="' + i + '" aria-label="Фото ' + (i + 1) + '"></button>';
+  }).join("");
+  const arrows = slides.length > 1
+    ? '<button class="cbtn prev" data-dir="-1" aria-label="Предыдущее фото">‹</button>' +
+      '<button class="cbtn next" data-dir="1" aria-label="Следующее фото">›</button>'
     : "";
-  return '<div class="ph">' + wrapped + '</div>';
+  return '<div class="carousel" data-idx="0">' +
+    '<div class="cwrap">' + figs + arrows + '</div>' +
+    '<div class="cfoot"><div class="cdots">' + dots + '</div>' +
+    '<div class="ccount">1 / ' + slides.length + '</div></div></div>';
 }
 
 function renderDays(){
   const list = document.getElementById("dayList");
   list.innerHTML = days.map(function(d){
-    const city = CITIES[d.city];
+    const city = CITIES[d.city] || {label:d.city, color:"#8a8278"};
+    let slideIdx = -1;
     const stops = d.places.map(function(p){
-      return '<li class="stop"><span class="tag">' + (TAGS[p.tag] || '•') + '</span>' +
+      const hasPhoto = !!(PLACE_PHOTOS[p.k] && PLACE_PHOTOS[p.k].src);
+      if(hasPhoto) slideIdx++;
+      return '<li class="stop"' + (hasPhoto ? ' data-slide="' + slideIdx + '"' : '') + '>' +
+        '<span class="tag">' + (TAGS[p.tag] || '•') + '</span>' +
         '<span class="tx"><span class="nm">' + p.name + '</span>' +
         (p.note ? '<div class="note">' + p.note + '</div>' : '') + '</span>' +
         (p.cost ? '<span class="cost">' + p.cost + '</span>' : '') +
@@ -563,11 +426,49 @@ function renderDays(){
         '<span class="city-tag" style="background:' + city.color + '1a;color:' + city.color + '">' + city.label + '</span>' +
         '<span class="chev">▶</span>' +
       '</div>' +
-      '<div class="day-body">' + dayPhoto(d.photo) + '<div class="inner"><ul class="stops">' + stops + '</ul>' +
+      '<div class="day-body">' + renderCarousel(d) + '<div class="inner"><ul class="stops">' + stops + '</ul>' +
       '<button class="mapbtn" data-focus="' + d.n + '">Показать на карте</button></div></div>' +
     '</div>';
   }).join("");
 }
+
+/* ---------- управление каруселью ---------- */
+function setSlide(car, idx){
+  const slides = car.querySelectorAll(".cslide");
+  const dots = car.querySelectorAll(".cdot");
+  if(!slides.length) return;
+  const n = (idx + slides.length) % slides.length;
+  car.setAttribute("data-idx", n);
+  slides.forEach(function(el, i){ el.classList.toggle("active", i === n); });
+  dots.forEach(function(el, i){ el.classList.toggle("on", i === n); });
+  const c = car.querySelector(".ccount");
+  if(c) c.textContent = (n + 1) + " / " + slides.length;
+}
+
+document.getElementById("dayList").addEventListener("click", function(e){
+  const btn = e.target.closest(".cbtn");
+  if(btn){
+    const car = btn.closest(".carousel");
+    setSlide(car, parseInt(car.getAttribute("data-idx"), 10) + parseInt(btn.getAttribute("data-dir"), 10));
+    e.stopPropagation();
+    return;
+  }
+  const dot = e.target.closest(".cdot");
+  if(dot){
+    setSlide(dot.closest(".carousel"), parseInt(dot.getAttribute("data-i"), 10));
+    e.stopPropagation();
+    return;
+  }
+  const stop = e.target.closest(".stop[data-slide]");
+  if(stop){
+    const day = stop.closest(".day");
+    const car = day && day.querySelector(".carousel");
+    if(car){
+      day.classList.add("open");
+      setSlide(car, parseInt(stop.getAttribute("data-slide"), 10));
+    }
+  }
+});
 
 /* ---------- переключение варианта ---------- */
 function setVariant(id){
@@ -576,7 +477,7 @@ function setVariant(id){
   activeId = id;
   currentVariant = v;
   days = buildDays(v);
-  try { localStorage.setItem("china-trip-variant-v2", id); } catch(e){}
+  try { localStorage.setItem("china-trip-variant-v3", id); } catch(e){}
   renderVariants();
   renderSummary();
   renderDays();
