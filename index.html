@@ -174,6 +174,7 @@ footer a{color:var(--muted)}
     <a href="#variants">Варианты</a>
     <a href="#itinerary">Маршрут</a>
     <a href="#booking">Брони</a>
+    <a href="#tours">Экскурсии</a>
     <a href="#notes">Бюджет</a>
   </nav>
 </header>
@@ -238,6 +239,19 @@ footer a{color:var(--muted)}
 
   <hr class="rule">
 
+  <section id="tours">
+    <div class="head">
+      <div>
+        <div class="eyebrow">Примеры, которые нашли сами</div>
+        <h2>Экскурсии — примеры</h2>
+        <p class="muted small">Не бронируем, а держим под рукой как ориентир: что предлагают готовые туры и сколько это стоит. Сюда же складываем всё, что присылает Женя.</p>
+      </div>
+    </div>
+    <div class="booklist" id="tourList"></div>
+  </section>
+
+  <hr class="rule">
+
   <section id="notes">
     <div class="head">
       <div>
@@ -249,7 +263,7 @@ footer a{color:var(--muted)}
   </section>
 
   <footer>
-    <p>Версия 2 · 30.10.2026. Гонконг и Clockenflap (4–6.12) зафиксированы, китайская часть — в трёх вариантах. Фото — Wikimedia Commons (по клику на изображение открывается источник). Карта — OpenStreetMap. Даты перелёта ещё уточняются.</p>
+    <p>Версия 3 · 30.10.2026. Добавлен раздел «Экскурсии — примеры» (первый — тур по Улуну с Trip.com). Гонконг и Clockenflap (4–6.12) зафиксированы, китайская часть — в трёх вариантах. Фото — Wikimedia Commons (по клику на изображение открывается источник). Карта — OpenStreetMap. Даты перелёта ещё уточняются.</p>
   </footer>
 
 </div>
@@ -607,6 +621,14 @@ const BOOKING = [
   {when:"заранее", it:"M+ (таймслот), Peak Tram и Ngong Ping 360 — онлайн дешевле"},
 ];
 
+const TOURS = [
+  {tag:"Улун",
+   title:"Три природных моста Тяньшэн + ущелье Луншуйся + прогулка по реке Уцзян",
+   meta:"Однодневный тур из Чунцина · группа до 8 человек, билеты на корабль включены · англоговорящий гид · 4,9 из 5 по 19 703 отзывам",
+   url:"https://kz.trip.com/things-to-do/detail/89546551",
+   note:"Пример того, что предлагают готовые туры по Улуну. В нашем плане эти же места стоят в дни Улуна, но своим ходом — без группы и ранних подъёмов. Цену смотреть на странице: зависит от даты и размера группы."},
+];
+
 const NOTES = [
   {t:"Clockenflap зафиксирован", b:"4–6 декабря 2026, Central Harbourfront в Гонконге. В плане закреплён день 6.12 — закрытие; 4 и 5.12 свободны, можно взять 3-дневный билет и ходить вечером."},
   {t:"Почему Гонконг в конце", b:"Если Гонконг поставить в начале, под фестиваль придётся лететь обратно — четыре сегмента вместо трёх. Так: Москва → Чунцин, Чунцин → Гонконг, Гонконг → Москва."},
@@ -621,6 +643,13 @@ document.getElementById("bookList").innerHTML = BOOKING.map(function(b){
     ? '<a href="' + b.url + '" target="_blank" rel="noopener">' + b.it + '</a>'
     : b.it;
   return '<div class="book"><span class="when">' + b.when + '</span><span class="it">' + it + '</span></div>';
+}).join("");
+
+document.getElementById("tourList").innerHTML = TOURS.map(function(t){
+  return '<div class="book"><span class="when">' + t.tag + '</span>' +
+    '<span class="it"><a href="' + t.url + '" target="_blank" rel="noopener">' + t.title + '</a>' +
+    '<div class="muted small" style="margin-top:4px">' + t.meta + '</div>' +
+    '<div class="muted small" style="margin-top:6px">' + t.note + '</div></span></div>';
 }).join("");
 
 document.getElementById("notesGrid").innerHTML = NOTES.map(function(n){
