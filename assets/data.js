@@ -1,4 +1,14 @@
 window.TRIP_PHOTOS = {
+  "Clockenflap": {
+    "src": "assets/img/clockenflap.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Clockenflap-day.jpg",
+    "description": "Clockenflap music festival stage, Hong Kong"
+  },
+  "Furong Cave": {
+    "src": "assets/img/furong-cave.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Furongdongfufashisun.JPG",
+    "description": "Furong Cave, Wulong (stalactites and underground pool)"
+  },
   "Hong Kong": {
     "src": "assets/img/hong-kong.jpg",
     "page": "https://commons.wikimedia.org/wiki/File:Hong_Kong_Harbour_Night_2019-06-11.jpg",
@@ -300,5 +310,15 @@ window.TRIP_PLACES = {
     "name": "Guanyinqiao",
     "lat": 29.5761428,
     "lon": 106.5289422
+  },
+  "central_harbourfront": {
+    "name": "Central Harbourfront Event Space",
+    "lat": 22.2839043,
+    "lon": 114.1625083
+  },
+  "furong_cave": {
+    "name": "Furong Cave (芙蓉洞)",
+    "lat": 29.2289158,
+    "lon": 107.9033277
   }
 };
