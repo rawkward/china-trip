@@ -1,0 +1,290 @@
+{
+  "hongkong": {
+    "query": "Hong Kong",
+    "name": "Hong Kong",
+    "display_name": "Hong Kong, China",
+    "lat": 22.2818333,
+    "lon": 114.1582831,
+    "type": "administrative"
+  },
+  "victoria_peak": {
+    "query": "Victoria Peak, Hong Kong",
+    "name": "Victoria Peak",
+    "display_name": "Victoria Peak, Hong Kong, China",
+    "lat": 22.2760386,
+    "lon": 114.1454573,
+    "type": "peak"
+  },
+  "disneyland": {
+    "query": "Hong Kong Disneyland",
+    "name": "Hong Kong Disneyland",
+    "display_name": "Hong Kong Disneyland, Rehearsal Road, Lantau, Tsuen Wan District, New Territories, Hong Kong, China",
+    "lat": 22.3130698,
+    "lon": 114.0409846,
+    "type": "theme_park"
+  },
+  "tian_tan_buddha": {
+    "query": "Tian Tan Buddha, Hong Kong",
+    "name": "Tian Tan Buddha Statue",
+    "display_name": "Tian Tan Buddha Statue, Ngong Ping Road, Lantau, Islands District, Ngong Ping, Hong Kong, China",
+    "lat": 22.2539595,
+    "lon": 113.905012,
+    "type": "attraction"
+  },
+  "victoria_harbour": {
+    "query": "Victoria Harbour, Hong Kong",
+    "name": "Victoria Harbour",
+    "display_name": "Victoria Harbour, Hong Kong, China",
+    "lat": 22.3235534,
+    "lon": 114.1145688,
+    "type": "protected_area"
+  },
+  "yau_ma_tei": {
+    "query": "Yau Ma Tei, Hong Kong",
+    "name": "Yau Ma Tei",
+    "display_name": "Yau Ma Tei, Man Ming Lane, Ferry Point, Yau Ma Tei, Yau Tsim Mong District, Kowloon, Hong Kong, China",
+    "lat": 22.3123731,
+    "lon": 114.1707938,
+    "type": "station"
+  },
+  "mong_kok": {
+    "query": "Mong Kok, Hong Kong",
+    "name": "Mong Kok",
+    "display_name": "Mong Kok, Kowloon City flyover, Kau Pui Shek, Ma Tau Wai, Kowloon City District, Kowloon, Hong Kong, China",
+    "lat": 22.319308,
+    "lon": 114.1698076,
+    "type": "station"
+  },
+  "chongqing": {
+    "query": "Chongqing",
+    "name": "Chongqing",
+    "display_name": "Chongqing, China",
+    "lat": 30.05518,
+    "lon": 107.8748712,
+    "type": "administrative"
+  },
+  "ciqikou": {
+    "query": "Ciqikou Ancient Town, Chongqing",
+    "name": "Ciqikou Ancient Town",
+    "display_name": "Ciqikou Ancient Town, 金蓉巷, Ciqikou, Shapingba District, Chongqing, 400000, China",
+    "lat": 29.5833399,
+    "lon": 106.4466489,
+    "type": "attraction"
+  },
+  "three_gorges_museum": {
+    "query": "Three Gorges Museum, Chongqing",
+    "name": "Three Gorges Museum",
+    "display_name": "Three Gorges Museum, 236, Renmin Road, 上清寺街道, Yuzhong District, Chongqing, 400015, China",
+    "lat": 29.5648943,
+    "lon": 106.5465582,
+    "type": "museum"
+  },
+  "chongqing_zoo": {
+    "query": "Chongqing Zoo",
+    "name": "Chongqing Zoo",
+    "display_name": "Chongqing Zoo, Qianyuan Road, Yangjiaping, Jiulongpo District, Jiulongpo, Chongqing, 400050, China",
+    "lat": 29.5066423,
+    "lon": 106.5022128,
+    "type": "zoo"
+  },
+  "liziba": {
+    "query": "Liziba station, Chongqing",
+    "name": "Liziba",
+    "display_name": "Liziba, 桂花园路, 上清寺街道, Yuzhong District, Chongqing, 400015, China",
+    "lat": 29.5556616,
+    "lon": 106.5339223,
+    "type": "station"
+  },
+  "eling": {
+    "query": "Eling Park, Chongqing",
+    "name": "Goose Range Park (E’ling Park)",
+    "display_name": "Goose Range Park (E’ling Park), 两路口街道, Yuzhong District, Chongqing, China",
+    "lat": 29.5524602,
+    "lon": 106.5320399,
+    "type": "park"
+  },
+  "hongya_cave": {
+    "query": "Hongya Cave, Chongqing",
+    "name": "Hong Ya Dong",
+    "display_name": "Hong Ya Dong, 千厮门大桥, 朝天门街道, Yuzhong District, Chongqing, 400013, China",
+    "lat": 29.5650738,
+    "lon": 106.5753425,
+    "type": "attraction"
+  },
+  "yangtze_cableway": {
+    "query": "Yangtze River Cableway, Chongqing",
+    "name": "Yangtze River Cableway",
+    "display_name": "Yangtze River Cableway, Changjiang Binjiang Road, 朝天门街道, Yuzhong District, Chongqing, 400013, China",
+    "lat": 29.5580403,
+    "lon": 106.5844384,
+    "type": "cable_car"
+  },
+  "jiefangbei": {
+    "query": "Jiefangbei, Chongqing",
+    "name": "Jiefangbei",
+    "display_name": "Jiefangbei, 解放碑街道, Yuzhong District, Chongqing, 400010, China",
+    "lat": 29.5601078,
+    "lon": 106.5733671,
+    "type": "quarter"
+  },
+  "wulong": {
+    "query": "Wulong District, Chongqing",
+    "name": "Wulong District",
+    "display_name": "Wulong District, Chongqing, China",
+    "lat": 29.3284452,
+    "lon": 107.7552723,
+    "type": "administrative"
+  },
+  "three_natural_bridges": {
+    "query": "Three Natural Bridges, Wulong, Chongqing",
+    "name": "Tiansheng Three Natural Bridges",
+    "display_name": "Tiansheng Three Natural Bridges, 银杏大道, Xiannüshan, Wulong District, Chongqing, China",
+    "lat": 29.4399342,
+    "lon": 107.7863287,
+    "type": "stone"
+  },
+  "longshuixia": {
+    "query": "Longshuixia, Wulong, Chongqing",
+    "name": "Longshuixia Fissure Gorge",
+    "display_name": "Longshuixia Fissure Gorge, Xiannüshan, Wulong District, Chongqing, China",
+    "lat": 29.4006852,
+    "lon": 107.7882607,
+    "type": "nature_reserve"
+  },
+  "fairy_mountain": {
+    "query": "Fairy Mountain, Wulong, Chongqing",
+    "name": "Fairy Mountain",
+    "display_name": "Fairy Mountain, Diandu Road, Xiangba, Wulong District, Fengdu County, Chongqing, China",
+    "lat": 29.5085753,
+    "lon": 107.738887,
+    "type": "attraction"
+  },
+  "beibei": {
+    "query": "Beibei District, Chongqing",
+    "name": "Beibei District",
+    "display_name": "Beibei District, Chongqing, China",
+    "lat": 29.8669185,
+    "lon": 106.5229916,
+    "type": "administrative"
+  },
+  "jinyun_mountain": {
+    "query": "Jinyun Mountain, Chongqing",
+    "name": "Jinyun Mountain National Natural Reserve",
+    "display_name": "Jinyun Mountain National Natural Reserve, Jinyun, Chengjiang, Beibei District, Chongqing, China",
+    "lat": 29.8468716,
+    "lon": 106.3854399,
+    "type": "nature_reserve"
+  },
+  "chengdu": {
+    "query": "Chengdu",
+    "name": "Chengdu",
+    "display_name": "Chengdu, Sichuan, China",
+    "lat": 30.659867,
+    "lon": 104.063315,
+    "type": "administrative"
+  },
+  "leshan": {
+    "query": "Leshan Giant Buddha",
+    "name": "Leshan Giant Buddha",
+    "display_name": "Leshan Giant Buddha, Jiuqu (Nine Turns) Plank Road, Dafo, Shizhong, Shizhong District, Leshan, Sichuan, 614000, China",
+    "lat": 29.5469169,
+    "lon": 103.7693136,
+    "type": "monument"
+  },
+  "dazu": {
+    "query": "Dazu Rock Carvings, Chongqing",
+    "name": "Dazu Rock Carvings - Beishan site",
+    "display_name": "Dazu Rock Carvings - Beishan site, Longgang, Dazu, Dazu District, Chongqing, China",
+    "lat": 29.7145277,
+    "lon": 105.7073505,
+    "type": "nature_reserve"
+  },
+  "zhangjiajie": {
+    "query": "Zhangjiajie National Forest Park",
+    "name": "Zhangjiajie Tianmen Mountain National Forest Park",
+    "display_name": "Zhangjiajie Tianmen Mountain National Forest Park, 天门山国家森林公园, Yongding District, Zhangjiajie, Hunan, China",
+    "lat": 29.0502892,
+    "lon": 110.4786156,
+    "type": "nature_reserve"
+  },
+  "furong": {
+    "query": "Furong Ancient Town, Hunan",
+    "name": "Furong Ancient Town Ticket Office",
+    "display_name": "Furong Ancient Town Ticket Office, X041, Furong, Yongshun County, Xiangxi, Hunan, China",
+    "lat": 28.7466085,
+    "lon": 109.942802,
+    "type": "ticket"
+  },
+  "macau": {
+    "query": "Macau",
+    "name": "Macau",
+    "display_name": "Macau, China",
+    "lat": 22.1757605,
+    "lon": 113.5514142,
+    "type": "administrative"
+  },
+  "temple_street": {
+    "query": "Temple Street Night Market, Hong Kong",
+    "name": "Temple Street Night Market",
+    "display_name": "Temple Street Night Market, Nanking Street, Kwun Chung, Yau Ma Tei, Yau Tsim Mong District, Kowloon, Hong Kong, China",
+    "lat": 22.3063969,
+    "lon": 114.169965,
+    "type": "marketplace"
+  },
+  "central_hk": {
+    "query": "Central, Hong Kong Island",
+    "name": "Central",
+    "display_name": "Central, Central District, Hong Kong Island, Hong Kong, China",
+    "lat": 22.2818286,
+    "lon": 114.1582784,
+    "type": "suburb"
+  },
+  "tsim_sha_tsui": {
+    "query": "Tsim Sha Tsui, Hong Kong",
+    "name": "Tsim Sha Tsui",
+    "display_name": "Tsim Sha Tsui, Yau Tsim Mong District, Kowloon, Hong Kong, China",
+    "lat": 22.2985604,
+    "lon": 114.1736032,
+    "type": "quarter"
+  },
+  "ngong_ping": {
+    "query": "Ngong Ping, Lantau Island, Hong Kong",
+    "name": "Ngong Ping",
+    "display_name": "Ngong Ping, Hong Kong, China",
+    "lat": 22.2558027,
+    "lon": 113.9041602,
+    "type": "town"
+  },
+  "tai_o": {
+    "query": "Tai O, Hong Kong",
+    "name": "Tai O",
+    "display_name": "Tai O, Hong Kong, China",
+    "lat": 22.2541524,
+    "lon": 113.8636197,
+    "type": "town"
+  },
+  "avenue_of_stars": {
+    "query": "Avenue of Stars, Tsim Sha Tsui, Hong Kong",
+    "name": "Avenue of Stars",
+    "display_name": "Avenue of Stars, Salisbury Road, Tsim Sha Tsui, Yau Tsim Mong District, Kowloon, Hong Kong, China",
+    "lat": 22.2941468,
+    "lon": 114.1757887,
+    "type": "bridge"
+  },
+  "nanshan_cq": {
+    "query": "Nanshan, Nan'an, Chongqing",
+    "name": "Nanshan",
+    "display_name": "Nanshan, Dashicun, Nan'an District, Chongqing, 400065, China",
+    "lat": 29.5620786,
+    "lon": 106.6339531,
+    "type": "administrative"
+  },
+  "guanyinqiao": {
+    "query": "Guanyinqiao, Chongqing",
+    "name": "Guanyinqiao",
+    "display_name": "Guanyinqiao, 观音桥步行街, Guanyinqiao Food Street, Guanyinqiao, Liangjiang, Liangjiang New Area, Chongqing, 400020, China",
+    "lat": 29.5761428,
+    "lon": 106.5289422,
+    "type": "station"
+  }
+}
