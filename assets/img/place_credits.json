@@ -165,16 +165,10 @@
   },
   "lhasa": {
     "file": "assets/img/places/lhasa.jpg",
-    "page": "https://commons.wikimedia.org/wiki/File:Lhasa,_Tibet.jpg",
-    "title": "File:Lhasa, Tibet.jpg",
-    "artist": "Jesse Allen",
-    "license": "Public domain",
-    "query": "Lhasa city Potala view",
-    "alt": [
-      "File:Lhasa - Potála - panoramio.jpg",
-      "File:Lhasa - panoramio (2).jpg",
-      "File:Lhasa from the Pabonka Monastery.JPG"
-    ]
+    "page": "https://commons.wikimedia.org/wiki/File:Lhasa_-_Pot%C3%A1la_-_panoramio.jpg",
+    "title": "File:Lhasa - Potála - panoramio.jpg",
+    "artist": "Pavel Špindler",
+    "license": "CC BY 3.0"
   },
   "potala_palace": {
     "file": "assets/img/places/potala_palace.jpg",
@@ -204,29 +198,17 @@
   },
   "sera_monastery": {
     "file": "assets/img/places/sera_monastery.jpg",
-    "page": "https://commons.wikimedia.org/wiki/File:Cooking_at_Sera_Monastery,_Lhasa._1993.jpg",
-    "title": "File:Cooking at Sera Monastery, Lhasa. 1993.jpg",
-    "artist": "John Hill",
-    "license": "CC BY-SA 4.0",
-    "query": "Sera Monastery Lhasa",
-    "alt": [
-      "File:Lhasa - Sera Monastery - panoramio (1).jpg",
-      "File:Tibet - Lhasa - Sera Monastery - 6385045629.jpg",
-      "File:Tibetan buddhist monk listens during debating practice at Sera Monastery, Lhasa, Tibet in 2007 (cropped).JPG"
-    ]
+    "page": "https://commons.wikimedia.org/wiki/File:Monks_debating,_Sera_monastery_in_Tibet,_2013.jpg",
+    "title": "File:Monks debating, Sera monastery in Tibet, 2013.jpg",
+    "artist": "Maris Burbergs",
+    "license": "CC BY 3.0"
   },
   "norbulingka": {
     "file": "assets/img/places/norbulingka.jpg",
-    "page": "https://commons.wikimedia.org/wiki/File:Lhasa,_Norbulingka_1999_01.jpg",
-    "title": "File:Lhasa, Norbulingka 1999 01.jpg",
-    "artist": "LBM1948",
-    "license": "CC BY-SA 4.0",
-    "query": "Norbulingka Lhasa",
-    "alt": [
-      "File:Lhasa, Norbulingka 1999 03.jpg",
-      "File:Lhasa, Norbulingka 1999 05.jpg",
-      "File:Lhasa, Norbulingka 1999 06.jpg"
-    ]
+    "page": "https://commons.wikimedia.org/wiki/File:Norbulingka,_Lhasa,_Tibet_-5538_-_Summer_Palace.jpg",
+    "title": "File:Norbulingka, Lhasa, Tibet -5538 - Summer Palace.jpg",
+    "artist": "Dennis G. Jarvis",
+    "license": "CC BY-SA 2.0"
   },
   "senado_square": {
     "file": "assets/img/places/senado_square.jpg",
@@ -256,16 +238,10 @@
   },
   "jokhang": {
     "file": "assets/img/places/jokhang.jpg",
-    "page": "https://commons.wikimedia.org/wiki/File:An_elderly_Tibetan_women_holding_a_prayer_wheel_on_Lhasa,_Barkhor.jpg",
-    "title": "File:An elderly Tibetan women holding a prayer wheel on Lhasa, Barkhor.jpg",
-    "artist": "Luca Galuzzi (Lucag)",
-    "license": "CC BY-SA 2.5",
-    "query": "Jokhang Temple Lhasa",
-    "alt": [
-      "File:Buddhist icons on the roof of the Jokhang temple in Lhasa, Tibet.jpg",
-      "File:Jokhang Temple frontal view.jpg",
-      "File:Jokhang Temple in Tibet.jpg"
-    ]
+    "page": "https://commons.wikimedia.org/wiki/File:Jokhang_Temple_frontal_view.jpg",
+    "title": "File:Jokhang Temple frontal view.jpg",
+    "artist": "Rene Heise",
+    "license": "CC BY-SA 4.0"
   },
   "taipa": {
     "file": "assets/img/places/taipa.jpg",
@@ -282,16 +258,10 @@
   },
   "venetian_macau": {
     "file": "assets/img/places/venetian_macau.jpg",
-    "page": "https://commons.wikimedia.org/wiki/File:Cirque_du_Soleil_ad_Venetian_Casino,_Macao.JPG",
-    "title": "File:Cirque du Soleil ad Venetian Casino, Macao.JPG",
-    "artist": "John Hill",
-    "license": "CC BY-SA 3.0",
-    "query": "Venetian Macao casino",
-    "alt": [
-      "File:Macau Venetian Macao Casino 18-years 1.jpg",
-      "File:The Venetian Macao.jpg",
-      "File:Venetian Macao Casino Area.jpg"
-    ]
+    "page": "https://commons.wikimedia.org/wiki/File:Venetian_Macao_(3269983904).jpg",
+    "title": "File:Venetian Macao (3269983904).jpg",
+    "artist": "Pok Kusuwan from Chiang Mai, Thailand",
+    "license": "CC BY 2.0"
   },
   "guia_fortress": {
     "file": "assets/img/places/guia_fortress.jpg",
@@ -308,16 +278,10 @@
   },
   "sai_kung": {
     "file": "assets/img/places/sai_kung.jpg",
-    "page": "https://commons.wikimedia.org/wiki/File:HK_SKD_Sai_Kung_%E5%AF%B6%E7%90%B3_Po_Lam_MCP_One_Shopping_Mall_shop_%E6%B5%B7%E6%B8%AF%E9%85%92%E5%AE%B6_Victoria_Harbour_Restaurant_seafood_big_crabs_August_2026_N13P_09.jpg",
-    "title": "File:HK SKD Sai Kung 寶琳 Po Lam MCP One Shopping Mall shop 海港酒家 Victoria Harbour Restaurant seafood big crabs August 2026 N13P 09.jpg",
-    "artist": "BaiyuenPlennra Guumz",
-    "license": "CC0",
-    "query": "Sai Kung Hong Kong harbour",
-    "alt": [
-      "File:Sai Kung Town Harbour 01.jpg",
-      "File:Sai Kung Town Harbour 02.jpg",
-      "File:Sai Kung Town Harbour 03.jpg"
-    ]
+    "page": "https://commons.wikimedia.org/wiki/File:Sai_Kung_Hoi_201407.jpg",
+    "title": "File:Sai Kung Hoi 201407.jpg",
+    "artist": "Ching Ching Tsui",
+    "license": "CC BY 2.0"
   },
   "panda_base": {
     "file": "assets/img/places/panda_base.jpg",
@@ -377,5 +341,33 @@
       "File:Tianmen Mountain 38218-Zhangjiajie (48757756147).jpg",
       "File:Tianmen Mountain 38265-Zhangjiajie (48757757187).jpg"
     ]
+  },
+  "yamdrok_lake": {
+    "file": "assets/img/places/yamdrok_lake.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Yamdrok_Lake_%26_Yak.jpg",
+    "title": "File:Yamdrok Lake & Yak.jpg",
+    "artist": "Stephen Anthony Rohan",
+    "license": "CC BY-SA 4.0"
+  },
+  "pelkor_chode": {
+    "file": "assets/img/places/pelkor_chode.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Kumbum_Chorten_Pelkor_Chode_Monastery_Gyantse_Tibet_China_%E8%A5%BF%E8%97%8F_%E6%B1%9F%E5%AD%9C_%E7%99%BD%E5%B1%85%E5%AF%BA_%E4%BD%9B%E5%A1%94_-_panoramio.jpg",
+    "title": "File:Kumbum Chorten Pelkor Chode Monastery Gyantse Tibet China 西藏 江孜 白居寺 佛塔 - panoramio.jpg",
+    "artist": "Hiroki Ogawa",
+    "license": "CC BY 3.0"
+  },
+  "tashilhunpo": {
+    "file": "assets/img/places/tashilhunpo.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Tashilhunpo_Monastery,_Shigatse,_Tibet_(54).jpg",
+    "title": "File:Tashilhunpo Monastery, Shigatse, Tibet (54).jpg",
+    "artist": "Prof. Mortel",
+    "license": "CC BY 2.0"
+  },
+  "emeishan": {
+    "file": "assets/img/places/emeishan.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Golden_Summit,_Mount_Emei,_China,_August_2016.jpg",
+    "title": "File:Golden Summit, Mount Emei, China, August 2016.jpg",
+    "artist": "王计",
+    "license": "CC BY 2.5"
   }
 }

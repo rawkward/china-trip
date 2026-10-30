@@ -341,4 +341,9 @@ window.TRIP_PLACES = {
   "panda_base": {"name": "Chengdu Panda Base", "lat": 30.733, "lon": 104.145},
   "sanxingdui": {"name": "Sanxingdui Museum", "lat": 31.0, "lon": 104.2},
   "disneyland": {"name": "Hong Kong Disneyland", "lat": 22.313, "lon": 114.041}
+,
+  "yamdrok_lake": {"name": "Yamdrok Lake", "lat": 28.93, "lon": 90.68},
+  "pelkor_chode": {"name": "Pelkor Chode (Gyantse)", "lat": 28.915, "lon": 89.6},
+  "tashilhunpo": {"name": "Tashilhunpo (Shigatse)", "lat": 29.27, "lon": 88.87},
+  "emeishan": {"name": "Mount Emei", "lat": 29.52, "lon": 103.33}
 };

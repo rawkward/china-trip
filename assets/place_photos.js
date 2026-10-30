@@ -149,7 +149,7 @@ window.TRIP_PLACE_PHOTOS = {
  },
  "lhasa": {
   "src": "assets/img/places/lhasa.jpg",
-  "page": "https://commons.wikimedia.org/wiki/File:Lhasa,_Tibet.jpg"
+  "page": "https://commons.wikimedia.org/wiki/File:Lhasa_-_Pot%C3%A1la_-_panoramio.jpg"
  },
  "potala_palace": {
   "src": "assets/img/places/potala_palace.jpg",
@@ -161,11 +161,11 @@ window.TRIP_PLACE_PHOTOS = {
  },
  "sera_monastery": {
   "src": "assets/img/places/sera_monastery.jpg",
-  "page": "https://commons.wikimedia.org/wiki/File:Cooking_at_Sera_Monastery,_Lhasa._1993.jpg"
+  "page": "https://commons.wikimedia.org/wiki/File:Monks_debating,_Sera_monastery_in_Tibet,_2013.jpg"
  },
  "norbulingka": {
   "src": "assets/img/places/norbulingka.jpg",
-  "page": "https://commons.wikimedia.org/wiki/File:Lhasa,_Norbulingka_1999_01.jpg"
+  "page": "https://commons.wikimedia.org/wiki/File:Norbulingka,_Lhasa,_Tibet_-5538_-_Summer_Palace.jpg"
  },
  "senado_square": {
   "src": "assets/img/places/senado_square.jpg",
@@ -177,7 +177,7 @@ window.TRIP_PLACE_PHOTOS = {
  },
  "jokhang": {
   "src": "assets/img/places/jokhang.jpg",
-  "page": "https://commons.wikimedia.org/wiki/File:An_elderly_Tibetan_women_holding_a_prayer_wheel_on_Lhasa,_Barkhor.jpg"
+  "page": "https://commons.wikimedia.org/wiki/File:Jokhang_Temple_frontal_view.jpg"
  },
  "taipa": {
   "src": "assets/img/places/taipa.jpg",
@@ -185,7 +185,7 @@ window.TRIP_PLACE_PHOTOS = {
  },
  "venetian_macau": {
   "src": "assets/img/places/venetian_macau.jpg",
-  "page": "https://commons.wikimedia.org/wiki/File:Cirque_du_Soleil_ad_Venetian_Casino,_Macao.JPG"
+  "page": "https://commons.wikimedia.org/wiki/File:Venetian_Macao_(3269983904).jpg"
  },
  "guia_fortress": {
   "src": "assets/img/places/guia_fortress.jpg",
@@ -193,7 +193,7 @@ window.TRIP_PLACE_PHOTOS = {
  },
  "sai_kung": {
   "src": "assets/img/places/sai_kung.jpg",
-  "page": "https://commons.wikimedia.org/wiki/File:HK_SKD_Sai_Kung_%E5%AF%B6%E7%90%B3_Po_Lam_MCP_One_Shopping_Mall_shop_%E6%B5%B7%E6%B8%AF%E9%85%92%E5%AE%B6_Victoria_Harbour_Restaurant_seafood_big_crabs_August_2026_N13P_09.jpg"
+  "page": "https://commons.wikimedia.org/wiki/File:Sai_Kung_Hoi_201407.jpg"
  },
  "panda_base": {
   "src": "assets/img/places/panda_base.jpg",
@@ -214,5 +214,21 @@ window.TRIP_PLACE_PHOTOS = {
  "tianmen": {
   "src": "assets/img/places/tianmen.jpg",
   "page": "https://commons.wikimedia.org/wiki/File:Tianmen_Mountain_38192-Zhangjiajie_(48757754852).jpg"
+ },
+ "yamdrok_lake": {
+  "src": "assets/img/places/yamdrok_lake.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Yamdrok_Lake_%26_Yak.jpg"
+ },
+ "pelkor_chode": {
+  "src": "assets/img/places/pelkor_chode.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Kumbum_Chorten_Pelkor_Chode_Monastery_Gyantse_Tibet_China_%E8%A5%BF%E8%97%8F_%E6%B1%9F%E5%AD%9C_%E7%99%BD%E5%B1%85%E5%AF%BA_%E4%BD%9B%E5%A1%94_-_panoramio.jpg"
+ },
+ "tashilhunpo": {
+  "src": "assets/img/places/tashilhunpo.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Tashilhunpo_Monastery,_Shigatse,_Tibet_(54).jpg"
+ },
+ "emeishan": {
+  "src": "assets/img/places/emeishan.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Golden_Summit,_Mount_Emei,_China,_August_2016.jpg"
  }
 };
