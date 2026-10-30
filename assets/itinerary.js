@@ -170,6 +170,7 @@ const HK_CENTRAL = {city:"hk", title:"Централ и Пик", sub:"Эскал
   {k:"central_hk", name:"Храм Man Mo", tag:"sight", note:"Бесплатно"},
   {k:"victoria_peak", name:"Пик (Victoria Peak)", tag:"sight", note:"Трамвай Peak Tram, лучше к закату", cost:"HK$116"},
   {k:"central_hk", name:"Еда: Lan Fong Yuen / Mak's Noodle", tag:"food", note:"", cost:"~HK$60"},
+  {k:"mong_kok", name:"Mong Kok вечером", tag:"shopping", note:"Рынки и мелочи — обычно заходит больше, чем моллы"},
 ]};
 
 const HK_LANTAU = {city:"hk", title:"Лантау: Будда и Tai O", sub:"Канатка, Большой Будда, свайная деревня", places:[
@@ -198,7 +199,13 @@ const HK_FREE = {city:"hk", title:"Свободный день в Гонконг
   {k:"victoria_harbour", name:"Вечер на набережной", tag:"sight", note:"Tsim Sha Tsui, вид на остров"},
 ]};
 
-const HK_DEPART = {city:"hk", title:"Вылет домой", sub:"Ночной рейс, дома 11 декабря", places:[
+const HK_DISNEY_DAY = {city:"hk", title:"Диснейленд и прощальный ужин", sub:"Будний день — низкий тариф и короткие очереди", places:[
+  {k:"disneyland", name:"Гонконгский Диснейленд", tag:"sight", note:"С 20 ноября полный рождественский декор; будний день дешевле и свободнее", cost:"HK$639"},
+  {k:"mong_kok", name:"Прощальный ужин Yardbird / Ho Lee Fook", tag:"food", note:"Бронировать за неделю", cost:"HK$600–700"},
+]};
+
+const HK_DEPART = {city:"hk", title:"Вылет домой", sub:"Утро на рынках, ночной рейс", places:[
+  {k:"mong_kok", name:"Утро: рынки и сувениры", tag:"shopping", note:"Mong Kok и Causeway Bay — докупить подарки", cost:""},
   {k:"hongkong", name:"Ночной рейс Гонконг → Москва", tag:"transport", note:"Дома 11.12, отдых 12–13.12, на работу 14.12"},
 ]};
 
@@ -215,6 +222,7 @@ const HK_FEST_KOWLOON = {city:"hk", title:"Ковлун: M+ и набережн�
   {k:"tsim_sha_tsui", name:"Музей искусств Гонконга", tag:"sight", note:"Бесплатно"},
   {k:"avenue_of_stars", name:"Avenue of Stars + Star Ferry", tag:"sight", note:"", cost:"~HK$5"},
   {k:"victoria_harbour", name:"Symphony of Lights", tag:"sight", note:"20:00, набережная гавани"},
+  {k:"mong_kok", name:"Causeway Bay и Harbour City", tag:"shopping", note:"Витрины с 20.11; вечером после набережной"},
   {k:"central_harbourfront", name:"Clockenflap: по желанию, вечер", tag:"optional", note:"Если понравилось 4.12 — зайти на пару сетов; иначе вечер свободен", cost:"билет"},
 ]};
 
@@ -355,7 +363,7 @@ const VARIANTS = [
   {
     id:"fest-cq", title:"Фестиваль + Чунцин, Фэнхуан и Улун", photo:"Chongqing", main:true,
     china:[CQ_ARRIVAL, CQ_RAILS, FENGHUANG_ARRIVE, FURONG_ARRIVE, FURONG_BACK, WULONG_DAY, WULONG_OUT],
-    hk:[HK_FEST_ARRIVE, HK_FEST_KOWLOON, HK_FEST_MAIN, HK_CENTRAL, HK_LANTAU, HK_SHOP, HK_DEPART],
+    hk:[HK_FEST_ARRIVE, HK_FEST_KOWLOON, HK_FEST_MAIN, HK_CENTRAL, HK_LANTAU, HK_DISNEY_DAY, HK_DEPART],
     cities:["Чунцин 2 ночи","Фэнхуан 1","Фужун 1","Улун 2","Гонконг 6 + фестиваль"],
     summary:"Основной вариант: Чунцин, два старых города Хунани с ночёвкой у водопада, Улун и финал — Clockenflap 4–6.12.",
     pros:["Clockenflap 6.12 — финал поездки","Фэнхуан и Фужун ночью — самая красивая подсветка","Бэйбэй не нужен: спа заменяет ночь у водопада"],
