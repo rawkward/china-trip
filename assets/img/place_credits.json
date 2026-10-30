@@ -27,16 +27,10 @@
   },
   "longshuixia": {
     "file": "assets/img/places/longshuixia.jpg",
-    "page": "https://commons.wikimedia.org/wiki/File:%E9%BE%99%E6%B0%B4%E5%B3%A1%E5%9C%B0%E7%BC%9D%E6%99%AF%E5%8C%BA%E5%87%BA%E5%8F%A3_-_Exit_of_Longshuixia_Canyon_Scenic_Area_-_2015.04_-_panoramio.jpg",
-    "title": "File:龙水峡地缝景区出口 - Exit of Longshuixia Canyon Scenic Area - 2015.04 - panoramio.jpg",
-    "artist": "rheins",
-    "license": "CC BY 3.0",
-    "query": "Longshuixia Wulong",
-    "alt": [
-      "File:龙水峡地缝 - Longshuixia Canyon - 2015.04 - panoramio.jpg",
-      "File:龙水峡地缝 - Longshuixia Canyon - 2015.04 - panoramio (1).jpg",
-      "File:龙水峡地缝 - Longshuixia Canyon - 2015.04 - panoramio (2).jpg"
-    ]
+    "page": "https://commons.wikimedia.org/wiki/File:%E9%87%8D%E5%BA%86-%E6%AD%A6%E9%9A%86-%E5%9C%B0%E7%BC%9D%E6%A0%88%E9%81%93_-_panoramio.jpg",
+    "title": "File:重庆-武隆-地缝栈道 - panoramio.jpg",
+    "artist": "Nyx Ning",
+    "license": "CC BY-SA 3.0"
   },
   "yau_ma_tei": {
     "file": "assets/img/places/yau_ma_tei.jpg",
@@ -157,25 +151,17 @@
   },
   "nanshan_cq": {
     "file": "assets/img/places/nanshan_cq.jpg",
-    "page": "https://commons.wikimedia.org/wiki/File:Chongqing_Art_Museum_Night.jpg",
-    "title": "File:Chongqing Art Museum Night.jpg",
-    "artist": "Buglord",
-    "license": "CC BY-SA 4.0",
-    "query": "Chongqing Night Yuzhong",
-    "alt": [
-      "File:Chongqing Art Museum Night.jpg",
-      "File:Chongqing Night Yuzhong.jpg",
-      "File:Night view of YUZHONG - panoramio.jpg"
-    ]
+    "page": "https://commons.wikimedia.org/wiki/File:Chongqing_Skyline_At_Night.png",
+    "title": "File:Chongqing Skyline At Night.png",
+    "artist": "Maple Doctor",
+    "license": "CC BY-SA 4.0"
   },
   "fairy_mountain": {
     "file": "assets/img/places/fairy_mountain.jpg",
-    "page": "https://commons.wikimedia.org/wiki/File:%E6%AD%A6%E9%9A%86_%E4%BB%99%E5%A5%B3%E5%B1%B1%E5%85%A8%E6%99%AF_01.jpg",
-    "title": "File:武隆 仙女山全景 01.jpg",
-    "artist": "Liuxingy",
-    "license": "CC BY-SA 4.0",
-    "query": "武隆 仙女山全景 01",
-    "alt": []
+    "page": "https://commons.wikimedia.org/wiki/File:%E6%AD%A6%E9%9A%86%E4%BB%99%E5%A5%B3%E5%B1%B1_-_panoramio.jpg",
+    "title": "File:武隆仙女山 - panoramio.jpg",
+    "artist": "杨志强Zhiqiang",
+    "license": "CC BY-SA 3.0"
   },
   "lhasa": {
     "file": "assets/img/places/lhasa.jpg",
@@ -361,16 +347,10 @@
   },
   "fenghuang": {
     "file": "assets/img/places/fenghuang.jpg",
-    "page": "https://commons.wikimedia.org/wiki/File:Tuo_River_in_Fenghuang_County,_Hunan,_China1.jpg",
-    "title": "File:Tuo River in Fenghuang County, Hunan, China1.jpg",
-    "artist": "Huangdan2060",
-    "license": "CC0",
-    "query": "Fenghuang ancient town Tuo river",
-    "alt": [
-      "File:Tuo River in Fenghuang County, Hunan, China11.jpg",
-      "File:Tuo River in Fenghuang County, Hunan, China4.jpg",
-      "File:Tuo River in Fenghuang County, Hunan, China5.jpg"
-    ]
+    "page": "https://commons.wikimedia.org/wiki/File:Fenghuang_County_night_view_20190727.jpg",
+    "title": "File:Fenghuang County night view 20190727.jpg",
+    "artist": "Sunyiming",
+    "license": "CC BY-SA 4.0"
   },
   "grand_canyon": {
     "file": "assets/img/places/grand_canyon.jpg",
