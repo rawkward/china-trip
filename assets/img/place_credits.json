@@ -369,5 +369,339 @@
     "title": "File:Golden Summit, Mount Emei, China, August 2016.jpg",
     "artist": "王计",
     "license": "CC BY 2.5"
+  },
+  "guangzhou": {
+    "file": "assets/img/places/guangzhou.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Canton_Tower_20220626_(cropped).jpg",
+    "title": "File:Canton Tower 20220626 (cropped).jpg",
+    "artist": "Tim Wu",
+    "license": "CC BY-SA 4.0",
+    "query": "Canton Tower Guangzhou skyline",
+    "alt": [
+      "File:Guangzhou (9713793896).jpg",
+      "File:Guangzhou BaiyunShan.jpg",
+      "File:Guangzhou skyline.jpg"
+    ]
+  },
+  "canton_opera": {
+    "file": "assets/img/places/canton_opera.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Guangzhou_Opera_House(Near).JPG",
+    "title": "File:Guangzhou Opera House(Near).JPG",
+    "artist": "Mr a",
+    "license": "CC BY 3.0",
+    "query": "Guangzhou Opera House Zaha Hadid",
+    "alt": [
+      "File:Guangzhou Opera House.png",
+      "File:Guangzhou Opera House - 53337501049.jpg",
+      "File:广州大剧院 - panoramio.jpg"
+    ]
+  },
+  "canton_tower": {
+    "file": "assets/img/places/canton_tower.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Canton_Tower_at_Night_20230722.jpg",
+    "title": "File:Canton Tower at Night 20230722.jpg",
+    "artist": "Tim Wu",
+    "license": "CC BY-SA 4.0",
+    "query": "Canton Tower night Guangzhou",
+    "alt": [
+      "File:Canton Tower, Guangzhou, CN Lit up at night.jpg",
+      "File:Canton Tower, Guangzhou (5928597687).jpg",
+      "File:Canton Tower at night 01.jpg"
+    ]
+  },
+  "shamian": {
+    "file": "assets/img/places/shamian.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Our_Lady_of_Lourdes_Chapel.jpg",
+    "title": "File:Our Lady of Lourdes Chapel.jpg",
+    "artist": "Anthony Hartman from Meizhou, China",
+    "license": "CC BY 2.0",
+    "query": "Shamian Island Guangzhou",
+    "alt": [
+      "File:Shamian Island, Guangzhou (5928584895).jpg",
+      "File:Shamian Island, Guangzhou (5928586397).jpg",
+      "File:Shamian Island, Guangzhou (5929139948).jpg"
+    ]
+  },
+  "chen_clan": {
+    "file": "assets/img/places/chen_clan.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Chen_Clan_Academy,_Guangzhou_(5928976016).jpg",
+    "title": "File:Chen Clan Academy, Guangzhou (5928976016).jpg",
+    "artist": "Eduardo M. C.",
+    "license": "CC BY 2.0",
+    "query": "Chen Clan Ancestral Hall Guangzhou",
+    "alt": [
+      "File:Chen Clan Ancestral Hall 2025.06 01.jpg",
+      "File:Chen Clan Ancestral Hall 2025.06 02.jpg",
+      "File:Chen Clan Ancestral Hall 2025.06 03.jpg"
+    ]
+  },
+  "guilin": {
+    "file": "assets/img/places/guilin.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:A_lovely_typically_Chinese_bridge_on_the_shore_(35910261852).jpg",
+    "title": "File:A lovely typically Chinese bridge on the shore (35910261852).jpg",
+    "artist": "shankar s. from Dubai, united arab emirates",
+    "license": "CC BY 2.0",
+    "query": "Guilin Li River pagoda",
+    "alt": [
+      "File:Another look at the entrance to Yangdi village (36079012285).jpg",
+      "File:Another shot of the gazebo by the riverside (35270879433).jpg",
+      "File:Lake Shanhu pagodas at night.jpg"
+    ]
+  },
+  "li_river": {
+    "file": "assets/img/places/li_river.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:1996_-261-17_Guilin_(Li_River)_(5069127744).jpg",
+    "title": "File:1996 -261-17 Guilin (Li River) (5069127744).jpg",
+    "artist": "Dan Lundberg",
+    "license": "CC BY-SA 2.0",
+    "query": "Li River karst Guilin landscape",
+    "alt": [
+      "File:1996 -262-10A Guilin (Li River) (5068522941).jpg",
+      "File:1996 -262-7A Guilin (Li River) (5068521479).jpg",
+      "File:1996 -262-9A Guilin (Li River) (5069130982).jpg"
+    ]
+  },
+  "yangshuo": {
+    "file": "assets/img/places/yangshuo.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Yulong_River_Valley.jpg",
+    "title": "File:Yulong River Valley.jpg",
+    "artist": "HodgsonB at en.wikipedia",
+    "license": "Public domain",
+    "query": "Yangshuo karst mountains Yulong",
+    "alt": [
+      "File:1 yangshuo mountain retreat 2011.jpg"
+    ]
+  },
+  "yulong_river": {
+    "file": "assets/img/places/yulong_river.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:20090502_Yangshuo_Yulong_River_6125.jpg",
+    "title": "File:20090502 Yangshuo Yulong River 6125.jpg",
+    "artist": "Jakub Hałun",
+    "license": "CC BY-SA 4.0",
+    "query": "Yulong River bamboo raft Yangshuo",
+    "alt": [
+      "File:Yulong river-Yangshuo-Guilin-China - panoramio.jpg",
+      "File:Yulong river-Yangshuo-Guilin.China - panoramio.jpg",
+      "File:Yulong river-Yangshuo -Guilin-China - panoramio.jpg"
+    ]
+  },
+  "longsheng": {
+    "file": "assets/img/places/longsheng.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Longji_Rice_Terraces_001.jpg",
+    "title": "File:Longji Rice Terraces 001.jpg",
+    "artist": "Rutger van der Maar",
+    "license": "CC BY 2.0",
+    "query": "Longji rice terraces Longsheng",
+    "alt": [
+      "File:Longji Rice Terraces 002.jpg",
+      "File:Longji Rice Terraces 003.jpg",
+      "File:Longji Rice Terraces 004.jpg"
+    ]
+  },
+  "west_street": {
+    "file": "assets/img/places/west_street.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:West_Street_-Yangshuo-Guilin_-_China_-_panoramio.jpg",
+    "title": "File:West Street -Yangshuo-Guilin - China - panoramio.jpg",
+    "artist": "HALUK COMERTEL",
+    "license": "CC BY 3.0",
+    "query": "West Street Yangshuo",
+    "alt": [
+      "File:West Street Yangshuo.jpg",
+      "File:Yangshuo-4335.JPG",
+      "File:Yangshuo-Weststrasse-14-Buddhakoepfe-2012-gje.jpg"
+    ]
+  },
+  "shanghai": {
+    "file": "assets/img/places/shanghai.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Pudong_-_Lujiazui_--_2013.03.02.jpg",
+    "title": "File:Pudong - Lujiazui -- 2013.03.02.jpg",
+    "artist": "Navigator84",
+    "license": "CC BY-SA 3.0",
+    "query": "Lujiazui skyline Pudong",
+    "alt": [
+      "File:Shanghai skyline waterfront pudong 5166168 69 70.jpg",
+      "File:Shanghai skyline waterfront pudong A235423.jpg",
+      "File:Pudong Shanghai November 2017 HDR panorama.jpg"
+    ]
+  },
+  "bund": {
+    "file": "assets/img/places/bund.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Le_Bund_et_la_rivi%C3%A8re_Huangpu_(Shanghai,_Chine)_(39166087805).jpg",
+    "title": "File:Le Bund et la rivière Huangpu (Shanghai, Chine) (39166087805).jpg",
+    "artist": "Jean-Pierre Dalbéra from Paris, France",
+    "license": "CC BY 2.0",
+    "query": "The Bund Shanghai promenade",
+    "alt": [
+      "File:Promenade -The Bund (Wai Tan) Shanghai- (685405681).jpg",
+      "File:Promenade du Bund.jpg",
+      "File:Shanghai bund – Preview (Greg Zaal via Poly Haven).png"
+    ]
+  },
+  "shanghai_museum": {
+    "file": "assets/img/places/shanghai_museum.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Interior_of_Power_Station_of_Art.jpg",
+    "title": "File:Interior of Power Station of Art.jpg",
+    "artist": "Iswzo",
+    "license": "CC BY-SA 4.0",
+    "query": "Power Station of Art Shanghai",
+    "alt": [
+      "File:Power Station of Art 2018-10-14 150806.png",
+      "File:Power Station of Art 2018-10-14 150814.png",
+      "File:Shanghai - Power Station of Art (12250847504).jpg"
+    ]
+  },
+  "suzhou": {
+    "file": "assets/img/places/suzhou.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:2015-09-24-154450_-_Bootskan%C3%A4le_in_Souzhou.jpg",
+    "title": "File:2015-09-24-154450 - Bootskanäle in Souzhou.jpg",
+    "artist": "Zossolino",
+    "license": "CC BY-SA 4.0",
+    "query": "Suzhou canal Pingjiang Road",
+    "alt": [
+      "File:Canal dans le centre ancien de Suzhou (16999191119).jpg"
+    ]
+  },
+  "humble_garden": {
+    "file": "assets/img/places/humble_garden.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Humble_Administrator%27s_Garden_Suzhou_November_2017_003.jpg",
+    "title": "File:Humble Administrator's Garden Suzhou November 2017 003.jpg",
+    "artist": "King of Hearts",
+    "license": "CC BY-SA 4.0",
+    "query": "Humble Administrator's Garden Suzhou",
+    "alt": [
+      "File:Humble Administrator's Garden Suzhou November 2017 004.jpg",
+      "File:Humble Administrator's Garden Suzhou November 2017 005.jpg",
+      "File:Humble Administrator's Garden Suzhou November 2017 006.jpg"
+    ]
+  },
+  "hangzhou": {
+    "file": "assets/img/places/hangzhou.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Hangzhou_Pagoda_on_West_Lake.jpg",
+    "title": "File:Hangzhou Pagoda on West Lake.jpg",
+    "artist": "Circa24",
+    "license": "CC BY-SA 4.0",
+    "query": "Hangzhou West Lake pagoda",
+    "alt": [
+      "File:Hangzhou Pagoda on West Lake 2.jpg",
+      "File:Baochu Pagoda in Hangzhou 2019-02 01.jpg",
+      "File:Leifeng Pagoda, Hangzhou by TheTokl - 32.jpg"
+    ]
+  },
+  "west_lake": {
+    "file": "assets/img/places/west_lake.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:20090524_Hangzhou_West_Lake_7531.jpg",
+    "title": "File:20090524 Hangzhou West Lake 7531.jpg",
+    "artist": "Jakub Hałun",
+    "license": "CC BY-SA 3.0",
+    "query": "West Lake Hangzhou",
+    "alt": [
+      "File:20260424 West Lake and Hangzhou Skyline.jpg",
+      "File:Hangzhou Skyline against the West Lake.png",
+      "File:West Lake, Hangzhou (Nine-turn bridge).jpg"
+    ]
+  },
+  "longjing": {
+    "file": "assets/img/places/longjing.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Longjing_Tea_field,_Dragon_Well_area,_Meijiawu_China.jpg",
+    "title": "File:Longjing Tea field, Dragon Well area, Meijiawu China.jpg",
+    "artist": "Peter K Burian",
+    "license": "CC BY-SA 4.0",
+    "query": "Longjing tea plantation Hangzhou",
+    "alt": [
+      "File:Longjing villiage.jpg",
+      "File:Tea-grower-hangzhou-edit.png",
+      "File:Tea plantation in hangzhou.JPG"
+    ]
+  },
+  "lingyin_temple": {
+    "file": "assets/img/places/lingyin_temple.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Lingyin_Temple,_Hangzhou_20161003.jpg",
+    "title": "File:Lingyin Temple, Hangzhou 20161003.jpg",
+    "artist": "Tyg728",
+    "license": "CC BY-SA 4.0",
+    "query": "Lingyin Temple Hangzhou",
+    "alt": [
+      "File:20260423 Stone Dhvaja of Lingyin Temple 01.jpg",
+      "File:20260423 Stone Dhvaja of Lingyin Temple 02.jpg",
+      "File:20260423 Stone Dhvaja of Lingyin Temple 03.jpg"
+    ]
+  },
+  "sanya": {
+    "file": "assets/img/places/sanya.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:HN_SanYa_YaLong_Bay_Holiday_Inn_and_beach.jpg",
+    "title": "File:HN SanYa YaLong Bay Holiday Inn and beach.jpg",
+    "artist": "No machine-readable author provided. HNPIX~commonswiki assumed (based on copyright claims).",
+    "license": "Public domain",
+    "query": "Sanya Yalong Bay beach resort",
+    "alt": [
+      "File:Hainan - 2007 - Resort Golden Palm - Yalong Bay - panoramio - Maxim Nedashkovskiy.jpg",
+      "File:Hainan island, Sanya town, the beach near to Cactus Resort - panoramio.jpg",
+      "File:Yalong bay Aegean Conifer Suites Resort - panoramio (1).jpg"
+    ]
+  },
+  "wuzhizhou": {
+    "file": "assets/img/places/wuzhizhou.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Haitang,_Sanya,_Hainan,_China_-_panoramio_(4).jpg",
+    "title": "File:Haitang, Sanya, Hainan, China - panoramio (4).jpg",
+    "artist": "song songroov",
+    "license": "CC BY 3.0",
+    "query": "Wuzhizhou Island Hainan",
+    "alt": [
+      "File:Haitang, Sanya, Hainan, China - panoramio (5).jpg",
+      "File:Haitang, Sanya, Hainan, China - panoramio (6).jpg",
+      "File:Wuzhizhou Island - 01.jpg"
+    ]
+  },
+  "nanshan_sanya": {
+    "file": "assets/img/places/nanshan_sanya.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Bodhisattva_Guanyin_Statue,_Nanshan_Guanyin_Park_(10098568155).jpg",
+    "title": "File:Bodhisattva Guanyin Statue, Nanshan Guanyin Park (10098568155).jpg",
+    "artist": "Gary Todd from Xinzheng, China",
+    "license": "CC0",
+    "query": "Guanyin statue Nanshan Sanya",
+    "alt": [
+      "File:Guan Yin of the South Sea of Sanya 20150426 140252.jpg",
+      "File:Guan Yin of the South Sea of Sanya 20150426 140259.jpg",
+      "File:Guan Yin of the South Sea of Sanya 20150426 140731.jpg"
+    ]
+  },
+  "sanyaphx": {
+    "file": "assets/img/places/sanyaphx.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Sanya_Phoenix_International_Airport_(SYX).jpg",
+    "title": "File:Sanya Phoenix International Airport (SYX).jpg",
+    "artist": "Ned",
+    "license": "CC BY 2.0",
+    "query": "Sanya Phoenix International Airport",
+    "alt": [
+      "File:Sanya Phoenix International Airport - panoramio.jpg",
+      "File:Sanya Phoenix International Airport 1.JPG",
+      "File:Sanya Phoenix International Airport 5.JPG"
+    ]
+  },
+  "former_french": {
+    "file": "assets/img/places/former_french.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:20260209_105_Wukang_Road.jpg",
+    "title": "File:20260209 105 Wukang Road.jpg",
+    "artist": "Windmemories",
+    "license": "CC BY-SA 4.0",
+    "query": "Wukang Road Shanghai",
+    "alt": [
+      "File:20260209 129 Wukang Road.jpg",
+      "File:Street View of Wukang Road.JPG",
+      "File:Street View of Wukang Road 1.JPG"
+    ]
+  },
+  "tianzifang": {
+    "file": "assets/img/places/tianzifang.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Passage_in_Tianzifang_Area.jpg",
+    "title": "File:Passage in Tianzifang Area.jpg",
+    "artist": "そらみみ",
+    "license": "CC BY-SA 4.0",
+    "query": "Tianzifang",
+    "alt": [
+      "File:Tianzifang 3.jpg",
+      "File:Tianzifang 20140309 114717.jpg",
+      "File:Tianzifang sign.jpg"
+    ]
   }
 }
