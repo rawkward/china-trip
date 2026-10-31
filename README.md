@@ -3,9 +3,20 @@
 Интерактивный план поездки: варианты маршрута, расписание по дням, карта, фото, чеклист бронирования.
 
 ## Файлы
-- `index.html` — приложение (самодостаточное: дизайн + логика внутри)
-- `assets/data.js` — сгенерированные данные (URL фото, координаты точек)
-- `assets/photos.json`, `assets/places.json` — сырые данные (фото из Wikimedia, геокодинг OSM/Nominatim)
+- `index.html` — приложение (самодостаточное: дизайн + логика внутри; грузит `data.js`, `itinerary.js`, `place_photos.js` с `?v=N` для сброса кэша)
+- `assets/itinerary.js` — маршруты по дням, 6 вариантов; правки маршрута делаются здесь
+- `assets/data.js` — сгенерированные данные (URL фото, координаты точек для карты)
+- `assets/place_photos.js` — фото по местам (ключ `k` из маршрута → фото)
+- `assets/places.json`, `assets/photos.json`, `assets/place_photos.json`, `assets/img/place_credits.json` — сырые данные (фото из Wikimedia, геокодинг OSM/Nominatim, атрибуция)
+- `scripts/fetch_place_photos.py` — загрузка новых фото из Wikimedia
+
+## Варианты маршрута (6)
+1. Фестиваль + Чунцин, Фэнхуан и Улун (основной) — 14 дней
+2. Чэнду и Тибет — 14 дней
+3. Фэнхуан, Фужун, Чжанцзяцзе, Чунцин и Гонконг с фестивалем — 15 дней
+4. Гонконг, Макао, Гуанчжоу и Гуйлинь — 15 дней
+5. Гонконг, Макао, Шанхай, Ханчжоу и Сучжоу — 14 дней
+6. Гонконг, Макао и Хайнань — 14 дней
 
 ## Локальный просмотр
 ```bash
@@ -14,15 +25,14 @@ python3 -m http.server 8765
 открой http://localhost:8765 — или просто открой `index.html` двойным кликом.
 
 ## Деплой на GitHub Pages
-1. Создай пустой репозиторий на GitHub (например `china-trip`).
-2. ```bash
-   git remote add origin git@github.com:<user>/china-trip.git
-   git push -u origin main
-   ```
-3. В репозитории: **Settings → Pages → Source: Deploy from a branch → main / root**.
-4. Сайт будет на `https://<user>.github.io/china-trip/`.
+Репозиторий уже подключён к `https://rawkward.github.io/china-trip/` (Source: main / root).
+Публикация правок — обычный push:
+
+```bash
+git add -A && git commit -m "…" && git push
+```
 
 ## Данные
 - Фото — Wikimedia Commons (лицензии CC, атрибуция в подвале сайта).
 - Координаты — OpenStreetMap/Nominatim (WGS-84); карта — CARTO/OSM.
-- Маршрут — черновик, даты уточняются (3 варианта, «хвост» Чунцин/Улун/Бэйбэй детально расписан).
+- Маршрут — черновик, даты перелёта уточняются.
