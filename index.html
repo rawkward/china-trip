@@ -197,6 +197,7 @@ footer a{color:var(--muted)}
     <a href="#itinerary">Маршрут</a>
     <a href="#booking">Брони</a>
     <a href="#tours">Экскурсии</a>
+    <a href="#links">Ссылки</a>
     <a href="#notes">Бюджет</a>
   </nav>
 </header>
@@ -270,6 +271,19 @@ footer a{color:var(--muted)}
       </div>
     </div>
     <div class="booklist" id="tourList"></div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="links">
+    <div class="head">
+      <div>
+        <div class="eyebrow">Читаем перед поездкой</div>
+        <h2>Полезные ссылки</h2>
+        <p class="muted small">Гид по Чжанцзяцзе от Trip.com — с разбором, что там есть, что берём себе и чего в нём нет.</p>
+      </div>
+    </div>
+    <div class="booklist" id="linkList"></div>
   </section>
 
   <hr class="rule">
@@ -559,6 +573,25 @@ document.getElementById("tourList").innerHTML = TOURS.map(function(t){
     '<div class="muted small" style="margin-top:6px">' + t.note + '</div>' +
     '<div class="muted small" style="margin-top:6px"><b>Стоит ли денег:</b> ' + t.verdict + '</div>' +
     '<div class="muted small" style="margin-top:4px"><b>Под наш маршрут:</b> ' + t.fit + '</div></span></div>';
+}).join("");
+
+const LINKS = [
+  {tag:"Чжанцзяцзе",
+   title:"Полный гид по горам Аватара: отели, маршруты, виды, еда",
+   src:"Trip.com · 26.10.2026 · на русском",
+   url:"https://ru.trip.com/guide/destination/%D0%B3%D0%BE%D1%80%D1%8B-%D0%B0%D0%B2%D0%B0%D1%82%D0%B0%D1%80%D0%B0-%D1%87%D0%B6%D0%B0%D0%BD%D1%86%D0%B7%D1%8F%D1%86%D0%B7%D0%B5-%D0%BF%D0%BE%D0%BB%D0%BD%D1%8B%D0%B9-%D0%B3%D0%B8%D0%B4.html",
+   note:"Что внутри: как добраться от города и аэропорта до парка (автобусы от Центральной автостанции ¥10–13, такси ¥50–100, от Западного вокзала — распределительный центр), все пять ворот и что удобнее от каждых, бесплатные эко-шаттлы внутри парка, разбор шести зон — Юаньцзяцзе, Тяньцзышань, Янцзяцзе, Цзиньбяньси, Хуаншичжай, Шили Хуалан, готовый план на четыре дня и рестораны у Восточных ворот со средним чеком ¥60–75.",
+   take:"Берём себе: база в Улинъюане у Восточных ворот — оттуда лифт Байлун, Тяньцзышань и Шили Хуалан; Южные ворота — под Цзиньбяньси и Хуаншичжай. Их «день 1–2» — это наши 3.12 и 4.12, «день 3» — 5.12.",
+   gap:"Чего в нём нет: декабрьских реалий. Ни слова про лёд на ступенях и микрошипы, про закрытую канатку Тяньмэня (с 13.10 на реконструкции, работает только линия C), про низкий сезон (¥118–147 вместо ¥225–228 за те же 4 дня) и про то, что билеты теперь только онлайн через 张家界一机游. Акция на пещеру Хуанлун в статье — до 30.11.2026, на наши даты не действует."},
+];
+
+document.getElementById("linkList").innerHTML = LINKS.map(function(l){
+  return '<div class="book"><span class="when">' + l.tag + '</span>' +
+    '<span class="it"><a href="' + l.url + '" target="_blank" rel="noopener">' + l.title + '</a>' +
+    '<div class="muted small" style="margin-top:4px">' + l.src + '</div>' +
+    '<div class="muted small" style="margin-top:6px">' + l.note + '</div>' +
+    '<div class="muted small" style="margin-top:6px"><b>Что берём:</b> ' + l.take + '</div>' +
+    '<div class="muted small" style="margin-top:4px"><b>Чего нет:</b> ' + l.gap + '</div></span></div>';
 }).join("");
 
 document.getElementById("notesGrid").innerHTML = NOTES.map(function(n){
