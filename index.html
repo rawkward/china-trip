@@ -80,6 +80,9 @@ hr.rule{border:0; border-top:1px solid var(--line); margin:0}
 }
 .vcard:hover{transform:translateY(-3px); box-shadow:0 14px 34px -18px rgba(28,25,23,.35)}
 .vcard.active{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+.vcard.main{border-color:#e8c8b4}
+.vcard.main .badge{background:var(--accent); opacity:.9}
+.vcard.main.active .badge{opacity:1}
 .vcard .ph{height:150px; background:var(--bg2); position:relative}
 .vcard .ph img{width:100%; height:100%; object-fit:cover; display:block}
 .vcard .badge{position:absolute; top:10px; left:10px; background:rgba(28,25,23,.72); color:#fff; font-size:.7rem; font-weight:600; padding:3px 10px; border-radius:999px}
@@ -533,7 +536,7 @@ function renderSummary(){
       : nights + " " + nightsWord(nights);
     return (i > 0 ? '<span class="arrow">→</span>' : '') +
       '<span class="city">' + CITIES[s.city].label + '<small>' + label + '</small></span>';
-  }).join("") + '<span class="muted small" style="margin-left:6px">· 14 дней</span>';
+  }).join("") + '<span class="muted small" style="margin-left:6px">· 14 ночей</span>';
 }
 
 /* ---------- рендер: карточки вариантов ---------- */
@@ -543,8 +546,11 @@ function renderVariants(){
     const p = PHOTOS[v.photo];
     const img = p && p.src ? '<img src="' + p.src + '" alt="' + v.title + '" loading="lazy">' : '';
     const isActive = v.id === activeId;
-    return '<div class="vcard' + (isActive ? ' active' : '') + '" data-id="' + v.id + '" role="button" tabindex="0">' +
-      '<div class="ph">' + img + '<span class="badge">' + (isActive ? 'показан сейчас' : 'вариант') + '</span></div>' +
+    const badge = v.main
+      ? (isActive ? 'основной · показан сейчас' : 'основной')
+      : (isActive ? 'показан сейчас' : 'вариант');
+    return '<div class="vcard' + (isActive ? ' active' : '') + (v.main ? ' main' : '') + '" data-id="' + v.id + '" role="button" tabindex="0">' +
+      '<div class="ph">' + img + '<span class="badge">' + badge + '</span></div>' +
       '<div class="body">' +
         '<h3>' + v.title + '</h3>' +
         '<div class="cities">' + v.cities.join(' · ') + '</div>' +
