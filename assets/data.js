@@ -377,5 +377,7 @@ window.TRIP_PLACES = {
   "kuixinglou": {"name": "Kuixing Building", "lat": 29.5600, "lon": 106.5736},
   "raffles_city": {"name": "Raffles City Chongqing", "lat": 29.5676, "lon": 106.5831},
   "qiansimen_bridge": {"name": "Qiansimen Bridge", "lat": 29.5737, "lon": 106.5724},
-  "west_kowloon": {"name": "Hong Kong West Kowloon Station", "lat": 22.3037, "lon": 114.1649}
+  "west_kowloon": {"name": "Hong Kong West Kowloon Station", "lat": 22.3037, "lon": 114.1649},
+  "futian": {"name": "Futian Station, Shenzhen", "lat": 22.5247, "lon": 114.0561},
+  "sz_airport": {"name": "Shenzhen Bao'an Airport", "lat": 22.6393, "lon": 113.8107}
 };
