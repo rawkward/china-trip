@@ -366,7 +366,7 @@ footer a{color:var(--muted)}
   <section class="hero" id="overview">
     <div class="date-chip">26.11 – 11.12.2026 · основной вариант — Чунцин, Чжанцзяцзе, Фужун и Clockenflap 6.12</div>
     <h1>Поездка в Китай вдвоём</h1>
-    <p class="lede">14 ночей, шесть сценариев. Основной — четыре дня в Чунцине, три дня в горах Чжанцзяцзе, ночь в Фужуне у водопада и шесть ночей в Гонконге с фестивалем. Остальные: Чэнду с Тибетом, Фэнхуан с Улуном, Гонконг с Макао и второй неделей в Гуанчжоу и Гуйлине, Шанхай с Сучжоу и Ханчжоу, Хайнань. Выберите карточку — план по дням и карта ниже перестроятся.</p>
+    <p class="lede">14 ночей, семь сценариев. Основной — четыре дня в Чунцине, три дня в горах Чжанцзяцзе, ночь в Фужуне у водопада и шесть ночей в Гонконге с фестивалем. Седьмой — те же места в обратном порядке: Гонконг первым, 2–15.12. Остальные: Чэнду с Тибетом, Фэнхуан с Улуном, Гонконг с Макао и второй неделей в Гуанчжоу и Гуйлине, Шанхай с Сучжоу и Ханчжоу, Хайнань. Выберите карточку — план по дням и карта ниже перестроятся.</p>
     <div class="routesummary" id="routesummary"></div>
   </section>
 
@@ -375,9 +375,9 @@ footer a{color:var(--muted)}
   <section id="variants">
     <div class="head">
       <div>
-        <div class="eyebrow">Шесть сценариев на одни и те же даты</div>
-        <h2>Шесть вариантов маршрута</h2>
-        <p class="muted small">Clockenflap 4–6.12 остался в третьем варианте — он теперь основной. Клик по карточке перестраивает план по дням и карту ниже.</p>
+        <div class="eyebrow">Семь сценариев, один фестиваль 4–6.12</div>
+        <h2>Семь вариантов маршрута</h2>
+        <p class="muted small">Clockenflap 4–6.12 есть и в третьем варианте (он основной), и в седьмом — где Гонконг идёт первым, 2–15.12. Клик по карточке перестраивает план по дням и карту ниже, у каждого варианта свои даты.</p>
       </div>
     </div>
     <div class="vgrid" id="variantGrid"></div>
@@ -471,14 +471,14 @@ footer a{color:var(--muted)}
   </section>
 
   <footer>
-    <p>Версия 9 · 01.11.2026. Шесть вариантов маршрута, основной — третий: Чунцин (4 ночи), Чжанцзяцзе (3), Фужун (1) и Гонконг (6), 26.11–11.12.2026. Вылет из Москвы 26.11 со стыковкой — так воскресенье 6.12 целиком уходит на Clockenflap; из Фужуна в Гонконг идём поездом G6079, домой — прямым SU213 11.12 в 11:55. Убраны Фэнхуан, зоопарк с пандами и музеи Чунцина; добавлены храм архатов, галерея, Куйсинлоу и крыша Raffles City. Бюджет обновлён под 14 ночей. Фото — Wikimedia Commons (клик по фото открывает источник). Карта — OpenStreetMap. Даты и цены требуют проверки при покупке.</p>
+    <p>Версия 10 · 01.11.2026. Семь вариантов маршрута, основной — третий: Чунцин (4 ночи), Чжанцзяцзе (3), Фужун (1) и Гонконг (6), 26.11–11.12.2026. Вылет из Москвы 26.11 со стыковкой — так воскресенье 6.12 целиком уходит на Clockenflap; из Фужуна в Гонконг идём поездом G6079, домой — прямым SU213 11.12 в 11:55. Седьмой вариант — те же города наоборот, 2–15.12, Гонконг первым: прилёт SU212 утром 2.12, поезд G6080 в Фужун 8.12, дальше 23 минуты до гор и Чунцин с прямым GS7941 15.12. Убраны Фэнхуан, зоопарк с пандами и музеи Чунцина; добавлены храм архатов, галерея, Куйсинлоу и крыша Raffles City. Бюджет обновлён под 14 ночей. Фото — Wikimedia Commons (клик по фото открывает источник). Карта — OpenStreetMap. Даты и цены требуют проверки при покупке.</p>
   </footer>
 
 </div>
 
-<script src="assets/data.js?v=13"></script>
-<script src="assets/itinerary.js?v=13"></script>
-<script src="assets/place_photos.js?v=13"></script>
+<script src="assets/data.js?v=14"></script>
+<script src="assets/itinerary.js?v=14"></script>
+<script src="assets/place_photos.js?v=14"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 "use strict";
@@ -499,8 +499,9 @@ const TAGS = {
 /* ---------- сборка дней под выбранный вариант ---------- */
 function buildDays(variant){
   if(!variant) return [];
+  const dates = variant.dates || DATES;
   return (variant.china || []).concat(variant.hk || []).map(function(d, i){
-    return Object.assign({}, d, {n:i+1, date:DATES[i]});
+    return Object.assign({}, d, {n:i+1, date:dates[i]});
   });
 }
 
@@ -536,7 +537,8 @@ function renderSummary(){
       : nights + " " + nightsWord(nights);
     return (i > 0 ? '<span class="arrow">→</span>' : '') +
       '<span class="city">' + CITIES[s.city].label + '<small>' + label + '</small></span>';
-  }).join("") + '<span class="muted small" style="margin-left:6px">· 14 ночей</span>';
+  const total = days.length ? days.length - 1 : 0;
+  }).join("") + '<span class="muted small" style="margin-left:6px">· ' + total + ' ' + nightsWord(total) + '</span>';
 }
 
 /* ---------- рендер: карточки вариантов ---------- */
@@ -546,6 +548,9 @@ function renderVariants(){
     const p = PHOTOS[v.photo];
     const img = p && p.src ? '<img src="' + p.src + '" alt="' + v.title + '" loading="lazy">' : '';
     const isActive = v.id === activeId;
+    const range = v.dates && v.dates.length
+      ? ' · ' + v.dates[0].split(' · ')[0] + '–' + v.dates[v.dates.length - 1].split(' · ')[0]
+      : '';
     const badge = v.main
       ? (isActive ? 'основной · показан сейчас' : 'основной')
       : (isActive ? 'показан сейчас' : 'вариант');
@@ -553,7 +558,7 @@ function renderVariants(){
       '<div class="ph">' + img + '<span class="badge">' + badge + '</span></div>' +
       '<div class="body">' +
         '<h3>' + v.title + '</h3>' +
-        '<div class="cities">' + v.cities.join(' · ') + '</div>' +
+        '<div class="cities">' + v.cities.join(' · ') + range + '</div>' +
         '<div class="summary">' + v.summary + '</div>' +
         '<ul class="pro">' + v.pros.map(function(x){ return '<li>' + x + '</li>'; }).join('') + '</ul>' +
         '<ul class="con">' + v.cons.map(function(x){ return '<li>' + x + '</li>'; }).join('') + '</ul>' +
