@@ -17,6 +17,7 @@ const FX_URL = "https://www.cbr-xml-daily.ru/daily_json.js";
 const CITY_LABELS = Object.freeze({
   cq: "Чунцин",
   zzj: "Чжанцзяцзе",
+  fr: "Фужун",
   hk: "Гонконг",
 });
 

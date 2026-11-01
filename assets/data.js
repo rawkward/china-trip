@@ -371,5 +371,11 @@ window.TRIP_PLACES = {
   "sanya": {"name": "Sanya", "lat": 18.2528, "lon": 109.5119},
   "wuzhizhou": {"name": "Wuzhizhou Island", "lat": 18.3133, "lon": 109.7647},
   "nanshan_sanya": {"name": "Nanshan Guanyin, Sanya", "lat": 18.3030, "lon": 109.2100},
-  "sanyaphx": {"name": "Sanya Phoenix Airport", "lat": 18.3029, "lon": 109.4123}
+  "sanyaphx": {"name": "Sanya Phoenix Airport", "lat": 18.3029, "lon": 109.4123},
+  "luohan_temple": {"name": "Luohan Temple, Chongqing", "lat": 29.5626, "lon": 106.5778},
+  "art_gallery_cq": {"name": "Chongqing Art Gallery", "lat": 29.5602, "lon": 106.5771},
+  "kuixinglou": {"name": "Kuixing Building", "lat": 29.5600, "lon": 106.5736},
+  "raffles_city": {"name": "Raffles City Chongqing", "lat": 29.5676, "lon": 106.5831},
+  "qiansimen_bridge": {"name": "Qiansimen Bridge", "lat": 29.5737, "lon": 106.5724},
+  "west_kowloon": {"name": "Hong Kong West Kowloon Station", "lat": 22.3037, "lon": 114.1649}
 };
