@@ -476,9 +476,9 @@ footer a{color:var(--muted)}
 
 </div>
 
-<script src="assets/data.js?v=16"></script>
-<script src="assets/itinerary.js?v=16"></script>
-<script src="assets/place_photos.js?v=16"></script>
+<script src="assets/data.js?v=17"></script>
+<script src="assets/itinerary.js?v=17"></script>
+<script src="assets/place_photos.js?v=17"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 "use strict";
@@ -529,6 +529,7 @@ function renderSummary(){
     else groups.push({city:d.city, count:1});
   });
   const el = document.getElementById("routesummary");
+  const total = days.length ? days.length - 1 : 0;
   el.innerHTML = groups.map(function(s, i){
     const isLast = i === groups.length - 1;
     const nights = isLast ? s.count - 1 : s.count;
@@ -537,7 +538,6 @@ function renderSummary(){
       : nights + " " + nightsWord(nights);
     return (i > 0 ? '<span class="arrow">→</span>' : '') +
       '<span class="city">' + CITIES[s.city].label + '<small>' + label + '</small></span>';
-  const total = days.length ? days.length - 1 : 0;
   }).join("") + '<span class="muted small" style="margin-left:6px">· ' + total + ' ' + nightsWord(total) + '</span>';
 }
 
