@@ -791,7 +791,7 @@ const VARIANTS = [
     budget:"Бюджет: выше среднего",
   },
   {
-    id:"zhangjiajie", title:"Чунцин, Чжанцзяцзе, Фужун и Гонконг с фестивалем", photo:"Zhangjiajie", main:true,
+    id:"zhangjiajie", title:"Чунцин, Чжанцзяцзе, Фужун и Гонконг с фестивалем", photo:"Zhangjiajie",
     china:[V3_CQ_ARRIVE, V3_CQ_OLD, V3_CQ_WULONG, V3_CQ_RAF, V3_TO_ZJJ, V3_ZJJ_AVATAR, V3_ZJJ_TIANZI, V3_FURONG, V3_FURONG_HK, V3_HK_FEST, V3_HK_CENTRAL, V3_HK_KOWLOON, V3_HK_DISNEY, V3_HK_LANTAU, V3_HK_DEPART],
     hk:[],
     cities:["Чунцин 4 ночи","Чжанцзяцзе 3","Фужун 1","Гонконг 6, с фестивалем и Диснеем"],
