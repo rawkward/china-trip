@@ -1,0 +1,243 @@
+import {
+  BudgetError,
+  mergeItem,
+  normalizeCategoryInput,
+  normalizeItemInput,
+  resolveParams,
+  validateParamsPatch,
+} from '../../shared/budget-core.js';
+import { preflight, withCors } from './cors.js';
+import * as db from './db.js';
+import { signToken, verifyPassword, verifyToken, TOKEN_TTL_SECONDS } from './auth.js';
+
+const MAX_BODY_BYTES = 32 * 1024;
+const THROTTLE_WINDOW_SECONDS = 15 * 60;
+const MAX_FAILURES = 5;
+const PRUNE_WINDOW_SECONDS = 24 * 60 * 60;
+
+class HttpError extends Error {
+  constructor(status, payload) {
+    super(payload && payload.error ? payload.error : 'http_error');
+    this.name = 'HttpError';
+    this.status = status;
+    this.payload = payload;
+  }
+}
+
+function json(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { 'content-type': 'application/json; charset=utf-8' },
+  });
+}
+
+function errorResponse(err) {
+  if (err instanceof HttpError) return json(err.payload, err.status);
+  if (err instanceof BudgetError) {
+    return json(
+      {
+        error: 'validation',
+        details:
+          err.details && err.details.length > 0
+            ? err.details.map((detail) => ({ code: err.code, ...detail }))
+            : [{ code: err.code, message: err.message }],
+      },
+      422,
+    );
+  }
+  console.error('unhandled error:', err && err.message);
+  return json({ error: 'internal' }, 500);
+}
+
+async function readJsonBody(request) {
+  const text = await request.text();
+  if (new TextEncoder().encode(text).length > MAX_BODY_BYTES) {
+    throw new HttpError(413, { error: 'body_too_large' });
+  }
+  if (text.trim() === '') throw new HttpError(400, { error: 'bad_json' });
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new HttpError(400, { error: 'bad_json' });
+  }
+  if (data === null || typeof data !== 'object' || Array.isArray(data)) {
+    throw new HttpError(400, { error: 'bad_json' });
+  }
+  return data;
+}
+
+async function requireAuth(request, env) {
+  if (!env.TOKEN_SECRET) throw new HttpError(500, { error: 'server_misconfigured' });
+  const header = request.headers.get('Authorization') || '';
+  const match = /^Bearer\s+(\S+)$/i.exec(header);
+  if (!match) throw new HttpError(401, { error: 'unauthorized' });
+  const payload = await verifyToken(env.TOKEN_SECRET, match[1], db.nowSeconds());
+  if (!payload) throw new HttpError(401, { error: 'unauthorized' });
+  return payload;
+}
+
+function clientIp(request) {
+  return request.headers.get('CF-Connecting-IP') || 'unknown';
+}
+
+async function handleLogin(request, env) {
+  if (!env.BUDGET_PASSWORD || !env.TOKEN_SECRET) {
+    throw new HttpError(500, { error: 'server_misconfigured' });
+  }
+  const ip = clientIp(request);
+  const now = db.nowSeconds();
+  await db.pruneLoginAttempts(env.DB, now - PRUNE_WINDOW_SECONDS);
+
+  const windowStart = now - THROTTLE_WINDOW_SECONDS;
+  const failures = await db.countLoginFailures(env.DB, ip, windowStart);
+  if (failures >= MAX_FAILURES) {
+    const earliest = await db.earliestLoginFailure(env.DB, ip, windowStart);
+    const retryAfter = Math.max(1, Math.ceil((earliest ?? now) + THROTTLE_WINDOW_SECONDS - now));
+    throw new HttpError(429, { error: 'too_many_attempts', retry_after: retryAfter });
+  }
+
+  const body = await readJsonBody(request);
+  const password = typeof body.password === 'string' ? body.password : '';
+  const ok = await verifyPassword(password, env.BUDGET_PASSWORD);
+
+  if (!ok) {
+    await db.recordLoginFailure(env.DB, ip, now);
+    throw new HttpError(403, { error: 'wrong_password' });
+  }
+
+  await db.clearLoginFailures(env.DB, ip);
+  const expiresAt = now + TOKEN_TTL_SECONDS;
+  const token = await signToken(env.TOKEN_SECRET, expiresAt);
+  return json({ token, expires_at: expiresAt });
+}
+
+async function handleGetBudget(env) {
+  const { params, updated_at } = await db.readParams(env.DB);
+  const categories = await db.listCategories(env.DB);
+  const items = await db.listItems(env.DB);
+
+  let version = updated_at ? updated_at * 1000 : 0;
+  for (const category of categories) version = Math.max(version, category.updated_at * 1000);
+  for (const item of items) version = Math.max(version, item.updated_at * 1000);
+  if (!version) version = Date.now();
+
+  return json({ params, params_updated_at: updated_at, categories, items, version });
+}
+
+async function handlePatchParams(request, env) {
+  const patch = validateParamsPatch(await readJsonBody(request));
+  const { params } = await db.readParams(env.DB);
+  const next = resolveParams({ ...params, ...patch });
+  await db.writeParams(env.DB, next, db.nowSeconds());
+  return json(next);
+}
+
+async function handleCreateCategory(request, env) {
+  const input = normalizeCategoryInput(await readJsonBody(request));
+  const category = await db.createCategory(env.DB, { id: `cat_${crypto.randomUUID()}`, name: input.name });
+  return json(category);
+}
+
+async function handleUpdateCategory(request, env, id) {
+  const fields = normalizeCategoryInput(await readJsonBody(request), { partial: true });
+  const category = await db.updateCategory(env.DB, id, fields);
+  if (!category) throw new HttpError(404, { error: 'not_found' });
+  return json(category);
+}
+
+async function handleDeleteCategory(env, id) {
+  const result = await db.deleteCategory(env.DB, id);
+  if (!result) throw new HttpError(404, { error: 'not_found' });
+  return json({ deleted: true, items_deleted: result.items_deleted });
+}
+
+async function assertCategoryExists(env, categoryId) {
+  const category = await db.getCategory(env.DB, categoryId);
+  if (!category) throw new HttpError(404, { error: 'not_found' });
+}
+
+async function handleCreateItem(request, env) {
+  const body = await readJsonBody(request);
+  const { params } = await db.readParams(env.DB);
+  const input = normalizeItemInput(body, params);
+  await assertCategoryExists(env, input.category_id);
+  const item = await db.createItem(env.DB, { ...input, id: `itm_${crypto.randomUUID()}` });
+  return json(item);
+}
+
+async function handleUpdateItem(request, env, id) {
+  const existing = await db.getItem(env.DB, id);
+  if (!existing) throw new HttpError(404, { error: 'not_found' });
+  const patch = await readJsonBody(request);
+
+  let requestedSort;
+  if (Object.prototype.hasOwnProperty.call(patch, 'sort')) {
+    if (patch.sort === null) throw new HttpError(422, { error: 'validation', details: [{ field: 'sort', message: 'sort must be a number' }] });
+    if (typeof patch.sort !== 'number' || !Number.isFinite(patch.sort)) {
+      throw new HttpError(422, { error: 'validation', details: [{ field: 'sort', message: 'sort must be a number' }] });
+    }
+    requestedSort = Math.trunc(patch.sort);
+  }
+
+  const merged = mergeItem(existing, patch);
+  const { params } = await db.readParams(env.DB);
+  const input = normalizeItemInput(merged, params);
+  await assertCategoryExists(env, input.category_id);
+  const item = await db.updateItem(env.DB, id, input, requestedSort);
+  if (!item) throw new HttpError(404, { error: 'not_found' });
+  return json(item);
+}
+
+async function handleDeleteItem(env, id) {
+  const deleted = await db.deleteItem(env.DB, id);
+  if (!deleted) throw new HttpError(404, { error: 'not_found' });
+  return json({ deleted: true });
+}
+
+async function route(request, env, url) {
+  const { pathname } = url;
+  const method = request.method;
+
+  if (method === 'OPTIONS') return preflight(request);
+
+  if (pathname === '/api/health' && method === 'GET') return json({ ok: true });
+  if (pathname === '/api/login' && method === 'POST') return handleLogin(request, env);
+
+  if (!pathname.startsWith('/api/')) throw new HttpError(404, { error: 'not_found' });
+
+  await requireAuth(request, env);
+
+  if (pathname === '/api/budget' && method === 'GET') return handleGetBudget(env);
+  if (pathname === '/api/params' && method === 'PATCH') return handlePatchParams(request, env);
+  if (pathname === '/api/categories' && method === 'POST') return handleCreateCategory(request, env);
+  if (pathname === '/api/items' && method === 'POST') return handleCreateItem(request, env);
+
+  const categoryMatch = /^\/api\/categories\/([^/]+)$/.exec(pathname);
+  if (categoryMatch) {
+    const id = decodeURIComponent(categoryMatch[1]);
+    if (method === 'PATCH') return handleUpdateCategory(request, env, id);
+    if (method === 'DELETE') return handleDeleteCategory(env, id);
+  }
+
+  const itemMatch = /^\/api\/items\/([^/]+)$/.exec(pathname);
+  if (itemMatch) {
+    const id = decodeURIComponent(itemMatch[1]);
+    if (method === 'PATCH') return handleUpdateItem(request, env, id);
+    if (method === 'DELETE') return handleDeleteItem(env, id);
+  }
+
+  throw new HttpError(400, { error: 'bad_route' });
+}
+
+export default {
+  async fetch(request, env) {
+    let response;
+    try {
+      response = await route(request, env, new URL(request.url));
+    } catch (err) {
+      response = errorResponse(err);
+    }
+    return withCors(response, request);
+  },
+};

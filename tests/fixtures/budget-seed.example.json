@@ -1,0 +1,46 @@
+{
+  "params": {
+    "cny_rate": 10,
+    "hkd_rate": 10,
+    "people": 2,
+    "trip_days": 3,
+    "reserve_pct": 0.1,
+    "test_nights": 1,
+    "test_hotel": 100,
+    "test_food": 50,
+    "test_transport": 10
+  },
+  "categories": [
+    {
+      "name": "Dummy category",
+      "items": [
+        {
+          "name": "Dummy plain item",
+          "currency": "RUB",
+          "note": "example only",
+          "qty": 2,
+          "unit_price": 100
+        },
+        {
+          "name": "Dummy formula item",
+          "currency": "CNY",
+          "note": "example only",
+          "qty_formula": "people*test_nights",
+          "price_formula": "test_hotel"
+        }
+      ]
+    },
+    {
+      "name": "Dummy category two",
+      "items": [
+        {
+          "name": "Dummy HKD item",
+          "currency": "HKD",
+          "note": "",
+          "qty": 1,
+          "unit_price": 50
+        }
+      ]
+    }
+  ]
+}

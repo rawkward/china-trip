@@ -1,0 +1,36 @@
+CREATE TABLE IF NOT EXISTS settings (
+  key        TEXT PRIMARY KEY,
+  value      TEXT NOT NULL,
+  updated_at INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS categories (
+  id         TEXT PRIMARY KEY,
+  name       TEXT NOT NULL,
+  sort       INTEGER NOT NULL,
+  created_at INTEGER NOT NULL,
+  updated_at INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS items (
+  id            TEXT PRIMARY KEY,
+  category_id   TEXT NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
+  name          TEXT NOT NULL,
+  qty           REAL,
+  qty_formula   TEXT,
+  unit_price    REAL,
+  price_formula TEXT,
+  currency      TEXT NOT NULL CHECK (currency IN ('RUB','CNY','HKD')),
+  note          TEXT NOT NULL DEFAULT '',
+  sort          INTEGER NOT NULL,
+  created_at    INTEGER NOT NULL,
+  updated_at    INTEGER NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS items_category_idx ON items(category_id, sort);
+
+CREATE TABLE IF NOT EXISTS login_attempts (
+  ip TEXT NOT NULL,
+  ts INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS login_attempts_idx ON login_attempts(ip, ts);

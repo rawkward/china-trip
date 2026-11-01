@@ -1,0 +1,8 @@
+name = "china-trip-budget"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "china-trip-budget"
+database_id = "bee3e353-0c61-4326-b0ad-f0a2b48afef6"

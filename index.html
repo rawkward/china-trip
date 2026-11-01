@@ -186,6 +186,161 @@ footer a{color:var(--muted)}
   .map-toggle{display:inline-block}
   .notes{grid-template-columns:1fr}
 }
+
+/* budget */
+.bud-stage input,.bud-stage select{
+  font-family:var(--sans); font-size:.9rem; color:var(--ink); background:#fff;
+  border:1px solid var(--line); border-radius:9px; padding:8px 10px; min-width:0;
+}
+.bud-stage input:focus,.bud-stage select:focus{outline:2px solid var(--accent-soft); border-color:var(--accent)}
+.bud-card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:20px}
+.bud-locked{max-width:560px}
+.bud-locked h3{margin:0 0 8px; font-family:var(--serif); font-size:1.35rem}
+.bud-eyebrow{font-size:.72rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:6px}
+.bud-login{margin-top:16px}
+.bud-label{display:block; font-size:.78rem; font-weight:600; color:var(--muted); margin-bottom:6px}
+.bud-login-row{display:flex; gap:8px}
+.bud-login-row input{flex:1}
+.bud-error{color:var(--accent); font-size:.82rem; min-height:1.2em; margin:8px 0 0}
+.bud-btn{
+  font-family:var(--sans); font-size:.86rem; font-weight:600; color:var(--ink);
+  background:#fff; border:1px solid var(--line); border-radius:9px; padding:8px 14px;
+  cursor:pointer; white-space:nowrap;
+}
+.bud-btn:hover{border-color:var(--accent); color:var(--accent)}
+.bud-btn:disabled{opacity:.45; cursor:default}
+.bud-primary{background:var(--accent); border-color:var(--accent); color:#fff}
+.bud-primary:hover{background:#9a3412; border-color:#9a3412; color:#fff}
+.bud-btn-sm{font-size:.78rem; padding:5px 10px}
+.bud-icon{
+  font-family:var(--sans); font-size:.86rem; line-height:1; color:var(--muted); background:#fff;
+  border:1px solid var(--line); border-radius:7px; padding:5px 8px; cursor:pointer;
+}
+.bud-icon:hover{border-color:var(--accent); color:var(--accent)}
+.bud-icon:disabled{opacity:.35; cursor:default}
+.bud-skeleton{display:flex; flex-direction:column; gap:10px}
+.bud-skeleton span{
+  display:block; height:16px; border-radius:6px;
+  background:linear-gradient(90deg,var(--bg2),#fff,var(--bg2));
+  background-size:200% 100%; animation:bud-shimmer 1.2s infinite;
+}
+@keyframes bud-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.bud-cache{font-size:.78rem; color:var(--muted); margin-bottom:10px; display:flex; gap:8px; align-items:center}
+.bud-summary{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; margin-bottom:14px}
+.bud-sum-card{background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 14px}
+.bud-sum-card .lbl{font-size:.7rem; color:var(--muted); font-weight:700; letter-spacing:.06em; text-transform:uppercase}
+.bud-sum-card .val{font-family:var(--serif); font-size:1.1rem; font-variant-numeric:tabular-nums; margin-top:4px}
+.bud-sum-total{background:var(--accent-soft); border-color:#f0cdbb}
+.bud-banner{
+  display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+  background:var(--accent-soft); border:1px solid #f0cdbb; border-radius:12px;
+  padding:10px 14px; margin-bottom:14px; font-size:.88rem;
+}
+.bud-banner-actions{display:flex; gap:8px}
+.bud-params{background:#fff; border:1px solid var(--line); border-radius:14px; padding:0 16px; margin-bottom:16px}
+.bud-params summary{
+  cursor:pointer; padding:14px 0; font-weight:600; font-family:var(--serif);
+  font-size:1.05rem; list-style:none;
+}
+.bud-params summary::-webkit-details-marker{display:none}
+.bud-params summary::after{content:"▸"; float:right; color:var(--muted); transition:transform .2s}
+.bud-params[open] summary::after{transform:rotate(90deg)}
+.bud-params-body{padding-bottom:16px}
+.bud-params-grid{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px}
+.bud-field{display:flex; flex-direction:column; gap:4px; font-size:.76rem; font-weight:600; color:var(--muted)}
+.bud-field input,.bud-field select{width:100%}
+.bud-rates{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:10px 0}
+.bud-fx-note{grid-column:1/-1; font-size:.76rem; font-weight:400; color:var(--muted)}
+.bud-city{border-top:1px dashed var(--line); margin-top:12px; padding-top:12px}
+.bud-city h4{margin:0 0 8px; font-family:var(--serif); font-size:1rem}
+.bud-items{display:flex; flex-direction:column; gap:14px}
+.bud-cat{background:#fff; border:1px solid var(--line); border-radius:14px; overflow:hidden}
+.bud-cat-head{
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:12px 14px;
+  border-bottom:1px solid var(--line); background:linear-gradient(180deg,#fff,#fdfbf7);
+}
+.bud-cat-name{font-family:var(--serif); font-weight:600; font-size:1.02rem}
+.bud-cat-meta{font-size:.76rem; color:var(--muted); font-variant-numeric:tabular-nums}
+.bud-cat-sub{font-weight:700; color:var(--accent); font-variant-numeric:tabular-nums; font-size:.9rem; margin-left:auto}
+.bud-cat-actions{display:flex; gap:4px; align-items:center}
+.bud-table-wrap{overflow-x:auto}
+.bud-table{width:100%; border-collapse:collapse; font-size:.86rem}
+.bud-table th{
+  text-align:left; font-size:.68rem; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--muted); font-weight:700; padding:8px 10px; border-bottom:1px solid var(--line);
+}
+.bud-table th.num{text-align:right}
+.bud-table td{padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top}
+.bud-table tbody tr:last-child td{border-bottom:0}
+.bud-table .num{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
+.bud-item-name{font-weight:500}
+.bud-item-note{font-size:.76rem; color:var(--muted); margin-top:2px; max-width:46ch}
+.bud-formula{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.78rem;
+  background:var(--bg2); border-radius:5px; padding:1px 5px; white-space:nowrap;
+}
+.bud-row-actions{display:flex; gap:2px; justify-content:flex-end}
+.bud-actions{padding-top:6px}
+.bud-empty-row td{color:var(--muted); font-size:.82rem}
+.bud-form{background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:12px}
+.bud-form-grid{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-bottom:10px}
+.bud-field-wide{grid-column:span 2}
+.bud-operand{display:flex; gap:4px}
+.bud-operand input{flex:1; min-width:0; width:100%}
+.bud-toggle{
+  font-family:var(--sans); font-size:.7rem; white-space:nowrap; cursor:pointer;
+  border:1px solid var(--line); background:#fff; border-radius:7px; padding:0 8px; color:var(--muted);
+}
+.bud-toggle.on{background:var(--ink); border-color:var(--ink); color:#fff}
+.bud-form-actions{display:flex; gap:8px; margin-top:10px}
+.bud-hint{font-size:.74rem; font-weight:400; color:var(--muted); margin-top:8px; overflow-wrap:anywhere}
+.bud-cat-rename{display:flex; gap:6px; align-items:center; flex-wrap:wrap; width:100%}
+.bud-cat-rename input{flex:1; min-width:140px}
+.bud-cat-new{
+  display:flex; gap:6px; align-items:center; flex-wrap:wrap; width:100%;
+  padding:12px 14px; border-top:1px solid var(--line); background:var(--bg);
+  border-radius:0 0 14px 14px;
+}
+.bud-cat-new input{flex:1; min-width:140px}
+.bud-add-cat{display:flex; justify-content:flex-start}
+.bud-toasts{
+  position:fixed; right:16px; bottom:16px; z-index:1300; display:flex; flex-direction:column;
+  gap:8px; max-width:min(360px,calc(100vw - 32px));
+}
+.bud-toast{
+  background:var(--ink); color:#fff; border-radius:10px; padding:10px 14px; font-size:.85rem;
+  box-shadow:0 10px 30px -12px rgba(28,25,23,.5); overflow-wrap:anywhere;
+}
+.bud-toast.error{background:var(--accent)}
+.bud-toast.success{background:#2f7d3a}
+
+@media (max-width:940px){
+  .bud-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bud-params-grid{grid-template-columns:1fr}
+  .bud-rates{grid-template-columns:1fr}
+  .bud-form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bud-table thead{display:none}
+  .bud-table,.bud-table tbody,.bud-table tr,.bud-table td{display:block; width:100%}
+  .bud-table tr{border-bottom:1px solid var(--line); padding:8px 12px}
+  .bud-table tbody tr:last-child{border-bottom:0}
+  .bud-table td{border:0; padding:3px 0; display:flex; gap:10px; text-align:left; white-space:normal}
+  .bud-table td::before{
+    content:attr(data-label); flex:0 0 40%; font-size:.7rem; font-weight:700; color:var(--muted);
+    text-transform:uppercase; letter-spacing:.04em;
+  }
+  .bud-table td.bud-actions{padding-top:8px; justify-content:flex-end}
+  .bud-table td.bud-actions::before{content:""; flex:0 0 0; display:none}
+  .bud-table .bud-edit-row td,.bud-table td[colspan]{display:block; padding:12px}
+  .bud-table .bud-edit-row td::before,.bud-table td[colspan]::before{display:none}
+  .bud-table .num{text-align:left}
+  .bud-empty-row td::before{display:none}
+}
+@media (max-width:560px){
+  .bud-summary{grid-template-columns:1fr}
+  .bud-params-grid{grid-template-columns:1fr}
+  .bud-form-grid{grid-template-columns:1fr}
+  .bud-field-wide{grid-column:1/-1}
+}
 </style>
 </head>
 <body>
@@ -198,7 +353,8 @@ footer a{color:var(--muted)}
     <a href="#booking">Брони</a>
     <a href="#tours">Экскурсии</a>
     <a href="#links">Ссылки</a>
-    <a href="#notes">Бюджет</a>
+    <a href="#budget">Бюджет</a>
+    <a href="#notes">Ритм</a>
   </nav>
 </header>
 
@@ -288,11 +444,24 @@ footer a{color:var(--muted)}
 
   <hr class="rule">
 
+  <section id="budget">
+    <div class="head">
+      <div>
+        <div class="eyebrow">Деньги поездки</div>
+        <h2>Бюджет</h2>
+        <p class="muted small">Статьи расходов, параметры поездки и живые итоги в рублях по курсу CNY и HKD. Раздел закрыт общим паролем.</p>
+      </div>
+    </div>
+    <div id="budgetApp"></div>
+  </section>
+
+  <hr class="rule">
+
   <section id="notes">
     <div class="head">
       <div>
         <div class="eyebrow">Деньги и темп</div>
-        <h2>Бюджет и ритм</h2>
+        <h2>Ритм и заметки</h2>
       </div>
     </div>
     <div class="notes" id="notesGrid"></div>
@@ -753,5 +922,7 @@ renderDays();
 document.addEventListener("DOMContentLoaded", initMap);
 if(document.readyState !== "loading") initMap();
 </script>
+<script src="assets/budget-config.js?v=1"></script>
+<script type="module" src="assets/budget.js?v=1"></script>
 </body>
 </html>
