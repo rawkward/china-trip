@@ -179,6 +179,10 @@ window.TRIP_PLACE_PHOTOS = {
   "src": "assets/img/places/mong_kok.jpg",
   "page": "https://commons.wikimedia.org/wiki/File:1_mong_kok_hong_kong_night_2011.JPG"
  },
+ "nanbinlu": {
+  "src": "assets/img/places/nanbinlu.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:重庆市南岸区南滨路建筑、趸船和长江.jpg"
+ },
  "nanshan_cq": {
   "src": "assets/img/places/nanshan_cq.jpg",
   "page": "https://commons.wikimedia.org/wiki/File:Chongqing_Skyline_At_Night.png"

@@ -301,6 +301,7 @@ window.TRIP_PLACES = {
     "lat": 22.2941468,
     "lon": 114.1757887
   },
+  "nanbinlu": {"name": "Nanbin Road, Nan'an", "lat": 29.5522, "lon": 106.5886},
   "nanshan_cq": {
     "name": "Nanshan",
     "lat": 29.5620786,
