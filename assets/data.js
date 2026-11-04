@@ -375,6 +375,8 @@ window.TRIP_PLACES = {
   "longsheng": {"name": "Longji Rice Terraces", "lat": 25.8797, "lon": 110.1333},
   "shanghai": {"name": "Shanghai", "lat": 31.2304, "lon": 121.4737},
   "bund": {"name": "The Bund", "lat": 31.2397, "lon": 121.4900},
+  "nanjing_road": {"name": "Nanjing Road East", "lat": 31.2377, "lon": 121.4753},
+  "yuyuan": {"name": "Yuyuan Bazaar", "lat": 31.2289, "lon": 121.4880},
   "former_french": {"name": "Former French Concession", "lat": 31.2100, "lon": 121.4450},
   "tianzifang": {"name": "Tianzifang", "lat": 31.2107, "lon": 121.4644},
   "shanghai_museum": {"name": "Power Station of Art", "lat": 31.2088, "lon": 121.4969},
