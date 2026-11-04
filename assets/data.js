@@ -395,5 +395,6 @@ window.TRIP_PLACES = {
   "qiansimen_bridge": {"name": "Qiansimen Bridge", "lat": 29.5737, "lon": 106.5724},
   "west_kowloon": {"name": "Hong Kong West Kowloon Station", "lat": 22.3037, "lon": 114.1649},
   "futian": {"name": "Futian Station, Shenzhen", "lat": 22.5247, "lon": 114.0561},
+  "xinzhou": {"name": "Xinzhou 3rd Street, Futian, Shenzhen", "lat": 22.5253, "lon": 114.0388},
   "sz_airport": {"name": "Shenzhen Bao'an Airport", "lat": 22.6393, "lon": 113.8107}
 };

@@ -127,13 +127,13 @@ window.TRIP_PLACE_PHOTOS = {
   "src": "assets/img/places/humble_garden.jpg",
   "page": "https://commons.wikimedia.org/wiki/File:Humble_Administrator%27s_Garden_Suzhou_November_2017_003.jpg"
  },
- "jiefangbei": {
-  "src": "assets/img/places/jiefangbei.jpg",
-  "page": "https://commons.wikimedia.org/wiki/File:Jiefangbei_CBD_31323-Chongqing_(45436205655).jpg"
- },
  "jiangbeizui": {
   "src": "assets/img/places/jiangbeizui.jpg",
   "page": "https://commons.wikimedia.org/wiki/File:%E6%B1%9F%E5%8C%97%E5%98%B4%E7%9A%84%E5%95%86%E4%B8%9A%E4%BD%8F%E5%AE%85%E3%80%81%E5%95%86%E4%B8%9A%E8%A1%97%E5%8C%BA%E3%80%81%E5%85%AC%E5%9B%AD%E4%BB%A5%E5%8F%8A%E6%9C%9D%E5%A4%A9%E9%97%A8%E5%A4%A7%E6%A1%A5.jpg"
+ },
+ "jiefangbei": {
+  "src": "assets/img/places/jiefangbei.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Jiefangbei_CBD_31323-Chongqing_(45436205655).jpg"
  },
  "jinyun_mountain": {
   "src": "assets/img/jinyun-mountain.jpg",
@@ -186,10 +186,6 @@ window.TRIP_PLACE_PHOTOS = {
  "mong_kok": {
   "src": "assets/img/places/mong_kok.jpg",
   "page": "https://commons.wikimedia.org/wiki/File:1_mong_kok_hong_kong_night_2011.JPG"
- },
- "sham_shui_po": {
-  "src": "assets/img/places/sham_shui_po.jpg",
-  "page": "https://commons.wikimedia.org/wiki/File:Sham_Shui_Po_Hong_Kong_(16072371561).jpg"
  },
  "nanbinlu": {
   "src": "assets/img/places/nanbinlu.jpg",
@@ -246,6 +242,10 @@ window.TRIP_PLACE_PHOTOS = {
  "sera_monastery": {
   "src": "assets/img/places/sera_monastery.jpg",
   "page": "https://commons.wikimedia.org/wiki/File:Monks_debating,_Sera_monastery_in_Tibet,_2013.jpg"
+ },
+ "sham_shui_po": {
+  "src": "assets/img/places/sham_shui_po.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Sham_Shui_Po_Hong_Kong_(16072371561).jpg"
  },
  "shamian": {
   "src": "assets/img/places/shamian.jpg",
@@ -330,6 +330,10 @@ window.TRIP_PLACE_PHOTOS = {
  "wuzhizhou": {
   "src": "assets/img/places/wuzhizhou.jpg",
   "page": "https://commons.wikimedia.org/wiki/File:Haitang,_Sanya,_Hainan,_China_-_panoramio_(4).jpg"
+ },
+ "xinzhou": {
+  "src": "assets/img/places/xinzhou.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:XINZHOU_ROAD,_FUTIAN_DISTRICT,_SHENZHEN_(40).jpg"
  },
  "yamdrok_lake": {
   "src": "assets/img/places/yamdrok_lake.jpg",
