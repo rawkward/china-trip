@@ -186,20 +186,20 @@ test('seed totals match the §6 acceptance table', (t) => {
     return;
   }
   const flat = flattenSeed(seed.data);
-  assert.equal(flat.items.length, 36);
+  assert.equal(flat.items.length, 35);
   assert.equal(flat.categories.length, 8);
 
   const totals = computeBudget({ params: seed.data.params, ...flat });
 
-  assert.equal(Math.round(totals.base), 389139);
-  assert.equal(totals.reserve, 38914);
-  assert.equal(Math.round(totals.total), 428053);
-  assert.equal(Math.round(totals.perPerson), 214027);
-  assert.equal(Math.round(totals.perDay), 14268);
+  assert.equal(Math.round(totals.base), 369909);
+  assert.equal(totals.reserve, 36991);
+  assert.equal(Math.round(totals.total), 406900);
+  assert.equal(Math.round(totals.perPerson), 203450);
+  assert.equal(Math.round(totals.perDay), 13563);
 
   const expected = {
     'Дорога в Москву и обратно': 10400,
-    'Перелёты': 106156,
+    'Перелёты': 86926,
     'Ж/д внутри Китая': 27873,
     'Проживание': 78535,
     'Билеты и развлечения': 69733,
@@ -210,7 +210,7 @@ test('seed totals match the §6 acceptance table', (t) => {
   const actual = Object.fromEntries(totals.categories.map((c) => [c.name, Math.round(c.subtotal)]));
   assert.deepEqual(actual, expected);
 
-  assert.equal(totals.categories.reduce((sum, c) => sum + c.count, 0), 36);
+  assert.equal(totals.categories.reduce((sum, c) => sum + c.count, 0), 35);
 });
 
 // ---------------------------------------------------------------------------
