@@ -163,7 +163,7 @@ base             = Σ amountRub over all items
 reserve          = round(base × reserve_pct)
 total            = base + reserve
 perPerson        = total / people
-perDay           = total / people / trip_days        // trip_days = 15 in the seed
+perDay           = total / people / trip_days        // trip_days = 16 in the seed
 ```
 
 Per-category sums use the same conversion. Rounding is applied only for display and for
@@ -174,15 +174,15 @@ Per-category sums use the same conversion. Rounding is applied only for display 
 
 | Metric | Value |
 |---|---|
-| base | 369 909 ₽ |
-| reserve | 36 991 ₽ |
-| total | 406 900 ₽ |
-| per person | 203 450 ₽ |
-| per person per day | 13 563 ₽ |
+| base | 375 464 ₽ |
+| reserve | 37 546 ₽ |
+| total | 413 010 ₽ |
+| per person | 206 505 ₽ |
+| per person per day | 12 907 ₽ |
 
 and per-category base sums: Дорога в Москву и обратно 10 400, Перелёты 86 926,
-Ж/д внутри Китая 27 873, Проживание 78 535, Билеты и развлечения 69 733,
-Еда 74 908, Транспорт в городе 16 134, Прочее 5 400. Items in the seed: 35.
+Ж/д внутри Китая 29 928, Проживание 82 035, Билеты и развлечения 69 733,
+Еда 74 908, Транспорт в городе 16 134, Прочее 5 400. Items in the seed: 37.
 
 ## 7. HTTP API
 
