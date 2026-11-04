@@ -2,7 +2,7 @@
    Один объект на точку. match — подстроки названий остановок в itinerary.js,
    по ним в маршруте появляется ссылка «в справочнике». */
 window.TRIP_GUIDE = {
-  cityOrder: ["hk", "cq", "zjj", "fr", "sh"],
+  cityOrder: ["hk", "mc", "cq", "zjj", "fr", "sh"],
   kinds: {
     stay:  {label: "Жильё",              eyebrow: "Где жить",        title: "Жильё по городам"},
     food:  {label: "Заведения",          eyebrow: "Еда и напитки",   title: "Заведения по городам"},
@@ -27,6 +27,14 @@ window.TRIP_GUIDE = {
      note:"База из текущего плана: 5 минут до метро Jordan, Temple Street под окнами, до Central Harbourfront 15 минут. Минус — в дни Clockenflap и перед праздниками Джордан дорожает первым, так что разница с Цуэньваном в эти пять ночей может быть в полторы-две цены. Сравнивать с Panda Hotel по итоговой сумме за 5–10.12, а не по цене за ночь.",
      maps:"Eaton HK 香港逸東酒店 380 Nathan Road Jordan Hong Kong",
      match:["Заселение в Джордане", "Заселение, Jordan"]},
+
+    {kind:"stay", city:"hk", id:"attitude-granville",
+     en:"Attitude on Granville", zh:"",
+     addr:"20 Granville Road, Tsim Sha Tsui 尖沙咀加連威老道20號",
+     site:"https://www.attitudegranville.com",
+     hours:"Стойка 24 ч · заезд с 15:00, выезд до 12:00",
+     note:"Бутик-отель на 加連威老道, в двух минутах от сувенирного 海防道 и 8–10 минутах от метро Tsim Sha Tsui: до Star Ferry и набережной пешком, до Central — одна линия. Номера маленькие (гонконгская норма для бутиков), зато район живой и вечером есть где поесть. По ссылке Жени на Ostrovok 4–8.12 — сверять цену за пять ночей с Eaton: разница обычно в пользу того, где в эти даты нет фестиваля.",
+     maps:"Attitude on Granville 20 Granville Road Tsim Sha Tsui Hong Kong"},
 
     /* ==================== ГОНКОНГ · ДОСТОПРИМЕЧАТЕЛЬНОСТИ ==================== */
     {kind:"sight", city:"hk", id:"victoria-peak",
@@ -123,6 +131,48 @@ window.TRIP_GUIDE = {
      note:"Городской фестиваль на набережной Централа: несколько сцен, еда, вид на гавань. Билет на конкретный день через Ticketflap, нужна зарубежная карта — российской не оплатить, решать заранее. Приходить к открытию, чтобы занять место у главной сцены.",
      maps:"Central Harbourfront Event Space 中環海濱活動空間 Hong Kong",
      match:["Clockenflap"]},
+
+    {kind:"sight", city:"hk", id:"ngong-ping-360",
+     en:"Ngong Ping 360 Cable Car", zh:"昂坪360",
+     addr:"11 Tat Tung Road, Tung Chung, Lantau 東涌達東路11號",
+     site:"https://www.np360.com.hk",
+     hours:"Будни 10:00–18:00 · выходные 9:00–18:30",
+     note:"25 минут над заливом и аэропортом до плато Нгон Пин. Стандартная кабинка туда-обратно HK$295, «кристальная» с прозрачным полом дороже. Очередь — главная переменная: к 9:30 это 5–10 минут, к полудню в выходные час. Профилактики публикуются на сайте за неделю, в декабре бывает остановка на день.",
+     maps:"Ngong Ping 360 Cable Car 昂坪360 Tung Chung Lantau",
+     match:["Ngong Ping 360"]},
+
+    {kind:"sight", city:"hk", id:"tian-tan-buddha",
+     en:"Tian Tan Buddha (Big Buddha)", zh:"天壇大佛",
+     addr:"Ngong Ping, Lantau 大嶼山昂坪", 
+     hours:"10:00–17:30 ежедневно · вход свободный",
+     note:"34-метровая бронзовая статуя на 268 ступенях: подниматься пешком, вход бесплатный, платный только музей внутри (HK$78 с талоном на вегетарианский обед). Рядом монастырь По Линь 寶蓮禪寺, 09:00–18:00, кухня до 16:30. Наверху ветрено и заметно холоднее города.",
+     maps:"Tian Tan Buddha 天坛大佛 Ngong Ping Lantau Hong Kong",
+     match:["Большой Будда (Tian Tan)"]},
+
+    {kind:"sight", city:"hk", id:"tai-o",
+     en:"Tai O Fishing Village", zh:"大澳",
+     addr:"Tai O, Lantau 大嶼山大澳",
+     hours:"Круглосуточно · деревня живая, лавки до вечера",
+     note:"Свайные дома на воде, лодки между домами, сушёная рыба и креветочная паста. Автобус 21 от Нгон Пин 15 минут, от Tung Chung — 50 минут. Полтора-два часа хватает; брать лодочную прогулку у причала на месте, а не «тур» у входа.",
+     maps:"Tai O Fishing Village 大澳 Lantau Hong Kong",
+     match:["Деревня Tai O", "Tai O"]},
+
+    /* ==================== МАКАО ==================== */
+    {kind:"sight", city:"mc", id:"macau-ferry",
+     en:"Hong Kong–Macau Ferry Terminal", zh:"港澳碼頭",
+     addr:"Shun Tak Centre, 200 Connaught Road Central, Sheung Wan 上環干諾道中200號信德中心",
+     hours:"Рейсы с 07:00 до полуночи, каждые 15–30 минут",
+     note:"Паром 55–60 минут, HK$175–200 в одну сторону (Turbojet и Cotai Water Jet). Идти на верхний уровень Shun Tak Centre, паспортный контроль на месте. Билет брать туда-обратно сразу: обратные вечерние рейсы разбирают. Макао — отдельная граница, россиянам 30 дней без визы.",
+     maps:"Hong Kong Macau Ferry Terminal 港澳碼頭 Shun Tak Centre Sheung Wan",
+     match:["Вариант А · паром в Макао", "Паром обратно в Гонконг"]},
+
+    {kind:"sight", city:"mc", id:"macau-old-town",
+     en:"Senado Square & Ruins of St Paul's", zh:"議事亭前地 · 大三巴牌坊",
+     addr:"Senado Square, Macau 澳門議事亭前地",
+     hours:"Площадь и руины — круглосуточно, снаружи",
+     note:"Португальская плитка, собор, желтые дома и главная открытка Макао — руины 大三巴, в 10 минутах пешком. Идти утром: к 11:00 площадь забита группами. Рядом 大炮台 и музей Макао, если хочется тени и прохлады. Из еды — 葡挞 в любой лавке и обед в 氹仔.",
+     maps:"Senado Square 議事亭前地 Macau",
+     match:["Сенадо-сквер", "Руины собора Св. Павла", "Паром Гонконг → Макао"]},
 
     /* ==================== ГОНКОНГ · ЗАВЕДЕНИЯ ==================== */
     {kind:"food", city:"hk", id:"lan-fong-yuen",
@@ -264,7 +314,7 @@ window.TRIP_GUIDE = {
      maps:"Ho Lee Fook 口利福 3-5 Elgin Street Central Hong Kong",
      match:["Ho Lee Fook"]},
 
-    {kind:"food", city:"hk", id:"aeon",
+    {kind:"food", city:"hk", id:"aeon", badge:"магазин",
      en:"AEON (Panda Place)", zh:"AEON 大窩口店",
      addr:"B2–B3, Panda Place, 3 Tsuen Wah Street, Tsuen Wan 荃灣荃華街3號悅來坊B2-B3",
      site:"https://www.aeonstores.com.hk",
@@ -272,13 +322,21 @@ window.TRIP_GUIDE = {
      note:"Продуктовый японский гипермаркет прямо под Panda Hotel: готовая еда — бенто, суши, жареная курица, салаты — и после 18:00 на неё вешают жёлтые скидки, к 21:00 остаётся самое дешёвое. Ужин на двоих без ресторана выходит HK$80–120. Второй AEON, 荃灣店, на 大河道 88 в Skyline Plaza.",
      maps:"AEON Panda Place 3 Tsuen Wah Street Tsuen Wan Hong Kong"},
 
-    {kind:"food", city:"hk", id:"wellcome",
+    {kind:"food", city:"hk", id:"wellcome", badge:"магазин",
      en:"Wellcome", zh:"惠康",
      addr:"Basement, Far East Consortium Building, 204–206 Nathan Road, Jordan 佐敦彌敦道204-206號地庫",
      site:"https://www.wellcome.com.hk",
      hours:"08:00–23:00",
      note:"Сетевая продуктовая у самого метро Jordan: вода, снеки, йогурты, фрукты, пиво — то, что не хочется тащить из ресторана. Дешевле 7-Eleven на те же позиции; для завтрака в номере берут булочки и молоко. По городу ~280 точек, ближайшая к отелю ищется в приложении сети.",
      maps:"Wellcome 惠康 204 Nathan Road Jordan Hong Kong"},
+
+    {kind:"food", city:"hk", id:"souvenirs-haiphong", badge:"магазин",
+     en:"Hong Kong Souvenir", zh:"海防道 45",
+     addr:"45 Haiphong Road, Tsim Sha Tsui 尖沙咀海防道45號",
+     hours:"Днём, точные часы сверить на месте",
+     note:"Магазин с карты, которую прислала Женя: магниты, открытки, футболки, чай и мелкие сувениры. Три минуты от станции Tsim Sha Tsui, рядом с Harbour City — заходить по пути с набережной. Цены нормальные, без накрутки с Nathan Road; берут наличные и Octopus. Тяжёлое и крупное всё равно выгоднее брать в конце поездки.",
+     maps:"Hong Kong Souvenir Limited 45 Haiphong Road Tsim Sha Tsui",
+     match:["Hong Kong Souvenir"]},
 
     /* ==================== ЧУНЦИН · ЖИЛЬЁ ==================== */
     {kind:"stay", city:"cq", id:"cq-qixinggang",
