@@ -721,5 +721,16 @@
       "File:Tianzifang 20140309 114717.jpg",
       "File:Tianzifang sign.jpg"
     ]
+  },
+  "sham_shui_po": {
+    "file": "assets/img/places/sham_shui_po.jpg",
+    "page": "https://commons.wikimedia.org/wiki/File:Sham_Shui_Po_Hong_Kong_(16072371561).jpg",
+    "title": "File:Sham Shui Po Hong Kong (16072371561).jpg",
+    "artist": "Bernard Spragg. NZ from Christchurch, New Zealand",
+    "license": "CC0",
+    "query": "Sham Shui Po street market Hong Kong (Commons search, hand-picked)",
+    "alt": [
+      "File:Flea market.. Sham Shui Po Hong Kong (15888325029).jpg"
+    ]
   }
 }

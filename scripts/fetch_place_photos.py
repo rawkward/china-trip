@@ -17,6 +17,7 @@ QUERIES = {
     "ngong_ping": "Ngong Ping 360 cable car",
     "tai_o": "Tai O stilt houses",
     "mong_kok": "Mong Kok Hong Kong street night",
+    "sham_shui_po": "Apliu Street Sham Shui Po market",
     "central_harbourfront": "Central Harbourfront Hong Kong",
     "tsim_sha_tsui": "Tsim Sha Tsui promenade skyline",
     "lhasa": "Lhasa city Potala view",

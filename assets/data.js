@@ -166,6 +166,11 @@ window.TRIP_PLACES = {
     "lat": 22.319308,
     "lon": 114.1698076
   },
+  "sham_shui_po": {
+    "name": "Sham Shui Po",
+    "lat": 22.3316578,
+    "lon": 114.1631454
+  },
   "chongqing": {
     "name": "Chongqing",
     "lat": 30.05518,
