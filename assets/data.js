@@ -302,6 +302,16 @@ window.TRIP_PLACES = {
     "lon": 114.1757887
   },
   "nanbinlu": {"name": "Nanbin Road, Nan'an", "lat": 29.5522, "lon": 106.5886},
+  "huangjueya": {
+    "name": "Huangjueya Old Street, Nanshan",
+    "lat": 29.5408,
+    "lon": 106.601
+  },
+  "jiangbeizui": {
+    "name": "Jiangbeizui Riverside Park",
+    "lat": 29.5749521,
+    "lon": 106.5787915
+  },
   "nanshan_cq": {
     "name": "Nanshan",
     "lat": 29.5620786,
