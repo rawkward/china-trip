@@ -36,6 +36,10 @@
 до Central ~30 минут по линии Tsuen Wan, под отелем AEON с готовой едой) и Sai Ying Pun (Ramada Hong Kong
 Harbour View, 239 Queen's Road West, от ~50 $ за ночь — отель, в котором Женя уже жила).
 
+Карточки с `badge:"альтернатива"` в «Достопримечательностях» — необязательные места на замену плану:
+Garden Hill, Mei Ho House и рынок Шам Шуй По, K11 Musea, Choi Hung Estate, Nan Lian Garden с монастырём Chi Lin,
+Kowloon Walled City Park. В плане по дням они стоят двумя строчками «Альтернатива: …» в ковлунском дне.
+
 Четвёртый раздел справочника — «Полезное» (`kind:"tip"`): ваучер Hong Kong Goodies на HK$100 в зале
 прилёта, Octopus по прилёте (Klook, стойка A12), дорога из аэропорта (такси, A11/A21, Airport Express),
 где садиться в трамвае на Пик и промокод Klook. Карточка без поля `maps` рендерится без ссылки на карту.
