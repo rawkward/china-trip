@@ -190,6 +190,27 @@ footer a{color:var(--muted)}
   .notes{grid-template-columns:1fr}
 }
 
+/* guide sections */
+.gcity{margin:26px 0 12px; font-family:var(--serif); font-size:1.15rem; display:flex; align-items:baseline; gap:10px}
+.gcity .cnt{font-size:.72rem; color:var(--muted); font-weight:500; font-family:var(--sans)}
+.guide{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px}
+.gcard{
+  background:#fff; border:1px solid var(--line); border-radius:14px; padding:15px 16px;
+  scroll-margin-top:80px;
+}
+.gcard:target{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+.gcard .gn{font-weight:700; font-size:1rem; line-height:1.3}
+.gcard .gz{font-weight:500; color:var(--muted); font-size:.9rem; margin-left:8px}
+.gcard .grec{display:inline-block; background:var(--accent-soft); color:var(--accent); border:1px solid #f0cdbb; border-radius:999px; font-size:.62rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:2px 8px; margin-left:8px; vertical-align:middle}
+.gcard .gaddr{font-size:.8rem; color:var(--muted); margin-top:5px}
+.gcard .ghours{font-size:.8rem; font-weight:600; color:#2f7d3a; margin-top:6px}
+.gcard .gnote{font-size:.86rem; margin-top:8px}
+.glinks{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; font-size:.78rem; font-weight:600}
+.glinks a{border:1px solid var(--line); border-radius:999px; padding:3px 10px; background:var(--bg); color:var(--ink)}
+.glinks a:hover{border-color:var(--accent); color:var(--accent); text-decoration:none}
+a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1px dashed currentColor; white-space:nowrap; margin-left:6px}
+@media (max-width:940px){ .guide{grid-template-columns:1fr} }
+
 /* budget */
 .bud-stage input,.bud-stage select{
   font-family:var(--sans); font-size:.9rem; color:var(--ink); background:#fff;
@@ -353,6 +374,9 @@ footer a{color:var(--muted)}
   <nav>
     <a href="#variants">Варианты</a>
     <a href="#itinerary">Маршрут</a>
+    <a href="#stay">Жильё</a>
+    <a href="#food">Заведения</a>
+    <a href="#sights">Места</a>
     <a href="#booking">Брони</a>
     <a href="#tours">Экскурсии</a>
     <a href="#links">Ссылки</a>
@@ -405,6 +429,43 @@ footer a{color:var(--muted)}
         </div>
       </div>
     </div>
+  </section>
+
+  <section id="stay">
+    <div class="head">
+      <div>
+        <div class="eyebrow">Где жить</div>
+        <h2>Жильё по городам</h2>
+        <p class="muted small">Отели и базы по маршруту: адрес, сайт, часы заезда и чем вариант платит за цену — дорогой, временем в метро или районом. В Гонконге два варианта: Джордан из плана и Цуэньвань (Panda Hotel) — дешевле, до Central около 30 минут. Дальше Чунцин, горы, Фужун и ночь у Пудуна. В маршруте по дням у таких остановок стоит ссылка «в справочнике».</p>
+      </div>
+    </div>
+    <div id="stayList"></div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="food">
+    <div class="head">
+      <div>
+        <div class="eyebrow">Еда и напитки</div>
+        <h2>Заведения по городам</h2>
+        <p class="muted small">Чайные, лапшичные, димсамы, хотпот и продуктовые — то, что стоит в плане и то, что держим под рукой. Адрес по-английски и по-китайски, ссылка на карту, часы работы и одна честная ремарка: очередь, закрытый день, размер порции.</p>
+      </div>
+    </div>
+    <div id="foodList"></div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="sights">
+    <div class="head">
+      <div>
+        <div class="eyebrow">Что смотреть</div>
+        <h2>Достопримечательности по городам</h2>
+        <p class="muted small">Смотровые, храмы, старые кварталы и парки по маршруту: адрес, сайт, часы, цена входа и то, что реально влияет на визит — день закрытия, последний вход, ветер, лёд на ступенях.</p>
+      </div>
+    </div>
+    <div id="sightList"></div>
   </section>
 
   <hr class="rule">
@@ -472,14 +533,15 @@ footer a{color:var(--muted)}
   </section>
 
   <footer>
-    <p>Версия 23 · 05.11.2026. Билеты куплены: China Eastern, бронь PEEPS5, 86 926 ₽ на двоих туда и обратно. Шесть вариантов маршрута, основной — Гонконг → Фужун → Чжанцзяцзе → Чунцин, 4–19.12.2026, 14 ночей на месте плюс ночь в самолёте: 4.12 в 16:45 из Шереметьева через Шанхай, ночь в пути, 5.12 в 11:40 Шэньчжэнь и поездом через границу в Гонконг, пять ночей (Clockenflap 6.12, Централ и Пик 7.12, Ковлун с M+ 8.12, Дисней 9.12), поезд G6080 10.12 в Фужун, 23 минуты до гор, три ночи в Чжанцзяцзе и четыре в Чунцине — с полным днём в Улуне 16.12 (Три моста и ущелье Луншуйся) и южным берегом с Наньшанем 17.12 (Сяхаоли, Хуанцзюэя, Лаоцзюньдун); 18.12 в 13:15 MU5430 в Шанхай, ночь у Пудуна, 19.12 в 11:50 MU591, Шереметьево в 17:05, дома вечером. Фото — Wikimedia Commons (клик по фото открывает источник). Карта — OpenStreetMap.</p>
+    <p>Версия 24 · 05.11.2026. Билеты куплены: China Eastern, бронь PEEPS5, 86 926 ₽ на двоих туда и обратно. Шесть вариантов маршрута, основной — Гонконг → Фужун → Чжанцзяцзе → Чунцин, 4–19.12.2026, 14 ночей на месте плюс ночь в самолёте: 4.12 в 16:45 из Шереметьева через Шанхай, ночь в пути, 5.12 в 11:40 Шэньчжэнь и поездом через границу в Гонконг, пять ночей (Clockenflap 6.12, Централ и Пик 7.12, Ковлун с M+ 8.12, Дисней 9.12), поезд G6080 10.12 в Фужун, 23 минуты до гор, три ночи в Чжанцзяцзе и четыре в Чунцине — с полным днём в Улуне 16.12 (Три моста и ущелье Луншуйся) и южным берегом с Наньшанем 17.12 (Сяхаоли, Хуанцзюэя, Лаоцзюньдун); 18.12 в 13:15 MU5430 в Шанхай, ночь у Пудуна, 19.12 в 11:50 MU591, Шереметьево в 17:05, дома вечером. Три справочника — жильё, заведения и достопримечательности по городам: адрес по-английски и по-китайски, сайт, карта, часы и ремарка. Фото — Wikimedia Commons (клик по фото открывает источник). Карта — OpenStreetMap.</p>
   </footer>
 
 </div>
 
-<script src="assets/data.js?v=34"></script>
-<script src="assets/itinerary.js?v=34"></script>
-<script src="assets/place_photos.js?v=34"></script>
+<script src="assets/data.js?v=35"></script>
+<script src="assets/itinerary.js?v=35"></script>
+<script src="assets/place_photos.js?v=35"></script>
+<script src="assets/guide.js?v=1"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 "use strict";
@@ -492,12 +554,59 @@ const CITIES = TRIP.CITIES;
 const DATES = TRIP.DATES;
 const VARIANTS = TRIP.VARIANTS;
 const PLACE_PHOTOS = window.TRIP_PLACE_PHOTOS || {};
+const GUIDE = window.TRIP_GUIDE || {kinds:{}, cityOrder:[], items:[]};
 
 const TAGS = {
   sight:"📍", food:"🍜", transport:"🚄", hotel:"🛏️", shopping:"🛍️", spa:"♨️", festival:"🎪", optional:"🎧",
 };
 
 /* ---------- сборка дней под выбранный вариант ---------- */
+function guideIdFor(name){
+  if(!name) return "";
+  const items = GUIDE.items || [];
+  for(let i = 0; i < items.length; i++){
+    const m = items[i].match || [];
+    for(let j = 0; j < m.length; j++){
+      if(name.indexOf(m[j]) !== -1) return items[i].id;
+    }
+  }
+  return "";
+}
+function guideLink(name){
+  const id = guideIdFor(name);
+  return id ? ' <a class="glink" href="#g-' + id + '">в справочнике</a>' : '';
+}
+function guideCard(it){
+  const q = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(it.maps || it.en);
+  return '<div class="gcard" id="g-' + it.id + '">' +
+    '<div class="gn">' + it.en + (it.zh ? '<span class="gz">' + it.zh + '</span>' : '') +
+      (it.rec ? '<span class="grec">рекомендация</span>' : '') + '</div>' +
+    (it.addr ? '<div class="gaddr">' + it.addr + '</div>' : '') +
+    (it.hours && it.hours !== "—" ? '<div class="ghours">' + it.hours + '</div>' : '') +
+    (it.note ? '<div class="gnote">' + it.note + '</div>' : '') +
+    '<div class="glinks">' +
+      (it.site ? '<a href="' + it.site + '" target="_blank" rel="noopener">сайт ↗</a>' : '') +
+      '<a href="' + q + '" target="_blank" rel="noopener">Google Maps ↗</a>' +
+    '</div>' +
+  '</div>';
+}
+function renderGuide(){
+  ["stay", "food", "sight"].forEach(function(kind){
+    const box = document.getElementById(kind + "List");
+    if(!box) return;
+    const items = (GUIDE.items || []).filter(function(i){ return i.kind === kind; });
+    const cities = [];
+    items.forEach(function(i){ if(cities.indexOf(i.city) === -1) cities.push(i.city); });
+    cities.sort(function(a, b){ return GUIDE.cityOrder.indexOf(a) - GUIDE.cityOrder.indexOf(b); });
+    box.innerHTML = cities.map(function(c){
+      const group = items.filter(function(i){ return i.city === c; });
+      const label = (CITIES[c] && CITIES[c].label) || c;
+      return '<h3 class="gcity">' + label + '<span class="cnt">' + group.length + '</span></h3>' +
+        '<div class="guide">' + group.map(guideCard).join("") + '</div>';
+    }).join("");
+  });
+}
+
 function buildDays(variant){
   if(!variant) return [];
   const dates = variant.dates || DATES;
@@ -609,7 +718,7 @@ function renderDays(){
       if(hasPhoto) slideIdx++;
       return '<li class="stop"' + (hasPhoto ? ' data-slide="' + slideIdx + '"' : '') + '>' +
         '<span class="tag">' + (TAGS[p.tag] || '•') + '</span>' +
-        '<span class="tx"><span class="nm">' + p.name + '</span>' +
+        '<span class="tx"><span class="nm">' + p.name + guideLink(p.name) + '</span>' +
         (p.note ? '<div class="note">' + p.note + '</div>' : '') + '</span>' +
         (p.cost ? '<span class="cost">' + p.cost + '</span>' : '') +
         '</li>';
@@ -642,6 +751,7 @@ function setSlide(car, idx){
 }
 
 document.getElementById("dayList").addEventListener("click", function(e){
+  if(e.target.closest("a")) return;
   const btn = e.target.closest(".cbtn");
   if(btn){
     const car = btn.closest(".carousel");
@@ -946,6 +1056,7 @@ function buildLegend(){
 renderVariants();
 renderSummary();
 renderDays();
+renderGuide();
 document.addEventListener("DOMContentLoaded", initMap);
 if(document.readyState !== "loading") initMap();
 </script>
