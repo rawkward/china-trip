@@ -133,9 +133,7 @@ hr.rule{border:0; border-top:1px solid var(--line); margin:0}
 .variant-note{margin:14px 0 0; color:var(--muted); font-size:.88rem}
 .vcard.active .badge{background:var(--accent)}
 .vcard:focus-visible{outline:3px solid var(--accent-soft); outline-offset:2px}
-.day-body .ph{height:170px; background:var(--bg2)}
 .ph a{display:block; width:100%; height:100%}
-.day-body .ph img{width:100%; height:100%; object-fit:cover; display:block}
 .day-body .inner{padding:16px}
 .stops{list-style:none; margin:0; padding:0}
 .stop{display:flex; gap:12px; padding:9px 0; border-bottom:1px dashed var(--line)}
@@ -160,26 +158,6 @@ hr.rule{border:0; border-top:1px solid var(--line); margin:0}
 footer{border-top:1px solid var(--line); padding:26px 0 40px; color:var(--muted); font-size:.8rem}
 footer a{color:var(--muted)}
 
-/* carousel */
-.carousel{position:relative; background:var(--bg2); border-bottom:1px solid var(--line)}
-.cwrap{position:relative}
-.cslide{display:none; margin:0}
-.cslide.active{display:block}
-.cslide img{width:100%; height:210px; object-fit:cover; display:block}
-.cslide figcaption{display:flex; justify-content:space-between; gap:10px; align-items:baseline; padding:8px 14px; background:#fff; border-bottom:1px solid var(--line); font-size:.82rem}
-.cslide .cname{font-weight:600}
-.cslide .ccost{color:var(--accent); font-weight:600; white-space:nowrap}
-.cbtn{position:absolute; top:50%; transform:translateY(-50%); width:34px; height:34px; border-radius:50%; border:0; background:rgba(28,25,23,.62); color:#fff; font-size:22px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:2}
-.cbtn.prev{left:10px}
-.cbtn.next{right:10px}
-.cbtn:hover{background:var(--accent)}
-.cfoot{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:8px 14px; background:#fff}
-.cdots{display:flex; gap:5px; flex-wrap:wrap}
-.cdot{width:7px; height:7px; border-radius:50%; border:0; background:#d8d2c8; cursor:pointer; padding:0}
-.cdot.on{background:var(--accent)}
-.ccount{font-size:.72rem; color:var(--muted); font-variant-numeric:tabular-nums}
-.stop[data-slide]{cursor:pointer}
-.stop[data-slide]:hover .nm{color:var(--accent)}
 
 @media (max-width:940px){
   .vgrid{grid-template-columns:1fr}
@@ -377,6 +355,7 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
     <a href="#stay">Жильё</a>
     <a href="#food">Заведения</a>
     <a href="#sights">Места</a>
+    <a href="#tips">Полезное</a>
     <a href="#booking">Брони</a>
     <a href="#tours">Экскурсии</a>
     <a href="#links">Ссылки</a>
@@ -390,7 +369,7 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
   <section class="hero" id="overview">
     <div class="date-chip">4 – 18.12.2026 · основной вариант — Гонконг, Фужун, Чжанцзяцзе и Чунцин; Clockenflap 6.12, Улун 16.12, Дисней 9.12</div>
     <h1>Поездка в Китай вдвоём</h1>
-    <p class="lede">14 ночей на месте, семь сценариев. Основной — Гонконг первым, по купленным билетам China Eastern: 4.12 в 16:45 из Шереметьева через Шанхай, ночь в самолёте, 5.12 в 11:40 Шэньчжэнь и поездом через границу в Гонконг к 15:00, пять ночей (Централ и Пик, Ковлун, фестиваль в одно воскресенье 6.12, Дисней), поезд в Фужун 10.12, 23 минуты до гор, три ночи в Чжанцзяцзе и четыре в Чунцине — с полным днём в Улуне на Три моста и ущелье Луншуйся; 18.12 в 13:15 в Шанхай, ночь у Пудуна, дома 19.12. Есть и второй вариант основного маршрута — с шестой ночью в Гонконге: Макао или канатка Ngong Ping 360 с Большим Буддой вместо Улуна. Остальные: те же города наоборот (Чунцин → горы → Фужун → Гонконг), Чэнду с Тибетом, Гонконг с Макао и Гуанчжоу с Гуйлинем, Шанхай с Сучжоу и Ханчжоу, Хайнань. Выберите карточку — план по дням и карта ниже перестроятся.</p>
+    <p class="lede">14 ночей на месте, шесть сценариев. Основной — Гонконг первым, по купленным билетам China Eastern: 4.12 в 16:45 из Шереметьева через Шанхай, ночь в самолёте, 5.12 в 11:40 Шэньчжэнь и поездом через границу в Гонконг к 15:00, пять ночей (Централ и Пик, Ковлун, фестиваль в одно воскресенье 6.12, Дисней), поезд в Фужун 10.12, 23 минуты до гор, три ночи в Чжанцзяцзе и четыре в Чунцине — с полным днём в Улуне на Три моста и ущелье Луншуйся; 18.12 в 13:15 в Шанхай, ночь у Пудуна, дома 19.12. Есть и второй вариант основного маршрута — с шестой ночью в Гонконге: Макао или канатка Ngong Ping 360 с Большим Буддой вместо Улуна. Остальные: Чэнду с Тибетом, Гонконг с Макао и Гуанчжоу с Гуйлинем, Шанхай с Сучжоу и Ханчжоу, Хайнань. Выберите карточку — план по дням и карта ниже перестроятся.</p>
     <div class="routesummary" id="routesummary"></div>
   </section>
 
@@ -399,8 +378,8 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
   <section id="variants">
     <div class="head">
       <div>
-        <div class="eyebrow">Семь сценариев, один фестиваль 6.12</div>
-        <h2>Семь вариантов маршрута</h2>
+        <div class="eyebrow">Шесть сценариев, один фестиваль 6.12</div>
+        <h2>Шесть вариантов маршрута</h2>
         <p class="muted small">Основной — Гонконг первым, 4–19.12: приезд в Джордан 5.12 к 15:00, Централ и Пик в понедельник 7.12, M+ в Ковлуне 8.12, Дисней в среду 9.12, Clockenflap одним днём в воскресенье 6.12, Улун с Тремя мостами и ущельем в среду 16.12; 18.12 вылет в Шанхай и ночь у аэропорта. Вторая карточка — тот же маршрут с шестой ночью в Гонконге: 10.12 Макао или Лантау вместо Улуна. Клик по карточке перестраивает план по дням и карту ниже — у каждого варианта свои даты.</p>
       </div>
     </div>
@@ -436,7 +415,7 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
       <div>
         <div class="eyebrow">Где жить</div>
         <h2>Жильё по городам</h2>
-        <p class="muted small">Отели и базы по маршруту: адрес, сайт, часы заезда и чем вариант платит за цену — дорогой, временем в метро или районом. В Гонконге два варианта: Джордан из плана и Цуэньвань (Panda Hotel) — дешевле, до Central около 30 минут. Дальше Чунцин, горы, Фужун и ночь у Пудуна. В маршруте по дням у таких остановок стоит ссылка «в справочнике».</p>
+        <p class="muted small">Отели и базы по маршруту: адрес, сайт, часы заезда и чем вариант платит за цену — дорогой, временем в метро или районом. В Гонконге три: Джордан из плана (Eaton HK), Цуэньвань (Panda Hotel, до Central ~30 минут) и Sai Ying Pun (Ramada Hong Kong Harbour View, от ~50 $ за ночь — отель, в котором Женя уже жила). Дальше Чунцин, горы, Фужун и ночь у Пудуна. В маршруте по дням у таких остановок стоит ссылка «в справочнике».</p>
       </div>
     </div>
     <div id="stayList"></div>
@@ -466,6 +445,19 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
       </div>
     </div>
     <div id="sightList"></div>
+  </section>
+
+  <hr class="rule">
+
+  <section id="tips">
+    <div class="head">
+      <div>
+        <div class="eyebrow">Практика на месте</div>
+        <h2>Полезное по городам</h2>
+        <p class="muted small">То, что экономит деньги и время в первые часы: ваучер туристического бюро в аэропорту, Octopus по прилёте, дорога из аэропорта, промокоды и мелкие правила, которые знаешь только после первой поездки. Пока заполнено по Гонконгу — сюда же пойдёт остальное, когда появятся свои наблюдения.</p>
+      </div>
+    </div>
+    <div id="tipList"></div>
   </section>
 
   <hr class="rule">
@@ -533,15 +525,14 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
   </section>
 
   <footer>
-    <p>Версия 25 · 05.11.2026. Билеты куплены: China Eastern, бронь PEEPS5, 86 926 ₽ на двоих туда и обратно. Семь вариантов маршрута, основной — Гонконг → Фужун → Чжанцзяцзе → Чунцин, 4–19.12.2026, 14 ночей на месте плюс ночь в самолёте: 4.12 в 16:45 из Шереметьева через Шанхай, ночь в пути, 5.12 в 11:40 Шэньчжэнь и поездом через границу в Гонконг, пять ночей (Clockenflap 6.12, Централ и Пик 7.12, Ковлун с M+ 8.12, Дисней 9.12), поезд G6080 10.12 в Фужун, 23 минуты до гор, три ночи в Чжанцзяцзе и четыре в Чунцине — с полным днём в Улуне 16.12 (Три моста и ущелье Луншуйся) и южным берегом с Наньшанем 17.12 (Сяхаоли, Хуанцзюэя, Лаоцзюньдун); 18.12 в 13:15 MU5430 в Шанхай, ночь у Пудуна, 19.12 в 11:50 MU591, Шереметьево в 17:05, дома вечером. Три справочника — жильё, заведения и достопримечательности по городам: адрес по-английски и по-китайски, сайт, карта, часы и ремарка. Фото — Wikimedia Commons (клик по фото открывает источник). Карта — OpenStreetMap.</p>
+    <p>Версия 26 · 05.11.2026. Билеты куплены: China Eastern, бронь PEEPS5, 86 926 ₽ на двоих туда и обратно. Шесть вариантов маршрута, основной — Гонконг → Фужун → Чжанцзяцзе → Чунцин, 4–19.12.2026, 14 ночей на месте плюс ночь в самолёте: 4.12 в 16:45 из Шереметьева через Шанхай, ночь в пути, 5.12 в 11:40 Шэньчжэнь и поездом через границу в Гонконг, пять ночей (Clockenflap 6.12, Централ и Пик 7.12, Ковлун с M+ 8.12, Дисней 9.12), поезд G6080 10.12 в Фужун, 23 минуты до гор, три ночи в Чжанцзяцзе и четыре в Чунцине — с полным днём в Улуне 16.12 (Три моста и ущелье Луншуйся) и южным берегом с Наньшанем 17.12 (Сяхаоли, Хуанцзюэя, Лаоцзюньдун); 18.12 в 13:15 MU5430 в Шанхай, ночь у Пудуна, 19.12 в 11:50 MU591, Шереметьево в 17:05, дома вечером. Три справочника — жильё, заведения и достопримечательности по городам: адрес по-английски и по-китайски, сайт, карта, часы и ремарка. Фото — Wikimedia Commons, только на карточках вариантов: в плане по дням карусель убрана, страница открывается легче. Карта — OpenStreetMap.</p>
   </footer>
 
 </div>
 
-<script src="assets/data.js?v=36"></script>
-<script src="assets/itinerary.js?v=36"></script>
-<script src="assets/place_photos.js?v=36"></script>
-<script src="assets/guide.js?v=2"></script>
+<script src="assets/data.js?v=37"></script>
+<script src="assets/itinerary.js?v=37"></script>
+<script src="assets/guide.js?v=3"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 "use strict";
@@ -553,7 +544,6 @@ const TRIP = window.TRIP_ITINERARY;
 const CITIES = TRIP.CITIES;
 const DATES = TRIP.DATES;
 const VARIANTS = TRIP.VARIANTS;
-const PLACE_PHOTOS = window.TRIP_PLACE_PHOTOS || {};
 const GUIDE = window.TRIP_GUIDE || {kinds:{}, cityOrder:[], items:[]};
 
 const TAGS = {
@@ -586,12 +576,12 @@ function guideCard(it){
     (it.note ? '<div class="gnote">' + it.note + '</div>' : '') +
     '<div class="glinks">' +
       (it.site ? '<a href="' + it.site + '" target="_blank" rel="noopener">сайт ↗</a>' : '') +
-      '<a href="' + q + '" target="_blank" rel="noopener">Google Maps ↗</a>' +
+      (it.maps ? '<a href="' + q + '" target="_blank" rel="noopener">Google Maps ↗</a>' : '') +
     '</div>' +
   '</div>';
 }
 function renderGuide(){
-  ["stay", "food", "sight"].forEach(function(kind){
+  Object.keys(GUIDE.kinds || {}).forEach(function(kind){
     const box = document.getElementById(kind + "List");
     if(!box) return;
     const items = (GUIDE.items || []).filter(function(i){ return i.kind === kind; });
@@ -678,45 +668,14 @@ function renderVariants(){
   }).join("");
 }
 
-/* ---------- рендер: дни и карусель фото ---------- */
-
-function renderCarousel(d){
-  const slides = [];
-  d.places.forEach(function(p){
-    const ph = PLACE_PHOTOS[p.k];
-    if(ph && ph.src) slides.push({p:p, ph:ph});
-  });
-  if(!slides.length) return "";
-  const figs = slides.map(function(s, i){
-    const img = s.ph.page
-      ? '<a href="' + s.ph.page + '" target="_blank" rel="noopener"><img src="' + s.ph.src + '" alt="' + s.p.name + '" loading="lazy" decoding="async"></a>'
-      : '<img src="' + s.ph.src + '" alt="' + s.p.name + '" loading="lazy" decoding="async">';
-    return '<figure class="cslide' + (i === 0 ? ' active' : '') + '">' + img +
-      '<figcaption><span class="cname">' + s.p.name + '</span>' +
-      (s.p.cost ? '<span class="ccost">' + s.p.cost + '</span>' : '') + '</figcaption></figure>';
-  }).join("");
-  const dots = slides.map(function(s, i){
-    return '<button class="cdot' + (i === 0 ? ' on' : '') + '" data-i="' + i + '" aria-label="Фото ' + (i + 1) + '"></button>';
-  }).join("");
-  const arrows = slides.length > 1
-    ? '<button class="cbtn prev" data-dir="-1" aria-label="Предыдущее фото">‹</button>' +
-      '<button class="cbtn next" data-dir="1" aria-label="Следующее фото">›</button>'
-    : "";
-  return '<div class="carousel" data-idx="0">' +
-    '<div class="cwrap">' + figs + arrows + '</div>' +
-    '<div class="cfoot"><div class="cdots">' + dots + '</div>' +
-    '<div class="ccount">1 / ' + slides.length + '</div></div></div>';
-}
+/* ---------- рендер: дни ---------- */
 
 function renderDays(){
   const list = document.getElementById("dayList");
   list.innerHTML = days.map(function(d){
     const city = CITIES[d.city] || {label:d.city, color:"#8a8278"};
-    let slideIdx = -1;
     const stops = d.places.map(function(p){
-      const hasPhoto = !!(PLACE_PHOTOS[p.k] && PLACE_PHOTOS[p.k].src);
-      if(hasPhoto) slideIdx++;
-      return '<li class="stop"' + (hasPhoto ? ' data-slide="' + slideIdx + '"' : '') + '>' +
+      return '<li class="stop">' +
         '<span class="tag">' + (TAGS[p.tag] || '•') + '</span>' +
         '<span class="tx"><span class="nm">' + p.name + guideLink(p.name) + '</span>' +
         (p.note ? '<div class="note">' + p.note + '</div>' : '') + '</span>' +
@@ -731,50 +690,11 @@ function renderDays(){
         '<span class="city-tag" style="background:' + city.color + '1a;color:' + city.color + '">' + city.label + '</span>' +
         '<span class="chev">▶</span>' +
       '</div>' +
-      '<div class="day-body">' + renderCarousel(d) + '<div class="inner"><ul class="stops">' + stops + '</ul>' +
+      '<div class="day-body"><div class="inner"><ul class="stops">' + stops + '</ul>' +
       '<button class="mapbtn" data-focus="' + d.n + '">Показать на карте</button></div></div>' +
     '</div>';
   }).join("");
 }
-
-/* ---------- управление каруселью ---------- */
-function setSlide(car, idx){
-  const slides = car.querySelectorAll(".cslide");
-  const dots = car.querySelectorAll(".cdot");
-  if(!slides.length) return;
-  const n = (idx + slides.length) % slides.length;
-  car.setAttribute("data-idx", n);
-  slides.forEach(function(el, i){ el.classList.toggle("active", i === n); });
-  dots.forEach(function(el, i){ el.classList.toggle("on", i === n); });
-  const c = car.querySelector(".ccount");
-  if(c) c.textContent = (n + 1) + " / " + slides.length;
-}
-
-document.getElementById("dayList").addEventListener("click", function(e){
-  if(e.target.closest("a")) return;
-  const btn = e.target.closest(".cbtn");
-  if(btn){
-    const car = btn.closest(".carousel");
-    setSlide(car, parseInt(car.getAttribute("data-idx"), 10) + parseInt(btn.getAttribute("data-dir"), 10));
-    e.stopPropagation();
-    return;
-  }
-  const dot = e.target.closest(".cdot");
-  if(dot){
-    setSlide(dot.closest(".carousel"), parseInt(dot.getAttribute("data-i"), 10));
-    e.stopPropagation();
-    return;
-  }
-  const stop = e.target.closest(".stop[data-slide]");
-  if(stop){
-    const day = stop.closest(".day");
-    const car = day && day.querySelector(".carousel");
-    if(car){
-      day.classList.add("open");
-      setSlide(car, parseInt(stop.getAttribute("data-slide"), 10));
-    }
-  }
-});
 
 /* ---------- переключение варианта ---------- */
 function setVariant(id){
@@ -826,10 +746,10 @@ const BOOKING = [
   {when:"6–8 недель", it:"<b>Отели:</b> Гонконг 5–10.12 (Джордан / Яу Ма Тэй), Фужун 10–11.12 (номер с видом на водопад — таких мало), Чжанцзяцзе 11–14.12 у восточных ворот, Чунцин 14–18.12 (Цисинган или 龙湖时代天街), Шанхай 18–19.12 у терминала 1. Booking, Agoda или сайты отелей: в дни фестиваля и перед праздниками цены уходят первыми"},
   {when:"за 14 дней", it:"<b>Поезда внутри Китая.</b> Продажа открывается ровно за 14 дней, раньше билетов нет ни на одном сайте: 10.12 G6080 Западный Коулун 08:07 → Фужунчжэнь (единственный поезд в день), 11.12 Фужунчжэнь → Чжанцзяцзе-Западный, 14.12 Чжанцзяцзе-Западный → Чунцин-Восточный, 16.12 Чунцин-Восточный ↔ Улун-Южный туда и обратно. Где: <a href=\"https://www.12306.cn\" target=\"_blank\" rel=\"noopener\">12306.cn</a> — дешевле, регистрация по паспорту; <a href=\"https://www.trip.com\" target=\"_blank\" rel=\"noopener\">Trip.com</a> — проще и по-английски, за небольшую наценку"},
   {when:"за 2–3 дня", it:"<b>Парк Чжанцзяцзе:</b> пропуск на 4 дня ¥147 в низкий сезон — только онлайн, в кассах обычные билеты не продают. Мини-программа WeChat «张家界一机游» или Trip.com. Там же пакет канаток и лифта Байлун — ¥193 с человека. Билет действует 4 дня с многократным входом, так что 12–13.12 закрыты с запасом на облака"},
-  {when:"заранее", it:"<b>Гонконг, три билета.</b> Трамвай на Пик 7.12 — <a href=\"https://www.thepeak.com.hk\" target=\"_blank\" rel=\"noopener\">thepeak.com.hk</a>, онлайн дешевле, подниматься к 16:30 к закату. M+ 8.12 — <a href=\"https://www.mplus.org.hk\" target=\"_blank\" rel=\"noopener\">mplus.org.hk</a>, вход по таймслоту, вечерний в будни свободнее. Диснейленд 9.12 — <a href=\"https://www.hongkongdisneyland.com\" target=\"_blank\" rel=\"noopener\">hongkongdisneyland.com</a>, билет на конкретную дату, будний тариф HK$639"},
+  {when:"заранее", it:"<b>Гонконг, три билета.</b> Трамвай на Пик 7.12 — <a href=\"https://www.thepeak.com.hk\" target=\"_blank\" rel=\"noopener\">thepeak.com.hk</a> или Klook с промокодом shore5off, онлайн дешевле, подниматься к 16:30 к закату. M+ 8.12 — <a href=\"https://www.mplus.org.hk\" target=\"_blank\" rel=\"noopener\">mplus.org.hk</a>, вход по таймслоту, вечерний в будни свободнее. Диснейленд 9.12 — <a href=\"https://www.hongkongdisneyland.com\" target=\"_blank\" rel=\"noopener\">hongkongdisneyland.com</a>, билет на конкретную дату, будний тариф HK$639"},
   {when:"заранее", it:"<b>Чунцин, два билета.</b> Шоу «Чунцин·1949» 15.12: секция B ¥279, зал вращается — дешёвая секция D этого не даёт. Купить на <a href=\"https://www.klook.com/zh-CN/activity/132505-chongqing-1949-show\" target=\"_blank\" rel=\"noopener\">Klook</a> или Trip.com; сеансы 14:00, 16:00 и 19:30 — берём вечерний в 19:30, дату 15.12 сверить при покупке. Raffles City, 探索舱 17.12: 120 ¥观景, 198 ¥ с «云中漫步» по гребню; слоты и закрытие при ветре — мини-программа WeChat «探索舱云端乐园» или <a href=\"https://www.klook.com/zh-CN/activity/173991-chongqing-lufosheng-plaza-exploration-cabin-cloudtop-amusement-park\" target=\"_blank\" rel=\"noopener\">Klook</a>"},
   {when:"заранее", it:"<b>Улун 16.12:</b> Три моста ¥125 и ущелье Луншуйся ¥85 с человека — Trip.com, Klook или готовый тур за 380 ¥ с забором от отеля (разбор в «Экскурсии — примеры»). Если берём тур, билеты в парки уже внутри и покупать отдельно не надо"},
-  {when:"по месту", it:"<b>Что покупаем на месте:</b> храм архатов ¥20, вход в Фужун ¥100, метро и паромы в Гонконге по карте Octopus (её оформляем в аэропорту при прилёте), Didi по городу. Часть касс не принимает карты — держим на это наличные юани и гонконгские доллары"},
+  {when:"по месту", it:"<b>Что покупаем на месте:</b> храм архатов ¥20, вход в Фужун ¥100, метро и паромы в Гонконге по карте Octopus (заказываем на Klook и забираем на стойке A12 в зале прилёта, см. «Полезное»), Didi по городу. Часть касс не принимает карты — держим на это наличные юани и гонконгские доллары"},
 ];
 
 const TOURS = [

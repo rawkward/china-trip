@@ -6,7 +6,8 @@ window.TRIP_GUIDE = {
   kinds: {
     stay:  {label: "Жильё",              eyebrow: "Где жить",        title: "Жильё по городам"},
     food:  {label: "Заведения",          eyebrow: "Еда и напитки",   title: "Заведения по городам"},
-    sight: {label: "Достопримечательности", eyebrow: "Что смотреть",  title: "Достопримечательности по городам"}
+    sight: {label: "Достопримечательности", eyebrow: "Что смотреть", title: "Достопримечательности по городам"},
+    tip:   {label: "Полезное",              eyebrow: "Практика на месте", title: "Полезное по городам"}
   },
   items: [
 
@@ -35,6 +36,14 @@ window.TRIP_GUIDE = {
      hours:"Стойка 24 ч · заезд с 15:00, выезд до 12:00",
      note:"Бутик-отель на 加連威老道, в двух минутах от сувенирного 海防道 и 8–10 минутах от метро Tsim Sha Tsui: до Star Ferry и набережной пешком, до Central — одна линия. Номера маленькие (гонконгская норма для бутиков), зато район живой и вечером есть где поесть. По ссылке Жени на Ostrovok 4–8.12 — сверять цену за пять ночей с Eaton: разница обычно в пользу того, где в эти даты нет фестиваля.",
      maps:"Attitude on Granville 20 Granville Road Tsim Sha Tsui Hong Kong"},
+
+    {kind:"stay", city:"hk", id:"ramada-hk-harbour-view",
+     en:"Ramada Hong Kong Harbour View", zh:"香港華美達海景酒店",
+     addr:"239 Queen's Road West, Sai Ying Pun 西營盤皇后大道西239號",
+     site:"https://www.ramadahongkongharbourview.com",
+     hours:"Стойка 24 ч · заезд с 15:00, выезд до 12:00",
+     note:"Отель, в котором Женя уже жила в Гонконге: 38 этажей, 432 номера, у части номеров окна на гавань. Sai Ying Pun — запад острова, две остановки Island Line до Central (~8 минут); от аэропорта — Airport Express до Hong Kong Station и метро, либо автобусом A11. Район тише и дешевле Джордана, под окнами 皇后大道西 с трамваем и рынком. По её ссылке на Klook — от ~50 $ за ночь, вдвое ниже Eaton и Panda, ценой 10–15 минут дороги: <a href=\"https://www.klook.com/ru/hotels/detail/271189-ramada-hong-kong-harbour-view/\" target=\"_blank\" rel=\"noopener\">цена на Klook</a>.",
+     maps:"Ramada Hong Kong Harbour View 香港華美達海景酒店 239 Queen's Road West Sai Ying Pun Hong Kong"},
 
     /* ==================== ГОНКОНГ · ДОСТОПРИМЕЧАТЕЛЬНОСТИ ==================== */
     {kind:"sight", city:"hk", id:"victoria-peak",
@@ -156,6 +165,38 @@ window.TRIP_GUIDE = {
      note:"Свайные дома на воде, лодки между домами, сушёная рыба и креветочная паста. Автобус 21 от Нгон Пин 15 минут, от Tung Chung — 50 минут. Полтора-два часа хватает; брать лодочную прогулку у причала на месте, а не «тур» у входа.",
      maps:"Tai O Fishing Village 大澳 Lantau Hong Kong",
      match:["Деревня Tai O", "Tai O"]},
+
+    /* ==================== ГОНКОНГ · ПОЛЕЗНОЕ ==================== */
+    {kind:"tip", city:"hk", id:"hk-goodies", badge:"100 HK$",
+     en:"Hong Kong Goodies — 100 HK$ на человека", zh:"香港好禮",
+     addr:"Стойка Hong Kong Tourism Board, зал прилёта, Терминал 1",
+     site:"https://www.discoverhongkong.com/eng/deals.html",
+     note:"Приветственный ваучер гостя: не меньше HK$100 на человека — скидка без минимальной суммы в ресторанах, магазинах и на аттракционах, либо приветственный напиток, либо подарок в музеях и на смотровых. Оформляют в туристическом бюро в зале прилёта, это первое дело после багажа: нужен паспорт, на каждого гостя отдельно, ваучер электронный и сразу в телефоне. Женя платила им смотровую на Пике (Sky Terrace 428). Список мест обновляется и на Пике принимают не в каждой кассе — условия спрашиваем на стойке.",
+     maps:"Hong Kong Tourism Board Visitor Centre Arrivals Hall Hong Kong International Airport"},
+
+    {kind:"tip", city:"hk", id:"hk-octopus", badge:"Klook",
+     en:"Octopus: заказать на Klook, забрать в аэропорту", zh:"八達通",
+     addr:"Стойка A12, зал прилёта, Терминал 1 (в отзывах — A13)",
+     site:"https://www.octopus.com.hk/en/consumer/tourist/index.html",
+     note:"Карта на метро, трамвай, автобусы, паромы и мелкие покупки: прикладываем и идём, без мелочи в кармане. Заказываем заранее на Klook и забираем в зале прилёта на стойке A12 (в части отзывов та же стойка значится A13 — номер сверяем в письме Klook). Купить на месте тоже можно: 7-Eleven в зале прилёта или MTR Customer Service на станции Airport. Без карты в метро работает бесконтактная банковская, но трамвай и часть автобусов её не принимают.",
+     maps:"Hong Kong International Airport Terminal 1 Arrival Hall"},
+
+    {kind:"tip", city:"hk", id:"hk-airport-transfer",
+     en:"Аэропорт → город: такси, A11, A21, Airport Express", zh:"機場交通",
+     site:"https://www.klook.com/en-HK/activity/71-airport-express-hong-kong/",
+     note:"Airport Express — ~24 минуты до Hong Kong Station (Централ), HK$120 по Octopus или HK$130 бумажным билетом, на Klook от ~7 $: берём заранее. Оплата на выходе — турникеты стоят на станции в городе, а не в аэропорту, поэтому билет и карту прикладываем уже там. Автобус A11 — по острову через Сёнвань и Централ до Норт-Пойнта, ~HK$40; A21 — по Натан-роуд через Чимсачёй и Джордан, ~HK$33; платим Octopus или наличными без сдачи, чемодан на полку у входа. Такси до острова ~HK$300–350 плюс тоннель, 30–40 минут вне часа пик: на двоих это дороже экспресса (HK$350 против 240), зато от двери до двери.",
+     maps:"Hong Kong International Airport Ground Transportation Centre"},
+
+    {kind:"tip", city:"hk", id:"hk-peak-tram-seat", badge:"Klook",
+     en:"Трамвай на Пик: где садиться", zh:"山頂纜車",
+     addr:"Нижняя станция: 33 Garden Road, Central 中環花園道33號",
+     site:"https://www.klook.com/en-HK/activity/765-peak-tram-sky-terrace-hongkong/",
+     note:"Смотреть на гавань — правая сторона по ходу подъёма. Вверх садимся ближе к хвосту вагона, вниз — к голове: тогда весь подъём и спуск видно через стекло, а не затылок впереди сидящего. Билет заранее на Klook или на thepeak.com.hk: односторонний HK$82, туда-обратно HK$116, онлайн дешевле кассы; подниматься к 16:30 — закат и сумерки, вниз автобусом 15, если на трамвай очередь.",
+     maps:"Peak Tram Lower Terminus 山頂纜車 33 Garden Road Central Hong Kong"},
+
+    {kind:"tip", city:"hk", id:"hk-klook-code", badge:"промокод",
+     en:"Промокод Klook: shore5off",
+     note:"5% скидки на заказ в Klook. Вводится в поле «промокод» на последнем шаге, до оплаты, и сразу видно, применился ли. Коды живут неделями: если shore5off не проходит, на странице аттракциона обычно висит свой — 5% на аттракционы Гонконга и Макао, 5% на Диснейленд. Проверять перед каждым заказом, а не после."},
 
     /* ==================== МАКАО ==================== */
     {kind:"sight", city:"mc", id:"macau-ferry",
