@@ -413,5 +413,8 @@ window.TRIP_PLACES = {
   "tsui_yuen": {"name": "Tsui Yuen Dessert 翠苑甜品專家, Percival Street", "lat": 22.2812200, "lon": 114.1820740},
   "boo_dim": {"name": "Boo Dim Lui Lee 包點, Parkes Street", "lat": 22.3043930, "lon": 114.1705397},
   "ding_dim": {"name": "Ding Dim 1968 鼎點, Wyndham Street", "lat": 22.2812446, "lon": 114.1549330},
-  "mammy_pancake": {"name": "Mammy Pancake 媽咪雞蛋仔, Temple Street", "lat": 22.3058244, "lon": 114.1696645}
+  "mammy_pancake": {"name": "Mammy Pancake 媽咪雞蛋仔, Temple Street", "lat": 22.3058244, "lon": 114.1696645},
+  "sheung_wan_market": {"name": "Sheung Wan Market Cooked Food Centre", "lat": 22.2861537, "lon": 114.1495257},
+  "catherine_bakery": {"name": "Catherine Bakery, Queen's Road Central", "lat": 22.2859000, "lon": 114.1500000},
+  "tsim_chai_kee": {"name": "Tsim Chai Kee 沾仔記, Wellington Street", "lat": 22.2829680, "lon": 114.1544810}
 };
