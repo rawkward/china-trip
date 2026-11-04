@@ -396,5 +396,22 @@ window.TRIP_PLACES = {
   "west_kowloon": {"name": "Hong Kong West Kowloon Station", "lat": 22.3037, "lon": 114.1649},
   "futian": {"name": "Futian Station, Shenzhen", "lat": 22.5247, "lon": 114.0561},
   "xinzhou": {"name": "Xinzhou 3rd Street, Futian, Shenzhen", "lat": 22.5253, "lon": 114.0388},
-  "sz_airport": {"name": "Shenzhen Bao'an Airport", "lat": 22.6393, "lon": 113.8107}
+  "sz_airport": {"name": "Shenzhen Bao'an Airport", "lat": 22.6393, "lon": 113.8107},
+  "mido_cafe": {"name": "Mido Cafe 美都餐室, Temple Street", "lat": 22.3102258, "lon": 114.1703691},
+  "cafe_match_box": {"name": "Cafe Match Box 喜喜冰室, Causeway Bay", "lat": 22.2820404, "lon": 114.1847272},
+  "bolton_cafe": {"name": "Bolton Cafe 保頓冰室, Ashley Road", "lat": 22.2973471, "lon": 114.1704909},
+  "genki_jordan": {"name": "Genki Sushi 元気寿司, Jordan", "lat": 22.3039309, "lon": 114.1715133},
+  "lan_fong_yuen": {"name": "Lan Fong Yuen 蘭芳園, Gage Street", "lat": 22.2826400, "lon": 114.1538000},
+  "maks_noodle": {"name": "Mak's Noodle 麥奀雲吞麵世家, Wellington Street", "lat": 22.2830000, "lon": 114.1546300},
+  "genki_daping": {"name": "Genki Sushi 元气寿司, Longhu Times Tianjie", "lat": 29.5418563, "lon": 106.5066341},
+  "gaga_mixc_world": {"name": "gaga, MixC World Shenzhen", "lat": 22.5449333, "lon": 113.9511274},
+  "baker_spice_upperhills": {"name": "Baker & Spice, UpperHills Shenzhen", "lat": 22.5601574, "lon": 114.0651169},
+  "jile_tang_chuansha": {"name": "Gokurakuyu Chuansha 极乐汤川沙", "lat": 31.1697597, "lon": 121.6809955},
+  "jile_tang_biyun": {"name": "Gokurakuyu Biyun 极乐汤碧云", "lat": 31.2568, "lon": 121.5862},
+  "tanglian_de_pudong": {"name": "Tangland 汤连得, Changqing Road", "lat": 31.1738324, "lon": 121.4840930},
+  "gwing_kee": {"name": "Gwing Kee Roasted 炯記燒味, Lock Road", "lat": 22.2972905, "lon": 114.1714884},
+  "tsui_yuen": {"name": "Tsui Yuen Dessert 翠苑甜品專家, Percival Street", "lat": 22.2812200, "lon": 114.1820740},
+  "boo_dim": {"name": "Boo Dim Lui Lee 包點, Parkes Street", "lat": 22.3043930, "lon": 114.1705397},
+  "ding_dim": {"name": "Ding Dim 1968 鼎點, Wyndham Street", "lat": 22.2812446, "lon": 114.1549330},
+  "mammy_pancake": {"name": "Mammy Pancake 媽咪雞蛋仔, Temple Street", "lat": 22.3058244, "lon": 114.1696645}
 };
