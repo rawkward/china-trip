@@ -43,3 +43,14 @@ CREATE TABLE IF NOT EXISTS day_notes (
   updated_at INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS day_notes_variant_idx ON day_notes(variant_id);
+
+CREATE TABLE IF NOT EXISTS stop_notes (
+  stop_key   TEXT PRIMARY KEY,
+  variant_id TEXT NOT NULL,
+  day_date   TEXT NOT NULL,
+  stop_slug  TEXT NOT NULL,
+  stop_name  TEXT NOT NULL DEFAULT '',
+  body       TEXT NOT NULL,
+  updated_at INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS stop_notes_variant_idx ON stop_notes(variant_id, day_date);

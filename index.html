@@ -143,6 +143,35 @@ hr.rule{border:0; border-top:1px solid var(--line); margin:0}
 .stop .nm{font-weight:600; font-size:.94rem}
 .stop .note{font-size:.82rem; color:var(--muted)}
 .stop .cost{font-variant-numeric:tabular-nums; font-size:.8rem; font-weight:600; color:var(--accent); white-space:nowrap; padding-top:2px}
+
+/* карусель вариантов внутри дня: одно заведение за раз */
+.pickbox{margin-top:6px; border-left:2px solid var(--accent-soft); padding-left:11px}
+.pickbody{min-height:46px}
+.pickbar{display:flex; align-items:center; gap:9px; margin-top:7px}
+.pbtn{background:#fff; border:1px solid var(--line); border-radius:8px; width:27px; height:25px; line-height:1; font-size:.95rem; color:var(--muted); cursor:pointer; font-family:inherit}
+.pbtn:hover{border-color:var(--accent); color:var(--accent)}
+.pdots{display:flex; gap:5px}
+.pdot{width:7px; height:7px; border-radius:50%; background:var(--line); border:0; padding:0; cursor:pointer}
+.pdot.on{background:var(--accent)}
+.phead{display:flex; align-items:center; gap:8px; margin-bottom:3px}
+.pbadge{font-size:.6rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; border-radius:999px; padding:2px 8px; border:1px solid var(--line)}
+.pbadge.rec{background:var(--accent-soft); color:var(--accent); border-color:#f0cdbb}
+.pbadge.alt{background:#f2f1ee; color:var(--muted)}
+.pnum{font-size:.7rem; color:var(--muted)}
+.pname{font-weight:600; font-size:.92rem}
+.pcost{font-size:.76rem; font-weight:600; color:var(--accent); margin-top:3px}
+.pdim{font-size:.72rem; color:var(--muted); margin-top:2px}
+/* правка текста к остановке — только по паролю */
+.st-tools{margin-top:4px}
+.st-edit{background:none; border:0; padding:0; font-size:.72rem; color:var(--muted); cursor:pointer; font-family:inherit; text-decoration:underline dotted}
+.st-edit:hover{color:var(--accent)}
+.st-editbox{margin-top:6px}
+.st-editbox textarea{width:100%; min-height:70px; border:1px solid var(--line); border-radius:10px; padding:8px 10px; font-family:inherit; font-size:.86rem; line-height:1.45; resize:vertical; color:var(--ink); background:#fff}
+.st-editbox textarea:focus{outline:2px solid var(--accent-soft); border-color:var(--accent)}
+.st-acts{display:flex; gap:7px; flex-wrap:wrap; margin-top:6px}
+.note.edited{color:var(--ink)}
+.note.edited::before{content:"правка: "; font-size:.66rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--accent)}
+
 .day-body .mapbtn{margin-top:12px; background:var(--ink); color:#fff; border:0; border-radius:10px; padding:9px 16px; font-weight:600; font-size:.86rem; cursor:pointer}
 .day-body .mapbtn:hover{background:var(--accent)}
 
@@ -571,14 +600,14 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
   </section>
 
   <footer>
-    <p>Версия 33 · 06.11.2026. Билеты куплены: China Eastern, бронь PEEPS5, 86 926 ₽ на двоих туда и обратно. Шесть вариантов маршрута, основной — Гонконг → Фужун → Чжанцзяцзе → Чунцин, 4–19.12.2026, 14 ночей на месте плюс ночь в самолёте: 4.12 в 16:45 из Шереметьева через Шанхай, ночь в пути, 5.12 в 11:40 Шэньчжэнь и поездом через границу в Гонконг, пять ночей (Clockenflap 6.12, Централ и Пик 7.12, Ковлун с M+ 8.12, Дисней 9.12), поезд G6080 10.12 в Фужун, 23 минуты до гор, три ночи в Чжанцзяцзе и четыре в Чунцине — с полным днём в Улуне 16.12 (Три моста и ущелье Луншуйся) и южным берегом с Наньшанем 17.12 (Сяхаоли, Хуанцзюэя, Лаоцзюньдун); 18.12 в 13:15 MU5430 в Шанхай, ночь у Пудуна, 19.12 в 11:50 MU591, Шереметьево в 17:05, дома вечером. Три справочника — жильё, заведения и достопримечательности по городам: адрес по-английски и по-китайски, сайт, карта, часы и ремарка. Фото — Wikimedia Commons, только на карточках вариантов: в плане по дням карусель убрана, страница открывается легче. Карта — OpenStreetMap. Плюс чек-лист «что сделать и купить заранее»: документы, деньги, связь, снаряжение и аптечка, с отметками в браузере и с палками для скандинавской ходьбы отдельным пунктом. Под планом каждого дня — заметка: текст видят все, править можно по паролю бюджета.</p>
+    <p>Версия 34 · 06.11.2026. Билеты куплены: China Eastern, бронь PEEPS5, 86 926 ₽ на двоих туда и обратно. Шесть вариантов маршрута, основной — Гонконг → Фужун → Чжанцзяцзе → Чунцин, 4–19.12.2026, 14 ночей на месте плюс ночь в самолёте: 4.12 в 16:45 из Шереметьева через Шанхай, ночь в пути, 5.12 в 11:40 Шэньчжэнь и поездом через границу в Гонконг, пять ночей (Clockenflap 6.12, Централ и Пик 7.12, Ковлун с M+ 8.12, Дисней 9.12), поезд G6080 10.12 в Фужун, 23 минуты до гор, три ночи в Чжанцзяцзе и четыре в Чунцине — с полным днём в Улуне 16.12 (Три моста и ущелье Луншуйся) и южным берегом с Наньшанем 17.12 (Сяхаоли, Хуанцзюэя, Лаоцзюньдун); 18.12 в 13:15 MU5430 в Шанхай, ночь у Пудуна, 19.12 в 11:50 MU591, Шереметьево в 17:05, дома вечером. Три справочника — жильё, заведения и достопримечательности по городам: адрес по-английски и по-китайски, сайт, карта, часы и ремарка. Фото — Wikimedia Commons, только на карточках вариантов: в плане по дням карусель убрана, страница открывается легче. Карта — OpenStreetMap. Плюс чек-лист «что сделать и купить заранее»: документы, деньги, связь, снаряжение и аптечка, с отметками в браузере и с палками для скандинавской ходьбы отдельным пунктом. Под планом каждого дня — заметка, и у каждой остановки — свой текст: всё это видят все, править можно по паролю бюджета. Где в дне несколько равноправных вариантов (четыре отеля, пять мест на обед, три смотровые, три мангала с видом на реку), они собраны каруселью: на экране один вариант, остальные — стрелками, первый помечен «рекомендуем», остальные «альтернатива». В Чунцине добавлены варианты из вашего списка — храм, канатка, Лицзиба, 云端之眼, 得意世界, 十八梯, 龙门浩, 苏家坝, кофейни 瓦顶顶 и SoSo House, 花市豌杂面, 鬼包子, 地下之城, The Move и паром 两江游.</p>
   </footer>
 
 </div>
 
 <script src="assets/data.js?v=41"></script>
-<script src="assets/itinerary.js?v=44"></script>
-<script src="assets/guide.js?v=7"></script>
+<script src="assets/itinerary.js?v=45"></script>
+<script src="assets/guide.js?v=8"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 "use strict";
@@ -720,14 +749,7 @@ function renderDays(){
   const list = document.getElementById("dayList");
   list.innerHTML = days.map(function(d){
     const city = CITIES[d.city] || {label:d.city, color:"#8a8278"};
-    const stops = d.places.map(function(p){
-      return '<li class="stop">' +
-        '<span class="tag">' + (TAGS[p.tag] || '•') + '</span>' +
-        '<span class="tx"><span class="nm">' + p.name + guideLink(p.name) + '</span>' +
-        (p.note ? '<div class="note">' + p.note + '</div>' : '') + '</span>' +
-        (p.cost ? '<span class="cost">' + p.cost + '</span>' : '') +
-        '</li>';
-    }).join("");
+    const stops = (d.places || []).map(function(p, si){ return renderStop(d, p, si); }).join("");
     const isFest = d.places.some(function(p){ return p.tag === "festival"; });
     return '<div class="day' + (isFest ? ' fest' : '') + '" data-day="' + d.n + '">' +
       '<div class="day-head">' +
@@ -894,10 +916,10 @@ function noteBar(){
   if(!el) return;
   if(noteToken){
     const until = noteExpires ? new Date(noteExpires * 1000).toLocaleDateString("ru-RU") : "";
-    el.innerHTML = '<span class="dn-hint">Заметки к дням: правка открыта' + (until ? ' до ' + until : '') + '</span>' +
+    el.innerHTML = '<span class="dn-hint">Дневник поездки: правка открыта' + (until ? ' до ' + until : '') + '</span>' +
       '<button class="dn-btn" type="button" id="noteLogout">Выйти</button>';
   } else {
-    el.innerHTML = '<span class="dn-hint">Заметки к дням читают все, правят по паролю — тому же, что у бюджета.</span>' +
+    el.innerHTML = '<span class="dn-hint">Заметки к дням и текст к остановкам читают все, правят по паролю — тому же, что у бюджета.</span>' +
       '<input type="password" id="notePass" class="dn-pass" autocomplete="current-password" placeholder="пароль">' +
       '<button class="dn-btn" type="button" id="noteLogin">Войти</button>';
   }
@@ -922,7 +944,7 @@ async function noteLogin(){
   } catch(e){
     noteError = "нет связи с сервером";
   }
-  noteBar(); notePaint();
+  noteBar(); notePaint(); stopPaint();
 }
 async function noteSave(key, box){
   const ta = box ? box.querySelector(".dn-ta") : null;
@@ -968,15 +990,189 @@ document.getElementById("dayList").addEventListener("click", function(e){
 const noteBarEl = document.getElementById("noteBar");
 noteBarEl.addEventListener("click", function(e){
   if(e.target.id === "noteLogin") noteLogin();
-  if(e.target.id === "noteLogout"){ noteClearToken(); noteError = ""; noteBar(); notePaint(); }
+  if(e.target.id === "noteLogout"){ noteClearToken(); noteError = ""; noteBar(); notePaint(); stopPaint(); }
 });
 noteBarEl.addEventListener("keydown", function(e){
   if(e.key === "Enter" && e.target.id === "notePass"){ e.preventDefault(); noteLogin(); }
 });
 
+const NOTE_STOP_MAX = 1200;
 noteReadToken();
 noteBar();
 noteLoad();
+stopLoad();
+
+/* ---------- остановки: карусель вариантов и правка текста ---------- */
+const PICK_LISTS = {};
+const PICK_STATE = {};
+const STOP_TEXTS = {};
+let stopNotes = {};
+let stopEditKey = "";
+let stopError = "";
+
+function stopSlug(text){
+  const str = String(text || "");
+  let h = 2166136261;
+  for(let i = 0; i < str.length; i++){ h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return (h >>> 0).toString(36).slice(0, 6).padEnd(6, "0");
+}
+function stopKey(d, title){ return noteKey(d) + "|" + stopSlug(title); }
+
+function stopNoteHtml(key, original){
+  const n = stopNotes[key];
+  const text = n ? n.body : (original || "");
+  const cls = n ? "note edited" : "note";
+  return '<div class="' + cls + '" data-note="' + key + '">' + noteEsc(text).replace(/\n/g, "<br>") + '</div>';
+}
+function stopToolsHtml(key){
+  if(stopEditKey === key){
+    return '<div class="st-editbox"><textarea class="st-ta" rows="3" maxlength="' + NOTE_STOP_MAX + '" placeholder="Текст к этой остановке">' +
+      noteEsc((stopNotes[key] && stopNotes[key].body) || STOP_TEXTS[key] || "") + '</textarea>' +
+      '<div class="st-acts">' +
+        '<button class="dn-btn" type="button" data-stop-save="' + key + '">Сохранить</button>' +
+        (stopNotes[key] ? '<button class="dn-btn dn-del" type="button" data-stop-reset="' + key + '">Вернуть мой текст</button>' : '') +
+        '<button class="dn-btn" type="button" data-stop-cancel="1">Отмена</button>' +
+      '</div></div>';
+  }
+  if(!noteToken) return "";
+  return '<div class="st-editline"><button class="st-edit" type="button" data-stop-edit="' + key + '">' +
+    (stopNotes[key] ? 'править текст' : '✎ править текст') + '</button></div>';
+}
+
+function pickCurrent(key){ return Math.min(PICK_STATE[key] || 0, Math.max(0, (PICK_LISTS[key] || []).length - 1)); }
+function pickBodyHtml(key, i){
+  const list = PICK_LISTS[key] || [];
+  const it = list[i] || {};
+  const badge = it.rec
+    ? '<span class="pbadge rec">рекомендуем</span>'
+    : '<span class="pbadge alt">альтернатива</span>';
+  return '<div class="phead">' + badge + '<span class="pnum">' + (i + 1) + ' / ' + list.length + '</span></div>' +
+    '<div class="pname">' + it.name + (it.gid ? ' <a class="glink" href="#g-' + it.gid + '">в справочнике</a>' : '') + '</div>' +
+    ((it.note || stopNotes[it.key]) ? stopNoteHtml(it.key, it.note) : '') +
+    '<div class="st-tools" data-stop-tools="' + it.key + '">' + stopToolsHtml(it.key) + '</div>' +
+    (it.cost ? '<div class="pcost">' + it.cost + '</div>' : '') +
+    (it.dim ? '<div class="pdim">' + it.dim + '</div>' : '');
+}
+function pickBarHtml(key){
+  const list = PICK_LISTS[key] || [];
+  let dots = "";
+  for(let i = 0; i < list.length; i++){
+    dots += '<button class="pdot' + (i === pickCurrent(key) ? ' on' : '') + '" type="button" data-pick="' + key + '" data-pick-to="' + i + '" aria-label="вариант ' + (i + 1) + '"></button>';
+  }
+  return '<div class="pickbar">' +
+    '<button class="pbtn" type="button" data-pick="' + key + '" data-pick-nav="-1" aria-label="предыдущий вариант">‹</button>' +
+    '<span class="pdots">' + dots + '</span>' +
+    '<button class="pbtn" type="button" data-pick="' + key + '" data-pick-nav="1" aria-label="следующий вариант">›</button>' +
+  '</div>';
+}
+function renderStop(d, p, si){
+  if(p && p.picks && p.picks.length){
+    const key = "p" + d.n + "-" + si + "-" + stopSlug(p.title || p.name || "");
+    PICK_LISTS[key] = p.picks.map(function(it, i){
+      const ik = stopKey(d, it.name);
+      STOP_TEXTS[ik] = it.note || "";
+      return {name: it.name, note: it.note || "", cost: it.cost || "", dim: it.dim || "",
+              rec: it.rec === true || (i === 0 && it.rec !== false), key: ik,
+              gid: guideIdFor(it.name)};
+    });
+    PICK_STATE[key] = 0;
+    return '<li class="stop pickstop">' +
+      '<span class="tag">' + (TAGS[p.tag] || '•') + '</span>' +
+      '<span class="tx"><span class="nm">' + p.title + '</span>' +
+        (p.note ? '<div class="note">' + p.note + '</div>' : '') +
+        '<div class="pickbox" data-pick-key="' + key + '">' +
+          '<div class="pickbody">' + pickBodyHtml(key, 0) + '</div>' +
+          pickBarHtml(key) +
+        '</div>' +
+      '</span>' +
+      (p.cost ? '<span class="cost">' + p.cost + '</span>' : '') +
+    '</li>';
+  }
+  const key = stopKey(d, p.name);
+  STOP_TEXTS[key] = p.note || "";
+  return '<li class="stop">' +
+    '<span class="tag">' + (TAGS[p.tag] || '•') + '</span>' +
+    '<span class="tx"><span class="nm">' + p.name + guideLink(p.name) + '</span>' +
+    ((p.note || stopNotes[key]) ? stopNoteHtml(key, p.note) : '') +
+    '<div class="st-tools" data-stop-tools="' + key + '">' + stopToolsHtml(key) + '</div>' +
+    '</span>' +
+    (p.cost ? '<span class="cost">' + p.cost + '</span>' : '') +
+  '</li>';
+}
+
+function stopPaint(){
+  const tools = document.querySelectorAll("#dayList [data-stop-tools]");
+  for(let i = 0; i < tools.length; i++){
+    const k = tools[i].getAttribute("data-stop-tools");
+    tools[i].innerHTML = stopToolsHtml(k);
+  }
+  const notes = document.querySelectorAll("#dayList [data-note]");
+  for(let i = 0; i < notes.length; i++){
+    const k = notes[i].getAttribute("data-note");
+    const n = stopNotes[k];
+    notes[i].innerHTML = noteEsc(n ? n.body : (STOP_TEXTS[k] || "")).replace(/\n/g, "<br>");
+    notes[i].className = n ? "note edited" : "note";
+  }
+}
+function stopLoad(){
+  return fetch(NOTE_API + "/api/stop-notes", {cache: "no-store"})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(data){
+      stopNotes = {};
+      ((data && data.notes) || []).forEach(function(n){ stopNotes[n.stop_key] = n; });
+      stopPaint();
+    })
+    .catch(function(){});
+}
+async function stopSave(key){
+  const ta = document.querySelector('.st-editbox .st-ta');
+  if(!ta) return;
+  try {
+    const data = await noteRequest("/api/stop-notes/" + encodeURIComponent(key), {
+      method: "PUT",
+      body: JSON.stringify({body: ta.value})
+    });
+    if(data && data.note) stopNotes[key] = data.note;
+    else delete stopNotes[key];
+    stopEditKey = ""; stopError = "";
+  } catch(err){
+    stopError = err.message || "не сохранилось";
+  }
+  noteBar(); stopPaint();
+}
+async function stopReset(key){
+  try { await noteRequest("/api/stop-notes/" + encodeURIComponent(key), {method: "DELETE"}); } catch(err){}
+  delete stopNotes[key];
+  stopEditKey = ""; stopError = "";
+  noteBar(); stopPaint();
+}
+document.getElementById("dayList").addEventListener("click", function(e){
+  const pick = e.target.closest("[data-pick]");
+  if(pick){
+    const key = pick.getAttribute("data-pick");
+    const list = PICK_LISTS[key] || [];
+    if(!list.length) return;
+    let i = pickCurrent(key);
+    if(pick.hasAttribute("data-pick-to")) i = parseInt(pick.getAttribute("data-pick-to"), 10) || 0;
+    else i = (i + parseInt(pick.getAttribute("data-pick-nav"), 10) + list.length) % list.length;
+    PICK_STATE[key] = i;
+    const box = pick.closest(".pickbox");
+    if(box){
+      box.querySelector(".pickbody").innerHTML = pickBodyHtml(key, i);
+      const bar = box.querySelector(".pickbar");
+      if(bar) bar.outerHTML = pickBarHtml(key);
+    }
+    return;
+  }
+  const ed = e.target.closest("[data-stop-edit]");
+  if(ed){ stopEditKey = ed.getAttribute("data-stop-edit"); stopPaint();
+    const ta = document.querySelector(".st-editbox .st-ta"); if(ta) ta.focus(); return; }
+  if(e.target.closest("[data-stop-cancel]")){ stopEditKey = ""; stopPaint(); return; }
+  const sv = e.target.closest("[data-stop-save]");
+  if(sv){ stopSave(sv.getAttribute("data-stop-save")); return; }
+  const rs = e.target.closest("[data-stop-reset]");
+  if(rs){ stopReset(rs.getAttribute("data-stop-reset")); return; }
+});
 
 /* ---------- брони и заметки ---------- */
 const BOOKING = [

@@ -12,6 +12,12 @@ import {
   normalizeDayNoteKey,
   splitDayKey,
 } from '../../shared/day-notes.js';
+import {
+  StopNoteError,
+  normalizeStopNoteBody,
+  normalizeStopNoteKey,
+  splitStopKey,
+} from '../../shared/stop-notes.js';
 import { preflight, withCors } from './cors.js';
 import * as db from './db.js';
 import { signToken, verifyPassword, verifyToken, TOKEN_TTL_SECONDS } from './auth.js';
@@ -39,7 +45,7 @@ function json(data, status = 200) {
 
 function errorResponse(err) {
   if (err instanceof HttpError) return json(err.payload, err.status);
-  if (err instanceof DayNoteError) {
+  if (err instanceof DayNoteError || err instanceof StopNoteError) {
     return json({ error: 'validation', details: [{ code: err.code, field: err.field, message: err.message }] }, 422);
   }
   if (err instanceof BudgetError) {
@@ -236,6 +242,40 @@ async function handleDeleteDayNote(env, rawKey) {
   return json({ deleted: true, day_key });
 }
 
+// -- правка текста к остановкам ---------------------------------------------
+
+async function handleListStopNotes(env) {
+  const notes = await db.listStopNotes(env.DB);
+  let version = 0;
+  for (const note of notes) version = Math.max(version, note.updated_at);
+  return json({ notes, version });
+}
+
+async function handlePutStopNote(request, env, rawKey) {
+  const stop_key = normalizeStopNoteKey(rawKey);
+  const payload = await readJsonBody(request);
+  const raw = payload.body;
+
+  // Пустой текст — это откат к тексту из маршрута, то есть удаление правки.
+  if (typeof raw === 'string' && raw.trim() === '') {
+    await db.deleteStopNote(env.DB, stop_key);
+    return json({ deleted: true, stop_key });
+  }
+
+  const body = normalizeStopNoteBody(raw);
+  const { variant_id, day_date, stop_slug } = splitStopKey(stop_key);
+  const stop_name = typeof payload.stop_name === 'string' ? payload.stop_name.slice(0, 160) : '';
+  const note = await db.upsertStopNote(env.DB, { stop_key, variant_id, day_date, stop_slug, stop_name, body });
+  return json({ note });
+}
+
+async function handleDeleteStopNote(env, rawKey) {
+  const stop_key = normalizeStopNoteKey(rawKey);
+  const deleted = await db.deleteStopNote(env.DB, stop_key);
+  if (!deleted) throw new HttpError(404, { error: 'not_found' });
+  return json({ deleted: true, stop_key });
+}
+
 async function route(request, env, url) {
   const { pathname } = url;
   const method = request.method;
@@ -247,8 +287,9 @@ async function route(request, env, url) {
 
   if (!pathname.startsWith('/api/')) throw new HttpError(404, { error: 'not_found' });
 
-  // Заметки к дням читаются без пароля: страница публичная, править — только с токеном.
+  // Заметки к дням и правки текста к остановкам читаются без пароля: страница публичная, править — только с токеном.
   if (pathname === '/api/day-notes' && method === 'GET') return handleListDayNotes(env);
+  if (pathname === '/api/stop-notes' && method === 'GET') return handleListStopNotes(env);
 
   await requireAuth(request, env);
 
@@ -276,6 +317,13 @@ async function route(request, env, url) {
     const key = decodeURIComponent(dayNoteMatch[1]);
     if (method === 'PUT') return handlePutDayNote(request, env, key);
     if (method === 'DELETE') return handleDeleteDayNote(env, key);
+  }
+
+  const stopNoteMatch = /^\/api\/stop-notes\/([^/]+)$/.exec(pathname);
+  if (stopNoteMatch) {
+    const key = decodeURIComponent(stopNoteMatch[1]);
+    if (method === 'PUT') return handlePutStopNote(request, env, key);
+    if (method === 'DELETE') return handleDeleteStopNote(env, key);
   }
 
   throw new HttpError(400, { error: 'bad_route' });

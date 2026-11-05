@@ -228,6 +228,47 @@ export async function deleteDayNote(db, key) {
   return true;
 }
 
+// -- правка текста к остановкам ---------------------------------------------
+
+const STOP_NOTE_COLUMNS = 'stop_key, variant_id, day_date, stop_slug, stop_name, body, updated_at';
+
+export async function listStopNotes(db) {
+  const { results } = await db
+    .prepare(`SELECT ${STOP_NOTE_COLUMNS} FROM stop_notes ORDER BY stop_key`)
+    .all();
+  return results ?? [];
+}
+
+export async function getStopNote(db, key) {
+  return db.prepare(`SELECT ${STOP_NOTE_COLUMNS} FROM stop_notes WHERE stop_key = ?`).bind(key).first();
+}
+
+export async function upsertStopNote(db, note) {
+  const ts = nowSeconds();
+  await db
+    .prepare(
+      `INSERT INTO stop_notes (stop_key, variant_id, day_date, stop_slug, stop_name, body, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?)
+       ON CONFLICT(stop_key) DO UPDATE SET
+         variant_id = excluded.variant_id,
+         day_date = excluded.day_date,
+         stop_slug = excluded.stop_slug,
+         stop_name = excluded.stop_name,
+         body = excluded.body,
+         updated_at = excluded.updated_at`,
+    )
+    .bind(note.stop_key, note.variant_id, note.day_date, note.stop_slug, note.stop_name || '', note.body, ts)
+    .run();
+  return getStopNote(db, note.stop_key);
+}
+
+export async function deleteStopNote(db, key) {
+  const existing = await getStopNote(db, key);
+  if (!existing) return false;
+  await db.prepare('DELETE FROM stop_notes WHERE stop_key = ?').bind(key).run();
+  return true;
+}
+
 // -- login throttle ---------------------------------------------------------
 
 export async function countLoginFailures(db, ip, since) {
