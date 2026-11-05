@@ -6,6 +6,12 @@ import {
   resolveParams,
   validateParamsPatch,
 } from '../../shared/budget-core.js';
+import {
+  DayNoteError,
+  normalizeDayNoteBody,
+  normalizeDayNoteKey,
+  splitDayKey,
+} from '../../shared/day-notes.js';
 import { preflight, withCors } from './cors.js';
 import * as db from './db.js';
 import { signToken, verifyPassword, verifyToken, TOKEN_TTL_SECONDS } from './auth.js';
@@ -33,6 +39,9 @@ function json(data, status = 200) {
 
 function errorResponse(err) {
   if (err instanceof HttpError) return json(err.payload, err.status);
+  if (err instanceof DayNoteError) {
+    return json({ error: 'validation', details: [{ code: err.code, field: err.field, message: err.message }] }, 422);
+  }
   if (err instanceof BudgetError) {
     return json(
       {
@@ -195,6 +204,38 @@ async function handleDeleteItem(env, id) {
   return json({ deleted: true });
 }
 
+// -- заметки к дням ---------------------------------------------------------
+
+async function handleListDayNotes(env) {
+  const notes = await db.listDayNotes(env.DB);
+  let version = 0;
+  for (const note of notes) version = Math.max(version, note.updated_at);
+  return json({ notes, version });
+}
+
+async function handlePutDayNote(request, env, rawKey) {
+  const day_key = normalizeDayNoteKey(rawKey);
+  const raw = (await readJsonBody(request)).body;
+
+  // Пустая заметка — это удаление: так «Сохранить» на очищенном поле делает то, что ждёт человек.
+  if (typeof raw === 'string' && raw.trim() === '') {
+    await db.deleteDayNote(env.DB, day_key);
+    return json({ deleted: true, day_key });
+  }
+
+  const body = normalizeDayNoteBody(raw);
+  const { variant_id, day_date } = splitDayKey(day_key);
+  const note = await db.upsertDayNote(env.DB, { day_key, variant_id, day_date, body });
+  return json({ note });
+}
+
+async function handleDeleteDayNote(env, rawKey) {
+  const day_key = normalizeDayNoteKey(rawKey);
+  const deleted = await db.deleteDayNote(env.DB, day_key);
+  if (!deleted) throw new HttpError(404, { error: 'not_found' });
+  return json({ deleted: true, day_key });
+}
+
 async function route(request, env, url) {
   const { pathname } = url;
   const method = request.method;
@@ -205,6 +246,9 @@ async function route(request, env, url) {
   if (pathname === '/api/login' && method === 'POST') return handleLogin(request, env);
 
   if (!pathname.startsWith('/api/')) throw new HttpError(404, { error: 'not_found' });
+
+  // Заметки к дням читаются без пароля: страница публичная, править — только с токеном.
+  if (pathname === '/api/day-notes' && method === 'GET') return handleListDayNotes(env);
 
   await requireAuth(request, env);
 
@@ -225,6 +269,13 @@ async function route(request, env, url) {
     const id = decodeURIComponent(itemMatch[1]);
     if (method === 'PATCH') return handleUpdateItem(request, env, id);
     if (method === 'DELETE') return handleDeleteItem(env, id);
+  }
+
+  const dayNoteMatch = /^\/api\/day-notes\/([^/]+)$/.exec(pathname);
+  if (dayNoteMatch) {
+    const key = decodeURIComponent(dayNoteMatch[1]);
+    if (method === 'PUT') return handlePutDayNote(request, env, key);
+    if (method === 'DELETE') return handleDeleteDayNote(env, key);
   }
 
   throw new HttpError(400, { error: 'bad_route' });

@@ -34,3 +34,12 @@ CREATE TABLE IF NOT EXISTS login_attempts (
   ts INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS login_attempts_idx ON login_attempts(ip, ts);
+
+CREATE TABLE IF NOT EXISTS day_notes (
+  day_key    TEXT PRIMARY KEY,
+  variant_id TEXT NOT NULL,
+  day_date   TEXT NOT NULL,
+  body       TEXT NOT NULL,
+  updated_at INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS day_notes_variant_idx ON day_notes(variant_id);

@@ -146,6 +146,25 @@ hr.rule{border:0; border-top:1px solid var(--line); margin:0}
 .day-body .mapbtn{margin-top:12px; background:var(--ink); color:#fff; border:0; border-radius:10px; padding:9px 16px; font-weight:600; font-size:.86rem; cursor:pointer}
 .day-body .mapbtn:hover{background:var(--accent)}
 
+/* заметки к дням */
+.notebar{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:0 0 14px; padding:10px 12px; border:1px solid var(--line); border-radius:12px; background:#fff}
+.dn-hint{font-size:.82rem; color:var(--muted)}
+.dn-pass{border:1px solid var(--line); border-radius:8px; padding:6px 10px; font-family:inherit; font-size:.85rem; width:150px}
+.dn-err{font-size:.8rem; color:#b91c1c; font-weight:600}
+.daynote{margin-top:14px; padding-top:12px; border-top:1px dashed var(--line); font-size:.88rem}
+.daynote:empty{display:none}
+.dn-head{font-size:.68rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin-bottom:4px}
+.dn-meta{font-size:.74rem; color:var(--muted); margin-top:4px}
+.dn-btn{background:#fff; border:1px solid var(--line); border-radius:8px; padding:3px 10px; font-size:.78rem; font-weight:600; color:var(--muted); cursor:pointer; font-family:inherit}
+.dn-btn:hover{border-color:var(--accent); color:var(--accent)}
+.dn-add{background:none; border:1px dashed var(--line); border-radius:8px; padding:5px 12px; font-size:.8rem; color:var(--muted); cursor:pointer; font-family:inherit}
+.dn-add:hover{border-color:var(--accent); color:var(--accent)}
+.dn-ta{width:100%; min-height:76px; border:1px solid var(--line); border-radius:10px; padding:9px 11px; font-family:inherit; font-size:.9rem; line-height:1.45; resize:vertical; color:var(--ink); background:#fff}
+.dn-ta:focus{outline:2px solid var(--accent-soft); border-color:var(--accent)}
+.dn-actions{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
+.dn-del{color:#b91c1c}
+.dn-del:hover{border-color:#b91c1c; color:#b91c1c}
+
 /* booking + notes */
 .booklist{display:grid; grid-template-columns:1fr; gap:10px}
 .book{background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 16px; display:flex; gap:12px; align-items:center}
@@ -403,10 +422,11 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
       <div>
         <div class="eyebrow">День за днём</div>
         <h2>Маршрут по дням</h2>
-        <p class="muted small">Дни — ориентировочные. Нажмите на день, чтобы развернуть, и «Показать на карте» — карта подсветит точки этого дня.</p>
+        <p class="muted small">Дни — ориентировочные. Нажмите на день, чтобы развернуть, и «Показать на карте» — карта подсветит точки этого дня. Под планом дня можно оставить заметку: читают все, правят по паролю.</p>
       </div>
       <button class="map-toggle chip" id="mapToggle">Карта</button>
     </div>
+    <div class="notebar" id="noteBar"></div>
     <div class="itinerary">
       <div class="daylist" id="dayList"></div>
       <div class="map-col" id="mapCol">
@@ -551,7 +571,7 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
   </section>
 
   <footer>
-    <p>Версия 31 · 05.11.2026. Билеты куплены: China Eastern, бронь PEEPS5, 86 926 ₽ на двоих туда и обратно. Шесть вариантов маршрута, основной — Гонконг → Фужун → Чжанцзяцзе → Чунцин, 4–19.12.2026, 14 ночей на месте плюс ночь в самолёте: 4.12 в 16:45 из Шереметьева через Шанхай, ночь в пути, 5.12 в 11:40 Шэньчжэнь и поездом через границу в Гонконг, пять ночей (Clockenflap 6.12, Централ и Пик 7.12, Ковлун с M+ 8.12, Дисней 9.12), поезд G6080 10.12 в Фужун, 23 минуты до гор, три ночи в Чжанцзяцзе и четыре в Чунцине — с полным днём в Улуне 16.12 (Три моста и ущелье Луншуйся) и южным берегом с Наньшанем 17.12 (Сяхаоли, Хуанцзюэя, Лаоцзюньдун); 18.12 в 13:15 MU5430 в Шанхай, ночь у Пудуна, 19.12 в 11:50 MU591, Шереметьево в 17:05, дома вечером. Три справочника — жильё, заведения и достопримечательности по городам: адрес по-английски и по-китайски, сайт, карта, часы и ремарка. Фото — Wikimedia Commons, только на карточках вариантов: в плане по дням карусель убрана, страница открывается легче. Карта — OpenStreetMap. Плюс чек-лист «что сделать и купить заранее»: документы, деньги, связь, снаряжение и аптечка, с отметками в браузере и с палками для скандинавской ходьбы отдельным пунктом.</p>
+    <p>Версия 32 · 06.11.2026. Билеты куплены: China Eastern, бронь PEEPS5, 86 926 ₽ на двоих туда и обратно. Шесть вариантов маршрута, основной — Гонконг → Фужун → Чжанцзяцзе → Чунцин, 4–19.12.2026, 14 ночей на месте плюс ночь в самолёте: 4.12 в 16:45 из Шереметьева через Шанхай, ночь в пути, 5.12 в 11:40 Шэньчжэнь и поездом через границу в Гонконг, пять ночей (Clockenflap 6.12, Централ и Пик 7.12, Ковлун с M+ 8.12, Дисней 9.12), поезд G6080 10.12 в Фужун, 23 минуты до гор, три ночи в Чжанцзяцзе и четыре в Чунцине — с полным днём в Улуне 16.12 (Три моста и ущелье Луншуйся) и южным берегом с Наньшанем 17.12 (Сяхаоли, Хуанцзюэя, Лаоцзюньдун); 18.12 в 13:15 MU5430 в Шанхай, ночь у Пудуна, 19.12 в 11:50 MU591, Шереметьево в 17:05, дома вечером. Три справочника — жильё, заведения и достопримечательности по городам: адрес по-английски и по-китайски, сайт, карта, часы и ремарка. Фото — Wikimedia Commons, только на карточках вариантов: в плане по дням карусель убрана, страница открывается легче. Карта — OpenStreetMap. Плюс чек-лист «что сделать и купить заранее»: документы, деньги, связь, снаряжение и аптечка, с отметками в браузере и с палками для скандинавской ходьбы отдельным пунктом. Под планом каждого дня — заметка: текст видят все, править можно по паролю бюджета.</p>
   </footer>
 
 </div>
@@ -717,9 +737,11 @@ function renderDays(){
         '<span class="chev">▶</span>' +
       '</div>' +
       '<div class="day-body"><div class="inner"><ul class="stops">' + stops + '</ul>' +
-      '<button class="mapbtn" data-focus="' + d.n + '">Показать на карте</button></div></div>' +
+      '<button class="mapbtn" data-focus="' + d.n + '">Показать на карте</button>' +
+      '<div class="daynote" data-key="' + noteKey(d) + '"></div></div></div>' +
     '</div>';
   }).join("");
+  notePaint();
 }
 
 /* ---------- переключение варианта ---------- */
@@ -763,6 +785,198 @@ document.getElementById("dayList").addEventListener("click", function(e){
   const head = e.target.closest(".day-head");
   if(head) head.closest(".day").classList.toggle("open");
 });
+
+/* ---------- заметки к дням: читают все, правят по паролю ---------- */
+const NOTE_API = "https://china-trip-api.pages.dev";
+const NOTE_TOKEN_KEY = "chinatrip.budget.token";
+const NOTE_TOKEN_EXP_KEY = "chinatrip.budget.token_exp";
+const NOTE_MAX = 2000;
+
+let noteToken = null;
+let noteExpires = 0;
+let dayNotes = {};
+let noteEditKey = "";
+let noteError = "";
+
+function noteEsc(s){
+  return String(s === null || s === undefined ? "" : s).replace(/[&<>"']/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+  });
+}
+function noteDate(sec){
+  const d = new Date(Number(sec) * 1000);
+  if(isNaN(d.getTime())) return "";
+  return d.toLocaleDateString("ru-RU", {day:"2-digit", month:"2-digit"}) + ", " +
+    d.toLocaleTimeString("ru-RU", {hour:"2-digit", minute:"2-digit"});
+}
+function noteKey(d){
+  const m = /(\d{2}\.\d{2})/.exec(d.date || "");
+  return activeId + "|" + (m ? m[1] : "д" + d.n);
+}
+function noteReadToken(){
+  try {
+    const t = localStorage.getItem(NOTE_TOKEN_KEY);
+    const exp = Number(localStorage.getItem(NOTE_TOKEN_EXP_KEY));
+    if(!t || !isFinite(exp) || exp * 1000 <= Date.now()){ noteToken = null; return null; }
+    noteToken = t; noteExpires = exp; return t;
+  } catch(e){ return null; }
+}
+function noteSaveToken(t, exp){
+  noteToken = t; noteExpires = exp;
+  try {
+    localStorage.setItem(NOTE_TOKEN_KEY, t);
+    localStorage.setItem(NOTE_TOKEN_EXP_KEY, String(exp));
+  } catch(e){}
+}
+function noteClearToken(){
+  noteToken = null; noteExpires = 0;
+  try {
+    localStorage.removeItem(NOTE_TOKEN_KEY);
+    localStorage.removeItem(NOTE_TOKEN_EXP_KEY);
+  } catch(e){}
+}
+async function noteRequest(path, opts){
+  const o = opts || {};
+  const headers = {"content-type": "application/json"};
+  if(noteToken) headers.authorization = "Bearer " + noteToken;
+  const res = await fetch(NOTE_API + path, {method: o.method || "GET", headers: headers, body: o.body, cache: "no-store"});
+  let data = null;
+  try { data = await res.json(); } catch(e){ data = null; }
+  if(!res.ok){
+    if(res.status === 401){ noteClearToken(); noteBar(); }
+    const detail = data && data.details && data.details[0] && data.details[0].message;
+    throw new Error(detail || ("ошибка " + res.status));
+  }
+  return data;
+}
+function noteLoad(){
+  return fetch(NOTE_API + "/api/day-notes", {cache: "no-store"})
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(data){
+      dayNotes = {};
+      ((data && data.notes) || []).forEach(function(n){ dayNotes[n.day_key] = n; });
+      notePaint();
+    })
+    .catch(function(){ notePaint(); });
+}
+function noteHtml(key){
+  const n = dayNotes[key];
+  if(noteEditKey === key){
+    return '<div class="dn-edit">' +
+      '<div class="dn-head">Заметка к дню</div>' +
+      '<textarea class="dn-ta" rows="3" maxlength="' + NOTE_MAX + '" placeholder="Что важно помнить про этот день">' +
+        noteEsc(n ? n.body : "") + '</textarea>' +
+      '<div class="dn-actions">' +
+        '<button class="dn-btn" type="button" data-note-save="' + noteEsc(key) + '">Сохранить</button>' +
+        (n ? '<button class="dn-btn dn-del" type="button" data-note-del="' + noteEsc(key) + '">Удалить</button>' : '') +
+        '<button class="dn-btn" type="button" data-note-cancel="1">Отмена</button>' +
+      '</div></div>';
+  }
+  if(!n){
+    return noteToken
+      ? '<button class="dn-add" type="button" data-note-edit="' + noteEsc(key) + '">＋ заметка к дню</button>'
+      : '';
+  }
+  return '<div class="dn-head">Заметка к дню</div>' +
+    '<div class="dn-body">' + noteEsc(n.body).replace(/\n/g, "<br>") + '</div>' +
+    '<div class="dn-meta">обновлено ' + noteDate(n.updated_at) +
+      (noteToken ? ' · <button class="dn-btn" type="button" data-note-edit="' + noteEsc(key) + '">править</button>' : '') +
+    '</div>';
+}
+function notePaint(){
+  const boxes = document.querySelectorAll("#dayList .daynote");
+  for(let i = 0; i < boxes.length; i++){
+    boxes[i].innerHTML = noteHtml(boxes[i].getAttribute("data-key"));
+  }
+}
+function noteBar(){
+  const el = document.getElementById("noteBar");
+  if(!el) return;
+  if(noteToken){
+    const until = noteExpires ? new Date(noteExpires * 1000).toLocaleDateString("ru-RU") : "";
+    el.innerHTML = '<span class="dn-hint">Заметки к дням: правка открыта' + (until ? ' до ' + until : '') + '</span>' +
+      '<button class="dn-btn" type="button" id="noteLogout">Выйти</button>';
+  } else {
+    el.innerHTML = '<span class="dn-hint">Заметки к дням читают все, правят по паролю — тому же, что у бюджета.</span>' +
+      '<input type="password" id="notePass" class="dn-pass" autocomplete="current-password" placeholder="пароль">' +
+      '<button class="dn-btn" type="button" id="noteLogin">Войти</button>';
+  }
+  if(noteError) el.innerHTML += '<span class="dn-err">' + noteEsc(noteError) + '</span>';
+}
+async function noteLogin(){
+  const input = document.getElementById("notePass");
+  const pwd = input ? input.value : "";
+  noteError = "";
+  if(!pwd){ noteError = "введите пароль"; noteBar(); return; }
+  try {
+    const res = await fetch(NOTE_API + "/api/login", {
+      method: "POST",
+      headers: {"content-type": "application/json"},
+      body: JSON.stringify({password: pwd})
+    });
+    const data = await res.json().catch(function(){ return null; });
+    if(res.status === 403) noteError = "неверный пароль";
+    else if(res.status === 429) noteError = "слишком много попыток, подождите 15 минут";
+    else if(!res.ok || !data || !data.token) noteError = "вход не удался (" + res.status + ")";
+    else noteSaveToken(data.token, data.expires_at);
+  } catch(e){
+    noteError = "нет связи с сервером";
+  }
+  noteBar(); notePaint();
+}
+async function noteSave(key, box){
+  const ta = box ? box.querySelector(".dn-ta") : null;
+  if(!ta) return;
+  try {
+    const data = await noteRequest("/api/day-notes/" + encodeURIComponent(key), {
+      method: "PUT",
+      body: JSON.stringify({body: ta.value})
+    });
+    if(data && data.note) dayNotes[key] = data.note;
+    else delete dayNotes[key];
+    noteEditKey = ""; noteError = "";
+  } catch(err){
+    noteError = err.message || "не сохранилось";
+  }
+  noteBar(); notePaint();
+}
+async function noteDelete(key){
+  try {
+    await noteRequest("/api/day-notes/" + encodeURIComponent(key), {method: "DELETE"});
+  } catch(err){}
+  delete dayNotes[key];
+  noteEditKey = ""; noteError = "";
+  noteBar(); notePaint();
+}
+
+document.getElementById("dayList").addEventListener("click", function(e){
+  const ed = e.target.closest("[data-note-edit]");
+  if(ed){
+    noteEditKey = ed.getAttribute("data-note-edit");
+    notePaint();
+    const ta = document.querySelector("#dayList .dn-ta");
+    if(ta) ta.focus();
+    return;
+  }
+  if(e.target.closest("[data-note-cancel]")){ noteEditKey = ""; notePaint(); return; }
+  const sv = e.target.closest("[data-note-save]");
+  if(sv){ noteSave(sv.getAttribute("data-note-save"), sv.closest(".dn-edit")); return; }
+  const del = e.target.closest("[data-note-del]");
+  if(del){ noteDelete(del.getAttribute("data-note-del")); return; }
+});
+
+const noteBarEl = document.getElementById("noteBar");
+noteBarEl.addEventListener("click", function(e){
+  if(e.target.id === "noteLogin") noteLogin();
+  if(e.target.id === "noteLogout"){ noteClearToken(); noteError = ""; noteBar(); notePaint(); }
+});
+noteBarEl.addEventListener("keydown", function(e){
+  if(e.key === "Enter" && e.target.id === "notePass"){ e.preventDefault(); noteLogin(); }
+});
+
+noteReadToken();
+noteBar();
+noteLoad();
 
 /* ---------- брони и заметки ---------- */
 const BOOKING = [

@@ -189,6 +189,45 @@ export async function deleteItem(db, id) {
   return true;
 }
 
+// -- заметки к дням ---------------------------------------------------------
+
+const DAY_NOTE_COLUMNS = 'day_key, variant_id, day_date, body, updated_at';
+
+export async function listDayNotes(db) {
+  const { results } = await db
+    .prepare(`SELECT ${DAY_NOTE_COLUMNS} FROM day_notes ORDER BY day_key`)
+    .all();
+  return results ?? [];
+}
+
+export async function getDayNote(db, key) {
+  return db.prepare(`SELECT ${DAY_NOTE_COLUMNS} FROM day_notes WHERE day_key = ?`).bind(key).first();
+}
+
+export async function upsertDayNote(db, note) {
+  const ts = nowSeconds();
+  await db
+    .prepare(
+      `INSERT INTO day_notes (day_key, variant_id, day_date, body, updated_at)
+       VALUES (?, ?, ?, ?, ?)
+       ON CONFLICT(day_key) DO UPDATE SET
+         variant_id = excluded.variant_id,
+         day_date = excluded.day_date,
+         body = excluded.body,
+         updated_at = excluded.updated_at`,
+    )
+    .bind(note.day_key, note.variant_id, note.day_date, note.body, ts)
+    .run();
+  return getDayNote(db, note.day_key);
+}
+
+export async function deleteDayNote(db, key) {
+  const existing = await getDayNote(db, key);
+  if (!existing) return false;
+  await db.prepare('DELETE FROM day_notes WHERE day_key = ?').bind(key).run();
+  return true;
+}
+
 // -- login throttle ---------------------------------------------------------
 
 export async function countLoginFailures(db, ip, since) {
