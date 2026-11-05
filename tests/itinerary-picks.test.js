@@ -78,7 +78,7 @@ test('каждый вариант из группы находится в спр
   assert.deepEqual(misses, [], 'нет карточки в справочнике для: ' + misses.join('; '));
 });
 
-test('в чуницинских днях основного маршрута новые заведения на месте', () => {
+test('в чунцинских днях основного маршрута новые заведения на месте', () => {
   const main = T.VARIANTS.find((v) => v.main);
   const days = (main.china || []).concat(main.hk || []);
   const cq = days.filter((d) => d.city === 'cq');
@@ -91,6 +91,6 @@ test('в чуницинских днях основного маршрута н�
   const flat = names.join(' | ');
   for (const needle of ['The Move', '黄玉明', '张三的烤肉', '桃园火锅', '地下之城', '花市豌杂面', '鬼包子', '瓦顶顶', '茶颜悦色', 'Post Coffee', '云端之眼', '得意世界', '苏家坝', '龙门浩', '海底']) {
     if (needle === '海底') continue;
-    assert.ok(flat.includes(needle), `в чуницинских днях нет «${needle}»`);
+    assert.ok(flat.includes(needle), `в чунцинских днях нет «${needle}»`);
   }
 });
