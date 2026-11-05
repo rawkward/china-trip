@@ -418,5 +418,9 @@ window.TRIP_PLACES = {
   "mammy_pancake": {"name": "Mammy Pancake 媽咪雞蛋仔, Temple Street", "lat": 22.3058244, "lon": 114.1696645},
   "sheung_wan_market": {"name": "Sheung Wan Market Cooked Food Centre", "lat": 22.2861537, "lon": 114.1495257},
   "catherine_bakery": {"name": "Catherine Bakery, Queen's Road Central", "lat": 22.2859000, "lon": 114.1500000},
-  "tsim_chai_kee": {"name": "Tsim Chai Kee 沾仔記, Wellington Street", "lat": 22.2829680, "lon": 114.1544810}
+  "tsim_chai_kee": {"name": "Tsim Chai Kee 沾仔記, Wellington Street", "lat": 22.2829680, "lon": 114.1544810},
+  "mak_man_kee": {"name": "Mak Man Kee 麥文記麵家, Parkes Street Jordan", "lat": 22.3046800, "lon": 114.1704400},
+  "ying_kee": {"name": "Ying Kee Noodle Shop 英記麵家, High Street Sai Ying Pun", "lat": 22.2850754, "lon": 114.1442905},
+  "colour_harbour": {"name": "7-Colour Harbour 彩虹禮巷, Cochrane Street Central", "lat": 22.2834871, "lon": 114.1548371},
+  "man_wa_lane": {"name": "Man Wa Lane 文華里, Sheung Wan", "lat": 22.2859600, "lon": 114.1524200}
 };
