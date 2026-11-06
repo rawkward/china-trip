@@ -31,7 +31,8 @@ git push -q --force origin gh-pages
 
 echo "== проверка =="
 url="https://rawkward.github.io/china-trip/?cb=$RANDOM"
-code=$(curl -s -o /dev/null -m 30 -L -w '%{http_code}' "$url")
+code=$(curl -s -o /dev/null -m 30 -L -w '%{http_code}' "$url" 2>/dev/null || true)
+code=${code:-000}
 echo "HTTP $code — $url"
 echo "если Pages ещё не переключён на ветку gh-pages:"
 echo "  gh api -X PUT repos/rawkward/china-trip/pages -f 'source[branch]=gh-pages' -f 'source[path]=/'"
