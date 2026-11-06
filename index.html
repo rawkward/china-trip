@@ -1928,6 +1928,21 @@ function paintMap(){
   if(mapMode === "day"){
     const d = days.filter(function(x){ return x.n === mapDay; })[0];
     const pts = dayPoints(mapDay);
+    /* остановки одного квартала делят координаты — разводим их по маленькой окружности, иначе номера прячут друг друга */
+    const placed = [];
+    pts.forEach(function(x){
+      let clash = 0;
+      placed.forEach(function(u){
+        if(Math.abs(u.lat - x.lat) < 0.0004 && Math.abs(u.lon - x.lon) < 0.0004) clash++;
+      });
+      if(clash){
+        const a = clash * 2.399;
+        const r = 0.0022 + Math.floor(clash / 7) * 0.0012;
+        x.lat += Math.sin(a) * r;
+        x.lon += Math.cos(a) * r;
+      }
+      placed.push({lat:x.lat, lon:x.lon});
+    });
     const color = (CITIES[d ? d.city : ""] || {color:"#8a8278"}).color;
     if(pts.length > 1){
       L.polyline(pts.map(function(x){ return [x.lat, x.lon]; }),
