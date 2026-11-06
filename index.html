@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
 <style>
 :root{
   --bg:#faf6ef;
@@ -61,6 +61,10 @@ h2{font-size:clamp(1.5rem,3vw,2.1rem); margin:0 0 4px}
 .hero .date-chip{display:inline-block; background:var(--accent-soft); color:var(--accent); border:1px solid #f0cdbb; padding:4px 12px; border-radius:999px; font-size:.82rem; font-weight:600; margin-bottom:18px}
 .hero h1{font-size:clamp(2.1rem,5.4vw,3.6rem); margin:0 0 12px; max-width:20ch}
 .hero .lede{font-size:1.05rem; color:var(--muted); max-width:62ch}
+.routesummary{margin:16px 0 2px; display:flex; align-items:center; flex-wrap:wrap; gap:8px; font-size:.92rem}
+.routesummary .city{background:var(--bg2); border:1px solid var(--line); border-radius:10px; padding:6px 12px; font-weight:600}
+.routesummary .city small{display:block; font-weight:500; color:var(--muted); font-size:.72rem}
+.routesummary .arrow{color:var(--accent); font-weight:700}
 
 /* sections */
 section{padding:34px 0}
@@ -93,10 +97,21 @@ hr.rule{border:0; border-top:1px solid var(--line); margin:0}
 
 /* itinerary layout */
 .itinerary{display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); gap:22px; align-items:start}
-.map-col{position:sticky; top:70px}
-.map-shell{position:relative; border:1px solid var(--line); border-radius:16px; overflow:hidden; background:#e9e2d6}
-#map{height:calc(100vh - 120px); min-height:420px; width:100%}
-.map-tools{display:flex; gap:8px; flex-wrap:wrap; padding:10px; border-top:1px solid var(--line); background:#fff}
+.itinerary > *{min-width:0}
+.map-col{position:sticky; top:70px; min-width:0}
+.map-shell{min-width:0}
+.map-shell{position:relative; border:1px solid var(--line); border-radius:16px; overflow:hidden; background:#e9e2d6; display:flex; flex-direction:column}
+#map{height:calc(100vh - 430px); min-height:380px; width:100%}
+.map-tools{order:-1; display:flex; flex-direction:column; gap:8px; padding:10px; border-bottom:1px solid var(--line); background:#fff}
+.mtrow{display:flex; gap:6px; flex-wrap:wrap; align-items:center}
+.mtrow.scroll{flex-wrap:wrap; overflow:visible}
+.mtrow .chip{font-size:.76rem; padding:4px 11px}
+.mtrow .sep{width:1px; height:18px; background:var(--line); margin:0 2px; flex:0 0 auto}
+.mtsel{font-family:var(--sans); font-size:.8rem; font-weight:600; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:8px; padding:5px 8px; max-width:100%}
+.maplink{font-size:.78rem; font-weight:600; color:var(--accent); border-bottom:1px dashed currentColor; white-space:nowrap; text-decoration:none}
+.mapnote{font-size:.72rem; color:var(--muted); padding:0 10px 8px}
+.daypin{background:none; border:0}
+.daypin span{display:flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; color:#fff; font:700 12px/1 var(--sans); border:2px solid #fff; box-shadow:0 1px 5px rgba(0,0,0,.35)}
 .chip{background:#fff; border:1px solid var(--line); border-radius:999px; padding:5px 13px; font-size:.8rem; font-weight:600; cursor:pointer; color:var(--muted)}
 .chip:hover{border-color:var(--accent); color:var(--accent)}
 .chip.on{background:var(--ink); border-color:var(--ink); color:#fff}
@@ -235,7 +250,7 @@ footer a{color:var(--muted)}
   .vgrid{grid-template-columns:1fr}
   .itinerary{grid-template-columns:1fr}
   .map-col{position:static}
-  #map{height:42vh; min-height:300px}
+  #map{height:62vh; min-height:360px}
   .map-toggle{display:inline-block}
   .notes{grid-template-columns:1fr}
 }
@@ -452,9 +467,7 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
 <div class="wrap">
 
   <section class="hero" id="overview">
-    <div class="date-chip">4 – 18.12.2026 · основной вариант — Гонконг, Фужун, Чжанцзяцзе и Чунцин; Clockenflap 6.12, Улун 16.12, Дисней 9.12</div>
     <h1>Поездка в Китай вдвоём</h1>
-    <div class="routesummary" id="routesummary" hidden></div>
   </section>
 
   <hr class="rule">
@@ -463,7 +476,6 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
     <div class="head">
       <div>
         <h2>Шесть вариантов маршрута</h2>
-        <p class="muted small">Основной — Гонконг, Фужун, Чжанцзяцзе и Чунцин. Вторая карточка — тот же маршрут с шестой ночью в Гонконге.</p>
       </div>
     </div>
     <div class="vgrid" id="variantGrid"></div>
@@ -476,10 +488,11 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
       <div>
         <div class="eyebrow">День за днём</div>
         <h2>Маршрут по дням</h2>
-        <p class="muted small">Дни — ориентировочные. Нажмите на день, чтобы развернуть, и «Показать на карте» — карта подсветит точки этого дня. Под планом дня можно оставить заметку: читают все, правят по паролю.</p>
+        <p class="muted small">Дни — ориентировочные. Нажмите на день, чтобы развернуть, и «Показать на карте» — карта покажет точки этого дня по порядку и соединит их линией. Переключатель «Все точки» на карте возвращает общий вид без линии, фильтры — по городу и по типу: отели, заведения, магазины, места. Под планом дня можно оставить заметку: читают все, правят по паролю.</p>
       </div>
       <button class="map-toggle chip" id="mapToggle">Карта</button>
     </div>
+    <div class="routesummary" id="routesummary"></div>
     <div class="notebar" id="noteBar"></div>
     <div class="itinerary">
       <div class="daylist" id="dayList"></div>
@@ -625,7 +638,7 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
   </section>
 
   <footer>
-    <p>Версия 36 · 06.11.2026. Билеты куплены: China Eastern, бронь PEEPS5, 86 926 ₽ на двоих туда и обратно. Шесть вариантов; основной — Гонконг → Фужун → Чжанцзяцзе → Чунцин, 4–19.12.2026, 14 ночей на месте и ночь в самолёте. Карточки вариантов короткие: даты, четыре плюса, четыре минуса и итоговая сумма. Справочники — жильё, заведения, места и полезное по городам: порядок по тегам «рекомендация → выбор → альтернатива», альтернативы под раскрывашкой, тег правится по паролю. Где в дне несколько равноправных вариантов одного слота, они собраны каруселью: на экране один, остальные стрелками. По паролю правятся заметка к дню, текст остановки и любой текст в карточке дня, а также порядок остановок, замена на карточку из справочника, время и цена. Фото — Wikimedia Commons, только на карточках вариантов; карта — OpenStreetMap.</p>
+    <p>Версия 37 · 06.11.2026. Билеты куплены: China Eastern, бронь PEEPS5, 86 926 ₽ на двоих туда и обратно. Шесть вариантов; основной — Гонконг → Фужун → Чжанцзяцзе → Чунцин, 4–19.12.2026, 14 ночей на месте и ночь в самолёте. Карточки вариантов короткие: даты, четыре плюса, четыре минуса и итоговая сумма. Справочники — жильё, заведения, места и полезное по городам: порядок по тегам «рекомендация → выбор → альтернатива», альтернативы под раскрывашкой, тег правится по паролю. Где в дне несколько равноправных вариантов одного слота, они собраны каруселью: на экране один, остальные стрелками. По паролю правятся заметка к дню, текст остановки и любой текст в карточке дня, а также порядок остановок, замена на карточку из справочника, время и цена. Фото — Wikimedia Commons, только на карточках вариантов. Карта — на подложке Google (Leaflet, при недоступности Google сама переключается на Яндекс и OpenStreetMap): два режима — «Все точки» без линии и «По дням» с пронумерованными точками дня и линией маршрута, плюс фильтры по типу (отели, заведения, магазины, места) и по городу и ссылка на маршрут дня в Google Maps. Правка по паролю открыта на год.</p>
   </footer>
 
 </div>
@@ -633,7 +646,7 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
 <script src="assets/data.js?v=41"></script>
 <script src="assets/itinerary.js?v=46"></script>
 <script src="assets/guide.js?v=9"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="assets/vendor/leaflet/leaflet.js?v=1"></script>
 <script>
 "use strict";
 const PHOTOS = window.TRIP_PHOTOS || {};
@@ -745,6 +758,37 @@ if(!VARIANTS.some(function(v){ return v.id === activeId; })) activeId = (VARIANT
 let currentVariant = VARIANTS.filter(function(v){ return v.id === activeId; })[0];
 let days = buildDays(currentVariant);
 
+/* ---------- рендер: сводка ночей над списком дней ---------- */
+function nightsWord(n){
+  const tail = n % 100;
+  if(tail >= 11 && tail <= 14) return "ночей";
+  const last = n % 10;
+  if(last === 1) return "ночь";
+  if(last >= 2 && last <= 4) return "ночи";
+  return "ночей";
+}
+
+function renderSummary(){
+  const el = document.getElementById("routesummary");
+  if(!el) return;
+  const groups = [];
+  days.forEach(function(d){
+    const last = groups[groups.length-1];
+    if(last && last.city === d.city) last.count++;
+    else groups.push({city:d.city, count:1});
+  });
+  const total = days.length ? days.length - 1 : 0;
+  el.innerHTML = groups.map(function(s, i){
+    const isLast = i === groups.length - 1;
+    const nights = isLast ? s.count - 1 : s.count;
+    const label = isLast
+      ? (nights > 0 ? nights + " " + nightsWord(nights) + " · вылет домой" : "вылет домой")
+      : nights + " " + nightsWord(nights);
+    return (i > 0 ? '<span class="arrow">→</span>' : '') +
+      '<span class="city">' + CITIES[s.city].label + '<small>' + label + '</small></span>';
+  }).join("") + '<span class="muted small" style="margin-left:6px">· всего ' + total + ' ' + nightsWord(total) + '</span>';
+}
+
 /* ---------- рендер: карточки вариантов ---------- */
 function renderVariants(){
   const grid = document.getElementById("variantGrid");
@@ -800,6 +844,7 @@ function renderDayCard(d){
 function renderDays(){
   const list = document.getElementById("dayList");
   list.innerHTML = days.map(function(d){ return renderDayCard(d); }).join("");
+  renderSummary();
   notePaint();
 }
 
@@ -1747,132 +1792,318 @@ document.getElementById("notesGrid").innerHTML = NOTES.map(function(n){
 }).join("");
 
 /* ---------- карта ---------- */
+const TILE_SETS = [
+  {id:"google", label:"Google", url:"https://mt{s}.google.com/vt/lyrs=m&hl=ru&x={x}&y={y}&z={z}", sub:["0","1","2","3"], attr:'&copy; <a href="https://www.google.com/maps">Google</a>', max:20},
+  {id:"yandex", label:"Яндекс", url:"https://core-renderer-tiles.maps.yandex.net/tiles?l=map&x={x}&y={y}&z={z}&scale=1&lang=ru_RU", sub:null, attr:'&copy; <a href="https://yandex.ru/maps">Яндекс</a>', max:19},
+  {id:"osm", label:"OpenStreetMap", url:"https://tile.openstreetmap.org/{z}/{x}/{y}.png", sub:null, attr:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', max:19}
+];
+const MAP_KINDS = [
+  {k:"hotel", label:"Отели"},
+  {k:"food", label:"Заведения"},
+  {k:"sight", label:"Места"},
+  {k:"shopping", label:"Магазины"},
+  {k:"transport", label:"Транспорт"},
+  {k:"festival", label:"Фестиваль"},
+  {k:"optional", label:"Альтернативы"},
+  {k:"spa", label:"Бани и спа"}
+];
 let map = null;
+let tileLayer = null;
+let tileIdx = 0;
+let tileOk = 0;
+let tileErrors = 0;
 let markerLayer = null;
+let lineLayer = null;
 let markerRegistry = [];
 let mapFilter = "all";
+let mapKind = "all";
+let mapMode = "all";
+let mapDay = 1;
 let mapReady = false;
 
 function initMap(){
   if(mapReady) return;
   const box = document.getElementById("map");
+  if(!box) return;
   if(typeof L === "undefined"){
     box.innerHTML = '<div style="padding:30px;text-align:center;color:#6f675d">Карта не загрузилась (нет Leaflet).</div>';
     return;
   }
+  if(!box.offsetWidth) return;   /* колонка карты скрыта (телефон) — ждём, пока её откроют */
   mapReady = true;
-  map = L.map("map", {scrollWheelZoom:true}).setView([26.5, 108.5], 5);
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    maxZoom:19
-  }).addTo(map);
-  document.getElementById("mapTools").addEventListener("click", onToolsClick);
+  map = L.map("map", {scrollWheelZoom:true, zoomAnimation:false, fadeAnimation:false}).setView([26.5, 108.5], 5, {animate:false});
+  setTileLayer(0);
+  const tools = document.getElementById("mapTools");
+  if(tools){
+    tools.addEventListener("click", onToolsClick);
+    tools.addEventListener("change", onToolsChange);
+  }
   rebuildMap();
 }
 
-function rebuildMap(){
-  if(!mapReady) return;
-  if(markerLayer) map.removeLayer(markerLayer);
-  markerLayer = L.layerGroup().addTo(map);
+function setTileLayer(idx){
+  if(!map) return;
+  tileIdx = idx;
+  if(tileLayer) map.removeLayer(tileLayer);
+  const t = TILE_SETS[idx];
+  tileOk = 0;
+  tileErrors = 0;
+  tileLayer = L.tileLayer(t.url, {
+    attribution:t.attr,
+    maxZoom:t.max,
+    subdomains: t.sub || "abc"
+  }).addTo(map);
+  tileLayer.on("tileload", function(){ tileOk++; });
+  tileLayer.on("tileerror", function(){
+    tileErrors++;
+    if(tileOk === 0 && tileErrors >= 5 && idx + 1 < TILE_SETS.length) setTileLayer(idx + 1);
+  });
+}
+
+function buildMarkerRegistry(){
   markerRegistry = [];
   const seen = {};
   days.forEach(function(d){
-    d.places.forEach(function(p){
+    (d.places || []).forEach(function(p){
       const pl = PLACES[p.k];
       if(!pl) return;
       let rec = seen[p.k];
       if(!rec){
-        rec = seen[p.k] = {key:p.k, name:p.name, days:[], city:d.city, lat:pl.lat, lon:pl.lon};
+        rec = seen[p.k] = {key:p.k, name:p.name, days:[], city:d.city, tag:p.tag || "", lat:pl.lat, lon:pl.lon};
         markerRegistry.push(rec);
       }
       if(rec.days.indexOf(d.n) === -1) rec.days.push(d.n);
     });
   });
+}
+
+function gmapsUrl(lat, lon){
+  return "https://www.google.com/maps/search/?api=1&query=" + lat + "," + lon;
+}
+
+function dayPoints(n){
+  const d = days.filter(function(x){ return x.n === n; })[0];
+  const out = [];
+  const seen = {};
+  ((d && d.places) || []).forEach(function(p){
+    const pl = PLACES[p.k];
+    if(!pl) return;
+    const key = p.k + "|" + Math.round(pl.lat * 1e5) + "|" + Math.round(pl.lon * 1e5);
+    if(seen[key]) return;
+    seen[key] = 1;
+    out.push({name:p.name, tag:p.tag || "", lat:pl.lat, lon:pl.lon});
+  });
+  return out;
+}
+
+function dayMapsUrl(n){
+  const pts = dayPoints(n);
+  if(!pts.length) return "https://www.google.com/maps";
+  if(pts.length === 1) return gmapsUrl(pts[0].lat, pts[0].lon);
+  const origin = pts[0].lat + "," + pts[0].lon;
+  const dest = pts[pts.length - 1].lat + "," + pts[pts.length - 1].lon;
+  const mids = pts.slice(1, pts.length - 1).slice(0, 9).map(function(p){ return p.lat + "," + p.lon; });
+  let u = "https://www.google.com/maps/dir/?api=1&origin=" + origin + "&destination=" + dest;
+  if(mids.length) u += "&waypoints=" + mids.join("|");
+  return u;
+}
+
+function rebuildMap(){
+  if(!mapReady) return;
+  if(markerLayer) map.removeLayer(markerLayer);
+  if(lineLayer) map.removeLayer(lineLayer);
+  markerLayer = L.layerGroup().addTo(map);
+  lineLayer = L.layerGroup().addTo(map);
+  buildMarkerRegistry();
+  if(!days.some(function(d){ return d.n === mapDay; })) mapDay = days.length ? days[0].n : 1;
+  buildChips();
+  paintMap();
+  buildLegend();
+}
+
+function paintMap(){
+  if(!mapReady || !markerLayer || !lineLayer) return;
+  markerLayer.clearLayers();
+  lineLayer.clearLayers();
+  if(mapMode === "day"){
+    const d = days.filter(function(x){ return x.n === mapDay; })[0];
+    const pts = dayPoints(mapDay);
+    const color = (CITIES[d ? d.city : ""] || {color:"#8a8278"}).color;
+    if(pts.length > 1){
+      L.polyline(pts.map(function(x){ return [x.lat, x.lon]; }),
+        {color:color, weight:4, opacity:0.8, lineJoin:"round", lineCap:"round"}).addTo(lineLayer);
+    }
+    pts.forEach(function(x, i){
+      const m = L.marker([x.lat, x.lon], {
+        icon: L.divIcon({className:"daypin", html:'<span style="background:' + color + '">' + (i + 1) + '</span>', iconSize:[24,24], iconAnchor:[12,12]})
+      }).addTo(markerLayer);
+      m.bindPopup('<strong>' + (i + 1) + '. ' + x.name + '</strong>' +
+        '<div class="small muted">Д' + mapDay + (x.tag ? ' · ' + (MAP_KINDS.filter(function(k){ return k.k === x.tag; })[0] || {label:x.tag}).label : '') + '</div>' +
+        '<div><a class="maplink" href="' + gmapsUrl(x.lat, x.lon) + '" target="_blank" rel="noopener">Google Maps ↗</a></div>');
+    });
+    if(pts.length){
+      map.fitBounds(L.latLngBounds(pts.map(function(x){ return [x.lat, x.lon]; })), {padding:[42,42], maxZoom:14, animate:false});
+    } else {
+      map.setView([26.5, 108.5], 5, {animate:false});
+    }
+    return;
+  }
   markerRegistry.forEach(function(r){
+    if(mapFilter !== "all" && r.city !== mapFilter) return;
+    if(mapKind !== "all" && r.tag !== mapKind) return;
     const color = (CITIES[r.city] || {color:"#8a8278"}).color;
     const m = L.circleMarker([r.lat, r.lon], {
-      radius:7, color:"#fff", weight:1.6, fillColor:color, fillOpacity:0.85
+      radius:7, color:"#fff", weight:1.6, fillColor:color, fillOpacity:0.85, opacity:1
     }).addTo(markerLayer);
     m.bindPopup('<strong>' + r.name + '</strong>' +
-      (r.days.length ? '<div class="small muted">дни: ' + r.days.map(function(x){ return "Д" + x; }).join(", ") + '</div>' : ''));
-    r.marker = m;
+      (r.days.length ? '<div class="small muted">дни: ' + r.days.map(function(x){ return "Д" + x; }).join(", ") + '</div>' : '') +
+      '<div><a class="maplink" href="' + gmapsUrl(r.lat, r.lon) + '" target="_blank" rel="noopener">Google Maps ↗</a></div>');
   });
-  buildChips();
-  applyFilter(mapFilter);
-  buildLegend();
+  const pts = markerRegistry.filter(function(r){
+    return (mapFilter === "all" || r.city === mapFilter) && (mapKind === "all" || r.tag === mapKind);
+  });
+  if(pts.length){
+    map.fitBounds(L.latLngBounds(pts.map(function(x){ return [x.lat, x.lon]; })), {padding:[24,24], maxZoom:13, animate:false});
+  }
 }
 
 function fitAll(){
   if(!map) return;
   const lls = markerRegistry.map(function(x){ return [x.lat, x.lon]; });
-  if(lls.length) map.fitBounds(L.latLngBounds(lls), {padding:[20,20]});
+  if(lls.length) map.fitBounds(L.latLngBounds(lls), {padding:[20,20], animate:false});
+}
+
+function showMapCol(){
+  const col = document.getElementById("mapCol");
+  if(!col) return;
+  if(col.style.display === "none"){
+    col.style.display = "";
+    const btn = document.getElementById("mapToggle");
+    if(btn) btn.classList.add("on");
+    if(!mapReady) initMap();
+    if(map) setTimeout(function(){ map.invalidateSize(); }, 60);
+  }
 }
 
 function focusDay(n){
-  if(!map) return;
-  const pts = markerRegistry.filter(function(x){ return x.days.indexOf(n) !== -1; });
-  markerRegistry.forEach(function(x){
-    const on = x.days.indexOf(n) !== -1;
-    x.marker.setStyle({fillOpacity: on ? 0.9 : 0.12, opacity: on ? 1 : 0.3});
-  });
-  if(pts.length){
-    map.fitBounds(L.latLngBounds(pts.map(function(x){ return [x.lat, x.lon]; })), {padding:[40,40], maxZoom:13});
-  }
+  showMapCol();
+  if(!mapReady) initMap();
+  if(!map){ return; }
+  mapMode = "day";
+  mapDay = n;
+  buildChips();
+  paintMap();
   document.querySelectorAll(".day").forEach(function(el){
     el.classList.toggle("focused", el.getAttribute("data-day") === String(n));
   });
+  showMapCol();
+  if(map) setTimeout(function(){ map.invalidateSize(); }, 80);
   const el = document.querySelector('.day[data-day="' + n + '"]');
   if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
 }
 
 function resetMap(){
+  mapMode = "all";
   mapFilter = "all";
-  markerRegistry.forEach(function(x){ x.marker.setStyle({fillOpacity:0.85, opacity:1}); });
+  mapKind = "all";
   document.querySelectorAll(".day").forEach(function(el){ el.classList.remove("focused"); });
-  document.querySelectorAll("#mapTools .chip").forEach(function(c){
-    c.classList.toggle("on", c.getAttribute("data-filter") === "all");
-  });
-  fitAll();
+  buildChips();
+  paintMap();
+  if(map) setTimeout(function(){ map.invalidateSize(); }, 50);
 }
 
 function buildChips(){
   const tools = document.getElementById("mapTools");
-  const order = [];
-  markerRegistry.forEach(function(r){ if(order.indexOf(r.city) === -1) order.push(r.city); });
-  if(mapFilter !== "all" && order.indexOf(mapFilter) === -1) mapFilter = "all";
-  tools.innerHTML = '<button class="chip' + (mapFilter === "all" ? ' on' : '') + '" data-filter="all">Все</button>' +
-    order.map(function(c){
-      return '<button class="chip' + (mapFilter === c ? ' on' : '') + '" data-filter="' + c + '">' + CITIES[c].label + '</button>';
-    }).join("") +
-    '<button class="chip" id="resetBtn" style="margin-left:auto">Сброс</button>';
+  if(!tools) return;
+  const kindsPresent = [];
+  MAP_KINDS.forEach(function(k){
+    if(markerRegistry.some(function(r){ return r.tag === k.k; })) kindsPresent.push(k);
+  });
+  if(mapKind !== "all" && !kindsPresent.some(function(k){ return k.k === mapKind; })) mapKind = "all";
+  const cityOrder = [];
+  markerRegistry.forEach(function(r){ if(cityOrder.indexOf(r.city) === -1) cityOrder.push(r.city); });
+  if(mapFilter !== "all" && cityOrder.indexOf(mapFilter) === -1) mapFilter = "all";
+
+  let html = '<div class="mtrow">' +
+    '<button class="chip' + (mapMode === "all" ? ' on' : '') + '" data-mode="all">Все точки</button>' +
+    '<button class="chip' + (mapMode === "day" ? ' on' : '') + '" data-mode="day">По дням</button>' +
+    '<button class="chip" id="resetBtn" style="margin-left:auto">Сброс</button>' +
+    '</div>';
+
+  if(mapMode === "day"){
+    html += '<div class="mtrow">' +
+      '<select class="mtsel" id="mapDaySel">' + days.map(function(d){
+        const city = (CITIES[d.city] || {}).label || d.city;
+        return '<option value="' + d.n + '"' + (d.n === mapDay ? ' selected' : '') + '>Д' + d.n + ' · ' + (d.date || '') + ' · ' + city + '</option>';
+      }).join("") + '</select>' +
+      '<a class="maplink" href="' + dayMapsUrl(mapDay) + '" target="_blank" rel="noopener">Маршрут дня в Google Maps ↗</a>' +
+      '</div>' +
+      '<div class="mapnote">Точки дня пронумерованы по порядку плана и соединены линией маршрута.</div>';
+  } else {
+    html += '<div class="mtrow scroll">' +
+      '<button class="chip' + (mapKind === "all" ? ' on' : '') + '" data-kind="all">Все типы</button>' +
+      kindsPresent.map(function(k){
+        return '<button class="chip' + (mapKind === k.k ? ' on' : '') + '" data-kind="' + k.k + '">' + k.label + '</button>';
+      }).join("") +
+      '</div>' +
+      '<div class="mtrow scroll">' +
+      '<button class="chip' + (mapFilter === "all" ? ' on' : '') + '" data-filter="all">Все города</button>' +
+      cityOrder.map(function(c){
+        return '<button class="chip' + (mapFilter === c ? ' on' : '') + '" data-filter="' + c + '">' + CITIES[c].label + '</button>';
+      }).join("") +
+      '</div>';
+  }
+  html += '<div class="mtrow">' +
+    '<span class="mapnote" style="padding:0">Подложка: ' + TILE_SETS[tileIdx].label + '</span>' +
+    '<button class="chip" id="tileBtn" style="margin-left:auto">Другая карта</button>' +
+    '</div>';
+  tools.innerHTML = html;
+}
+
+function onToolsChange(e){
+  const sel = e.target;
+  if(!sel || sel.id !== "mapDaySel") return;
+  mapDay = parseInt(sel.value, 10) || 1;
+  buildChips();
+  paintMap();
 }
 
 function onToolsClick(e){
-  const b = e.target.closest(".chip");
+  const b = e.target.closest("button");
   if(!b) return;
   if(b.id === "resetBtn"){ resetMap(); return; }
-  mapFilter = b.getAttribute("data-filter");
-  document.querySelectorAll("#mapTools .chip").forEach(function(c){
-    c.classList.toggle("on", c.getAttribute("data-filter") === mapFilter);
-  });
-  applyFilter(mapFilter);
-}
-
-function applyFilter(f){
-  markerRegistry.forEach(function(x){
-    const on = f === "all" || x.city === f;
-    x.marker.setStyle({fillOpacity: on ? 0.85 : 0.10, opacity: on ? 1 : 0.25});
-  });
-  if(f === "all"){
-    fitAll();
-  } else {
-    const pts = markerRegistry.filter(function(x){ return x.city === f; });
-    if(pts.length) map.fitBounds(L.latLngBounds(pts.map(function(x){ return [x.lat, x.lon]; })), {padding:[40,40]});
+  if(b.id === "tileBtn"){
+    setTileLayer((tileIdx + 1) % TILE_SETS.length);
+    buildChips();
+    return;
+  }
+  const mode = b.getAttribute("data-mode");
+  if(mode){
+    if(mode === mapMode) return;
+    mapMode = mode;
+    buildChips();
+    paintMap();
+    if(map) setTimeout(function(){ map.invalidateSize(); }, 50);
+    return;
+  }
+  const kind = b.getAttribute("data-kind");
+  if(kind){
+    mapKind = kind;
+    buildChips();
+    paintMap();
+    return;
+  }
+  const city = b.getAttribute("data-filter");
+  if(city){
+    mapFilter = city;
+    buildChips();
+    paintMap();
   }
 }
 
 function buildLegend(){
   const el = document.getElementById("legend");
+  if(!el) return;
   const order = [];
   markerRegistry.forEach(function(r){ if(order.indexOf(r.city) === -1) order.push(r.city); });
   el.innerHTML = order.map(function(c){
@@ -1890,7 +2121,8 @@ function buildLegend(){
     const hidden = col.style.display === "none";
     col.style.display = hidden ? "" : "none";
     btn.classList.toggle("on", hidden);
-    if(hidden && map) setTimeout(function(){ map.invalidateSize(); }, 50);
+    if(hidden && !mapReady) initMap();
+    if(hidden && map) setTimeout(function(){ map.invalidateSize(); }, 60);
   });
 })();
 

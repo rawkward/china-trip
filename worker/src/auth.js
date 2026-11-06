@@ -1,6 +1,6 @@
 const encoder = new TextEncoder();
 
-export const TOKEN_TTL_SECONDS = 30 * 24 * 60 * 60;
+export const TOKEN_TTL_SECONDS = 365 * 24 * 60 * 60;
 const TOKEN_VERSION = 'v1';
 const TOKEN_MESSAGE_PREFIX = 'budget|';
 
