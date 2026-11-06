@@ -24,6 +24,12 @@ import {
   normalizeDayTexts,
   splitDayKey as splitDayTextKey,
 } from '../../shared/day-texts.js';
+import {
+  GuideTagError,
+  normalizeGuideTag,
+  normalizeGuideTagKey,
+  splitGuideTagKey,
+} from '../../shared/guide-tags.js';
 import { preflight, withCors } from './cors.js';
 import * as db from './db.js';
 import { signToken, verifyPassword, verifyToken, TOKEN_TTL_SECONDS } from './auth.js';
@@ -51,7 +57,12 @@ function json(data, status = 200) {
 
 function errorResponse(err) {
   if (err instanceof HttpError) return json(err.payload, err.status);
-  if (err instanceof DayNoteError || err instanceof StopNoteError || err instanceof DayTextError) {
+  if (
+    err instanceof DayNoteError ||
+    err instanceof StopNoteError ||
+    err instanceof DayTextError ||
+    err instanceof GuideTagError
+  ) {
     return json({ error: 'validation', details: [{ code: err.code, field: err.field, message: err.message }] }, 422);
   }
   if (err instanceof BudgetError) {
@@ -334,6 +345,29 @@ async function handleDeleteDayText(env, rawKey) {
   return json({ deleted: true, day_key });
 }
 
+// -- теги карточек справочника ----------------------------------------------
+
+async function handleListGuideTags(env) {
+  const tags = await db.listGuideTags(env.DB);
+  return json({ tags });
+}
+
+async function handlePutGuideTag(request, env, rawKey) {
+  const tag_key = normalizeGuideTagKey(rawKey);
+  const payload = await readJsonBody(request);
+  const tag = normalizeGuideTag(payload.tag);
+  const { kind, city, guide_id } = splitGuideTagKey(tag_key);
+  const row = await db.upsertGuideTag(env.DB, { tag_key, kind, city, guide_id, tag });
+  return json({ tag: row });
+}
+
+async function handleDeleteGuideTag(env, rawKey) {
+  const tag_key = normalizeGuideTagKey(rawKey);
+  const deleted = await db.deleteGuideTag(env.DB, tag_key);
+  if (!deleted) throw new HttpError(404, { error: 'not_found' });
+  return json({ deleted: true, tag_key });
+}
+
 async function route(request, env, url) {
   const { pathname } = url;
   const method = request.method;
@@ -349,6 +383,7 @@ async function route(request, env, url) {
   if (pathname === '/api/day-notes' && method === 'GET') return handleListDayNotes(env);
   if (pathname === '/api/stop-notes' && method === 'GET') return handleListStopNotes(env);
   if (pathname === '/api/day-texts' && method === 'GET') return handleListDayTexts(env);
+  if (pathname === '/api/guide-tags' && method === 'GET') return handleListGuideTags(env);
 
   await requireAuth(request, env);
 
@@ -390,6 +425,13 @@ async function route(request, env, url) {
     const key = decodeURIComponent(dayTextMatch[1]);
     if (method === 'PUT') return handlePutDayText(request, env, key);
     if (method === 'DELETE') return handleDeleteDayText(env, key);
+  }
+
+  const guideTagMatch = /^\/api\/guide-tags\/([^/]+)$/.exec(pathname);
+  if (guideTagMatch) {
+    const key = decodeURIComponent(guideTagMatch[1]);
+    if (method === 'PUT') return handlePutGuideTag(request, env, key);
+    if (method === 'DELETE') return handleDeleteGuideTag(env, key);
   }
 
   throw new HttpError(400, { error: 'bad_route' });

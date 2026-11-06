@@ -263,6 +263,46 @@ suite('budget API (integration)', () => {
     }
   });
 
+  test('guide tags: public read, authenticated write and delete', async () => {
+    const key = `food|hk|apitest${Date.now()}`;
+    const path = `/api/guide-tags/${encodeURIComponent(key)}`;
+    try {
+      const empty = await call('/api/guide-tags', { auth: false });
+      assert.equal(empty.status, 200);
+      assert.ok(Array.isArray(empty.data.tags));
+
+      const denied = await call(path, { method: 'PUT', body: { tag: 'rec' }, auth: false });
+      assert.equal(denied.status, 401);
+
+      const put = await call(path, { method: 'PUT', body: { tag: 'rec' } });
+      assert.equal(put.status, 200, JSON.stringify(put.data));
+      assert.equal(put.data.tag.tag_key, key);
+      assert.equal(put.data.tag.kind, 'food');
+      assert.equal(put.data.tag.city, 'hk');
+      assert.equal(put.data.tag.guide_id, key.split('|')[2]);
+      assert.equal(put.data.tag.tag, 'rec');
+
+      const list = await call('/api/guide-tags', { auth: false });
+      const found = list.data.tags.find((row) => row.tag_key === key);
+      assert.ok(found);
+      assert.equal(found.tag, 'rec');
+
+      const changed = await call(path, { method: 'PUT', body: { tag: 'alt' } });
+      assert.equal(changed.status, 200);
+      assert.equal(changed.data.tag.tag, 'alt');
+
+      const bad = await call(path, { method: 'PUT', body: { tag: 'bogus' } });
+      assert.equal(bad.status, 422);
+      assert.equal(bad.data.error, 'validation');
+
+      const deleted = await call(path, { method: 'DELETE' });
+      assert.equal(deleted.status, 200);
+      assert.equal((await call(path, { method: 'DELETE' })).status, 404);
+    } finally {
+      await call(path, { method: 'DELETE' });
+    }
+  });
+
   test('CORS preflight echoes the Pages origin', async () => {
     const result = await call('/api/budget', { method: 'OPTIONS', auth: false, origin: PAGES_ORIGIN });
     assert.equal(result.status, 204);

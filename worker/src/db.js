@@ -308,6 +308,46 @@ export async function deleteDayText(db, key) {
   return true;
 }
 
+// -- теги карточек справочника ----------------------------------------------
+
+const GUIDE_TAG_COLUMNS = 'tag_key, kind, city, guide_id, tag, updated_at';
+
+export async function listGuideTags(db) {
+  const { results } = await db
+    .prepare(`SELECT ${GUIDE_TAG_COLUMNS} FROM guide_tags ORDER BY kind, city, tag_key`)
+    .all();
+  return results ?? [];
+}
+
+export async function getGuideTag(db, key) {
+  return db.prepare(`SELECT ${GUIDE_TAG_COLUMNS} FROM guide_tags WHERE tag_key = ?`).bind(key).first();
+}
+
+export async function upsertGuideTag(db, row) {
+  const ts = nowSeconds();
+  await db
+    .prepare(
+      `INSERT INTO guide_tags (tag_key, kind, city, guide_id, tag, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?)
+       ON CONFLICT(tag_key) DO UPDATE SET
+         kind = excluded.kind,
+         city = excluded.city,
+         guide_id = excluded.guide_id,
+         tag = excluded.tag,
+         updated_at = excluded.updated_at`,
+    )
+    .bind(row.tag_key, row.kind, row.city, row.guide_id, row.tag, ts)
+    .run();
+  return getGuideTag(db, row.tag_key);
+}
+
+export async function deleteGuideTag(db, key) {
+  const existing = await getGuideTag(db, key);
+  if (!existing) return false;
+  await db.prepare('DELETE FROM guide_tags WHERE tag_key = ?').bind(key).run();
+  return true;
+}
+
 // -- login throttle ---------------------------------------------------------
 
 export async function countLoginFailures(db, ip, since) {

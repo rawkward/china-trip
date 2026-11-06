@@ -63,3 +63,13 @@ CREATE TABLE IF NOT EXISTS day_texts (
   updated_at INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS day_texts_variant_idx ON day_texts(variant_id);
+
+CREATE TABLE IF NOT EXISTS guide_tags (
+  tag_key    TEXT PRIMARY KEY,
+  kind       TEXT NOT NULL,
+  city       TEXT NOT NULL,
+  guide_id   TEXT NOT NULL,
+  tag        TEXT NOT NULL CHECK (tag IN ('rec','alt','choice')),
+  updated_at INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS guide_tags_kind_idx ON guide_tags(kind, city);

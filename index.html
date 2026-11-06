@@ -61,10 +61,6 @@ h2{font-size:clamp(1.5rem,3vw,2.1rem); margin:0 0 4px}
 .hero .date-chip{display:inline-block; background:var(--accent-soft); color:var(--accent); border:1px solid #f0cdbb; padding:4px 12px; border-radius:999px; font-size:.82rem; font-weight:600; margin-bottom:18px}
 .hero h1{font-size:clamp(2.1rem,5.4vw,3.6rem); margin:0 0 12px; max-width:20ch}
 .hero .lede{font-size:1.05rem; color:var(--muted); max-width:62ch}
-.routesummary{margin-top:26px; display:flex; align-items:center; flex-wrap:wrap; gap:8px; font-size:.92rem}
-.routesummary .city{background:var(--bg2); border:1px solid var(--line); border-radius:10px; padding:6px 12px; font-weight:600}
-.routesummary .city small{display:block; font-weight:500; color:var(--muted); font-size:.72rem}
-.routesummary .arrow{color:var(--accent); font-weight:700}
 
 /* sections */
 section{padding:34px 0}
@@ -88,8 +84,7 @@ hr.rule{border:0; border-top:1px solid var(--line); margin:0}
 .vcard .badge{position:absolute; top:10px; left:10px; background:rgba(28,25,23,.72); color:#fff; font-size:.7rem; font-weight:600; padding:3px 10px; border-radius:999px}
 .vcard .body{padding:16px}
 .vcard h3{margin:0 0 4px; font-size:1.15rem}
-.vcard .cities{font-size:.82rem; color:var(--muted); margin-bottom:10px}
-.vcard .summary{font-size:.9rem; margin-bottom:12px}
+.vcard .dates{font-size:.82rem; color:var(--muted); margin-bottom:10px}
 .vcard ul{margin:0 0 12px; padding-left:0; list-style:none; font-size:.86rem}
 .vcard ul li{padding:3px 0 3px 20px; position:relative; color:var(--muted)}
 .vcard ul.pro li::before{content:"＋"; position:absolute; left:0; color:#2f7d3a; font-weight:700}
@@ -130,7 +125,6 @@ hr.rule{border:0; border-top:1px solid var(--line); margin:0}
 .day.fest{border-color:#e7b48f; background:linear-gradient(180deg,#fffaf6,#fff)}
 .day.fest .day-num{color:#9a3412}
 .festflag{display:inline-block; background:var(--accent); color:#fff; font-size:.66rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; border-radius:999px; padding:2px 8px; margin-left:8px; vertical-align:middle}
-.variant-note{margin:14px 0 0; color:var(--muted); font-size:.88rem}
 .vcard.active .badge{background:var(--accent)}
 .vcard:focus-visible{outline:3px solid var(--accent-soft); outline-offset:2px}
 .ph a{display:block; width:100%; height:100%}
@@ -254,6 +248,13 @@ footer a{color:var(--muted)}
 .glinks a{border:1px solid var(--line); border-radius:999px; padding:3px 10px; background:var(--bg); color:var(--ink)}
 .glinks a:hover{border-color:var(--accent); color:var(--accent); text-decoration:none}
 a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1px dashed currentColor; white-space:nowrap; margin-left:6px}
+.galts{margin-top:12px}
+.galts summary{cursor:pointer; font-size:.8rem; font-weight:600; color:var(--muted)}
+.galts summary:hover{color:var(--accent)}
+.galts .guide{margin-top:12px}
+.gtag-edit{display:flex; gap:6px; flex-wrap:wrap; margin-top:10px}
+.gtag-edit button{font-family:var(--sans); font-size:.68rem; border:1px solid var(--line); background:var(--bg); color:var(--muted); border-radius:999px; padding:3px 8px; cursor:pointer}
+.gtag-edit button.on{background:var(--accent); border-color:var(--accent); color:#fff}
 @media (max-width:940px){ .guide{grid-template-columns:1fr} }
 
 /* budget */
@@ -437,8 +438,7 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
   <section class="hero" id="overview">
     <div class="date-chip">4 – 18.12.2026 · основной вариант — Гонконг, Фужун, Чжанцзяцзе и Чунцин; Clockenflap 6.12, Улун 16.12, Дисней 9.12</div>
     <h1>Поездка в Китай вдвоём</h1>
-    <p class="lede">14 ночей на месте, шесть сценариев. Основной — Гонконг первым, по купленным билетам China Eastern: 4.12 в 16:45 из Шереметьева через Шанхай, ночь в самолёте, 5.12 в 11:40 Шэньчжэнь и поездом через границу в Гонконг к 15:00, пять ночей (Централ и Пик, Ковлун, фестиваль в одно воскресенье 6.12, Дисней), поезд в Фужун 10.12, 23 минуты до гор, три ночи в Чжанцзяцзе и четыре в Чунцине — с полным днём в Улуне на Три моста и ущелье Луншуйся; 18.12 в 13:15 в Шанхай, ночь у Пудуна, дома 19.12. Есть и второй вариант основного маршрута — с шестой ночью в Гонконге: Макао или канатка Ngong Ping 360 с Большим Буддой вместо Улуна. Остальные: Чэнду с Тибетом, Гонконг с Макао и Гуанчжоу с Гуйлинем, Шанхай с Сучжоу и Ханчжоу, Хайнань. Выберите карточку — план по дням и карта ниже перестроятся.</p>
-    <div class="routesummary" id="routesummary"></div>
+    <div class="routesummary" id="routesummary" hidden></div>
   </section>
 
   <hr class="rule">
@@ -446,13 +446,11 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
   <section id="variants">
     <div class="head">
       <div>
-        <div class="eyebrow">Шесть сценариев, один фестиваль 6.12</div>
         <h2>Шесть вариантов маршрута</h2>
-        <p class="muted small">Основной — Гонконг первым, 4–19.12: приезд в Джордан 5.12 к 15:00, Централ и Пик в понедельник 7.12, M+ в Ковлуне 8.12, Дисней в среду 9.12, Clockenflap одним днём в воскресенье 6.12, Улун с Тремя мостами и ущельем в среду 16.12; 18.12 вылет в Шанхай и ночь у аэропорта. Вторая карточка — тот же маршрут с шестой ночью в Гонконге: 10.12 Макао или Лантау вместо Улуна. Клик по карточке перестраивает план по дням и карту ниже — у каждого варианта свои даты.</p>
+        <p class="muted small">Основной — Гонконг, Фужун, Чжанцзяцзе и Чунцин. Вторая карточка — тот же маршрут с шестой ночью в Гонконге.</p>
       </div>
     </div>
     <div class="vgrid" id="variantGrid"></div>
-    <p class="variant-note" id="variantNote">Сейчас открыт основной вариант. Клик по другой карточке перестроит план и карту.</p>
   </section>
 
   <hr class="rule">
@@ -652,11 +650,29 @@ function guideLink(name){
   const id = guideIdFor(name);
   return id ? ' <a class="glink" href="#g-' + id + '">в справочнике</a>' : '';
 }
+function guideDefaultTag(it){
+  if(it.rec) return "rec";
+  if(it.badge === "альтернатива") return "alt";
+  return "choice";
+}
+function guideTagKey(it){ return it.kind + "|" + it.city + "|" + it.id; }
+function tagOf(it){ return GUIDE_TAGS[guideTagKey(it)] || guideDefaultTag(it); }
+const GUIDE_TAG_KEY_RE = /^[a-z]{4,6}\|[a-z0-9_-]{1,20}\|[a-z0-9][a-z0-9_-]{0,39}$/;
+const GUIDE_TAG_LABELS = {rec:"рекомендация", choice:"выбор", alt:"альтернатива"};
+function guideTagHtml(it, tag){
+  if(!noteToken) return "";
+  const key = guideTagKey(it);
+  if(!GUIDE_TAG_KEY_RE.test(key)) return "";
+  return '<div class="gtag-edit">' + ["rec","choice","alt"].map(function(t){
+    return '<button type="button" class="' + (t === tag ? 'on' : '') + '" data-gtag="' + key + '" data-gtag-set="' + t + '">' + GUIDE_TAG_LABELS[t] + '</button>';
+  }).join("") + '</div>';
+}
 function guideCard(it){
   const q = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(it.maps || it.en);
+  const tag = tagOf(it);
   return '<div class="gcard" id="g-' + it.id + '">' +
     '<div class="gn">' + it.en + (it.zh ? '<span class="gz">' + it.zh + '</span>' : '') +
-      (it.rec || it.badge ? '<span class="grec">' + (it.badge || 'рекомендация') + '</span>' : '') + '</div>' +
+      '<span class="grec">' + (it.badge || GUIDE_TAG_LABELS[tag]) + '</span></div>' +
     (it.addr ? '<div class="gaddr">' + it.addr + '</div>' : '') +
     (it.hours && it.hours !== "—" ? '<div class="ghours">' + it.hours + '</div>' : '') +
     (it.note ? '<div class="gnote">' + it.note + '</div>' : '') +
@@ -664,9 +680,11 @@ function guideCard(it){
       (it.site ? '<a href="' + it.site + '" target="_blank" rel="noopener">сайт ↗</a>' : '') +
       (it.maps ? '<a href="' + q + '" target="_blank" rel="noopener">Google Maps ↗</a>' : '') +
     '</div>' +
+    guideTagHtml(it, tag) +
   '</div>';
 }
 function renderGuide(){
+  const TAG_ORDER = {rec:0, choice:1, alt:2};
   Object.keys(GUIDE.kinds || {}).forEach(function(kind){
     const box = document.getElementById(kind + "List");
     if(!box) return;
@@ -676,9 +694,15 @@ function renderGuide(){
     cities.sort(function(a, b){ return GUIDE.cityOrder.indexOf(a) - GUIDE.cityOrder.indexOf(b); });
     box.innerHTML = cities.map(function(c){
       const group = items.filter(function(i){ return i.city === c; });
+      group.sort(function(a, b){ return TAG_ORDER[tagOf(a)] - TAG_ORDER[tagOf(b)]; });
+      const main = group.filter(function(i){ return tagOf(i) !== "alt"; });
+      const alts = group.filter(function(i){ return tagOf(i) === "alt"; });
       const label = (CITIES[c] && CITIES[c].label) || c;
       return '<h3 class="gcity">' + label + '<span class="cnt">' + group.length + '</span></h3>' +
-        '<div class="guide">' + group.map(guideCard).join("") + '</div>';
+        '<div class="guide">' + main.map(guideCard).join("") + '</div>' +
+        (alts.length
+          ? '<details class="galts"><summary>Альтернативы · ' + alts.length + '</summary><div class="guide">' + alts.map(guideCard).join("") + '</div></details>'
+          : '');
     }).join("");
   });
 }
@@ -697,36 +721,6 @@ if(!VARIANTS.some(function(v){ return v.id === activeId; })) activeId = (VARIANT
 let currentVariant = VARIANTS.filter(function(v){ return v.id === activeId; })[0];
 let days = buildDays(currentVariant);
 
-/* ---------- рендер: сводка маршрута ---------- */
-function nightsWord(n){
-  const tail = n % 100;
-  if(tail >= 11 && tail <= 14) return "ночей";
-  const last = n % 10;
-  if(last === 1) return "ночь";
-  if(last >= 2 && last <= 4) return "ночи";
-  return "ночей";
-}
-
-function renderSummary(){
-  const groups = [];
-  days.forEach(function(d){
-    const last = groups[groups.length-1];
-    if(last && last.city === d.city) last.count++;
-    else groups.push({city:d.city, count:1});
-  });
-  const el = document.getElementById("routesummary");
-  const total = days.length ? days.length - 1 : 0;
-  el.innerHTML = groups.map(function(s, i){
-    const isLast = i === groups.length - 1;
-    const nights = isLast ? s.count - 1 : s.count;
-    const label = isLast
-      ? (nights > 0 ? nights + " " + nightsWord(nights) + " · вылет домой" : "вылет домой")
-      : nights + " " + nightsWord(nights);
-    return (i > 0 ? '<span class="arrow">→</span>' : '') +
-      '<span class="city">' + CITIES[s.city].label + '<small>' + label + '</small></span>';
-  }).join("") + '<span class="muted small" style="margin-left:6px">· ' + total + ' ' + nightsWord(total) + '</span>';
-}
-
 /* ---------- рендер: карточки вариантов ---------- */
 function renderVariants(){
   const grid = document.getElementById("variantGrid");
@@ -734,8 +728,10 @@ function renderVariants(){
     const p = PHOTOS[v.photo];
     const img = p && p.src ? '<img src="' + p.src + '" alt="' + v.title + '" loading="lazy">' : '';
     const isActive = v.id === activeId;
-    const range = v.dates && v.dates.length
-      ? ' · ' + v.dates[0].split(' · ')[0] + '–' + v.dates[v.dates.length - 1].split(' · ')[0]
+    const axis = v.dates && v.dates.length ? v.dates : DATES;
+    const lastDay = (v.china || []).length + (v.hk || []).length - 1;
+    const range = axis.length
+      ? axis[0].split(' · ')[0] + '–' + (axis[lastDay] || axis[axis.length - 1]).split(' · ')[0]
       : '';
     const badge = v.main
       ? (isActive ? 'основной · показан сейчас' : 'основной')
@@ -744,8 +740,7 @@ function renderVariants(){
       '<div class="ph">' + img + '<span class="badge">' + badge + '</span></div>' +
       '<div class="body">' +
         '<h3>' + v.title + '</h3>' +
-        '<div class="cities">' + v.cities.join(' · ') + range + '</div>' +
-        '<div class="summary">' + v.summary + '</div>' +
+        '<div class="dates">' + range + '</div>' +
         '<ul class="pro">' + v.pros.map(function(x){ return '<li>' + x + '</li>'; }).join('') + '</ul>' +
         '<ul class="con">' + v.cons.map(function(x){ return '<li>' + x + '</li>'; }).join('') + '</ul>' +
         '<div class="budget">' + v.budget + '</div>' +
@@ -803,13 +798,8 @@ function setVariant(id){
   days = buildDays(v);
   try { localStorage.setItem("china-trip-variant-v5", id); } catch(e){}
   renderVariants();
-  renderSummary();
   renderDays();
   rebuildMap();
-  const note = document.getElementById("variantNote");
-  if(note){
-    note.innerHTML = 'Показан вариант: <b>' + v.title + '</b>. План по дням и карта ниже перестроены.';
-  }
 }
 
 document.getElementById("variantGrid").addEventListener("click", function(e){
@@ -854,6 +844,7 @@ let dayNotes = {};
 let noteEditKey = "";
 let noteError = "";
 let DAY_TEXTS = {};
+let GUIDE_TAGS = {};
 let textEditKey = "";
 let textError = "";
 
@@ -902,7 +893,7 @@ async function noteRequest(path, opts){
   let data = null;
   try { data = await res.json(); } catch(e){ data = null; }
   if(!res.ok){
-    if(res.status === 401){ noteClearToken(); noteBar(); }
+    if(res.status === 401){ noteClearToken(); noteBar(); renderGuide(); }
     const detail = data && data.details && data.details[0] && data.details[0].message;
     throw new Error(detail || ("ошибка " + res.status));
   }
@@ -982,7 +973,7 @@ async function noteLogin(){
   } catch(e){
     noteError = "нет связи с сервером";
   }
-  noteBar(); renderDays(); stopPaint();
+  noteBar(); renderDays(); stopPaint(); renderGuide();
 }
 async function noteSave(key, box){
   const ta = box ? box.querySelector(".dn-ta") : null;
@@ -1028,7 +1019,7 @@ document.getElementById("dayList").addEventListener("click", function(e){
 const noteBarEl = document.getElementById("noteBar");
 noteBarEl.addEventListener("click", function(e){
   if(e.target.id === "noteLogin") noteLogin();
-  if(e.target.id === "noteLogout"){ noteClearToken(); noteError = ""; textError = ""; textEditKey = ""; noteBar(); renderDays(); stopPaint(); }
+  if(e.target.id === "noteLogout"){ noteClearToken(); noteError = ""; textError = ""; textEditKey = ""; noteBar(); renderDays(); stopPaint(); renderGuide(); }
 });
 noteBarEl.addEventListener("keydown", function(e){
   if(e.key === "Enter" && e.target.id === "notePass"){ e.preventDefault(); noteLogin(); }
@@ -1040,6 +1031,7 @@ noteBar();
 noteLoad();
 stopLoad();
 textLoad();
+tagLoad();
 
 /* ---------- остановки: карусель вариантов и правка текста ---------- */
 const PICK_LISTS = {};
@@ -1300,6 +1292,39 @@ function textLoad(){
       .catch(function(){});
   } catch(e){ return Promise.resolve(); }
 }
+function tagLoad(){
+  try {
+    return fetch(NOTE_API + "/api/guide-tags", {cache: "no-store"})
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(data){
+        GUIDE_TAGS = {};
+        ((data && data.tags) || []).forEach(function(t){ GUIDE_TAGS[t.tag_key] = t.tag; });
+        renderGuide();
+      })
+      .catch(function(){});
+  } catch(e){ return Promise.resolve(); }
+}
+async function tagSave(key, tag){
+  try {
+    const data = await noteRequest("/api/guide-tags/" + encodeURIComponent(key), {
+      method: "PUT",
+      body: JSON.stringify({tag: tag})
+    });
+    if(data && data.tag && data.tag.tag_key) GUIDE_TAGS[data.tag.tag_key] = data.tag.tag;
+    else GUIDE_TAGS[key] = tag;
+    textError = "";
+  } catch(err){
+    textError = err.message || "не сохранилось";
+    noteBar();
+  }
+  renderGuide();
+}
+
+document.addEventListener("click", function(e){
+  const btn = e.target.closest("[data-gtag]");
+  if(!btn) return;
+  tagSave(btn.getAttribute("data-gtag"), btn.getAttribute("data-gtag-set"));
+});
 
 document.getElementById("dayList").addEventListener("click", function(e){
   const pick = e.target.closest("[data-pick]");
@@ -1688,7 +1713,6 @@ function buildLegend(){
 
 /* ---------- старт ---------- */
 renderVariants();
-renderSummary();
 renderDays();
 renderGuide();
 document.addEventListener("DOMContentLoaded", initMap);
