@@ -163,6 +163,17 @@ hr.rule{border:0; border-top:1px solid var(--line); margin:0}
 .st-editbox textarea{width:100%; min-height:70px; border:1px solid var(--line); border-radius:10px; padding:8px 10px; font-family:inherit; font-size:.86rem; line-height:1.45; resize:vertical; color:var(--ink); background:#fff}
 .st-editbox textarea:focus{outline:2px solid var(--accent-soft); border-color:var(--accent)}
 .st-acts{display:flex; gap:7px; flex-wrap:wrap; margin-top:6px}
+/* время у остановки и инструменты порядка/замены — только по паролю */
+.tm{display:inline-block; font-variant-numeric:tabular-nums; font-size:.7rem; font-weight:600; color:var(--muted); background:var(--bg2); border:1px solid var(--line); border-radius:999px; padding:0 7px; margin-right:6px; white-space:nowrap; vertical-align:1px}
+.ordtools{display:flex; flex-wrap:wrap; gap:6px; margin-top:5px}
+.ot-btn{background:#fff; border:1px solid var(--line); border-radius:7px; padding:1px 8px; font-family:inherit; font-size:.72rem; font-weight:600; color:var(--muted); cursor:pointer; line-height:1.5}
+.ot-btn:hover{border-color:var(--accent); color:var(--accent)}
+.tm-edit{margin-top:5px}
+.refpick{max-height:240px; overflow:auto; margin-top:6px; border:1px solid var(--line); border-radius:10px; background:#fff; padding:6px; display:flex; flex-direction:column; gap:4px}
+.rp-btn{background:#fff; border:1px solid var(--line); border-radius:8px; padding:5px 9px; font-family:inherit; font-size:.78rem; font-weight:500; color:var(--ink); cursor:pointer; text-align:left; white-space:normal; overflow-wrap:anywhere}
+.rp-btn:hover{border-color:var(--accent); color:var(--accent)}
+.rp-btn.on{border-color:var(--accent); background:var(--accent-soft); color:var(--accent)}
+.rp-empty{font-size:.76rem; color:var(--muted); padding:3px 2px}
 .note.edited{color:var(--ink)}
 .note.edited::before{content:"правка: "; font-size:.66rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--accent)}
 
@@ -410,6 +421,11 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
   .bud-params-grid{grid-template-columns:1fr}
   .bud-form-grid{grid-template-columns:1fr}
   .bud-field-wide{grid-column:1/-1}
+  .stop{gap:8px}
+  .stop .tag{width:26px}
+  .ordtools{gap:5px}
+  .ot-btn{padding:1px 6px}
+  .refpick{padding:5px}
 }
 </style>
 </head>
@@ -609,14 +625,14 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
   </section>
 
   <footer>
-    <p>Версия 35 · 06.11.2026. Билеты куплены: China Eastern, бронь PEEPS5, 86 926 ₽ на двоих туда и обратно. Шесть вариантов маршрута, основной — Гонконг → Фужун → Чжанцзяцзе → Чунцин, 4–19.12.2026, 14 ночей на месте плюс ночь в самолёте: 4.12 в 16:45 из Шереметьева через Шанхай, ночь в пути, 5.12 в 11:40 Шэньчжэнь и поездом через границу в Гонконг, пять ночей (Clockenflap 6.12, Централ и Пик 7.12, Ковлун с M+ 8.12, Дисней 9.12), поезд G6080 10.12 в Фужун, 23 минуты до гор, три ночи в Чжанцзяцзе и четыре в Чунцине — с полным днём в Улуне 16.12 (Три моста и ущелье Луншуйся) и южным берегом с Наньшанем 17.12 (Сяхаоли, Хуанцзюэя, Лаоцзюньдун); 18.12 в 13:15 MU5430 в Шанхай, ночь у Пудуна, 19.12 в 11:50 MU591, Шереметьево в 17:05, дома вечером. Три справочника — жильё, заведения и достопримечательности по городам: адрес по-английски и по-китайски, сайт, карта, часы и ремарка. Фото — Wikimedia Commons, только на карточках вариантов: в плане по дням карусель убрана, страница открывается легче. Карта — OpenStreetMap. Плюс чек-лист «что сделать и купить заранее»: документы, деньги, связь, снаряжение и аптечка, с отметками в браузере и с палками для скандинавской ходьбы отдельным пунктом. Под планом каждого дня — заметка, и у каждой остановки — свой текст: всё это видят все, править можно по паролю бюджета. Любой текст в карточке дня — заголовок, подзаголовок, названия и цены остановок, группы и варианты карусели — тоже правится по паролю, правки хранятся отдельно от маршрута. Где в дне несколько равноправных вариантов (четыре отеля, пять мест на обед, три смотровые, три мангала с видом на реку), они собраны каруселью: на экране один вариант, остальные — стрелками, первый помечен «рекомендуем», остальные «альтернатива». В Чунцине добавлены варианты из вашего списка — храм, канатка, Лицзиба, 云端之眼, 得意世界, 十八梯, 龙门浩, 苏家坝, кофейни 瓦顶顶 и SoSo House, 花市豌杂面, 鬼包子, 地下之城, The Move и паром 两江游.</p>
+    <p>Версия 36 · 06.11.2026. Билеты куплены: China Eastern, бронь PEEPS5, 86 926 ₽ на двоих туда и обратно. Шесть вариантов; основной — Гонконг → Фужун → Чжанцзяцзе → Чунцин, 4–19.12.2026, 14 ночей на месте и ночь в самолёте. Карточки вариантов короткие: даты, четыре плюса, четыре минуса и итоговая сумма. Справочники — жильё, заведения, места и полезное по городам: порядок по тегам «рекомендация → выбор → альтернатива», альтернативы под раскрывашкой, тег правится по паролю. Где в дне несколько равноправных вариантов одного слота, они собраны каруселью: на экране один, остальные стрелками. По паролю правятся заметка к дню, текст остановки и любой текст в карточке дня, а также порядок остановок, замена на карточку из справочника, время и цена. Фото — Wikimedia Commons, только на карточках вариантов; карта — OpenStreetMap.</p>
   </footer>
 
 </div>
 
 <script src="assets/data.js?v=41"></script>
-<script src="assets/itinerary.js?v=45"></script>
-<script src="assets/guide.js?v=8"></script>
+<script src="assets/itinerary.js?v=46"></script>
+<script src="assets/guide.js?v=9"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 "use strict";
@@ -649,6 +665,14 @@ function guideIdFor(name){
 function guideLink(name){
   const id = guideIdFor(name);
   return id ? ' <a class="glink" href="#g-' + id + '">в справочнике</a>' : '';
+}
+function guideItemByKey(key){
+  const items = GUIDE.items || [];
+  for(let i = 0; i < items.length; i++){
+    const it = items[i];
+    if(it.kind + "|" + it.city + "|" + it.id === key) return it;
+  }
+  return null;
 }
 function guideDefaultTag(it){
   if(it.rec) return "rec";
@@ -846,6 +870,8 @@ let noteError = "";
 let DAY_TEXTS = {};
 let GUIDE_TAGS = {};
 let textEditKey = "";
+let timeEditField = "";
+let refPickField = "";
 let textError = "";
 
 function noteEsc(s){
@@ -1019,7 +1045,7 @@ document.getElementById("dayList").addEventListener("click", function(e){
 const noteBarEl = document.getElementById("noteBar");
 noteBarEl.addEventListener("click", function(e){
   if(e.target.id === "noteLogin") noteLogin();
-  if(e.target.id === "noteLogout"){ noteClearToken(); noteError = ""; textError = ""; textEditKey = ""; noteBar(); renderDays(); stopPaint(); renderGuide(); }
+  if(e.target.id === "noteLogout"){ noteClearToken(); noteError = ""; textError = ""; textEditKey = ""; timeEditField = ""; refPickField = ""; noteBar(); renderDays(); stopPaint(); renderGuide(); }
 });
 noteBarEl.addEventListener("keydown", function(e){
   if(e.key === "Enter" && e.target.id === "notePass"){ e.preventDefault(); noteLogin(); }
@@ -1070,6 +1096,60 @@ function stopToolsHtml(key){
     (stopNotes[key] ? 'править текст' : '✎ править текст') + '</button></div>';
 }
 
+function dayTextValue(dayNum, fieldKey){
+  const d = dayByNum(dayNum);
+  const key = d ? noteKey(d) : "";
+  const t = key ? DAY_TEXTS[key] : null;
+  return t && typeof t[fieldKey] === "string" ? t[fieldKey] : "";
+}
+function refKindForTag(tag){
+  if(tag === "food") return "food";
+  if(tag === "hotel") return "stay";
+  return "sight";
+}
+function refPickHtml(d, field, tag){
+  const kind = refKindForTag(tag);
+  const current = dayTextValue(d.n, field);
+  const items = (GUIDE.items || []).filter(function(it){
+    return it.kind === kind && it.city === d.city;
+  }).slice(0, 40);
+  let html = '<div class="refpick">' +
+    '<button type="button" class="rp-btn' + (!current ? ' on' : '') + '" data-ref-pick="' + noteEsc(field) +
+      '" data-day="' + d.n + '" data-ref-value="">оставить как есть</button>';
+  items.forEach(function(it){
+    const key = it.kind + "|" + it.city + "|" + it.id;
+    const label = it.en + (it.zh ? ' — ' + it.zh : '');
+    html += '<button type="button" class="rp-btn' + (current === key ? ' on' : '') + '" data-ref-pick="' +
+      noteEsc(field) + '" data-day="' + d.n + '" data-ref-value="' + noteEsc(key) + '">' + noteEsc(label) + '</button>';
+  });
+  if(!items.length) html += '<div class="rp-empty">в этом городе карточек нет</div>';
+  return html + '</div>';
+}
+function stopAdminHtml(d, slug, groupKind, tag){
+  if(!noteToken) return "";
+  const timeField = (groupKind === "picks" ? "picks:" : "stop:") + slug + ":time";
+  const refField = "ref:" + slug;
+  const timeVal = dayTextValue(d.n, timeField);
+  let html = '<span class="ordtools">' +
+    '<button class="ot-btn" type="button" data-ord="up" data-day="' + d.n + '" data-slug="' + slug + '" aria-label="выше" title="выше">↑</button>' +
+    '<button class="ot-btn" type="button" data-ord="down" data-day="' + d.n + '" data-slug="' + slug + '" aria-label="ниже" title="ниже">↓</button>' +
+    '<button class="ot-btn" type="button" data-tm="' + noteEsc(timeField) + '" data-day="' + d.n + '">' +
+      (timeVal ? 'время: ' + noteEsc(timeVal) : '＋ время') + '</button>' +
+    '<button class="ot-btn" type="button" data-ref-open="' + noteEsc(refField) + '" data-day="' + d.n + '">заменить</button>' +
+  '</span>';
+  if(timeEditField === timeField){
+    html += '<span class="tf-edit tm-edit">' +
+      '<input type="text" class="tf-in" maxlength="40" placeholder="10:00–12:30" value="' + noteEsc(timeVal) + '">' +
+      '<span class="tf-acts">' +
+        '<button class="dn-btn" type="button" data-tm-save="' + noteEsc(timeField) + '" data-day="' + d.n + '">Сохранить</button>' +
+        (timeVal ? '<button class="dn-btn dn-del" type="button" data-tm-reset="' + noteEsc(timeField) + '" data-day="' + d.n + '">Сбросить</button>' : '') +
+        '<button class="dn-btn" type="button" data-tm-cancel="1">Отмена</button>' +
+      '</span></span>';
+  }
+  if(refPickField === refField) html += refPickHtml(d, refField, tag);
+  return html;
+}
+
 function pickCurrent(key){ return Math.min(PICK_STATE[key] || 0, Math.max(0, (PICK_LISTS[key] || []).length - 1)); }
 function pickDayNum(key){
   const m = /^p(\d+)-/.exec(key || "");
@@ -1117,14 +1197,17 @@ function renderStop(d, p, si){
               gid: guideIdFor(origName), gs: groupSlug};
     });
     if(!(key in PICK_STATE)) PICK_STATE[key] = 0;
-    return '<li class="stop pickstop">' +
+    return '<li class="stop pickstop" data-slug="' + groupSlug + '" data-day="' + d.n + '">' +
       '<span class="tag">' + (TAGS[p.tag] || '•') + '</span>' +
-      '<span class="tx"><span class="nm">' + tfHtml("picks:" + groupSlug + ":title", p.title, "line", d.n) + '</span>' +
+      '<span class="tx">' +
+        (p._time ? '<span class="tm">' + noteEsc(p._time) + '</span>' : '') +
+        '<span class="nm">' + tfHtml("picks:" + groupSlug + ":title", p.title, "line", d.n) + '</span>' +
         (p.note ? '<div class="note">' + tfHtml("picks:" + groupSlug + ":note", p.note, "text", d.n) + '</div>' : '') +
         '<div class="pickbox" data-pick-key="' + key + '">' +
           '<div class="pickbody">' + pickBodyHtml(key, 0, d.n) + '</div>' +
           pickBarHtml(key) +
         '</div>' +
+        stopAdminHtml(d, groupSlug, "picks", p.tag) +
       '</span>' +
       (p.cost ? '<span class="cost">' + tfHtml("picks:" + groupSlug + ":cost", p.cost, "line", d.n) + '</span>' : '') +
     '</li>';
@@ -1133,11 +1216,14 @@ function renderStop(d, p, si){
   const slug = stopSlug(origName);
   const key = stopKey(d, origName);
   STOP_TEXTS[key] = p.note || "";
-  return '<li class="stop">' +
+  return '<li class="stop" data-slug="' + slug + '" data-day="' + d.n + '">' +
     '<span class="tag">' + (TAGS[p.tag] || '•') + '</span>' +
-    '<span class="tx"><span class="nm">' + tfHtml("stop:" + slug + ":name", p.name, "line", d.n) + guideLink(origName) + '</span>' +
-    ((p.note || stopNotes[key]) ? stopNoteHtml(key, p.note) : '') +
-    '<div class="st-tools" data-stop-tools="' + key + '">' + stopToolsHtml(key) + '</div>' +
+    '<span class="tx">' +
+      (p._time ? '<span class="tm">' + noteEsc(p._time) + '</span>' : '') +
+      '<span class="nm">' + tfHtml("stop:" + slug + ":name", p.name, "line", d.n) + guideLink(origName) + '</span>' +
+      ((p.note || stopNotes[key]) ? stopNoteHtml(key, p.note) : '') +
+      '<div class="st-tools" data-stop-tools="' + key + '">' + stopToolsHtml(key) + '</div>' +
+      stopAdminHtml(d, slug, "stop", p.tag) +
     '</span>' +
     (p.cost ? '<span class="cost">' + tfHtml("stop:" + slug + ":cost", p.cost, "line", d.n) + '</span>' : '') +
   '</li>';
@@ -1210,12 +1296,23 @@ function withTexts(d){
     const q = Object.assign({}, p);
     if(p.picks && p.picks.length){
       const slug = stopSlug(p.title || p.name || "");
+      q._slug = slug;
       q._title = p.title;
       q._name = p.name;
       const base = "picks:" + slug;
       if(t[base + ":title"] !== undefined) q.title = t[base + ":title"];
       if(t[base + ":note"] !== undefined) q.note = t[base + ":note"];
       if(t[base + ":cost"] !== undefined) q.cost = t[base + ":cost"];
+      if(t[base + ":time"] !== undefined) q._time = t[base + ":time"];
+      const ref = t["ref:" + slug];
+      if(ref){
+        const item = guideItemByKey(ref);
+        if(item){
+          q.title = item.en || q.title;
+          q.note = item.note || "";
+          q.cost = "";
+        }
+      }
       q.picks = p.picks.map(function(it, i){
         const r = Object.assign({}, it);
         r._name = it.name;
@@ -1227,13 +1324,35 @@ function withTexts(d){
       });
     } else {
       const slug = stopSlug(p.name || "");
+      q._slug = slug;
       q._name = p.name;
       const base = "stop:" + slug;
       if(t[base + ":name"] !== undefined) q.name = t[base + ":name"];
       if(t[base + ":cost"] !== undefined) q.cost = t[base + ":cost"];
+      if(t[base + ":time"] !== undefined) q._time = t[base + ":time"];
+      const ref = t["ref:" + slug];
+      if(ref){
+        const item = guideItemByKey(ref);
+        if(item){
+          q.name = item.en || q.name;
+          q.note = item.note || "";
+          q.cost = "";
+        }
+      }
     }
     return q;
   });
+  const order = t.order;
+  if(order){
+    const wanted = order.split(",");
+    const rest = out.places.slice();
+    const picked = [];
+    for(let i = 0; i < wanted.length; i++){
+      const idx = rest.findIndex(function(x){ return x._slug === wanted[i]; });
+      if(idx !== -1) picked.push(rest.splice(idx, 1)[0]);
+    }
+    out.places = picked.concat(rest);
+  }
   return out;
 }
 function tfHtml(fieldKey, html, kind, dayNum){
@@ -1279,6 +1398,20 @@ async function textSave(dayNum, fieldKey, value){
     textError = err.message || "не сохранилось";
     noteBar();
   }
+}
+function reorderStop(dayNum, slug, dir){
+  const d = dayByNum(dayNum);
+  if(!d) return;
+  const v = withTexts(d);
+  const order = (v.places || []).map(function(p){ return p._slug; });
+  const i = order.indexOf(slug);
+  if(i === -1) return;
+  const j = dir === "up" ? i - 1 : i + 1;
+  if(j < 0 || j >= order.length) return;
+  const tmp = order[i];
+  order[i] = order[j];
+  order[j] = tmp;
+  textSave(dayNum, "order", order.join(","));
 }
 function textLoad(){
   try {
@@ -1344,6 +1477,56 @@ document.getElementById("dayList").addEventListener("click", function(e){
       const bar = box.querySelector(".pickbar");
       if(bar) bar.outerHTML = pickBarHtml(key);
     }
+    return;
+  }
+  const ord = e.target.closest("[data-ord]");
+  if(ord){
+    reorderStop(
+      parseInt(ord.getAttribute("data-day"), 10),
+      ord.getAttribute("data-slug"),
+      ord.getAttribute("data-ord")
+    );
+    return;
+  }
+  const tm = e.target.closest("[data-tm]");
+  if(tm){
+    timeEditField = tm.getAttribute("data-tm");
+    refreshDay(parseInt(tm.getAttribute("data-day"), 10));
+    const f = document.querySelector("#dayList .tm-edit .tf-in");
+    if(f) f.focus();
+    return;
+  }
+  if(e.target.closest("[data-tm-cancel]")){
+    const dayEl = e.target.closest(".day");
+    timeEditField = "";
+    if(dayEl) refreshDay(parseInt(dayEl.getAttribute("data-day"), 10));
+    return;
+  }
+  const tms = e.target.closest("[data-tm-save]");
+  if(tms){
+    const box = tms.closest(".tm-edit");
+    const f = box ? box.querySelector(".tf-in") : null;
+    timeEditField = "";
+    textSave(parseInt(tms.getAttribute("data-day"), 10), tms.getAttribute("data-tm-save"), f ? f.value : "");
+    return;
+  }
+  const tmr = e.target.closest("[data-tm-reset]");
+  if(tmr){
+    timeEditField = "";
+    textSave(parseInt(tmr.getAttribute("data-day"), 10), tmr.getAttribute("data-tm-reset"), "");
+    return;
+  }
+  const ro = e.target.closest("[data-ref-open]");
+  if(ro){
+    const field = ro.getAttribute("data-ref-open");
+    refPickField = refPickField === field ? "" : field;
+    refreshDay(parseInt(ro.getAttribute("data-day"), 10));
+    return;
+  }
+  const rp = e.target.closest("[data-ref-pick]");
+  if(rp){
+    refPickField = "";
+    textSave(parseInt(rp.getAttribute("data-day"), 10), rp.getAttribute("data-ref-pick"), rp.getAttribute("data-ref-value") || "");
     return;
   }
   const tfe = e.target.closest("[data-tf-edit]");

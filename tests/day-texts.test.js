@@ -4,6 +4,7 @@ import test from 'node:test';
 import {
   DAY_TEXTS_MAX_FIELDS,
   DAY_TEXT_MAX_LEN,
+  DAY_TEXT_TIME_MAX_LEN,
   DayTextError,
   isDayTextKey,
   normalizeDayTextKey,
@@ -88,4 +89,77 @@ test('больше 40 полей — body_too_long', () => {
 test('пустой объект допустим и возвращается как {}', () => {
   assert.deepEqual(normalizeDayTexts({}), {});
   assert.deepEqual(normalizeDayTexts({ title: '  ', sub: '\r\n' }), {});
+});
+
+test('новые поля: время, порядок и замена карточкой справочника', () => {
+  assert.deepEqual(
+    normalizeDayTexts({
+      order: '  k3f9qa,9x2b1c,p7d4e2  ',
+      'stop:k3f9qa:time': ' 10:00–12:30 ',
+      'picks:p1x2y3:time': '13:00',
+      'ref:9x2b1c': ' food|hk|mak-man-kee ',
+    }),
+    {
+      order: 'k3f9qa,9x2b1c,p7d4e2',
+      'stop:k3f9qa:time': '10:00–12:30',
+      'picks:p1x2y3:time': '13:00',
+      'ref:9x2b1c': 'food|hk|mak-man-kee',
+    },
+  );
+});
+
+test('мусор в order — bad_value с именем поля', () => {
+  for (const bad of [
+    'abc',
+    'k3f9qa,',
+    'k3f9qa,K3F9QA',
+    'k3f9qa, k3f9qa',
+    'k3f9qa;9x2b1c',
+    'a'.repeat(11),
+    Array.from({ length: 41 }, (_, i) => `s${String(i).padStart(5, '0')}`).join(','),
+  ]) {
+    assert.throws(
+      () => normalizeDayTexts({ order: bad }),
+      (err) => err instanceof DayTextError && err.code === 'bad_value' && err.field === 'order',
+      `должен отвергнуть ${JSON.stringify(bad).slice(0, 80)}`,
+    );
+  }
+});
+
+test('мусор в ref — bad_value с именем поля', () => {
+  for (const bad of [
+    'mak-man-kee',
+    'food|hk',
+    'drink|hk|mak-man-kee',
+    'food|hk|Mak',
+    'food|hk|',
+    'food|hk|mak man kee',
+    'food|hk|' + 'a'.repeat(41),
+  ]) {
+    assert.throws(
+      () => normalizeDayTexts({ 'ref:k3f9qa': bad }),
+      (err) => err instanceof DayTextError && err.code === 'bad_value' && err.field === 'ref:k3f9qa',
+    );
+  }
+});
+
+test('время длиннее 40 символов — body_too_long', () => {
+  assert.throws(
+    () => normalizeDayTexts({ 'stop:k3f9qa:time': 'a'.repeat(DAY_TEXT_TIME_MAX_LEN + 1) }),
+    (err) =>
+      err instanceof DayTextError && err.code === 'body_too_long' && err.field === 'stop:k3f9qa:time',
+  );
+  assert.doesNotThrow(() => normalizeDayTexts({ 'stop:k3f9qa:time': 'a'.repeat(DAY_TEXT_TIME_MAX_LEN) }));
+  assert.throws(
+    () => normalizeDayTexts({ 'picks:p1x2y3:time': 'a'.repeat(DAY_TEXT_TIME_MAX_LEN + 1) }),
+    (err) =>
+      err instanceof DayTextError && err.code === 'body_too_long' && err.field === 'picks:p1x2y3:time',
+  );
+});
+
+test('старая запись без новых полей читается', () => {
+  assert.deepEqual(
+    normalizeDayTexts({ title: 'День', 'stop:k3f9qa:name': 'Остановка' }),
+    { title: 'День', 'stop:k3f9qa:name': 'Остановка' },
+  );
 });
