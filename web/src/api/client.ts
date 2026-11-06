@@ -15,6 +15,8 @@ function resolveApiBase(): string {
       ? (window as unknown as { __TRIP_API_BASE__?: string }).__TRIP_API_BASE__
       : undefined;
   if (typeof fromWindow === "string" && fromWindow) return fromWindow;
+  const fromEnv = (import.meta as { env?: Record<string, string | undefined> }).env?.VITE_TRIP_API;
+  if (typeof fromEnv === "string" && fromEnv) return fromEnv;
   if (fromGlobal && typeof fromGlobal.API_BASE === "string" && fromGlobal.API_BASE) {
     return fromGlobal.API_BASE;
   }
@@ -94,42 +96,42 @@ export const api = {
   },
 
   listDayNotes: (signal?: AbortSignal) =>
-    request<{ notes: DayNote[] }>("/api/day-notes", { signal }).then((d) => d.notes ?? []),
+    request<{ notes: DayNote[] }>("/api/day-notes", { signal }).then((d) => d?.notes ?? []),
   putDayNote: (key: string, body: string, token: string) =>
     request<{ note: DayNote | null }>("/api/day-notes/" + encodeURIComponent(key), {
       method: "PUT",
       body: { body },
       token,
-    }).then((d) => d.note ?? null),
+    }).then((d) => d?.note ?? null),
   deleteDayNote: (key: string, token: string) =>
     request<unknown>("/api/day-notes/" + encodeURIComponent(key), { method: "DELETE", token }),
 
   listStopNotes: (signal?: AbortSignal) =>
-    request<{ notes: StopNote[] }>("/api/stop-notes", { signal }).then((d) => d.notes ?? []),
+    request<{ notes: StopNote[] }>("/api/stop-notes", { signal }).then((d) => d?.notes ?? []),
   putStopNote: (key: string, body: string, token: string) =>
     request<{ note: StopNote | null }>("/api/stop-notes/" + encodeURIComponent(key), {
       method: "PUT",
       body: { body },
       token,
-    }).then((d) => d.note ?? null),
+    }).then((d) => d?.note ?? null),
   deleteStopNote: (key: string, token: string) =>
     request<unknown>("/api/stop-notes/" + encodeURIComponent(key), { method: "DELETE", token }),
 
   listDayTexts: (signal?: AbortSignal) =>
-    request<{ notes: DayTextRecord[] }>("/api/day-texts", { signal }).then((d) => d.notes ?? []),
+    request<{ notes: DayTextRecord[] }>("/api/day-texts", { signal }).then((d) => d?.notes ?? []),
   putDayTexts: (key: string, texts: DayTextsMap, token: string) =>
     request<{ note: DayTextRecord | null }>("/api/day-texts/" + encodeURIComponent(key), {
       method: "PUT",
       body: { texts },
       token,
-    }).then((d) => (d.note?.texts ?? null) as DayTextsMap | null),
+    }).then((d) => (d?.note?.texts ?? null) as DayTextsMap | null),
 
   listGuideTags: (signal?: AbortSignal) =>
-    request<{ tags: GuideTagRecord[] }>("/api/guide-tags", { signal }).then((d) => d.tags ?? []),
+    request<{ tags: GuideTagRecord[] }>("/api/guide-tags", { signal }).then((d) => d?.tags ?? []),
   putGuideTag: (key: string, tag: GuideTagValue, token: string) =>
     request<{ tag: GuideTagRecord | null }>("/api/guide-tags/" + encodeURIComponent(key), {
       method: "PUT",
       body: { tag },
       token,
-    }).then((d) => d.tag ?? null),
+    }).then((d) => d?.tag ?? null),
 };

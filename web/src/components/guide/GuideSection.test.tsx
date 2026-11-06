@@ -1,0 +1,73 @@
+import { render, screen, within } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { EditsProvider } from "../../edits/EditsContext";
+import { GuideSection } from "./GuideSection";
+
+function stubApi() {
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(() => new Promise(() => {})),
+  );
+}
+
+function renderGuide(kind: "stay" | "food" | "sight" | "tip", id: string) {
+  return render(
+    <EditsProvider>
+      <GuideSection id={id} kind={kind} />
+    </EditsProvider>,
+  );
+}
+
+describe("GuideSection", () => {
+  beforeEach(() => {
+    localStorage.clear();
+    stubApi();
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it("группирует карточки по городам в порядке маршрута", () => {
+    renderGuide("stay", "stay");
+
+    const hk = screen.getByRole("region", { name: "Гонконг" });
+    const cq = screen.getByRole("region", { name: "Чунцин" });
+
+    expect(within(hk).getByText("4")).toBeInTheDocument();
+    expect(within(hk).getByText("Panda Hotel")).toBeInTheDocument();
+    expect(within(hk).getByText("Eaton HK")).toBeInTheDocument();
+    expect(within(hk).queryByText("Qixinggang district")).not.toBeInTheDocument();
+    expect(within(cq).getByText("Qixinggang district")).toBeInTheDocument();
+  });
+
+  it("держит альтернативы под закрытой раскрывашкой", () => {
+    renderGuide("sight", "sights");
+
+    const alt = screen.getByText("Garden Hill");
+    const details = alt.closest("details");
+    expect(details).not.toBeNull();
+    expect(details).not.toHaveAttribute("open");
+
+    const main = screen.getByText("Victoria Peak & Peak Tram");
+    expect(main.closest("details")).toBeNull();
+    expect(screen.getAllByText(/^Альтернативы · \d+$/).length).toBeGreaterThan(0);
+  });
+
+  it("даёт карточке якорь #g-<id> и отступ под липкую шапку", () => {
+    renderGuide("sight", "sights");
+
+    const card = document.getElementById("g-victoria-peak");
+    expect(card).not.toBeNull();
+    expect(card).toHaveTextContent("Victoria Peak");
+    expect(card).toHaveClass("scroll-mt-24");
+  });
+
+  it("не показывает редактор тега без токена", () => {
+    renderGuide("stay", "stay");
+
+    expect(screen.queryByRole("button", { name: "рекомендация" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "выбор" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "альтернатива" })).not.toBeInTheDocument();
+  });
+});

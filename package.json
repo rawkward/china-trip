@@ -2,7 +2,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test \"tests/**/*.test.js\""
+    "test": "node --test \"tests/**/*.test.js\"",
+    "test:web": "npm --prefix web test",
+    "build:web": "npm --prefix web run build",
+    "dev:web": "npm --prefix web run dev",
+    "test:all": "npm test && npm --prefix web test"
   },
   "devDependencies": {
     "wrangler": "^3"
