@@ -18,3 +18,10 @@ worker/.dev.vars
 worker/.wrangler/
 api/.wrangler/
 *.seed.json
+
+# react site build & test artifacts
+web/dist/
+web/test-results/
+web/playwright-report/
+web/.vite/
+web/e2e/baseline/
