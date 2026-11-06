@@ -97,7 +97,7 @@ export function MapTools({
         </>
       ) : (
         <>
-          <div className="flex min-w-0 gap-1.5 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
+          <div className="flex min-w-0 gap-1.5 overflow-x-auto pb-1 [scrollbar-width:none]">
             <button
               type="button"
               className={cn(chipBase, kind === "all" && "chip-on")}
@@ -118,7 +118,7 @@ export function MapTools({
               </button>
             ))}
           </div>
-          <div className="flex min-w-0 gap-1.5 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
+          <div className="flex min-w-0 gap-1.5 overflow-x-auto pb-1 [scrollbar-width:none]">
             <button
               type="button"
               className={cn(chipBase, city === "all" && "chip-on")}
