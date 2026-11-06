@@ -72,7 +72,11 @@ export function groupGuideByCity(
   const ofKind = items.filter((i) => i.kind === kind);
   const cities: string[] = [];
   for (const i of ofKind) if (cities.indexOf(i.city) === -1) cities.push(i.city);
-  cities.sort((a, b) => cityOrder.indexOf(a) - cityOrder.indexOf(b));
+  const rank = (city: string) => {
+    const i = cityOrder.indexOf(city);
+    return i === -1 ? cityOrder.length : i; // незнакомый город — в конец
+  };
+  cities.sort((a, b) => rank(a) - rank(b));
   return cities.map((city) => {
     const group = ofKind
       .filter((i) => i.city === city)

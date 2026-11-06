@@ -48,4 +48,5 @@ export const STORAGE_KEYS = {
   checklist: "china-trip-checklist-v1",
   token: "chinatrip.budget.token",
   tokenExp: "chinatrip.budget.token_exp",
+  budgetCache: "chinatrip.budget.cache",
 } as const;

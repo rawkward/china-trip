@@ -2,6 +2,8 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./e2e",
+  // бюджет и правки требуют мока API — гоняются отдельным конфигом
+  testIgnore: ["**/budget.spec.ts", "**/editing.spec.ts"],
   timeout: 90_000,
   expect: { timeout: 10_000 },
   fullyParallel: false,

@@ -25,3 +25,6 @@ web/test-results/
 web/playwright-report/
 web/.vite/
 web/e2e/baseline/
+
+# verify_web.sh temp
+.verify-site/

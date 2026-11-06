@@ -26,6 +26,30 @@ export default defineConfig({
     outDir: "dist",
     emptyOutDir: true,
     sourcemap: false,
+    rolldownOptions: {
+      output: {
+        // Данные поездки и вендоры — отдельные чанки: основной код остаётся компактным.
+        codeSplitting: {
+          groups: [
+            {
+              name: "react-vendor",
+              test: /node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+              priority: 30,
+            },
+            {
+              name: "trip-data",
+              test: /[\\/]src[\\/]data[\\/]/,
+              priority: 20,
+            },
+            {
+              name: "vendor",
+              test: /node_modules/,
+              priority: 10,
+            },
+          ],
+        },
+      },
+    },
   },
   test: {
     environment: "jsdom",

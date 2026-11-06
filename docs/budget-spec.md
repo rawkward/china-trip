@@ -174,13 +174,13 @@ Per-category sums use the same conversion. Rounding is applied only for display 
 
 | Metric | Value |
 |---|---|
-| base | 375 464 ₽ |
-| reserve | 37 546 ₽ |
-| total | 413 010 ₽ |
-| per person | 206 505 ₽ |
-| per person per day | 12 907 ₽ |
+| base | 376 570 ₽ |
+| reserve | 37 657 ₽ |
+| total | 414 227 ₽ |
+| per person | 207 113 ₽ |
+| per person per day | 12 945 ₽ |
 
-and per-category base sums: Дорога в Москву и обратно 10 400, Перелёты 86 926,
+and per-category base sums: Дорога в Москву и обратно 11 506, Перелёты 86 926,
 Ж/д внутри Китая 29 928, Проживание 82 035, Билеты и развлечения 69 733,
 Еда 74 908, Транспорт в городе 16 134, Прочее 5 400. Items in the seed: 37.
 

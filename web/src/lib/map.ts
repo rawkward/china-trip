@@ -113,11 +113,14 @@ export function dayPoints(days: Day[], places: Places, n: number): MapPoint[] {
  * окружности, иначе номера на карте прячутся друг под другом.
  */
 export function spreadOverlaps(points: MapPoint[]): MapPoint[] {
-  const placed: MapPoint[] = [];
+  // Считаем по ИСХОДНЫМ координатам: две остановки одного здания стоят в одной точке.
+  // Старая страница сравнивала уже сдвинутые точки, поэтому третья и следующие
+  // совпадали со второй и закрывали друг друга.
+  const origins: MapPoint[] = [];
   return points.map((pt) => {
     let clash = 0;
-    for (const u of placed) {
-      if (Math.abs(u.lat - pt.lat) < 0.0004 && Math.abs(u.lon - pt.lon) < 0.0004) clash++;
+    for (const o of origins) {
+      if (Math.abs(o.lat - pt.lat) < 0.0004 && Math.abs(o.lon - pt.lon) < 0.0004) clash++;
     }
     const next = { ...pt };
     if (clash) {
@@ -126,7 +129,7 @@ export function spreadOverlaps(points: MapPoint[]): MapPoint[] {
       next.lat += Math.sin(a) * r;
       next.lon += Math.cos(a) * r;
     }
-    placed.push(next);
+    origins.push(pt);
     return next;
   });
 }

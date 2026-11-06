@@ -1,0 +1,24 @@
+{
+  "Date": "2026-10-31T11:30:00+03:00",
+  "Timestamp": "2026-10-31T08:30:00Z",
+  "Valute": {
+    "CNY": {
+      "ID": "R01215",
+      "NumCode": "156",
+      "CharCode": "CNY",
+      "Nominal": 1,
+      "Name": "Китайский юань",
+      "Value": 12.0873,
+      "Previous": 12.1
+    },
+    "HKD": {
+      "ID": "R01239",
+      "NumCode": "344",
+      "CharCode": "HKD",
+      "Nominal": 10,
+      "Name": "Гонконгский доллар",
+      "Value": 102.66,
+      "Previous": 102.7
+    }
+  }
+}

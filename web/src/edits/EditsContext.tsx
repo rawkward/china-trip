@@ -59,6 +59,11 @@ export function EditsProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [reloadTick, setReloadTick] = useState(0);
   const alive = useRef(true);
+  // Зеркало dayTexts: saveText обязан видеть самую свежую карту полей, иначе два быстрых
+  // сохранения уходят с неполным телом (второй PUT терял первое поле).
+  const textsRef = useRef<Record<string, DayTextsMap>>({});
+  // Очередь PUT'ов на день: тело каждого запроса собирается в момент отправки, порядок сохраняется.
+  const saveQueues = useRef(new Map<string, Promise<unknown>>());
 
   useEffect(() => {
     alive.current = true;
@@ -91,9 +96,11 @@ export function EditsProvider({ children }: { children: ReactNode }) {
         if (!alive.current) return;
         setDayNotes(Object.fromEntries(notes.map((n) => [n.day_key, n])));
         setStopNotes(Object.fromEntries(stops.map((n) => [n.stop_key, n])));
-        setDayTexts(
-          Object.fromEntries(texts.map((t) => [t.day_key, t.texts ?? {}])),
-        );
+        const loadedTexts = Object.fromEntries(
+          texts.map((t) => [t.day_key, t.texts ?? {}]),
+        ) as Record<string, DayTextsMap>;
+        textsRef.current = loadedTexts;
+        setDayTexts(loadedTexts);
         setGuideTags(Object.fromEntries(tags.map((t) => [t.tag_key, t.tag])));
       })
       .finally(() => {
@@ -101,6 +108,23 @@ export function EditsProvider({ children }: { children: ReactNode }) {
       });
     return () => ctrl.abort();
   }, [reloadTick]);
+
+  /** Единая точка записи текстов: ref, состояние и (опционально) удаление пустого дня. */
+  const commitTexts = useCallback((dayKey: string, texts: DayTextsMap | null) => {
+    const next = { ...textsRef.current };
+    if (texts) next[dayKey] = texts;
+    else delete next[dayKey];
+    textsRef.current = next;
+    setDayTexts(next);
+  }, []);
+
+  /** Ставит задачу в очередь дня: запросы уходят строго по порядку, следующий видит результат предыдущего. */
+  const enqueue = useCallback(<T,>(dayKey: string, task: () => Promise<T>): Promise<T> => {
+    const prev = saveQueues.current.get(dayKey) ?? Promise.resolve();
+    const run = prev.then(task, task) as Promise<T>;
+    saveQueues.current.set(dayKey, run.catch(() => undefined));
+    return run;
+  }, []);
 
   const setEditing = useCallback((patch: Partial<EditingState>) => {
     setEditingState((prev) => ({ ...prev, ...patch }));
@@ -200,25 +224,22 @@ export function EditsProvider({ children }: { children: ReactNode }) {
     async (dayKey: string, field: string, value: string) => {
       const t = requireToken();
       if (!t) return;
-      setDayTexts((prev) => {
-        const texts = { ...(prev[dayKey] ?? {}) };
-        const clean = normalizeText(value);
-        if (clean === "") delete texts[field];
-        else texts[field] = clean;
-        return { ...prev, [dayKey]: texts };
-      });
-      const texts = { ...(dayTexts[dayKey] ?? {}) };
       const clean = normalizeText(value);
-      if (clean === "") delete texts[field];
-      else texts[field] = clean;
+      const optimistic = { ...(textsRef.current[dayKey] ?? {}) };
+      if (clean === "") delete optimistic[field];
+      else optimistic[field] = clean;
+      commitTexts(dayKey, optimistic);
+
       try {
-        const saved = await api.putDayTexts(dayKey, texts, t);
-        setDayTexts((prev) => {
-          const next = { ...prev };
-          if (saved) next[dayKey] = saved;
-          else delete next[dayKey];
-          return next;
+        const saved = await enqueue(dayKey, () => {
+          const body = textsRef.current[dayKey] ?? {};
+          return api.putDayTexts(dayKey, body, t);
         });
+        // Пока шёл запрос могли сохранить другое поле — чужую работу не перетираем.
+        const current = textsRef.current[dayKey] ?? {};
+        const inFlight = Object.keys(optimistic).length === Object.keys(current).length &&
+          Object.entries(optimistic).every(([k, v]) => current[k] === v);
+        if (inFlight) commitTexts(dayKey, saved);
         setEditing({ text: undefined, time: undefined, ref: undefined });
         setError("");
       } catch (err) {
@@ -226,7 +247,7 @@ export function EditsProvider({ children }: { children: ReactNode }) {
         setReloadTick((n) => n + 1);
       }
     },
-    [requireToken, dayTexts, fail, setEditing],
+    [requireToken, commitTexts, enqueue, fail, setEditing],
   );
 
   const saveGuideTag = useCallback(

@@ -5,19 +5,12 @@ import { cn } from "../../lib/cn";
 import { Button, Checkbox } from "../ui";
 import { Section } from "../layout/Section";
 
-interface FlatItem {
-  id: string;
-  group: string;
-  index: number;
-  html: string;
-}
-
 const TOTAL = CHECKS.reduce((n, g) => n + g.items.length, 0);
 
-/** Плоский список пунктов: id = «chk-<группа>-<номер>» (стабилен, пока не переставили). */
-const FLAT: FlatItem[] = CHECKS.flatMap((group, gi) =>
-  group.items.map((html, ii) => ({ id: `chk-${gi}-${ii}`, group: group.cap, index: gi, html })),
-);
+/** id пункта: «chk-<группа>-<номер>» — стабилен, пока не переставили. */
+function checkId(groupIndex: number, itemIndex: number): string {
+  return `chk-${groupIndex}-${itemIndex}`;
+}
 
 /** Чек-лист: отметки живут в localStorage этого браузера. */
 export function ChecklistSection() {
@@ -56,7 +49,14 @@ export function ChecklistSection() {
         </div>
       }
     >
-      <div className="mb-5 h-1.5 w-full overflow-hidden rounded-full bg-paper-deep">
+      <div
+        className="mb-5 h-1.5 w-full overflow-hidden rounded-full bg-paper-deep"
+        role="progressbar"
+        aria-label="Прогресс чек-листа"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={progress}
+      >
         <div
           className="h-full rounded-full bg-accent transition-[width] duration-300"
           style={{ width: `${progress}%` }}
@@ -72,7 +72,7 @@ export function ChecklistSection() {
             </h3>
             <div className="grid gap-0.5">
               {group.items.map((html, ii) => {
-                const id = `chk-${gi}-${ii}`;
+                const id = checkId(gi, ii);
                 return (
                   <Checkbox
                     key={id}
@@ -92,8 +92,6 @@ export function ChecklistSection() {
       <p className="mt-4 text-[0.78rem] text-muted-soft">
         Отметки сохраняются в этом браузере — на другом устройстве список будет чистым.
       </p>
-      {/* FLAT держим рядом: он же задаёт id пунктов и годится для тестов */}
-      <span hidden data-check-total={TOTAL} data-check-flat={FLAT.length} />
     </Section>
   );
 }
