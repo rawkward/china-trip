@@ -941,7 +941,7 @@ const TRIP_GUIDE = {
      maps:"Mak Man Kee 麥文記麵家 51 Parkes Street Jordan Hong Kong",
      match:["Mak Man Kee","麥文記"]},
 
-    {kind:"food", city:"shenzhen", id:"baker-spice-upperhills",
+    {kind:"food", city:"shenzhen", id:"baker-spice-upperhills", rec:true,
      en:"Baker & Spice", zh:"",
      addr:"深业上城 UpperHills, Futian, Shenzhen 深圳市福田區深業上城",
      hours:"—",
@@ -957,7 +957,7 @@ const TRIP_GUIDE = {
      maps:"gaga MixC World Nanshan Shenzhen 万象天地",
      match:["gaga"]},
 
-    {kind:"sight", city:"shenzhen", id:"waterwrap-futian", badge:"баня",
+    {kind:"sight", city:"shenzhen", id:"waterwrap-futian", rec:true,
      en:"WaterWrap+ (水裹+)", zh:"水裹+ 新洲店",
      addr:"13 Xinzhou 3rd Street, Futian 深圳市福田區新洲三街13號",
      hours:"Круглосуточно",
