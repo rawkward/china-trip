@@ -269,6 +269,45 @@ export async function deleteStopNote(db, key) {
   return true;
 }
 
+// -- правка любого текста в карточке дня ------------------------------------
+
+const DAY_TEXT_COLUMNS = 'day_key, variant_id, day_date, body, updated_at';
+
+export async function listDayTexts(db) {
+  const { results } = await db
+    .prepare(`SELECT ${DAY_TEXT_COLUMNS} FROM day_texts ORDER BY day_key`)
+    .all();
+  return results ?? [];
+}
+
+export async function getDayText(db, key) {
+  return db.prepare(`SELECT ${DAY_TEXT_COLUMNS} FROM day_texts WHERE day_key = ?`).bind(key).first();
+}
+
+export async function upsertDayText(db, note) {
+  const ts = nowSeconds();
+  await db
+    .prepare(
+      `INSERT INTO day_texts (day_key, variant_id, day_date, body, updated_at)
+       VALUES (?, ?, ?, ?, ?)
+       ON CONFLICT(day_key) DO UPDATE SET
+         variant_id = excluded.variant_id,
+         day_date = excluded.day_date,
+         body = excluded.body,
+         updated_at = excluded.updated_at`,
+    )
+    .bind(note.day_key, note.variant_id, note.day_date, note.body, ts)
+    .run();
+  return getDayText(db, note.day_key);
+}
+
+export async function deleteDayText(db, key) {
+  const existing = await getDayText(db, key);
+  if (!existing) return false;
+  await db.prepare('DELETE FROM day_texts WHERE day_key = ?').bind(key).run();
+  return true;
+}
+
 // -- login throttle ---------------------------------------------------------
 
 export async function countLoginFailures(db, ip, since) {

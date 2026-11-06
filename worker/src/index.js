@@ -18,6 +18,12 @@ import {
   normalizeStopNoteKey,
   splitStopKey,
 } from '../../shared/stop-notes.js';
+import {
+  DayTextError,
+  normalizeDayTextKey,
+  normalizeDayTexts,
+  splitDayKey as splitDayTextKey,
+} from '../../shared/day-texts.js';
 import { preflight, withCors } from './cors.js';
 import * as db from './db.js';
 import { signToken, verifyPassword, verifyToken, TOKEN_TTL_SECONDS } from './auth.js';
@@ -45,7 +51,7 @@ function json(data, status = 200) {
 
 function errorResponse(err) {
   if (err instanceof HttpError) return json(err.payload, err.status);
-  if (err instanceof DayNoteError || err instanceof StopNoteError) {
+  if (err instanceof DayNoteError || err instanceof StopNoteError || err instanceof DayTextError) {
     return json({ error: 'validation', details: [{ code: err.code, field: err.field, message: err.message }] }, 422);
   }
   if (err instanceof BudgetError) {
@@ -276,6 +282,58 @@ async function handleDeleteStopNote(env, rawKey) {
   return json({ deleted: true, stop_key });
 }
 
+// -- правка любого текста в карточке дня ------------------------------------
+
+function parseDayTexts(raw) {
+  try {
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) return parsed;
+  } catch {
+    // битая строка в D1 не должна ронять публичное чтение
+  }
+  return {};
+}
+
+async function handleListDayTexts(env) {
+  const rows = await db.listDayTexts(env.DB);
+  const notes = rows.map((row) => ({
+    day_key: row.day_key,
+    variant_id: row.variant_id,
+    day_date: row.day_date,
+    texts: parseDayTexts(row.body),
+    updated_at: row.updated_at,
+  }));
+  return json({ notes });
+}
+
+async function handlePutDayText(request, env, rawKey) {
+  const day_key = normalizeDayTextKey(rawKey);
+  const payload = await readJsonBody(request);
+  const texts = normalizeDayTexts(payload.texts);
+  const { variant_id, day_date } = splitDayTextKey(day_key);
+
+  // Пустой набор — это сброс всех правок дня, строку в D1 не держим.
+  if (Object.keys(texts).length === 0) {
+    await db.deleteDayText(env.DB, day_key);
+    return json({ note: null });
+  }
+
+  const row = await db.upsertDayText(env.DB, {
+    day_key,
+    variant_id,
+    day_date,
+    body: JSON.stringify(texts),
+  });
+  return json({ note: { day_key, variant_id, day_date, texts, updated_at: row.updated_at } });
+}
+
+async function handleDeleteDayText(env, rawKey) {
+  const day_key = normalizeDayTextKey(rawKey);
+  const deleted = await db.deleteDayText(env.DB, day_key);
+  if (!deleted) throw new HttpError(404, { error: 'not_found' });
+  return json({ deleted: true, day_key });
+}
+
 async function route(request, env, url) {
   const { pathname } = url;
   const method = request.method;
@@ -290,6 +348,7 @@ async function route(request, env, url) {
   // Заметки к дням и правки текста к остановкам читаются без пароля: страница публичная, править — только с токеном.
   if (pathname === '/api/day-notes' && method === 'GET') return handleListDayNotes(env);
   if (pathname === '/api/stop-notes' && method === 'GET') return handleListStopNotes(env);
+  if (pathname === '/api/day-texts' && method === 'GET') return handleListDayTexts(env);
 
   await requireAuth(request, env);
 
@@ -324,6 +383,13 @@ async function route(request, env, url) {
     const key = decodeURIComponent(stopNoteMatch[1]);
     if (method === 'PUT') return handlePutStopNote(request, env, key);
     if (method === 'DELETE') return handleDeleteStopNote(env, key);
+  }
+
+  const dayTextMatch = /^\/api\/day-texts\/([^/]+)$/.exec(pathname);
+  if (dayTextMatch) {
+    const key = decodeURIComponent(dayTextMatch[1]);
+    if (method === 'PUT') return handlePutDayText(request, env, key);
+    if (method === 'DELETE') return handleDeleteDayText(env, key);
   }
 
   throw new HttpError(400, { error: 'bad_route' });

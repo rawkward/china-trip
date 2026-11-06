@@ -227,6 +227,42 @@ suite('budget API (integration)', () => {
     }
   });
 
+  test('day texts: public read, authenticated write and delete', async () => {
+    const dayKey = `apitest${Date.now()}|01.01`;
+    const path = `/api/day-texts/${encodeURIComponent(dayKey)}`;
+    try {
+      const empty = await call('/api/day-texts', { auth: false });
+      assert.equal(empty.status, 200);
+      assert.ok(Array.isArray(empty.data.notes));
+
+      const denied = await call(path, { method: 'PUT', body: { texts: { title: 'x' } }, auth: false });
+      assert.equal(denied.status, 401);
+
+      const put = await call(path, { method: 'PUT', body: { texts: { title: '  API день  ', sub: 'подзаголовок' } } });
+      assert.equal(put.status, 200, JSON.stringify(put.data));
+      assert.equal(put.data.note.day_key, dayKey);
+      assert.equal(put.data.note.texts.title, 'API день');
+
+      const list = await call('/api/day-texts', { auth: false });
+      const found = list.data.notes.find((note) => note.day_key === dayKey);
+      assert.ok(found);
+      assert.equal(found.texts.sub, 'подзаголовок');
+
+      const cleared = await call(path, { method: 'PUT', body: { texts: {} } });
+      assert.equal(cleared.status, 200);
+      assert.equal(cleared.data.note, null);
+      const afterClear = await call('/api/day-texts', { auth: false });
+      assert.ok(!afterClear.data.notes.some((note) => note.day_key === dayKey));
+
+      await call(path, { method: 'PUT', body: { texts: { title: 'ещё раз' } } });
+      const deleted = await call(path, { method: 'DELETE' });
+      assert.equal(deleted.status, 200);
+      assert.equal((await call(path, { method: 'DELETE' })).status, 404);
+    } finally {
+      await call(path, { method: 'DELETE' });
+    }
+  });
+
   test('CORS preflight echoes the Pages origin', async () => {
     const result = await call('/api/budget', { method: 'OPTIONS', auth: false, origin: PAGES_ORIGIN });
     assert.equal(result.status, 204);

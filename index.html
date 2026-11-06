@@ -194,6 +194,17 @@ hr.rule{border:0; border-top:1px solid var(--line); margin:0}
 .dn-del{color:#b91c1c}
 .dn-del:hover{border-color:#b91c1c; color:#b91c1c}
 
+/* правка любого текста в карточке дня — только по паролю */
+.tf{position:relative}
+.tf.on{text-decoration:underline dotted; text-decoration-color:var(--accent); text-underline-offset:2px}
+.tf-pen{background:none; border:0; padding:0 0 0 4px; margin:0; font-family:inherit; font-size:.72rem; line-height:1; color:var(--muted); cursor:pointer; vertical-align:baseline; opacity:.7}
+.tf-pen:hover{color:var(--accent); opacity:1}
+.tf-edit{display:block; margin-top:6px; font-weight:400; font-size:.88rem; white-space:normal}
+.tf-in{display:block; width:100%; box-sizing:border-box; border:1px solid var(--line); border-radius:8px; padding:5px 8px; font-family:inherit; font-size:.88rem; line-height:1.35; color:var(--ink); background:#fff}
+.tf-ta{display:block; width:100%; box-sizing:border-box; min-height:64px; border:1px solid var(--line); border-radius:10px; padding:8px 10px; font-family:inherit; font-size:.88rem; line-height:1.45; resize:vertical; color:var(--ink); background:#fff}
+.tf-in:focus,.tf-ta:focus{outline:2px solid var(--accent-soft); border-color:var(--accent)}
+.tf-acts{display:flex; gap:7px; flex-wrap:wrap; margin-top:6px}
+
 /* booking + notes */
 .booklist{display:grid; grid-template-columns:1fr; gap:10px}
 .book{background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 16px; display:flex; gap:12px; align-items:center}
@@ -600,7 +611,7 @@ a.glink{font-size:.72rem; font-weight:600; color:var(--accent); border-bottom:1p
   </section>
 
   <footer>
-    <p>Версия 34 · 06.11.2026. Билеты куплены: China Eastern, бронь PEEPS5, 86 926 ₽ на двоих туда и обратно. Шесть вариантов маршрута, основной — Гонконг → Фужун → Чжанцзяцзе → Чунцин, 4–19.12.2026, 14 ночей на месте плюс ночь в самолёте: 4.12 в 16:45 из Шереметьева через Шанхай, ночь в пути, 5.12 в 11:40 Шэньчжэнь и поездом через границу в Гонконг, пять ночей (Clockenflap 6.12, Централ и Пик 7.12, Ковлун с M+ 8.12, Дисней 9.12), поезд G6080 10.12 в Фужун, 23 минуты до гор, три ночи в Чжанцзяцзе и четыре в Чунцине — с полным днём в Улуне 16.12 (Три моста и ущелье Луншуйся) и южным берегом с Наньшанем 17.12 (Сяхаоли, Хуанцзюэя, Лаоцзюньдун); 18.12 в 13:15 MU5430 в Шанхай, ночь у Пудуна, 19.12 в 11:50 MU591, Шереметьево в 17:05, дома вечером. Три справочника — жильё, заведения и достопримечательности по городам: адрес по-английски и по-китайски, сайт, карта, часы и ремарка. Фото — Wikimedia Commons, только на карточках вариантов: в плане по дням карусель убрана, страница открывается легче. Карта — OpenStreetMap. Плюс чек-лист «что сделать и купить заранее»: документы, деньги, связь, снаряжение и аптечка, с отметками в браузере и с палками для скандинавской ходьбы отдельным пунктом. Под планом каждого дня — заметка, и у каждой остановки — свой текст: всё это видят все, править можно по паролю бюджета. Где в дне несколько равноправных вариантов (четыре отеля, пять мест на обед, три смотровые, три мангала с видом на реку), они собраны каруселью: на экране один вариант, остальные — стрелками, первый помечен «рекомендуем», остальные «альтернатива». В Чунцине добавлены варианты из вашего списка — храм, канатка, Лицзиба, 云端之眼, 得意世界, 十八梯, 龙门浩, 苏家坝, кофейни 瓦顶顶 и SoSo House, 花市豌杂面, 鬼包子, 地下之城, The Move и паром 两江游.</p>
+    <p>Версия 35 · 06.11.2026. Билеты куплены: China Eastern, бронь PEEPS5, 86 926 ₽ на двоих туда и обратно. Шесть вариантов маршрута, основной — Гонконг → Фужун → Чжанцзяцзе → Чунцин, 4–19.12.2026, 14 ночей на месте плюс ночь в самолёте: 4.12 в 16:45 из Шереметьева через Шанхай, ночь в пути, 5.12 в 11:40 Шэньчжэнь и поездом через границу в Гонконг, пять ночей (Clockenflap 6.12, Централ и Пик 7.12, Ковлун с M+ 8.12, Дисней 9.12), поезд G6080 10.12 в Фужун, 23 минуты до гор, три ночи в Чжанцзяцзе и четыре в Чунцине — с полным днём в Улуне 16.12 (Три моста и ущелье Луншуйся) и южным берегом с Наньшанем 17.12 (Сяхаоли, Хуанцзюэя, Лаоцзюньдун); 18.12 в 13:15 MU5430 в Шанхай, ночь у Пудуна, 19.12 в 11:50 MU591, Шереметьево в 17:05, дома вечером. Три справочника — жильё, заведения и достопримечательности по городам: адрес по-английски и по-китайски, сайт, карта, часы и ремарка. Фото — Wikimedia Commons, только на карточках вариантов: в плане по дням карусель убрана, страница открывается легче. Карта — OpenStreetMap. Плюс чек-лист «что сделать и купить заранее»: документы, деньги, связь, снаряжение и аптечка, с отметками в браузере и с палками для скандинавской ходьбы отдельным пунктом. Под планом каждого дня — заметка, и у каждой остановки — свой текст: всё это видят все, править можно по паролю бюджета. Любой текст в карточке дня — заголовок, подзаголовок, названия и цены остановок, группы и варианты карусели — тоже правится по паролю, правки хранятся отдельно от маршрута. Где в дне несколько равноправных вариантов (четыре отеля, пять мест на обед, три смотровые, три мангала с видом на реку), они собраны каруселью: на экране один вариант, остальные — стрелками, первый помечен «рекомендуем», остальные «альтернатива». В Чунцине добавлены варианты из вашего списка — храм, канатка, Лицзиба, 云端之眼, 得意世界, 十八梯, 龙门浩, 苏家坝, кофейни 瓦顶顶 и SoSo House, 花市豌杂面, 鬼包子, 地下之城, The Move и паром 两江游.</p>
   </footer>
 
 </div>
@@ -745,25 +756,42 @@ function renderVariants(){
 
 /* ---------- рендер: дни ---------- */
 
+const OPEN_DAYS = new Set();
+
+function renderDayCard(d){
+  const v = withTexts(d);
+  const city = CITIES[v.city] || {label:v.city, color:"#8a8278"};
+  const stops = (v.places || []).map(function(p, si){ return renderStop(v, p, si); }).join("");
+  const isFest = (v.places || []).some(function(p){ return p.tag === "festival"; });
+  const isOpen = OPEN_DAYS.has(v.n);
+  return '<div class="day' + (isFest ? ' fest' : '') + (isOpen ? ' open' : '') + '" data-day="' + v.n + '">' +
+    '<div class="day-head">' +
+      '<div class="day-num">Д' + v.n + '</div>' +
+      '<div class="meta"><h3>' + tfHtml("title", v.title, "line", v.n) + (isFest ? '<span class="festflag">фестиваль</span>' : '') + '</h3>' +
+        '<div class="sub">' + v.date + ' · ' + tfHtml("sub", v.sub, "line", v.n) + '</div></div>' +
+      '<span class="city-tag" style="background:' + city.color + '1a;color:' + city.color + '">' + city.label + '</span>' +
+      '<span class="chev">▶</span>' +
+    '</div>' +
+    '<div class="day-body"><div class="inner"><ul class="stops">' + stops + '</ul>' +
+    '<button class="mapbtn" data-focus="' + v.n + '">Показать на карте</button>' +
+    '<div class="daynote" data-key="' + noteKey(v) + '"></div></div></div>' +
+  '</div>';
+}
+
 function renderDays(){
   const list = document.getElementById("dayList");
-  list.innerHTML = days.map(function(d){
-    const city = CITIES[d.city] || {label:d.city, color:"#8a8278"};
-    const stops = (d.places || []).map(function(p, si){ return renderStop(d, p, si); }).join("");
-    const isFest = d.places.some(function(p){ return p.tag === "festival"; });
-    return '<div class="day' + (isFest ? ' fest' : '') + '" data-day="' + d.n + '">' +
-      '<div class="day-head">' +
-        '<div class="day-num">Д' + d.n + '</div>' +
-        '<div class="meta"><h3>' + d.title + (isFest ? '<span class="festflag">фестиваль</span>' : '') + '</h3><div class="sub">' + d.date + ' · ' + d.sub + '</div></div>' +
-        '<span class="city-tag" style="background:' + city.color + '1a;color:' + city.color + '">' + city.label + '</span>' +
-        '<span class="chev">▶</span>' +
-      '</div>' +
-      '<div class="day-body"><div class="inner"><ul class="stops">' + stops + '</ul>' +
-      '<button class="mapbtn" data-focus="' + d.n + '">Показать на карте</button>' +
-      '<div class="daynote" data-key="' + noteKey(d) + '"></div></div></div>' +
-    '</div>';
-  }).join("");
+  list.innerHTML = days.map(function(d){ return renderDayCard(d); }).join("");
   notePaint();
+}
+
+function refreshDay(n){
+  const card = document.querySelector('#dayList .day[data-day="' + n + '"]');
+  if(!card) return;
+  const d = days.filter(function(x){ return x.n === n; })[0];
+  if(!d) return;
+  card.outerHTML = renderDayCard(d);
+  notePaint();
+  stopPaint();
 }
 
 /* ---------- переключение варианта ---------- */
@@ -805,7 +833,13 @@ document.getElementById("dayList").addEventListener("click", function(e){
   const fb = e.target.closest(".mapbtn");
   if(fb){ focusDay(parseInt(fb.getAttribute("data-focus"), 10)); return; }
   const head = e.target.closest(".day-head");
-  if(head) head.closest(".day").classList.toggle("open");
+  if(!head) return;
+  // кнопки и редакторы текста не должны раскрывать/сворачивать день
+  if(e.target.closest("[data-tf], .tf-edit, .tf-pen")) return;
+  const dayEl = head.closest(".day");
+  const n = parseInt(dayEl.getAttribute("data-day"), 10);
+  const open = dayEl.classList.toggle("open");
+  if(open) OPEN_DAYS.add(n); else OPEN_DAYS.delete(n);
 });
 
 /* ---------- заметки к дням: читают все, правят по паролю ---------- */
@@ -819,6 +853,9 @@ let noteExpires = 0;
 let dayNotes = {};
 let noteEditKey = "";
 let noteError = "";
+let DAY_TEXTS = {};
+let textEditKey = "";
+let textError = "";
 
 function noteEsc(s){
   return String(s === null || s === undefined ? "" : s).replace(/[&<>"']/g, function(c){
@@ -919,11 +956,12 @@ function noteBar(){
     el.innerHTML = '<span class="dn-hint">Дневник поездки: правка открыта' + (until ? ' до ' + until : '') + '</span>' +
       '<button class="dn-btn" type="button" id="noteLogout">Выйти</button>';
   } else {
-    el.innerHTML = '<span class="dn-hint">Заметки к дням и текст к остановкам читают все, правят по паролю — тому же, что у бюджета.</span>' +
+    el.innerHTML = '<span class="dn-hint">Заметки к дням, тексты к остановкам и любой текст в карточке дня читают все, правят по паролю — тому же, что у бюджета.</span>' +
       '<input type="password" id="notePass" class="dn-pass" autocomplete="current-password" placeholder="пароль">' +
       '<button class="dn-btn" type="button" id="noteLogin">Войти</button>';
   }
   if(noteError) el.innerHTML += '<span class="dn-err">' + noteEsc(noteError) + '</span>';
+  if(textError) el.innerHTML += '<span class="dn-err">' + noteEsc(textError) + '</span>';
 }
 async function noteLogin(){
   const input = document.getElementById("notePass");
@@ -944,7 +982,7 @@ async function noteLogin(){
   } catch(e){
     noteError = "нет связи с сервером";
   }
-  noteBar(); notePaint(); stopPaint();
+  noteBar(); renderDays(); stopPaint();
 }
 async function noteSave(key, box){
   const ta = box ? box.querySelector(".dn-ta") : null;
@@ -990,7 +1028,7 @@ document.getElementById("dayList").addEventListener("click", function(e){
 const noteBarEl = document.getElementById("noteBar");
 noteBarEl.addEventListener("click", function(e){
   if(e.target.id === "noteLogin") noteLogin();
-  if(e.target.id === "noteLogout"){ noteClearToken(); noteError = ""; noteBar(); notePaint(); stopPaint(); }
+  if(e.target.id === "noteLogout"){ noteClearToken(); noteError = ""; textError = ""; textEditKey = ""; noteBar(); renderDays(); stopPaint(); }
 });
 noteBarEl.addEventListener("keydown", function(e){
   if(e.key === "Enter" && e.target.id === "notePass"){ e.preventDefault(); noteLogin(); }
@@ -1001,6 +1039,7 @@ noteReadToken();
 noteBar();
 noteLoad();
 stopLoad();
+textLoad();
 
 /* ---------- остановки: карусель вариантов и правка текста ---------- */
 const PICK_LISTS = {};
@@ -1040,18 +1079,25 @@ function stopToolsHtml(key){
 }
 
 function pickCurrent(key){ return Math.min(PICK_STATE[key] || 0, Math.max(0, (PICK_LISTS[key] || []).length - 1)); }
-function pickBodyHtml(key, i){
+function pickDayNum(key){
+  const m = /^p(\d+)-/.exec(key || "");
+  return m ? parseInt(m[1], 10) : 0;
+}
+function pickBodyHtml(key, i, dayNum){
   const list = PICK_LISTS[key] || [];
   const it = list[i] || {};
+  const n = dayNum === undefined ? pickDayNum(key) : dayNum;
+  const gs = it.gs || "";
   const badge = it.rec
     ? '<span class="pbadge rec">рекомендуем</span>'
     : '<span class="pbadge alt">альтернатива</span>';
   return '<div class="phead">' + badge + '<span class="pnum">' + (i + 1) + ' / ' + list.length + '</span></div>' +
-    '<div class="pname">' + it.name + (it.gid ? ' <a class="glink" href="#g-' + it.gid + '">в справочнике</a>' : '') + '</div>' +
+    '<div class="pname">' + tfHtml("pick:" + gs + ":" + i + ":name", it.name, "line", n) +
+      (it.gid ? ' <a class="glink" href="#g-' + it.gid + '">в справочнике</a>' : '') + '</div>' +
     ((it.note || stopNotes[it.key]) ? stopNoteHtml(it.key, it.note) : '') +
     '<div class="st-tools" data-stop-tools="' + it.key + '">' + stopToolsHtml(it.key) + '</div>' +
-    (it.cost ? '<div class="pcost">' + it.cost + '</div>' : '') +
-    (it.dim ? '<div class="pdim">' + it.dim + '</div>' : '');
+    (it.cost ? '<div class="pcost">' + tfHtml("pick:" + gs + ":" + i + ":cost", it.cost, "line", n) + '</div>' : '') +
+    (it.dim ? '<div class="pdim">' + tfHtml("pick:" + gs + ":" + i + ":dim", it.dim, "text", n) + '</div>' : '');
 }
 function pickBarHtml(key){
   const list = PICK_LISTS[key] || [];
@@ -1067,36 +1113,41 @@ function pickBarHtml(key){
 }
 function renderStop(d, p, si){
   if(p && p.picks && p.picks.length){
-    const key = "p" + d.n + "-" + si + "-" + stopSlug(p.title || p.name || "");
+    const groupTitle = p._title || p.title || p.name || "";
+    const groupSlug = stopSlug(groupTitle);
+    const key = "p" + d.n + "-" + si + "-" + groupSlug;
     PICK_LISTS[key] = p.picks.map(function(it, i){
-      const ik = stopKey(d, it.name);
+      const origName = it._name || it.name;
+      const ik = stopKey(d, origName);
       STOP_TEXTS[ik] = it.note || "";
-      return {name: it.name, note: it.note || "", cost: it.cost || "", dim: it.dim || "",
+      return {name: it.name, origName: origName, note: it.note || "", cost: it.cost || "", dim: it.dim || "",
               rec: it.rec === true || (i === 0 && it.rec !== false), key: ik,
-              gid: guideIdFor(it.name)};
+              gid: guideIdFor(origName), gs: groupSlug};
     });
-    PICK_STATE[key] = 0;
+    if(!(key in PICK_STATE)) PICK_STATE[key] = 0;
     return '<li class="stop pickstop">' +
       '<span class="tag">' + (TAGS[p.tag] || '•') + '</span>' +
-      '<span class="tx"><span class="nm">' + p.title + '</span>' +
-        (p.note ? '<div class="note">' + p.note + '</div>' : '') +
+      '<span class="tx"><span class="nm">' + tfHtml("picks:" + groupSlug + ":title", p.title, "line", d.n) + '</span>' +
+        (p.note ? '<div class="note">' + tfHtml("picks:" + groupSlug + ":note", p.note, "text", d.n) + '</div>' : '') +
         '<div class="pickbox" data-pick-key="' + key + '">' +
-          '<div class="pickbody">' + pickBodyHtml(key, 0) + '</div>' +
+          '<div class="pickbody">' + pickBodyHtml(key, 0, d.n) + '</div>' +
           pickBarHtml(key) +
         '</div>' +
       '</span>' +
-      (p.cost ? '<span class="cost">' + p.cost + '</span>' : '') +
+      (p.cost ? '<span class="cost">' + tfHtml("picks:" + groupSlug + ":cost", p.cost, "line", d.n) + '</span>' : '') +
     '</li>';
   }
-  const key = stopKey(d, p.name);
+  const origName = p._name || p.name;
+  const slug = stopSlug(origName);
+  const key = stopKey(d, origName);
   STOP_TEXTS[key] = p.note || "";
   return '<li class="stop">' +
     '<span class="tag">' + (TAGS[p.tag] || '•') + '</span>' +
-    '<span class="tx"><span class="nm">' + p.name + guideLink(p.name) + '</span>' +
+    '<span class="tx"><span class="nm">' + tfHtml("stop:" + slug + ":name", p.name, "line", d.n) + guideLink(origName) + '</span>' +
     ((p.note || stopNotes[key]) ? stopNoteHtml(key, p.note) : '') +
     '<div class="st-tools" data-stop-tools="' + key + '">' + stopToolsHtml(key) + '</div>' +
     '</span>' +
-    (p.cost ? '<span class="cost">' + p.cost + '</span>' : '') +
+    (p.cost ? '<span class="cost">' + tfHtml("stop:" + slug + ":cost", p.cost, "line", d.n) + '</span>' : '') +
   '</li>';
 }
 
@@ -1146,6 +1197,110 @@ async function stopReset(key){
   stopEditKey = ""; stopError = "";
   noteBar(); stopPaint();
 }
+/* ---------- правка любого текста в карточке дня ---------- */
+function dayByNum(n){
+  for(let i = 0; i < days.length; i++){ if(days[i].n === n) return days[i]; }
+  return null;
+}
+function textHas(key, field){
+  const t = key ? DAY_TEXTS[key] : null;
+  return !!(t && Object.prototype.hasOwnProperty.call(t, field));
+}
+function withTexts(d){
+  const key = noteKey(d);
+  const t = DAY_TEXTS[key] || {};
+  const out = Object.assign({}, d);
+  out._title = d.title;
+  out._sub = d.sub;
+  if(Object.prototype.hasOwnProperty.call(t, "title")) out.title = t.title;
+  if(Object.prototype.hasOwnProperty.call(t, "sub")) out.sub = t.sub;
+  out.places = (d.places || []).map(function(p){
+    const q = Object.assign({}, p);
+    if(p.picks && p.picks.length){
+      const slug = stopSlug(p.title || p.name || "");
+      q._title = p.title;
+      q._name = p.name;
+      const base = "picks:" + slug;
+      if(t[base + ":title"] !== undefined) q.title = t[base + ":title"];
+      if(t[base + ":note"] !== undefined) q.note = t[base + ":note"];
+      if(t[base + ":cost"] !== undefined) q.cost = t[base + ":cost"];
+      q.picks = p.picks.map(function(it, i){
+        const r = Object.assign({}, it);
+        r._name = it.name;
+        const f = "pick:" + slug + ":" + i;
+        if(t[f + ":name"] !== undefined) r.name = t[f + ":name"];
+        if(t[f + ":cost"] !== undefined) r.cost = t[f + ":cost"];
+        if(t[f + ":dim"] !== undefined) r.dim = t[f + ":dim"];
+        return r;
+      });
+    } else {
+      const slug = stopSlug(p.name || "");
+      q._name = p.name;
+      const base = "stop:" + slug;
+      if(t[base + ":name"] !== undefined) q.name = t[base + ":name"];
+      if(t[base + ":cost"] !== undefined) q.cost = t[base + ":cost"];
+    }
+    return q;
+  });
+  return out;
+}
+function tfHtml(fieldKey, html, kind, dayNum){
+  const text = html === null || html === undefined ? "" : String(html);
+  if(!noteToken) return text;
+  const d = dayByNum(dayNum);
+  const key = d ? noteKey(d) : "";
+  const on = textHas(key, fieldKey);
+  if(textEditKey === fieldKey){
+    const value = on ? DAY_TEXTS[key][fieldKey] : text;
+    const safe = noteEsc(value);
+    const input = kind === "text"
+      ? '<textarea class="tf-ta" rows="3" maxlength="1200">' + safe + '</textarea>'
+      : '<input type="text" class="tf-in" maxlength="1200" value="' + safe + '">';
+    return '<span class="tf-edit">' + input +
+      '<span class="tf-acts">' +
+        '<button class="dn-btn" type="button" data-tf-save="' + noteEsc(fieldKey) + '" data-tf-day="' + dayNum + '">Сохранить</button>' +
+        (on ? '<button class="dn-btn dn-del" type="button" data-tf-reset="' + noteEsc(fieldKey) + '" data-tf-day="' + dayNum + '">Сбросить</button>' : '') +
+        '<button class="dn-btn" type="button" data-tf-cancel="1">Отмена</button>' +
+      '</span></span>';
+  }
+  return '<span class="tf' + (on ? " on" : "") + '">' + text +
+    '<button class="tf-pen" type="button" data-tf-edit="' + noteEsc(fieldKey) + '" data-tf-day="' + dayNum + '" aria-label="править текст" title="править текст">✎</button></span>';
+}
+async function textSave(dayNum, fieldKey, value){
+  const d = dayByNum(dayNum);
+  if(!d) return;
+  const key = noteKey(d);
+  const texts = Object.assign({}, DAY_TEXTS[key] || {});
+  const v = String(value === null || value === undefined ? "" : value).replace(/\r\n/g, "\n").replace(/\r/g, "\n").trim();
+  if(v === "") delete texts[fieldKey];
+  else texts[fieldKey] = v;
+  try {
+    const data = await noteRequest("/api/day-texts/" + encodeURIComponent(key), {
+      method: "PUT",
+      body: JSON.stringify({texts: texts})
+    });
+    if(data && data.note && data.note.texts) DAY_TEXTS[key] = data.note.texts;
+    else delete DAY_TEXTS[key];
+    textEditKey = ""; textError = "";
+    noteBar(); refreshDay(dayNum);
+  } catch(err){
+    textError = err.message || "не сохранилось";
+    noteBar();
+  }
+}
+function textLoad(){
+  try {
+    return fetch(NOTE_API + "/api/day-texts", {cache: "no-store"})
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(data){
+        DAY_TEXTS = {};
+        ((data && data.notes) || []).forEach(function(n){ DAY_TEXTS[n.day_key] = n.texts || {}; });
+        renderDays();
+      })
+      .catch(function(){});
+  } catch(e){ return Promise.resolve(); }
+}
+
 document.getElementById("dayList").addEventListener("click", function(e){
   const pick = e.target.closest("[data-pick]");
   if(pick){
@@ -1158,10 +1313,38 @@ document.getElementById("dayList").addEventListener("click", function(e){
     PICK_STATE[key] = i;
     const box = pick.closest(".pickbox");
     if(box){
-      box.querySelector(".pickbody").innerHTML = pickBodyHtml(key, i);
+      const dayEl = pick.closest(".day");
+      const n = dayEl ? parseInt(dayEl.getAttribute("data-day"), 10) : pickDayNum(key);
+      box.querySelector(".pickbody").innerHTML = pickBodyHtml(key, i, n);
       const bar = box.querySelector(".pickbar");
       if(bar) bar.outerHTML = pickBarHtml(key);
     }
+    return;
+  }
+  const tfe = e.target.closest("[data-tf-edit]");
+  if(tfe){
+    textEditKey = tfe.getAttribute("data-tf-edit");
+    refreshDay(parseInt(tfe.getAttribute("data-tf-day"), 10));
+    const f = document.querySelector("#dayList .tf-edit .tf-in, #dayList .tf-edit .tf-ta");
+    if(f) f.focus();
+    return;
+  }
+  if(e.target.closest("[data-tf-cancel]")){
+    const dayEl = e.target.closest(".day");
+    textEditKey = "";
+    if(dayEl) refreshDay(parseInt(dayEl.getAttribute("data-day"), 10));
+    return;
+  }
+  const tfs = e.target.closest("[data-tf-save]");
+  if(tfs){
+    const box = tfs.closest(".tf-edit");
+    const f = box ? box.querySelector(".tf-in, .tf-ta") : null;
+    textSave(parseInt(tfs.getAttribute("data-tf-day"), 10), tfs.getAttribute("data-tf-save"), f ? f.value : "");
+    return;
+  }
+  const tfr = e.target.closest("[data-tf-reset]");
+  if(tfr){
+    textSave(parseInt(tfr.getAttribute("data-tf-day"), 10), tfr.getAttribute("data-tf-reset"), "");
     return;
   }
   const ed = e.target.closest("[data-stop-edit]");
