@@ -8,6 +8,7 @@ import {
   mapKindLabel,
   MAP_KINDS,
   spreadOverlaps,
+  stopNumbers,
   TILE_SETS,
 } from "./map";
 import type { Day, Places } from "../types";
@@ -68,6 +69,23 @@ describe("dayPoints", () => {
 
   it("несуществующий день — пустой список", () => {
     expect(dayPoints(days(), PLACES, 99)).toEqual([]);
+  });
+});
+
+describe("stopNumbers", () => {
+  it("нумерует остановки в порядке dayPoints", () => {
+    expect(stopNumbers(days()[0], PLACES)).toEqual([1, 2, 1]);
+    expect(stopNumbers(days()[1], PLACES)).toEqual([1, null, 2]);
+  });
+
+  it("повтор одного места получает тот же номер", () => {
+    const nums = stopNumbers(days()[0], PLACES);
+    expect(nums[0]).toBe(nums[2]);
+  });
+
+  it("нет места в places или нет дня — null и пустой список", () => {
+    expect(stopNumbers(days()[1], PLACES)[1]).toBeNull();
+    expect(stopNumbers(undefined, PLACES)).toEqual([]);
   });
 });
 

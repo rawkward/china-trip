@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { GUIDE_ITEMS } from "@/data";
@@ -125,6 +125,54 @@ describe("DayCard", () => {
 
     expect(screen.getByText("Взять зонт и наличные")).toBeInTheDocument();
     expect(screen.getByText(/обновлено 06\.11, 12:30/)).toBeInTheDocument();
+  });
+
+  it("показывает номера точек карты в порядке остановок", () => {
+    const mapDay: Day = {
+      ...day,
+      places: [
+        { k: "hongkong", name: "Заселение", tag: "hotel" },
+        { k: "victoria_peak", name: "Трамвай на Пик", tag: "sight" },
+        { k: "hongkong", name: "Ужин", tag: "food" },
+      ],
+    };
+
+    render(
+      <DayCard
+        day={mapDay}
+        dayKey="hk|07.12"
+        texts={{}}
+        api={makeApi()}
+        open
+        onToggle={vi.fn()}
+        onFocusDay={vi.fn()}
+      />,
+    );
+
+    const region = screen.getByRole("region", { name: "День 1" });
+    const badges = within(region).getAllByTitle(/^точка \d+ на карте$/);
+    expect(badges.map((b) => b.getAttribute("title"))).toEqual([
+      "точка 1 на карте",
+      "точка 2 на карте",
+      "точка 1 на карте",
+    ]);
+    expect(within(badges[0]).getByText("точка 1 на карте")).toBeInTheDocument();
+  });
+
+  it("не показывает бейдж для места без координат", () => {
+    render(
+      <DayCard
+        day={{ ...day, places: [{ k: "unknown_key", name: "Нет на карте", tag: "sight" }] }}
+        dayKey="hk|07.12"
+        texts={{}}
+        api={makeApi()}
+        open
+        onToggle={vi.fn()}
+        onFocusDay={vi.fn()}
+      />,
+    );
+
+    expect(screen.queryByTitle(/точка \d+ на карте/)).not.toBeInTheDocument();
   });
 
   it("зовёт карту с номером дня", async () => {

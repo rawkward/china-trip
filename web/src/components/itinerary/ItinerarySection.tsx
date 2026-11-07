@@ -53,6 +53,20 @@ export function ItinerarySection() {
   const focusOnDay = (n: number) => {
     setFocusDay(n);
     setMapOpen(true);
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return;
+    if (window.matchMedia("(min-width: 1024px)").matches) return;
+
+    const scrollToMap = () => {
+      const el = document.getElementById("itinerary-map");
+      if (el && typeof el.scrollIntoView === "function") {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    };
+    if (typeof window.requestAnimationFrame === "function") {
+      window.requestAnimationFrame(scrollToMap);
+    } else {
+      window.setTimeout(scrollToMap, 0);
+    }
   };
 
   return (
@@ -123,7 +137,7 @@ export function ItinerarySection() {
         <div
           id="itinerary-map"
           className={cn(
-            "min-w-0 lg:sticky lg:top-20 lg:block",
+            "min-w-0 scroll-mt-16 lg:sticky lg:top-20 lg:block lg:scroll-mt-20",
             mapOpen ? "block" : "hidden",
           )}
         >

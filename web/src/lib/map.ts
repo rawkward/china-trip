@@ -1,4 +1,4 @@
-import type { Day, DayTag, Places } from "../types";
+import type { Day, DayTag, Places, Stop } from "../types";
 
 export interface MapPoint {
   name: string;
@@ -92,20 +92,68 @@ export function buildMarkerRegistry(days: Day[], places: Places): MarkerRecord[]
   return out;
 }
 
+interface DayPointEntry {
+  point: MapPoint;
+  number: number;
+  key: string;
+  isNew: boolean;
+}
+
+function placeKey(p: Stop, places: Places): string | null {
+  const pl = places[p.k];
+  if (!pl) return null;
+  return p.k + "|" + Math.round(pl.lat * 1e5) + "|" + Math.round(pl.lon * 1e5);
+}
+
+/**
+ * Общая ветка нумерации: одна и та же точка (ключ места + округлённые
+ * координаты) получает один номер, счётчик растёт только на новой точке.
+ */
+function dayPointEntry(
+  p: Stop,
+  places: Places,
+  seen: Map<string, number>,
+  counter: { n: number },
+): DayPointEntry | null {
+  const pl = places[p.k];
+  const key = placeKey(p, places);
+  if (!pl || key === null) return null;
+  let number = seen.get(key);
+  const isNew = number === undefined;
+  if (number === undefined) {
+    number = counter.n++;
+    seen.set(key, number);
+  }
+  return {
+    point: { name: p.name || p.title || p.k, tag: p.tag ?? "", lat: pl.lat, lon: pl.lon },
+    number,
+    key,
+    isNew,
+  };
+}
+
 /** Точки одного дня в порядке плана, без повторов одного места. */
 export function dayPoints(days: Day[], places: Places, n: number): MapPoint[] {
   const d = days.find((x) => x.n === n);
   const out: MapPoint[] = [];
-  const seen = new Set<string>();
+  const seen = new Map<string, number>();
+  const counter = { n: 1 };
   for (const p of d?.places ?? []) {
-    const pl = places[p.k];
-    if (!pl) continue;
-    const key = p.k + "|" + Math.round(pl.lat * 1e5) + "|" + Math.round(pl.lon * 1e5);
-    if (seen.has(key)) continue;
-    seen.add(key);
-    out.push({ name: p.name || p.title || p.k, tag: p.tag ?? "", lat: pl.lat, lon: pl.lon });
+    const entry = dayPointEntry(p, places, seen, counter);
+    if (!entry || !entry.isNew) continue;
+    out.push(entry.point);
   }
   return out;
+}
+
+/** Номер метки на карте дня для каждой остановки; null — места нет в places. */
+export function stopNumbers(day: Day | undefined, places: Places): (number | null)[] {
+  const seen = new Map<string, number>();
+  const counter = { n: 1 };
+  return (day?.places ?? []).map((p) => {
+    const entry = dayPointEntry(p, places, seen, counter);
+    return entry ? entry.number : null;
+  });
 }
 
 /**

@@ -40,6 +40,7 @@ function renderStop(stop: Stop, api = makeApi()) {
         api={api}
         index={0}
         total={1}
+        mapNum={null}
         onMove={vi.fn()}
       />
     </ul>,
@@ -109,6 +110,7 @@ describe("StopRow: замена на карточку справочника", (
           api={api}
           index={0}
           total={1}
+          mapNum={null}
           onMove={vi.fn()}
         />
       </ul>,

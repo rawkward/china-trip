@@ -18,11 +18,26 @@ export interface StopRowProps {
   api: ItineraryEditApi;
   index: number;
   total: number;
+  /** Номер метки этой остановки на карте дня или null, если её там нет. */
+  mapNum: number | null;
+  /** Цвет города — тот же, что у метки на карте. */
+  mapColor?: string;
   onMove: (slug: string, dir: "up" | "down") => void;
 }
 
 /** Одна остановка дня или группа равноправных вариантов (карусель). */
-export function StopRow({ day, dayKey, stop, texts, api, index, total, onMove }: StopRowProps) {
+export function StopRow({
+  day,
+  dayKey,
+  stop,
+  texts,
+  api,
+  index,
+  total,
+  mapNum,
+  mapColor = "#8a8278",
+  onMove,
+}: StopRowProps) {
   const slug = slugOfStop(stop);
   const isPicks = !!stop.picks && stop.picks.length > 0;
   const fields = stopFieldSet(slug) as { name: string; cost: string; time: string; ref: string };
@@ -82,15 +97,18 @@ export function StopRow({ day, dayKey, stop, texts, api, index, total, onMove }:
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
             {timeNode}
-            <EditableText
-              dayKey={dayKey}
-              field={groupFields.title}
-              value={stop.title ?? stop.name ?? ""}
-              edited={hasText(texts, groupFields.title)}
-              api={api}
-              className="text-[0.9rem] font-semibold"
-              ariaLabel="название группы вариантов"
-            />
+            <span className="flex min-w-0 items-baseline gap-x-2">
+              {mapNum !== null && <MapNumBadge n={mapNum} color={mapColor} />}
+              <EditableText
+                dayKey={dayKey}
+                field={groupFields.title}
+                value={stop.title ?? stop.name ?? ""}
+                edited={hasText(texts, groupFields.title)}
+                api={api}
+                className="text-[0.9rem] font-semibold"
+                ariaLabel="название группы вариантов"
+              />
+            </span>
             {stop.cost && (
               <span className="ml-auto shrink-0 text-[0.8rem] font-semibold tabular-nums text-accent">
                 <EditableText
@@ -143,15 +161,18 @@ export function StopRow({ day, dayKey, stop, texts, api, index, total, onMove }:
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
           {timeNode}
-          <EditableText
-            dayKey={dayKey}
-            field={fields.name}
-            value={stop.name ?? ""}
-            edited={hasText(texts, fields.name)}
-            api={api}
-            className="text-[0.9rem] font-semibold"
-            ariaLabel="название остановки"
-          />
+          <span className="flex min-w-0 items-baseline gap-x-2">
+            {mapNum !== null && <MapNumBadge n={mapNum} color={mapColor} />}
+            <EditableText
+              dayKey={dayKey}
+              field={fields.name}
+              value={stop.name ?? ""}
+              edited={hasText(texts, fields.name)}
+              api={api}
+              className="text-[0.9rem] font-semibold"
+              ariaLabel="название остановки"
+            />
+          </span>
           {guideId && (
             <a
               href={"#g-" + guideId}
@@ -181,6 +202,25 @@ export function StopRow({ day, dayKey, stop, texts, api, index, total, onMove }:
         {refPicker}
       </div>
     </li>
+  );
+}
+
+/** Кружок с номером точки — визуальная копия метки на карте дня. */
+function MapNumBadge({ n, color }: { n: number; color: string }) {
+  return (
+    <span
+      title={"точка " + n + " на карте"}
+      className="inline-flex shrink-0 items-center justify-center rounded-full text-[0.68rem] font-bold leading-none tabular-nums text-white"
+      style={{
+        width: "1.15rem",
+        height: "1.15rem",
+        backgroundColor: color,
+        boxShadow: "0 0 0 1.5px #fff",
+      }}
+    >
+      <span aria-hidden="true">{n}</span>
+      <span className="sr-only">точка {n} на карте</span>
+    </span>
   );
 }
 
