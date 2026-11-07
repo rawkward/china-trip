@@ -12,6 +12,7 @@ import { RouteMap } from "../map/RouteMap";
 import { Button } from "../ui";
 import { toast } from "../ui/Toast";
 import { DayCard } from "./DayCard";
+import { MissedBlock } from "./MissedBlock";
 
 /**
  * «Маршрут по дням»: сводка ночей, аккордеон дней и колонка карты.
@@ -144,6 +145,8 @@ export function ItinerarySection() {
           <RouteMap visible={mapOpen} focusDay={focusDay} onDayChange={setFocusDay} />
         </div>
       </div>
+
+      <MissedBlock />
 
       {!token && <span className="sr-only">Правка текстов закрыта</span>}
     </Section>

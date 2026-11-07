@@ -10,7 +10,6 @@ import { BookingSection } from "./components/sections/BookingSection";
 import { ChecklistSection } from "./components/sections/ChecklistSection";
 import { ToursSection } from "./components/sections/ToursSection";
 import { LinksSection } from "./components/sections/LinksSection";
-import { NotesSection } from "./components/sections/NotesSection";
 import { BudgetApp } from "./components/budget/BudgetApp";
 import { EditsProvider } from "./edits/EditsContext";
 import { VariantProvider } from "./hooks/useVariant";
@@ -52,8 +51,6 @@ export default function App() {
           <LinksSection />
           <Rule />
           <BudgetApp />
-          <Rule />
-          <NotesSection />
         </main>
         <Footer />
         <Toaster />

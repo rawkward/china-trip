@@ -164,11 +164,6 @@ export interface LinkRow {
   gap: string;
 }
 
-export interface NoteRow {
-  t: string;
-  b: string;
-}
-
 export interface CheckGroup {
   cap: string;
   items: string[];
