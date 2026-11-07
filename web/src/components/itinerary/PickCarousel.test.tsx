@@ -119,6 +119,7 @@ describe("StopRow guide link", () => {
         api={api}
         index={0}
         total={1}
+        mapNum={null}
         onMove={vi.fn()}
       />,
     );
@@ -136,6 +137,7 @@ describe("StopRow guide link", () => {
         api={api}
         index={0}
         total={1}
+        mapNum={null}
         onMove={vi.fn()}
       />,
     );

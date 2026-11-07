@@ -1,7 +1,8 @@
 import { ChevronDown, MapPin, Pencil } from "lucide-react";
-import { CITIES } from "@/data";
+import { CITIES, PLACES } from "@/data";
 import type { Day } from "@/types";
 import { cn } from "@/lib/cn";
+import { stopNumbers } from "@/lib/map";
 import { moveInOrder } from "@/lib/texts";
 import { Button, IconButton } from "../ui";
 import { InlineEditor, hasText, type ItineraryEditApi } from "./EditableText";
@@ -40,6 +41,7 @@ export function DayCard({ day, dayKey, texts, api, open, onToggle, onFocusDay }:
       ? api.editing.text
       : null;
   const order = day.places.map(slugOfStop);
+  const mapNums = stopNumbers(day, PLACES);
 
   const handleMove = (slug: string, dir: "up" | "down") => {
     const next = moveInOrder(order, slug, dir);
@@ -161,6 +163,8 @@ export function DayCard({ day, dayKey, texts, api, open, onToggle, onFocusDay }:
                   api={api}
                   index={i}
                   total={day.places.length}
+                  mapNum={mapNums[i] ?? null}
+                  mapColor={city.color}
                   onMove={handleMove}
                 />
               ))}
