@@ -6,6 +6,7 @@ import {
   guideItemByKey,
   GUIDE_TAG_KEY_RE,
   guideTagKey,
+  isPark,
   refKindForTag,
   tagOf,
 } from "./guide";
@@ -101,6 +102,17 @@ describe("groupGuideByCity", () => {
     const groups = groupGuideByCity(items, cityOrder, cityLabels, "food", {});
     expect(groups.map((g) => g.city)).toEqual(["cq"]);
     expect(groups[0].total).toBe(1);
+  });
+
+  it("фильтр парков оставляет только карточки с флагом park", () => {
+    const mixed: GuideItem[] = [...items, { ...items[0], park: true }];
+    const all = groupGuideByCity(mixed, cityOrder, cityLabels, "sight", {});
+    const parks = groupGuideByCity(mixed, cityOrder, cityLabels, "sight", {}, isPark);
+
+    expect(all.reduce((n, g) => n + g.total, 0)).toBe(5);
+    expect(parks.map((g) => g.city)).toEqual(["hk"]);
+    expect(parks[0].total).toBe(1);
+    expect(parks[0].main[0].park).toBe(true);
   });
 
   it("город без города в cityOrder уходит в конец с сырым ключом", () => {

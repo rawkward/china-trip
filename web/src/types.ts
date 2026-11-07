@@ -109,6 +109,8 @@ export interface GuideItem {
   match?: string[];
   rec?: boolean;
   badge?: string;
+  /** парк: карточка попадает и в «Места», и в отдельный раздел «Парки» */
+  park?: true;
 }
 
 export interface Guide {

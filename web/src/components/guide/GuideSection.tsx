@@ -2,13 +2,16 @@ import { CITIES, GUIDE, GUIDE_ITEMS } from "../../data";
 import { useEdits } from "../../edits/EditsContext";
 import { cn } from "../../lib/cn";
 import { groupGuideByCity, tagOf } from "../../lib/guide";
-import type { GuideKind, GuideTagValue } from "../../types";
+import type { GuideItem, GuideKind, GuideTagValue } from "../../types";
 import { Section } from "../layout/Section";
 import { GuideCard } from "./GuideCard";
 
 export interface GuideSectionProps {
   id: string;
   kind: GuideKind;
+  /** раздел парков переиспользует вид sight, но со своим фильтром и своими якорями */
+  only?: (it: GuideItem) => boolean;
+  anchorPrefix?: string;
 }
 
 const GRID: Record<GuideKind, string> = {
@@ -19,9 +22,9 @@ const GRID: Record<GuideKind, string> = {
 };
 
 /** Справочник одного вида: города в порядке маршрута, альтернативы под раскрывашкой. */
-export function GuideSection({ id, kind }: GuideSectionProps) {
+export function GuideSection({ id, kind, only, anchorPrefix = "g-" }: GuideSectionProps) {
   const { token, guideTags, saveGuideTag } = useEdits();
-  const groups = groupGuideByCity(GUIDE_ITEMS, GUIDE.cityOrder, CITIES, kind, guideTags);
+  const groups = groupGuideByCity(GUIDE_ITEMS, GUIDE.cityOrder, CITIES, kind, guideTags, only);
 
   const handleTag = (key: string, tag: GuideTagValue) => {
     void saveGuideTag(key, tag);
@@ -50,6 +53,7 @@ export function GuideSection({ id, kind }: GuideSectionProps) {
                   tag={tagOf(item, guideTags)}
                   token={token}
                   onTag={handleTag}
+                  anchorPrefix={anchorPrefix}
                 />
               ))}
             </div>
@@ -68,6 +72,7 @@ export function GuideSection({ id, kind }: GuideSectionProps) {
                       tag={tagOf(item, guideTags)}
                       token={token}
                       onTag={handleTag}
+                      anchorPrefix={anchorPrefix}
                     />
                   ))}
                 </div>

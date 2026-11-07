@@ -14,6 +14,7 @@ import { NotesSection } from "./components/sections/NotesSection";
 import { BudgetApp } from "./components/budget/BudgetApp";
 import { EditsProvider } from "./edits/EditsContext";
 import { VariantProvider } from "./hooks/useVariant";
+import { isPark } from "./lib/guide";
 
 export default function App() {
   return (
@@ -37,6 +38,8 @@ export default function App() {
           <GuideSection id="food" kind="food" />
           <Rule />
           <GuideSection id="sights" kind="sight" />
+          <Rule />
+          <GuideSection id="parks" kind="sight" only={isPark} anchorPrefix="gp-" />
           <Rule />
           <GuideSection id="tips" kind="tip" />
           <Rule />
