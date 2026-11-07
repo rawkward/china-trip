@@ -30,6 +30,13 @@ import {
   normalizeGuideTagKey,
   splitGuideTagKey,
 } from '../../shared/guide-tags.js';
+import {
+  CHECKLIST_LIMITS,
+  ChecklistError,
+  newChecklistId,
+  normalizeChecklistCap,
+  normalizeChecklistText,
+} from '../../shared/checklist.js';
 import { preflight, withCors } from './cors.js';
 import * as db from './db.js';
 import { signToken, verifyPassword, verifyToken, TOKEN_TTL_SECONDS } from './auth.js';
@@ -61,7 +68,8 @@ function errorResponse(err) {
     err instanceof DayNoteError ||
     err instanceof StopNoteError ||
     err instanceof DayTextError ||
-    err instanceof GuideTagError
+    err instanceof GuideTagError ||
+    err instanceof ChecklistError
   ) {
     return json({ error: 'validation', details: [{ code: err.code, field: err.field, message: err.message }] }, 422);
   }
@@ -368,6 +376,99 @@ async function handleDeleteGuideTag(env, rawKey) {
   return json({ deleted: true, tag_key });
 }
 
+// -- чек-лист ---------------------------------------------------------------
+// В отличие от заметок к дням, чек-лист закрыт паролем целиком: и чтение, и правки.
+
+function checklistGroupJson(group, items) {
+  return {
+    id: group.id,
+    cap: group.cap,
+    sort: group.sort,
+    items: items.map((item) => ({ id: item.id, text: item.text, sort: item.sort })),
+  };
+}
+
+function checklistItemJson(item) {
+  return { id: item.id, text: item.text, sort: item.sort };
+}
+
+async function handleListChecklist(env) {
+  const groups = await db.listChecklistGroups(env.DB);
+  const items = await db.listChecklistItems(env.DB);
+  const byGroup = new Map(groups.map((group) => [group.id, []]));
+  for (const item of items) {
+    const list = byGroup.get(item.group_id);
+    if (list) list.push(item);
+  }
+  return json({ groups: groups.map((group) => checklistGroupJson(group, byGroup.get(group.id) ?? [])) });
+}
+
+async function handleCreateChecklistGroup(request, env) {
+  const body = await readJsonBody(request);
+  const cap = normalizeChecklistCap(body.cap);
+  const count = await db.countChecklistGroups(env.DB);
+  if (count >= CHECKLIST_LIMITS.groups) {
+    throw new ChecklistError(
+      'too_many_groups',
+      'cap',
+      `групп не может быть больше ${CHECKLIST_LIMITS.groups}`,
+    );
+  }
+  const group = await db.insertChecklistGroup(env.DB, { id: newChecklistId('grp'), cap });
+  return json({ group: checklistGroupJson(group, []) });
+}
+
+async function handleUpdateChecklistGroup(request, env, id) {
+  const body = await readJsonBody(request);
+  const cap = normalizeChecklistCap(body.cap);
+  const group = await db.updateChecklistGroup(env.DB, id, { cap });
+  if (!group) throw new HttpError(404, { error: 'not_found' });
+  const items = await db.listChecklistItems(env.DB, id);
+  return json({ group: checklistGroupJson(group, items) });
+}
+
+async function handleDeleteChecklistGroup(env, id) {
+  const result = await db.deleteChecklistGroup(env.DB, id);
+  if (!result) throw new HttpError(404, { error: 'not_found' });
+  return json({ deleted: true });
+}
+
+async function handleCreateChecklistItem(request, env) {
+  const body = await readJsonBody(request);
+  const groupId = String(body.group === undefined || body.group === null ? '' : body.group).trim();
+  if (!groupId) throw new ChecklistError('bad_group', 'group', 'не указана группа');
+  const group = await db.getChecklistGroup(env.DB, groupId);
+  if (!group) throw new HttpError(404, { error: 'not_found' });
+
+  const text = normalizeChecklistText(body.text);
+  const count = await db.countChecklistItemsInGroup(env.DB, groupId);
+  if (count >= CHECKLIST_LIMITS.itemsPerGroup) {
+    throw new ChecklistError(
+      'too_many_items',
+      'text',
+      `в группе не может быть больше ${CHECKLIST_LIMITS.itemsPerGroup} пунктов`,
+    );
+  }
+  const item = await db.insertChecklistItem(env.DB, { id: newChecklistId('itm'), group_id: groupId, text });
+  return json({ item: checklistItemJson(item) });
+}
+
+async function handleUpdateChecklistItem(request, env, id) {
+  const existing = await db.getChecklistItem(env.DB, id);
+  if (!existing) throw new HttpError(404, { error: 'not_found' });
+  const body = await readJsonBody(request);
+  const text = normalizeChecklistText(body.text);
+  const item = await db.updateChecklistItem(env.DB, id, { text });
+  if (!item) throw new HttpError(404, { error: 'not_found' });
+  return json({ item: checklistItemJson(item) });
+}
+
+async function handleDeleteChecklistItem(env, id) {
+  const deleted = await db.deleteChecklistItem(env.DB, id);
+  if (!deleted) throw new HttpError(404, { error: 'not_found' });
+  return json({ deleted: true });
+}
+
 async function route(request, env, url) {
   const { pathname } = url;
   const method = request.method;
@@ -391,6 +492,28 @@ async function route(request, env, url) {
   if (pathname === '/api/params' && method === 'PATCH') return handlePatchParams(request, env);
   if (pathname === '/api/categories' && method === 'POST') return handleCreateCategory(request, env);
   if (pathname === '/api/items' && method === 'POST') return handleCreateItem(request, env);
+
+  if (pathname === '/api/checklist' && method === 'GET') return handleListChecklist(env);
+  if (pathname === '/api/checklist/groups' && method === 'POST') {
+    return handleCreateChecklistGroup(request, env);
+  }
+  if (pathname === '/api/checklist/items' && method === 'POST') {
+    return handleCreateChecklistItem(request, env);
+  }
+
+  const checklistGroupMatch = /^\/api\/checklist\/groups\/([^/]+)$/.exec(pathname);
+  if (checklistGroupMatch) {
+    const id = decodeURIComponent(checklistGroupMatch[1]);
+    if (method === 'PATCH') return handleUpdateChecklistGroup(request, env, id);
+    if (method === 'DELETE') return handleDeleteChecklistGroup(env, id);
+  }
+
+  const checklistItemMatch = /^\/api\/checklist\/items\/([^/]+)$/.exec(pathname);
+  if (checklistItemMatch) {
+    const id = decodeURIComponent(checklistItemMatch[1]);
+    if (method === 'PATCH') return handleUpdateChecklistItem(request, env, id);
+    if (method === 'DELETE') return handleDeleteChecklistItem(env, id);
+  }
 
   const categoryMatch = /^\/api\/categories\/([^/]+)$/.exec(pathname);
   if (categoryMatch) {

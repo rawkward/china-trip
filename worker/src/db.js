@@ -348,6 +348,128 @@ export async function deleteGuideTag(db, key) {
   return true;
 }
 
+// -- чек-лист ---------------------------------------------------------------
+
+const CHECKLIST_GROUP_COLUMNS = 'id, cap, sort, updated_at';
+const CHECKLIST_ITEM_COLUMNS = 'id, group_id, text, sort, updated_at';
+
+export async function listChecklistGroups(db) {
+  const { results } = await db
+    .prepare(`SELECT ${CHECKLIST_GROUP_COLUMNS} FROM checklist_groups ORDER BY sort, id`)
+    .all();
+  return results ?? [];
+}
+
+export async function listChecklistItems(db, groupId) {
+  if (groupId === undefined || groupId === null) {
+    const { results } = await db
+      .prepare(`SELECT ${CHECKLIST_ITEM_COLUMNS} FROM checklist_items ORDER BY group_id, sort, id`)
+      .all();
+    return results ?? [];
+  }
+  const { results } = await db
+    .prepare(`SELECT ${CHECKLIST_ITEM_COLUMNS} FROM checklist_items WHERE group_id = ? ORDER BY sort, id`)
+    .bind(groupId)
+    .all();
+  return results ?? [];
+}
+
+export async function getChecklistGroup(db, id) {
+  return db
+    .prepare(`SELECT ${CHECKLIST_GROUP_COLUMNS} FROM checklist_groups WHERE id = ?`)
+    .bind(id)
+    .first();
+}
+
+export async function getChecklistItem(db, id) {
+  return db
+    .prepare(`SELECT ${CHECKLIST_ITEM_COLUMNS} FROM checklist_items WHERE id = ?`)
+    .bind(id)
+    .first();
+}
+
+export async function insertChecklistGroup(db, { id, cap }) {
+  const ts = nowSeconds();
+  const row = await db
+    .prepare('SELECT COALESCE(MAX(sort), -1) + 1 AS next_sort FROM checklist_groups')
+    .first();
+  const sort = row && row.next_sort != null ? row.next_sort : 0;
+  await db
+    .prepare('INSERT INTO checklist_groups (id, cap, sort, updated_at) VALUES (?, ?, ?, ?)')
+    .bind(id, cap, sort, ts)
+    .run();
+  return { id, cap, sort, updated_at: ts };
+}
+
+export async function updateChecklistGroup(db, id, fields) {
+  const current = await getChecklistGroup(db, id);
+  if (!current) return null;
+  const ts = nowSeconds();
+  await db
+    .prepare('UPDATE checklist_groups SET cap = ?, updated_at = ? WHERE id = ?')
+    .bind(fields.cap, ts, id)
+    .run();
+  return getChecklistGroup(db, id);
+}
+
+export async function deleteChecklistGroup(db, id) {
+  const current = await getChecklistGroup(db, id);
+  if (!current) return null;
+  const countRow = await db
+    .prepare('SELECT COUNT(*) AS n FROM checklist_items WHERE group_id = ?')
+    .bind(id)
+    .first();
+  const itemsDeleted = countRow && countRow.n != null ? countRow.n : 0;
+  await db.prepare('DELETE FROM checklist_items WHERE group_id = ?').bind(id).run();
+  await db.prepare('DELETE FROM checklist_groups WHERE id = ?').bind(id).run();
+  return { items_deleted: itemsDeleted };
+}
+
+export async function insertChecklistItem(db, { id, group_id, text }) {
+  const ts = nowSeconds();
+  const row = await db
+    .prepare('SELECT COALESCE(MAX(sort), -1) + 1 AS next_sort FROM checklist_items WHERE group_id = ?')
+    .bind(group_id)
+    .first();
+  const sort = row && row.next_sort != null ? row.next_sort : 0;
+  await db
+    .prepare('INSERT INTO checklist_items (id, group_id, text, sort, updated_at) VALUES (?, ?, ?, ?, ?)')
+    .bind(id, group_id, text, sort, ts)
+    .run();
+  return { id, group_id, text, sort, updated_at: ts };
+}
+
+export async function updateChecklistItem(db, id, fields) {
+  const current = await getChecklistItem(db, id);
+  if (!current) return null;
+  const ts = nowSeconds();
+  await db
+    .prepare('UPDATE checklist_items SET text = ?, updated_at = ? WHERE id = ?')
+    .bind(fields.text, ts, id)
+    .run();
+  return getChecklistItem(db, id);
+}
+
+export async function deleteChecklistItem(db, id) {
+  const current = await getChecklistItem(db, id);
+  if (!current) return false;
+  await db.prepare('DELETE FROM checklist_items WHERE id = ?').bind(id).run();
+  return true;
+}
+
+export async function countChecklistGroups(db) {
+  const row = await db.prepare('SELECT COUNT(*) AS n FROM checklist_groups').first();
+  return row && row.n != null ? row.n : 0;
+}
+
+export async function countChecklistItemsInGroup(db, groupId) {
+  const row = await db
+    .prepare('SELECT COUNT(*) AS n FROM checklist_items WHERE group_id = ?')
+    .bind(groupId)
+    .first();
+  return row && row.n != null ? row.n : 0;
+}
+
 // -- login throttle ---------------------------------------------------------
 
 export async function countLoginFailures(db, ip, since) {

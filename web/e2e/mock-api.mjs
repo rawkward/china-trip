@@ -13,6 +13,21 @@ const db = {
   stopNotes: new Map(),
   dayTexts: new Map(),
   guideTags: new Map(),
+  checklistGroups: [
+    { id: "grp_docs", cap: "Документы и въезд", sort: 0, updated_at: now() },
+    { id: "grp_money", cap: "Деньги и оплата", sort: 1, updated_at: now() },
+  ],
+  checklistItems: [
+    {
+      id: "itm_passport",
+      group_id: "grp_docs",
+      text: "<b>Загранпаспорт</b> — проверить срок",
+      sort: 0,
+      updated_at: now(),
+    },
+    { id: "itm_visa", group_id: "grp_docs", text: "Безвиз", sort: 1, updated_at: now() },
+    { id: "itm_cash", group_id: "grp_money", text: "Наличные юани", sort: 0, updated_at: now() },
+  ],
   params: {
     people: 2,
     trip_days: 13,
@@ -109,6 +124,25 @@ function authorized(req) {
   return header === "Bearer " + TOKEN;
 }
 
+function checklistPayload() {
+  return db.checklistGroups
+    .slice()
+    .sort((a, b) => a.sort - b.sort)
+    .map((group) => ({
+      id: group.id,
+      cap: group.cap,
+      sort: group.sort,
+      items: db.checklistItems
+        .filter((item) => item.group_id === group.id)
+        .sort((a, b) => a.sort - b.sort)
+        .map((item) => ({ id: item.id, text: item.text, sort: item.sort })),
+    }));
+}
+
+function checklistValidation(field, message) {
+  return { error: "validation", details: [{ field, message }] };
+}
+
 const routes = {
   "GET /api/health": (_req, res) => json(res, 200, { ok: true }),
 
@@ -191,6 +225,80 @@ const server = createServer(async (req, res) => {
 
   // защищённые мутации
   if (!authorized(req)) return json(res, 401, { error: "unauthorized" });
+
+  if (path === "/api/checklist" && method === "GET") {
+    return json(res, 200, { groups: checklistPayload() });
+  }
+
+  if (path === "/api/checklist/groups" && method === "POST") {
+    const body = await readBody(req);
+    const cap = String(body.cap ?? "").trim();
+    if (!cap) return json(res, 422, checklistValidation("cap", "название группы не может быть пустым"));
+    const group = {
+      id: "grp_" + Math.random().toString(36).slice(2, 8),
+      cap,
+      sort: db.checklistGroups.length,
+      updated_at: now(),
+    };
+    db.checklistGroups.push(group);
+    return json(res, 200, { group: { id: group.id, cap: group.cap, sort: group.sort, items: [] } });
+  }
+
+  if (path === "/api/checklist/items" && method === "POST") {
+    const body = await readBody(req);
+    const groupId = String(body.group ?? "");
+    if (!db.checklistGroups.some((group) => group.id === groupId)) return notFound(res);
+    const text = String(body.text ?? "").trim();
+    if (!text) return json(res, 422, checklistValidation("text", "текст пункта не может быть пустым"));
+    const item = {
+      id: "itm_" + Math.random().toString(36).slice(2, 8),
+      group_id: groupId,
+      text,
+      sort: db.checklistItems.filter((row) => row.group_id === groupId).length,
+      updated_at: now(),
+    };
+    db.checklistItems.push(item);
+    return json(res, 200, { item: { id: item.id, text: item.text, sort: item.sort } });
+  }
+
+  const checklistGroupMatch = /^\/api\/checklist\/groups\/(.+)$/.exec(path);
+  if (checklistGroupMatch) {
+    const id = decodeURIComponent(checklistGroupMatch[1]);
+    const idx = db.checklistGroups.findIndex((group) => group.id === id);
+    if (idx < 0) return notFound(res);
+    if (method === "PATCH") {
+      const body = await readBody(req);
+      const cap = String(body.cap ?? "").trim();
+      if (!cap) return json(res, 422, checklistValidation("cap", "название группы не может быть пустым"));
+      db.checklistGroups[idx] = { ...db.checklistGroups[idx], cap, updated_at: now() };
+      const group = checklistPayload().find((row) => row.id === id);
+      return json(res, 200, { group });
+    }
+    if (method === "DELETE") {
+      db.checklistGroups.splice(idx, 1);
+      db.checklistItems = db.checklistItems.filter((item) => item.group_id !== id);
+      return json(res, 200, { deleted: true });
+    }
+  }
+
+  const checklistItemMatch = /^\/api\/checklist\/items\/(.+)$/.exec(path);
+  if (checklistItemMatch) {
+    const id = decodeURIComponent(checklistItemMatch[1]);
+    const idx = db.checklistItems.findIndex((item) => item.id === id);
+    if (idx < 0) return notFound(res);
+    if (method === "PATCH") {
+      const body = await readBody(req);
+      const text = String(body.text ?? "").trim();
+      if (!text) return json(res, 422, checklistValidation("text", "текст пункта не может быть пустым"));
+      db.checklistItems[idx] = { ...db.checklistItems[idx], text, updated_at: now() };
+      const item = db.checklistItems[idx];
+      return json(res, 200, { item: { id: item.id, text: item.text, sort: item.sort } });
+    }
+    if (method === "DELETE") {
+      db.checklistItems.splice(idx, 1);
+      return json(res, 200, { deleted: true });
+    }
+  }
 
   const dayNote = /^\/api\/day-notes\/(.+)$/.exec(path);
   if (dayNote) {

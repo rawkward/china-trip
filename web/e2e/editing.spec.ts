@@ -70,4 +70,22 @@ test.describe("правки текстов и заметки", () => {
     await expect(page.getByText(/неверный пароль/).first()).toBeVisible();
     await expect(page.getByRole("button", { name: "править заголовок дня" })).toHaveCount(0);
   });
+
+  test("чек-лист скрыт без пароля и появляется после входа", async ({ page }) => {
+    await expect(page.locator("#checklist")).toHaveCount(0);
+    await expect(page.getByRole("link", { name: "Чек-лист" })).toHaveCount(0);
+
+    const section = page.locator("#itinerary");
+    await section.getByLabel("Пароль для правок").fill(PASSWORD);
+    await section.getByRole("button", { name: "Войти" }).click();
+    await expect(section.getByText(/Правка открыта/)).toBeVisible();
+
+    await expect(page.locator("#checklist")).toBeVisible();
+    await expect(page.getByRole("link", { name: "Чек-лист" }).first()).toBeVisible();
+    await expect(page.locator("#checklist")).toContainText("Документы и въезд");
+    await expect(page.locator("#checklist")).toContainText("Загранпаспорт");
+
+    await page.reload({ waitUntil: "networkidle" });
+    await expect(page.locator("#checklist")).toBeVisible();
+  });
 });

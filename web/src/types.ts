@@ -169,9 +169,17 @@ export interface NoteRow {
   b: string;
 }
 
-export interface CheckGroup {
+export interface ChecklistItem {
+  id: string;
+  text: string;
+  sort: number;
+}
+
+export interface ChecklistGroup {
+  id: string;
   cap: string;
-  items: string[];
+  sort: number;
+  items: ChecklistItem[];
 }
 
 /* ---------- слой правок в D1 ---------- */

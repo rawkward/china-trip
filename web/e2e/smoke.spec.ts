@@ -18,7 +18,6 @@ test("страница поднимается и все разделы на ме
     "sights",
     "tips",
     "booking",
-    "checklist",
     "tours",
     "links",
     "budget",
@@ -26,6 +25,10 @@ test("страница поднимается и все разделы на ме
   ]) {
     await expect(page.locator(`#${id}`), `раздел #${id}`).toHaveCount(1);
   }
+
+  // чек-лист закрыт паролем: без входа его нет ни в меню, ни на странице
+  await expect(page.locator("#checklist")).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Чек-лист" })).toHaveCount(0);
 
   // ничего не распирает страницу по горизонтали
   const overflow = await page.evaluate(() => ({

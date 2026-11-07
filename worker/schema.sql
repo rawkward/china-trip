@@ -73,3 +73,20 @@ CREATE TABLE IF NOT EXISTS guide_tags (
   updated_at INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS guide_tags_kind_idx ON guide_tags(kind, city);
+
+CREATE TABLE IF NOT EXISTS checklist_groups (
+  id         TEXT PRIMARY KEY,
+  cap        TEXT NOT NULL,
+  sort       INTEGER NOT NULL,
+  updated_at INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS checklist_items (
+  id         TEXT PRIMARY KEY,
+  group_id   TEXT NOT NULL,
+  text       TEXT NOT NULL,
+  sort       INTEGER NOT NULL,
+  updated_at INTEGER NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS checklist_items_group_idx ON checklist_items(group_id, sort);

@@ -1,14 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { COPY } from "../../content/copy";
+import { useToken } from "../../edits/auth";
 import { cn } from "../../lib/cn";
 
 /** Липкая шапка: имя поездки и якоря разделов. */
 export function TopBar() {
   const [active, setActive] = useState<string>("");
   const [open, setOpen] = useState(false);
+  const token = useToken();
+
+  // Приватные разделы (чек-лист) не показываем в меню без входа по паролю.
+  const navItems = useMemo(
+    () => COPY.nav.filter((item) => !item.private || Boolean(token)),
+    [token],
+  );
 
   useEffect(() => {
-    const ids = COPY.nav.map((n) => n.id);
+    const ids = navItems.map((n) => n.id);
     const sections = ids
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => Boolean(el));
@@ -25,7 +33,7 @@ export function TopBar() {
     );
     sections.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [navItems]);
 
   return (
     <header className="sticky top-0 z-[1100] border-b border-line/80 bg-paper/85 backdrop-blur-md">
@@ -44,7 +52,7 @@ export function TopBar() {
           )}
           aria-label="Разделы"
         >
-          {COPY.nav.map((item) => (
+          {navItems.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
@@ -75,7 +83,7 @@ export function TopBar() {
           aria-label="Разделы"
           className="grid grid-cols-2 gap-1 border-t border-line bg-paper px-4 py-3 text-[0.86rem] lg:hidden"
         >
-          {COPY.nav.map((item) => (
+          {navItems.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}

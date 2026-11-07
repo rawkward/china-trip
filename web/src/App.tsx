@@ -7,7 +7,7 @@ import { VariantSection } from "./components/variants/VariantSection";
 import { ItinerarySection } from "./components/itinerary/ItinerarySection";
 import { GuideSection } from "./components/guide/GuideSection";
 import { BookingSection } from "./components/sections/BookingSection";
-import { ChecklistSection } from "./components/sections/ChecklistSection";
+import { ChecklistGate } from "./components/sections/ChecklistGate";
 import { ToursSection } from "./components/sections/ToursSection";
 import { LinksSection } from "./components/sections/LinksSection";
 import { NotesSection } from "./components/sections/NotesSection";
@@ -45,8 +45,7 @@ export default function App() {
           <Rule />
           <BookingSection />
           <Rule />
-          <ChecklistSection />
-          <Rule />
+          <ChecklistGate />
           <ToursSection />
           <Rule />
           <LinksSection />

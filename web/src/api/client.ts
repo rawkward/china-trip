@@ -1,5 +1,7 @@
 import type {
   AuthToken,
+  ChecklistGroup,
+  ChecklistItem,
   DayNote,
   DayTextRecord,
   DayTextsMap,
@@ -134,4 +136,43 @@ export const api = {
       body: { tag },
       token,
     }).then((d) => d?.tag ?? null),
+
+  listChecklist: (token: string, signal?: AbortSignal) =>
+    request<{ groups: ChecklistGroup[] }>("/api/checklist", { token, signal }).then(
+      (d) => d?.groups ?? [],
+    ),
+  createChecklistGroup: (cap: string, token: string) =>
+    request<{ group: ChecklistGroup }>("/api/checklist/groups", {
+      method: "POST",
+      body: { cap },
+      token,
+    }).then((d) => d.group),
+  updateChecklistGroup: (id: string, cap: string, token: string) =>
+    request<{ group: ChecklistGroup }>("/api/checklist/groups/" + encodeURIComponent(id), {
+      method: "PATCH",
+      body: { cap },
+      token,
+    }).then((d) => d.group),
+  deleteChecklistGroup: (id: string, token: string) =>
+    request<unknown>("/api/checklist/groups/" + encodeURIComponent(id), {
+      method: "DELETE",
+      token,
+    }),
+  createChecklistItem: (group: string, text: string, token: string) =>
+    request<{ item: ChecklistItem }>("/api/checklist/items", {
+      method: "POST",
+      body: { group, text },
+      token,
+    }).then((d) => d.item),
+  updateChecklistItem: (id: string, text: string, token: string) =>
+    request<{ item: ChecklistItem }>("/api/checklist/items/" + encodeURIComponent(id), {
+      method: "PATCH",
+      body: { text },
+      token,
+    }).then((d) => d.item),
+  deleteChecklistItem: (id: string, token: string) =>
+    request<unknown>("/api/checklist/items/" + encodeURIComponent(id), {
+      method: "DELETE",
+      token,
+    }),
 };
