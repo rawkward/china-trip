@@ -1,6 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { EditsProvider } from "../../edits/EditsContext";
+import { isPark } from "../../lib/guide";
 import { GuideSection } from "./GuideSection";
 
 function stubApi() {
@@ -69,5 +70,20 @@ describe("GuideSection", () => {
     expect(screen.queryByRole("button", { name: "рекомендация" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "выбор" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "альтернатива" })).not.toBeInTheDocument();
+  });
+
+  it("раздел парков показывает только карточки с флагом park", () => {
+    render(
+      <EditsProvider>
+        <GuideSection id="parks" kind="sight" only={isPark} anchorPrefix="gp-" />
+      </EditsProvider>,
+    );
+
+    expect(document.getElementById("gp-nan-lian")).not.toBeNull();
+    expect(document.getElementById("gp-hong-kong-park")).not.toBeNull();
+    expect(document.getElementById("gp-victoria-peak")).toBeNull();
+
+    const park = screen.getByText("Hong Kong Park");
+    expect(park.closest("details")).not.toBeNull();
   });
 });

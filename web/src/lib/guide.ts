@@ -13,6 +13,11 @@ export function guideTagKey(it: Pick<GuideItem, "kind" | "city" | "id">): string
   return it.kind + "|" + it.city + "|" + it.id;
 }
 
+/** Фильтр раздела «Парки»: только карточки с флагом park. */
+export function isPark(it: GuideItem): boolean {
+  return it.park === true;
+}
+
 export function guideDefaultTag(it: GuideItem): GuideTagValue {
   if (it.rec) return "rec";
   if (it.badge === "альтернатива") return "alt";
@@ -68,8 +73,9 @@ export function groupGuideByCity(
   cityLabels: Record<string, { label: string }>,
   kind: GuideKind,
   tags: Record<string, GuideTagValue>,
+  filter?: (it: GuideItem) => boolean,
 ): GuideCityGroup[] {
-  const ofKind = items.filter((i) => i.kind === kind);
+  const ofKind = items.filter((i) => i.kind === kind && (!filter || filter(i)));
   const cities: string[] = [];
   for (const i of ofKind) if (cities.indexOf(i.city) === -1) cities.push(i.city);
   const rank = (city: string) => {

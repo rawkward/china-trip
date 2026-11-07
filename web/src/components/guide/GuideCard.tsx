@@ -8,6 +8,7 @@ export interface GuideCardProps {
   kind: GuideKind;
   token: string | null;
   onTag: (key: string, tag: GuideTagValue) => void;
+  anchorPrefix?: string;
 }
 
 const CARD_SHELL: Record<GuideKind, string> = {
@@ -34,7 +35,7 @@ const NOTE_SIZE: Record<GuideKind, string> = {
 const TAG_ORDER: GuideTagValue[] = ["rec", "choice", "alt"];
 
 /** Карточка справочника: имя, адрес, часы, заметка, ссылки и правка тега. */
-export function GuideCard({ item, tag, kind, token, onTag }: GuideCardProps) {
+export function GuideCard({ item, tag, kind, token, onTag, anchorPrefix = "g-" }: GuideCardProps) {
   const key = guideTagKey(item);
   const canEdit = Boolean(token) && GUIDE_TAG_KEY_RE.test(key);
   const mapsUrl =
@@ -45,7 +46,7 @@ export function GuideCard({ item, tag, kind, token, onTag }: GuideCardProps) {
 
   return (
     <article
-      id={"g-" + item.id}
+      id={anchorPrefix + item.id}
       className={cn(
         "surface scroll-mt-24 transition-colors target:border-accent target:ring-2 target:ring-accent/30",
         CARD_SHELL[kind],
