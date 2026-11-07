@@ -21,7 +21,7 @@ test("страница поднимается и все разделы на ме
     "tours",
     "links",
     "budget",
-    "notes",
+    "missed",
   ]) {
     await expect(page.locator(`#${id}`), `раздел #${id}`).toHaveCount(1);
   }
