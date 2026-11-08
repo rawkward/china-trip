@@ -81,14 +81,14 @@ export function TopBar() {
         <nav
           id="topbar-mobile-nav"
           aria-label="Разделы"
-          className="grid grid-cols-2 gap-1 border-t border-line bg-paper px-4 py-3 text-[0.86rem] lg:hidden"
+          className="grid grid-cols-1 gap-1 border-t border-line bg-paper px-4 py-3 text-[0.86rem] lg:hidden"
         >
           {navItems.map((item) => (
             <a
               key={item.id}
               href={`#${item.id}`}
               onClick={() => setOpen(false)}
-              className={cn("rounded-lg px-2 py-1.5 hover:bg-paper-deep hover:no-underline", active === item.id && "text-accent")}
+              className={cn("rounded-lg px-2 py-2 hover:bg-paper-deep hover:no-underline", active === item.id && "text-accent")}
             >
               {item.label}
             </a>
