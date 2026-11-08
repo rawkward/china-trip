@@ -34,9 +34,10 @@ export interface StopAdminActionsProps {
   onMoveDown: () => void;
   onEditTime: () => void;
   onToggleRef: () => void;
+  onDelete: () => void;
 }
 
-/** Служебные кнопки остановки: порядок, время и замена на карточку справочника. */
+/** Служебные кнопки остановки: порядок, время, замена на карточку и удаление из дня. */
 export function StopAdminActions({
   token,
   index,
@@ -46,6 +47,7 @@ export function StopAdminActions({
   onMoveDown,
   onEditTime,
   onToggleRef,
+  onDelete,
 }: StopAdminActionsProps) {
   if (!token) return null;
 
@@ -62,6 +64,9 @@ export function StopAdminActions({
       </AdminButton>
       <AdminButton label="заменить на карточку из справочника" onClick={onToggleRef}>
         заменить
+      </AdminButton>
+      <AdminButton label="убрать из маршрута" onClick={onDelete}>
+        ✕ убрать
       </AdminButton>
     </div>
   );

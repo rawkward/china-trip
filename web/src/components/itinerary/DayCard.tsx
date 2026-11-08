@@ -46,7 +46,21 @@ export function DayCard({ day, dayKey, texts, api, open, onToggle, onFocusDay }:
   const handleMove = (slug: string, dir: "up" | "down") => {
     const next = moveInOrder(order, slug, dir);
     if (next === order) return;
-    void api.saveText(dayKey, "order", next.join(","));
+    const hidden = (day._hidden ?? []).map(slugOfStop);
+    void api.saveText(dayKey, "order", next.concat(hidden).join(","));
+  };
+
+  const hiddenList = () => (texts.hide ?? "").split(",").filter((slug) => slug.length > 0);
+
+  const handleDelete = (slug: string) => {
+    const list = hiddenList();
+    if (list.indexOf(slug) === -1) list.push(slug);
+    void api.saveText(dayKey, "hide", list.join(","));
+  };
+
+  const handleRestore = (slug: string) => {
+    const list = hiddenList().filter((item) => item !== slug);
+    void api.saveText(dayKey, "hide", list.join(","));
   };
 
   return (
@@ -166,9 +180,40 @@ export function DayCard({ day, dayKey, texts, api, open, onToggle, onFocusDay }:
                   mapNum={mapNums[i] ?? null}
                   mapColor={city.color}
                   onMove={handleMove}
+                  onDelete={handleDelete}
                 />
               ))}
             </ul>
+
+            {day.places.length === 0 && (
+              <p className="mt-2 text-[0.82rem] text-muted">в этом дне не осталось остановок</p>
+            )}
+
+            {api.token && !!day._hidden?.length && (
+              <div className="mt-2 rounded-lg border border-dashed border-line bg-paper-deep/30 px-2.5 py-2">
+                <p className="m-0 text-[0.7rem] font-bold uppercase tracking-wide text-muted">
+                  убрано из маршрута · справочник не меняется
+                </p>
+                <ul className="m-0 mt-1 list-none p-0">
+                  {day._hidden.map((stop, i) => (
+                    <li
+                      key={slugOfStop(stop) + "-" + i}
+                      className="flex items-center justify-between gap-2 py-0.5 text-[0.8rem] text-muted"
+                    >
+                      <span className="min-w-0 truncate">{stop.title ?? stop.name ?? ""}</span>
+                      <button
+                        type="button"
+                        className="shrink-0 rounded-md border border-line bg-surface px-1.5 py-0.5 text-[0.72rem] font-semibold text-muted transition-colors hover:border-line-strong hover:text-accent"
+                        aria-label={"вернуть " + (stop.title ?? stop.name ?? "")}
+                        onClick={() => handleRestore(slugOfStop(stop))}
+                      >
+                        вернуть
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             <div className="mt-3">
               <Button variant="primary" size="sm" onClick={() => onFocusDay(day.n)}>

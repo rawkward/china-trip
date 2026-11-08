@@ -29,7 +29,7 @@ const day: Day = {
   places: [],
 };
 
-function renderStop(stop: Stop, api = makeApi()) {
+function renderStop(stop: Stop, api = makeApi(), onDelete = vi.fn()) {
   return render(
     <ul>
       <StopRow
@@ -42,6 +42,7 @@ function renderStop(stop: Stop, api = makeApi()) {
         total={1}
         mapNum={null}
         onMove={vi.fn()}
+        onDelete={onDelete}
       />
     </ul>,
   );
@@ -112,6 +113,7 @@ describe("StopRow: замена на карточку справочника", (
           total={1}
           mapNum={null}
           onMove={vi.fn()}
+          onDelete={vi.fn()}
         />
       </ul>,
     );
@@ -140,5 +142,42 @@ describe("StopRow: группа вариантов", () => {
     expect(screen.getByText("Обед в Централе")).toBeInTheDocument();
     expect(screen.getByText("1 / 2")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "следующий вариант" })).toBeInTheDocument();
+  });
+});
+
+describe("StopRow: удаление из маршрута", () => {
+  it("кнопка «убрать из маршрута» вызывает onDelete со slug остановки", () => {
+    const onDelete = vi.fn();
+    renderStop({ k: "peak", name: "Трамвай на Пик", tag: "sight", _slug: "peak" }, makeApi(), onDelete);
+
+    fireEvent.click(screen.getByRole("button", { name: "убрать из маршрута" }));
+    expect(onDelete).toHaveBeenCalledWith("peak");
+  });
+
+  it("без токена кнопки удаления нет", () => {
+    renderStop({ k: "peak", name: "Трамвай на Пик", tag: "sight", _slug: "peak" }, makeApi({ token: null }));
+
+    expect(screen.queryByRole("button", { name: "убрать из маршрута" })).not.toBeInTheDocument();
+  });
+
+  it("у группы вариантов тоже есть кнопка удаления", () => {
+    const onDelete = vi.fn();
+    renderStop(
+      {
+        k: "lunch",
+        title: "Обед в Централе",
+        tag: "food",
+        _slug: "lunch",
+        picks: [
+          { name: "Трамвай на Пик", cost: "HK$100" },
+          { name: "Забегаловка", cost: "HK$40" },
+        ],
+      },
+      makeApi(),
+      onDelete,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "убрать из маршрута" }));
+    expect(onDelete).toHaveBeenCalledWith("lunch");
   });
 });

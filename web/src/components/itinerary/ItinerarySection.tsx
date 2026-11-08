@@ -40,6 +40,7 @@ export function ItinerarySection() {
       }),
     [days, activeId, dayTexts],
   );
+  const mapDays = useMemo(() => cards.map((c) => c.day), [cards]);
 
   const toggleDay = (n: number) => {
     setOpenDays((prev) => {
@@ -139,7 +140,12 @@ export function ItinerarySection() {
             mapOpen ? "block" : "hidden",
           )}
         >
-          <RouteMap visible={mapOpen} focusDay={focusDay} onDayChange={setFocusDay} />
+          <RouteMap
+            visible={mapOpen}
+            focusDay={focusDay}
+            onDayChange={setFocusDay}
+            days={mapDays}
+          />
         </div>
       </div>
 

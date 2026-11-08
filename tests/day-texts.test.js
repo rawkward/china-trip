@@ -120,7 +120,11 @@ test('мусор в order — bad_value с именем поля', () => {
   ]) {
     assert.throws(
       () => normalizeDayTexts({ order: bad }),
-      (err) => err instanceof DayTextError && err.code === 'bad_value' && err.field === 'order',
+      (err) =>
+        err instanceof DayTextError &&
+        err.code === 'bad_value' &&
+        err.field === 'order' &&
+        err.message === 'порядок — это slug-и через запятую',
       `должен отвергнуть ${JSON.stringify(bad).slice(0, 80)}`,
     );
   }
@@ -162,4 +166,29 @@ test('старая запись без новых полей читается', 
     normalizeDayTexts({ title: 'День', 'stop:k3f9qa:name': 'Остановка' }),
     { title: 'День', 'stop:k3f9qa:name': 'Остановка' },
   );
+});
+
+test('hide принимает валидные slug-и через запятую', () => {
+  assert.deepEqual(normalizeDayTexts({ hide: '  k3f9qa,9x2b1c,p7d4e2  ' }), {
+    hide: 'k3f9qa,9x2b1c,p7d4e2',
+  });
+});
+
+test('мусор в hide — bad_value с именем поля', () => {
+  for (const bad of ['АБВ', 'k3f9qa, 9x2b1c', 'k3f9qa,,9x2b1c', 'abc', 'k3f9qa,', 'a'.repeat(11)]) {
+    assert.throws(
+      () => normalizeDayTexts({ hide: bad }),
+      (err) =>
+        err instanceof DayTextError &&
+        err.code === 'bad_value' &&
+        err.field === 'hide' &&
+        err.message === 'скрытые — это slug-и через запятую',
+      `должен отвергнуть ${JSON.stringify(bad)}`,
+    );
+  }
+});
+
+test('пустая строка сбрасывает hide', () => {
+  assert.deepEqual(normalizeDayTexts({ hide: '   ' }), {});
+  assert.deepEqual(normalizeDayTexts({ hide: '', title: 'День' }), { title: 'День' });
 });

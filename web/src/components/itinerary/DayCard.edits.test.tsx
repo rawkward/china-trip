@@ -127,3 +127,71 @@ describe("DayCard: пустой день", () => {
     expect(screen.getByText((_content, element) => element?.textContent === "0 остановок")).toBeInTheDocument();
   });
 });
+
+describe("DayCard: удаление остановок из дня", () => {
+  it("удаление сохраняет поле hide с нужным slug", () => {
+    const api = makeApi();
+    renderCard({ api });
+
+    fireEvent.click(
+      within(screen.getByRole("region", { name: "День 1" })).getAllByRole("button", {
+        name: "убрать из маршрута",
+      })[0],
+    );
+
+    expect(api.saveText).toHaveBeenCalledWith("hk|07.12", "hide", "a");
+  });
+
+  it("второе удаление добавляет второй slug", () => {
+    const api = makeApi();
+    renderCard({ api, texts: { hide: "a" } });
+
+    fireEvent.click(
+      within(screen.getByRole("region", { name: "День 1" })).getAllByRole("button", {
+        name: "убрать из маршрута",
+      })[1],
+    );
+
+    expect(api.saveText).toHaveBeenCalledWith("hk|07.12", "hide", "a,b");
+  });
+
+  it("«вернуть» убирает slug из списка", () => {
+    const api = makeApi();
+    const hiddenDay: Day = { ...day, _hidden: [day.places[1], day.places[2]] };
+    renderCard({ api, day: hiddenDay, texts: { hide: "b,c" } });
+
+    fireEvent.click(screen.getByRole("button", { name: "вернуть Трамвай на Пик" }));
+
+    expect(api.saveText).toHaveBeenCalledWith("hk|07.12", "hide", "c");
+  });
+
+  it("возврат последней остановки сбрасывает поле пустой строкой", () => {
+    const api = makeApi();
+    const hiddenDay: Day = { ...day, _hidden: [day.places[2]] };
+    renderCard({ api, day: hiddenDay, texts: { hide: "c" } });
+
+    fireEvent.click(screen.getByRole("button", { name: "вернуть Ужин" }));
+
+    expect(api.saveText).toHaveBeenCalledWith("hk|07.12", "hide", "");
+  });
+
+  it("блок «убрано из маршрута» виден только с токеном", () => {
+    const hiddenDay: Day = { ...day, _hidden: [day.places[2]] };
+    const { rerender } = renderCard({ api: makeApi({ token: null }), day: hiddenDay });
+    expect(screen.queryByText(/убрано из маршрута/)).not.toBeInTheDocument();
+
+    rerender(
+      <DayCard
+        day={hiddenDay}
+        dayKey="hk|07.12"
+        texts={{}}
+        api={makeApi()}
+        open
+        onToggle={vi.fn()}
+        onFocusDay={vi.fn()}
+      />,
+    );
+    expect(screen.getByText(/убрано из маршрута/)).toBeInTheDocument();
+    expect(screen.getAllByText("Ужин").length).toBeGreaterThan(0);
+  });
+});

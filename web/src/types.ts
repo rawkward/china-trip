@@ -62,6 +62,8 @@ export interface Day extends DayBlock {
   /** исходный заголовок/подзаголовок до правок — для сброса */
   _title?: string;
   _sub?: string;
+  /** остановки, скрытые из дня правкой `hide` (в справочнике остаются) */
+  _hidden?: Stop[];
 }
 
 export interface Variant {

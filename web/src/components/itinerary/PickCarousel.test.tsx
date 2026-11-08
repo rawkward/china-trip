@@ -121,6 +121,7 @@ describe("StopRow guide link", () => {
         total={1}
         mapNum={null}
         onMove={vi.fn()}
+        onDelete={vi.fn()}
       />,
     );
     expect(screen.getByRole("link", { name: "в справочнике" })).toHaveAttribute(
@@ -139,6 +140,7 @@ describe("StopRow guide link", () => {
         total={1}
         mapNum={null}
         onMove={vi.fn()}
+        onDelete={vi.fn()}
       />,
     );
     expect(screen.queryByRole("link", { name: "в справочнике" })).not.toBeInTheDocument();

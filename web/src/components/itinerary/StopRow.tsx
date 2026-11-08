@@ -23,6 +23,7 @@ export interface StopRowProps {
   /** Цвет города — тот же, что у метки на карте. */
   mapColor?: string;
   onMove: (slug: string, dir: "up" | "down") => void;
+  onDelete: (slug: string) => void;
 }
 
 /** Одна остановка дня или группа равноправных вариантов (карусель). */
@@ -37,6 +38,7 @@ export function StopRow({
   mapNum,
   mapColor = "#8a8278",
   onMove,
+  onDelete,
 }: StopRowProps) {
   const slug = slugOfStop(stop);
   const isPicks = !!stop.picks && stop.picks.length > 0;
@@ -65,6 +67,7 @@ export function StopRow({
       onMoveDown={() => onMove(slug, "down")}
       onEditTime={() => api.setEditing({ time: timeField })}
       onToggleRef={() => api.setEditing({ ref: refOpen ? undefined : refField })}
+      onDelete={() => onDelete(slug)}
     />
   );
 

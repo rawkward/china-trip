@@ -4,6 +4,7 @@ import { PLACES } from "@/data";
 import { cn } from "@/lib/cn";
 import { buildMarkerRegistry, dayMapsUrl, dayPoints, TILE_SETS } from "@/lib/map";
 import { useVariant } from "@/hooks/useVariant";
+import type { Day } from "@/types";
 import { MapLegend, MapTools } from "./MapTools";
 import type { CityFilter, KindFilter, MapMode } from "./mapModel";
 import { cityOrderOf, presentKinds } from "./mapModel";
@@ -13,10 +14,13 @@ export interface RouteMapProps {
   visible: boolean;
   focusDay: number | null;
   onDayChange?: (n: number) => void;
+  /** Уже отредактированные дни; без пропа берутся дни активного варианта. */
+  days?: Day[];
 }
 
-export function RouteMap({ visible, focusDay, onDayChange }: RouteMapProps) {
-  const { days } = useVariant();
+export function RouteMap({ visible, focusDay, onDayChange, days: propsDays }: RouteMapProps) {
+  const { days: variantDays } = useVariant();
+  const days = propsDays ?? variantDays;
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const [mode, setMode] = useState<MapMode>("all");

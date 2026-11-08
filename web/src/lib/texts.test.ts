@@ -137,3 +137,44 @@ describe("stopFieldSet / moveInOrder", () => {
     expect(order).toEqual(["a", "b", "c"]);
   });
 });
+
+describe("withTexts: скрытие остановок", () => {
+  it("скрытие по slug убирает остановку из places и кладёт в _hidden", () => {
+    const base = withTexts(day(), {}, guide);
+    const hiddenSlug = base.places[0]._slug!;
+    const out = withTexts(day(), { hide: hiddenSlug }, guide);
+    expect(out.places.map((p) => p.name)).toEqual(["Ужин"]);
+    expect(out._hidden?.map((p) => p.name)).toEqual(["Хунъядун"]);
+  });
+
+  it("неизвестный slug ничего не ломает", () => {
+    const base = withTexts(day(), {}, guide);
+    const out = withTexts(day(), { hide: "zzzzzz" }, guide);
+    expect(out.places.map((p) => p.name)).toEqual(base.places.map((p) => p.name));
+    expect(out._hidden).toEqual([]);
+  });
+
+  it("hide работает вместе с order: скрытая остановка уходит, остальные сохраняют порядок", () => {
+    const base = withTexts(day(), {}, guide);
+    const first = base.places[0]._slug!;
+    const second = base.places[1]._slug!;
+    const out = withTexts(day(), { order: [second, first].join(","), hide: first }, guide);
+    expect(out.places.map((p) => p.name)).toEqual(["Ужин"]);
+    expect(out._hidden?.map((p) => p.name)).toEqual(["Хунъядун"]);
+  });
+
+  it("пустой hide оставляет все остановки и пустой _hidden", () => {
+    const base = withTexts(day(), {}, guide);
+    const out = withTexts(day(), { hide: "" }, guide);
+    expect(out.places.map((p) => p.name)).toEqual(base.places.map((p) => p.name));
+    expect(out._hidden).toEqual([]);
+  });
+
+  it("скрыть можно все остановки — places становится пустым", () => {
+    const base = withTexts(day(), {}, guide);
+    const hide = base.places.map((p) => p._slug).join(",");
+    const out = withTexts(day(), { hide }, guide);
+    expect(out.places).toEqual([]);
+    expect(out._hidden).toHaveLength(base.places.length);
+  });
+});

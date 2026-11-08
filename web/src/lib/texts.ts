@@ -91,6 +91,19 @@ export function withTexts(
     }
     out.places = picked.concat(rest);
   }
+
+  if (has("hide")) {
+    const hiddenSlugs = t.hide.split(",").filter((slug) => slug.length > 0);
+    const hidden: Stop[] = [];
+    out.places = out.places.filter((p) => {
+      if (p._slug && hiddenSlugs.indexOf(p._slug) !== -1) {
+        hidden.push(p);
+        return false;
+      }
+      return true;
+    });
+    out._hidden = hidden;
+  }
   return out;
 }
 
