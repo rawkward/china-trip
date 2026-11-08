@@ -161,6 +161,11 @@ export const TRIP_PLACES = {
     "lat": 22.3123731,
     "lon": 114.1707938
   },
+  "causeway_bay": {
+    "name": "Causeway Bay · Victoria Park 銅鑼灣",
+    "lat": 22.2791932,
+    "lon": 114.1883258
+  },
   "mong_kok": {
     "name": "Mong Kok",
     "lat": 22.319308,

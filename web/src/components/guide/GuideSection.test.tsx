@@ -35,7 +35,7 @@ describe("GuideSection", () => {
     const hk = screen.getByRole("region", { name: "Гонконг" });
     const cq = screen.getByRole("region", { name: "Чунцин" });
 
-    expect(within(hk).getByText("4")).toBeInTheDocument();
+    expect(within(hk).getByText("5")).toBeInTheDocument();
     expect(within(hk).getByText("Panda Hotel")).toBeInTheDocument();
     expect(within(hk).getByText("Eaton HK")).toBeInTheDocument();
     expect(within(hk).queryByText("Qixinggang district")).not.toBeInTheDocument();

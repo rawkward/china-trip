@@ -12,7 +12,16 @@ const TRIP_GUIDE = {
   items: [
 
     /* ==================== ГОНКОНГ · ЖИЛЬЁ ==================== */
-    {kind:"stay", city:"hk", id:"panda-hotel", rec:true,
+    {kind:"stay", city:"hk", id:"rosedale-hk", rec:true,
+     en:"Rosedale Hotel Hong Kong", zh:"香港珀麗酒店",
+     addr:"8 Shelter Street, Causeway Bay 銅鑼灣信德街8號",
+     site:"https://www.trip.com/hotels/hong-kong-hotel-detail-428254/rosedale-hotel-hong-kong/",
+     hours:"Стойка 24 ч · заезд с 14:00, выезд до 11:00",
+     note:"Выбранный отель на все пять ночей в Гонконге, 5–10.12. Causeway Bay, восточный край у Виктория-парка: 8 Shelter Street, 480 м до станции Causeway Bay и 10 минут пешком до Tin Hau, трамвай Causeway Road (Shelter Street) — 50 метров от двери. До Централа 8 минут по Island line, до Central Harbourfront в дни Clockenflap — 15–20 минут: Island line до 金鐘 и пешком. От аэропорта автобус A11 идёт прямо к Виктория-парку, 70–80 минут; если заезжать поездом, от Западного Коулуна такси 20–25 минут через туннель. Номера небольшие по гонконгской норме, зато парк под окнами, SOGO и Fashion Walk в 10 минутах, вечером есть где поесть. Заезд с 14:00 — к 15:00 номер будет готов",
+     maps:"Rosedale Hotel Hong Kong 香港珀麗酒店 8 Shelter Street Causeway Bay Hong Kong",
+     match:["Rosedale"]},
+
+    {kind:"stay", city:"hk", id:"panda-hotel", badge:"альтернатива",
      en:"Panda Hotel", zh:"悦来酒店",
      addr:"3 Tsuen Wah Street, Tsuen Wan 荃灣荃華街3號",
      site:"https://www.pandahotel.com.hk",
@@ -25,7 +34,7 @@ const TRIP_GUIDE = {
      addr:"380 Nathan Road, Jordan 佐敦彌敦道380號",
      site:"https://www.eatonworkshop.com/en-us/hong-kong",
      hours:"Стойка 24 ч · заезд с 15:00, выезд до 12:00",
-     note:"База из текущего плана: 5 минут до метро Jordan, Temple Street под окнами, до Central Harbourfront 15 минут. Минус — в дни Clockenflap и перед праздниками Джордан дорожает первым, так что разница с Цуэньваном в эти пять ночей может быть в полторы-две цены. Сравнивать с Panda Hotel по итоговой сумме за 5–10.12, а не по цене за ночь.",
+     note:"Прежняя база плана, пока не выбрали Rosedale: 5 минут до метро Jordan, Temple Street под окнами, до Central Harbourfront 15 минут. Минус — в дни Clockenflap и перед праздниками Джордан дорожает первым, так что разница с Цуэньваном в эти пять ночей может быть в полторы-две цены. Сравнивать с Panda Hotel по итоговой сумме за 5–10.12, а не по цене за ночь.",
      maps:"Eaton HK 香港逸東酒店 380 Nathan Road Jordan Hong Kong",
      match:["Заселение в Джордане", "Заселение, Jordan"]},
 
@@ -369,7 +378,7 @@ const TRIP_GUIDE = {
      en:"Boo Dim Lui Lee", zh:"",
      addr:"37–39 Parkes Street, Jordan 佐敦白加士街37-39號",
      hours:"07:00–21:00",
-     note:"Готовая кантонская еда на вынос в двух минутах от отеля в Джордане: димсамы с креветками, сяомай, пирог из редьки с рисом. Почти всё дешевле HK$50, полный ужин на двоих ~HK$100. Выручает в первый вечер после перелёта.",
+     note:"Готовая кантонская еда на вынос в двух минутах от станции Jordan: димсамы с креветками, сяомай, пирог из редьки с рисом. Почти всё дешевле HK$50, полный ужин на двоих ~HK$100. Выручает в первый вечер после перелёта.",
      maps:"37-39 Parkes Street Jordan Hong Kong",
      match:["Boo Dim Lui Lee"]},
 
@@ -385,7 +394,7 @@ const TRIP_GUIDE = {
      en:"Genki Sushi", zh:"元気寿司",
      addr:"221B–E Nathan Road, B2 Hanford Commercial Centre 佐敦彌敦道221B-E號恒福商業中心B2",
      hours:"Работает допоздна, точное время сверить в приложении сети",
-     note:"Конвейер с поездом-доставкой, 5 минут от отеля. Дёшево и предсказуемо: HK$60–90 с человека. Хороший вариант на первый вечер, если на Temple Street слишком людно, или после Диснея, когда сил на ужин уже нет.",
+     note:"Конвейер с поездом-доставкой, 5 минут от станции Jordan. Дёшево и предсказуемо: HK$60–90 с человека. Хороший вариант на первый вечер, если на Temple Street слишком людно, или после Диснея, когда сил на ужин уже нет.",
      maps:"Genki Sushi 元気寿司 221 Nathan Road Jordan Hong Kong",
      match:["Genki Sushi 元気寿司"]},
 
