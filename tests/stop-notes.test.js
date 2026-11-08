@@ -43,8 +43,9 @@ test('текст остановки нормализуется и режется
   assert.equal(normalizeStopNoteBody('a'.repeat(STOP_NOTE_MAX_BODY)), 'a'.repeat(STOP_NOTE_MAX_BODY));
 });
 
-test('пустой и слишком длинный текст — ошибка с кодом', () => {
-  assert.throws(() => normalizeStopNoteBody('   '), (err) => err instanceof StopNoteError && err.code === 'empty_body');
+test('пустой текст допустим, слишком длинный — ошибка с кодом', () => {
+  assert.equal(normalizeStopNoteBody(''), '');
+  assert.equal(normalizeStopNoteBody('   '), '');
   assert.throws(
     () => normalizeStopNoteBody('a'.repeat(STOP_NOTE_MAX_BODY + 1)),
     (err) => err instanceof StopNoteError && err.code === 'body_too_long',

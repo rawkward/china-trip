@@ -29,14 +29,19 @@ const day: Day = {
   places: [],
 };
 
-function renderStop(stop: Stop, api = makeApi(), onDelete = vi.fn()) {
+function renderStop(
+  stop: Stop,
+  api = makeApi(),
+  onDelete = vi.fn(),
+  texts: Record<string, string> = {},
+) {
   return render(
     <ul>
       <StopRow
         day={day}
         dayKey="hk|07.12"
         stop={stop}
-        texts={{}}
+        texts={texts}
         api={api}
         index={0}
         total={1}
@@ -142,6 +147,31 @@ describe("StopRow: группа вариантов", () => {
     expect(screen.getByText("Обед в Централе")).toBeInTheDocument();
     expect(screen.getByText("1 / 2")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "следующий вариант" })).toBeInTheDocument();
+  });
+
+  it("после замены на карточку справочника карусели нет, видна пометка карточки", () => {
+    const api = makeApi();
+    renderStop(
+      {
+        k: "lunch",
+        name: "Victoria Peak",
+        tag: "sight",
+        _slug: "lunch",
+        _name: "Victoria Peak",
+        note: "Вид на город",
+        picks: [],
+      },
+      api,
+      vi.fn(),
+      { "ref:lunch": "sight|hk|victoria-peak" },
+    );
+
+    expect(screen.queryByRole("button", { name: "следующий вариант" })).not.toBeInTheDocument();
+    expect(screen.getByText("Victoria Peak")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "карточка справочника" })).toHaveAttribute(
+      "href",
+      "#g-victoria-peak",
+    );
   });
 });
 

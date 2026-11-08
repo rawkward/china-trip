@@ -104,6 +104,37 @@ describe("withTexts", () => {
     expect(out.places[0].picks?.[1].dim).toBe("название с чужих слов");
     expect(out.places[0].picks?.[0].rec).toBe(true);
   });
+
+  it("ref у группы сворачивает карусель в одну карточку справочника", () => {
+    const picks: Day = {
+      city: "cq",
+      title: "Обед",
+      sub: "",
+      n: 2,
+      date: "15.12 · вт",
+      places: [
+        {
+          k: "cq",
+          title: "Обед в 渝中",
+          tag: "food",
+          note: "три варианта",
+          picks: [
+            { name: "Хотпот", note: "острый", cost: "¥80", rec: true },
+            { name: "Димсамы", note: "спокойнее", cost: "¥60" },
+          ],
+        },
+      ],
+    };
+    const slug = withTexts(picks, {}, guide).places[0]._slug!;
+    const out = withTexts(picks, { [`ref:${slug}`]: "food|cq|hotpot" }, guide);
+    const q = out.places[0];
+    expect(q.title).toBe("Qin Ma Hotpot");
+    expect(q.name).toBe("Qin Ma Hotpot");
+    expect(q._name).toBe("Qin Ma Hotpot");
+    expect(q.note).toBe("Очередь с 18:00");
+    expect(q.cost).toBe("");
+    expect(q.picks).toEqual([]);
+  });
 });
 
 describe("stopKey", () => {

@@ -325,11 +325,8 @@ const server = createServer(async (req, res) => {
     const k = decodeURIComponent(stopNote[1]);
     if (method === "PUT") {
       const body = await readBody(req);
+      // Пустой текст — валидная заметка: описание остановки скрывается, запись остаётся.
       const text = String(body.body ?? "").trim();
-      if (!text) {
-        db.stopNotes.delete(k);
-        return json(res, 200, { note: null });
-      }
       const note = { stop_key: k, body: text, updated_at: now() };
       db.stopNotes.set(k, note);
       return json(res, 200, { note });

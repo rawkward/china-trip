@@ -169,6 +169,11 @@ export const TRIP_PLACES = {
   "victoria_park": {"name": "Victoria Park 維多利亞公園", "lat": 22.2812263, "lon": 114.1891144},
   "fashion_walk": {"name": "Fashion Walk 名店坊", "lat": 22.2795, "lon": 114.186},
   "causeway_bay_food": {"name": "Lee Garden Two · Paterson Street 銅鑼灣", "lat": 22.2798, "lon": 114.1863},
+  "luddite_vintage": {"name": "Luddite Clothing Co. 希雲街 15A", "lat": 22.27782, "lon": 114.18684},
+  "donki_cwb": {"name": "DON DON DONKI 名珠城 百德新街", "lat": 22.2812616, "lon": 114.1857147},
+  "tin_hau_temple": {"name": "天后廟 Tin Hau Temple 天后廟道 10", "lat": 22.282419, "lon": 114.192832},
+  "central_library": {"name": "香港中央圖書館 Hong Kong Central Library", "lat": 22.2800978, "lon": 114.1889377},
+  "genki_cwb": {"name": "Genki Sushi 元気寿司 皇室堡 Windsor House", "lat": 22.2804007, "lon": 114.1864586},
   "mong_kok": {
     "name": "Mong Kok",
     "lat": 22.319308,

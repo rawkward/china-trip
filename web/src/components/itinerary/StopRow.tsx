@@ -157,6 +157,9 @@ export function StopRow({
 
   const stopOriginal = stop._name ?? stop.name ?? "";
   const guideId = guideIdFor(GUIDE_ITEMS, stop.name) || guideIdFor(GUIDE_ITEMS, stop._name);
+  const ref = texts[fields.ref] ?? "";
+  const refId = ref.split("|")[2] ?? "";
+  const refHref = refId && GUIDE_ITEMS.some((it) => it.id === refId) ? "#g-" + refId : "";
 
   return (
     <li className="flex gap-2.5 border-b border-dashed border-line py-2.5 last:border-b-0 sm:gap-3">
@@ -182,6 +185,14 @@ export function StopRow({
               className="whitespace-nowrap text-[0.72rem] font-semibold text-accent underline decoration-dotted underline-offset-2"
             >
               в справочнике
+            </a>
+          )}
+          {refHref && (
+            <a
+              href={refHref}
+              className="whitespace-nowrap text-[0.72rem] font-semibold text-accent underline decoration-dotted underline-offset-2"
+            >
+              карточка справочника
             </a>
           )}
           {stop.cost && (

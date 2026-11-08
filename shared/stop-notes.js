@@ -36,9 +36,6 @@ export function normalizeStopNoteBody(value) {
     throw new StopNoteError('bad_body', 'body', 'текст должен быть строкой');
   }
   const body = value.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim();
-  if (body.length === 0) {
-    throw new StopNoteError('empty_body', 'body', 'текст пустой');
-  }
   if (body.length > STOP_NOTE_MAX_BODY) {
     throw new StopNoteError('body_too_long', 'body', `текст длиннее ${STOP_NOTE_MAX_BODY} символов`);
   }

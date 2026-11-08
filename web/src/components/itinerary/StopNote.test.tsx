@@ -82,6 +82,29 @@ describe("StopNote", () => {
     expect(edits.setEditing).toHaveBeenCalledWith({ stop: undefined });
   });
 
+  it("заметка с пустым телом скрывает авторский текст", () => {
+    const empty = { stop_key: KEY, body: "", updated_at: 1 };
+    const { container } = render(
+      <StopNote stopKey={KEY} original="авторский" edits={makeEdits({ stopNotes: { [KEY]: empty } })} />,
+    );
+    expect(container).toBeEmptyDOMElement();
+  });
+
+  it("пустое тело при токене показывает «описание скрыто» и возврат авторского текста", () => {
+    const empty = { stop_key: KEY, body: "", updated_at: 1 };
+    const edits = makeEdits({ token: "t", stopNotes: { [KEY]: empty } });
+    render(<StopNote stopKey={KEY} original="авторский" edits={edits} />);
+
+    expect(screen.queryByText("авторский")).not.toBeInTheDocument();
+    expect(screen.getByText("описание скрыто")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "вернуть авторский текст" }));
+    expect(edits.resetStopNote).toHaveBeenCalledWith(KEY);
+
+    fireEvent.click(screen.getByRole("button", { name: "править текст к остановке" }));
+    expect(edits.setEditing).toHaveBeenCalledWith({ stop: KEY });
+  });
+
   it("у новой правки нет кнопки возврата", () => {
     const edits = makeEdits({ token: "t", editing: { stop: KEY } });
     render(<StopNote stopKey={KEY} original="авторский" edits={edits} />);

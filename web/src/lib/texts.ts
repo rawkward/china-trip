@@ -15,14 +15,15 @@ function applyRef(
   slug: string,
   items: GuideItem[],
   nameField: "name" | "title",
-): void {
+): GuideItem | null {
   const ref = texts["ref:" + slug];
-  if (!ref) return;
+  if (!ref) return null;
   const item = guideItemByKey(items, ref);
-  if (!item) return;
+  if (!item) return null;
   if (item.en) q[nameField] = item.en;
   q.note = item.note ?? "";
   q.cost = "";
+  return item;
 }
 
 /**
@@ -57,16 +58,25 @@ export function withTexts(
       if (has(base + ":note")) q.note = t[base + ":note"];
       if (has(base + ":cost")) q.cost = t[base + ":cost"];
       if (has(base + ":time")) q._time = t[base + ":time"];
-      applyRef(q, t, slug, items, "title");
-      q.picks = p.picks.map((it: Pick, i: number) => {
-        const r: Pick = { ...it };
-        r._name = it.name;
-        const f = "pick:" + slug + ":" + i;
-        if (has(f + ":name")) r.name = t[f + ":name"];
-        if (has(f + ":cost")) r.cost = t[f + ":cost"];
-        if (has(f + ":dim")) r.dim = t[f + ":dim"];
-        return r;
-      });
+      const item = applyRef(q, t, slug, items, "title");
+      if (item) {
+        q.title = item.en;
+        q.name = item.en;
+        q.note = item.note ?? "";
+        q.cost = "";
+        q.picks = [];
+        q._name = item.en;
+      } else {
+        q.picks = p.picks.map((it: Pick, i: number) => {
+          const r: Pick = { ...it };
+          r._name = it.name;
+          const f = "pick:" + slug + ":" + i;
+          if (has(f + ":name")) r.name = t[f + ":name"];
+          if (has(f + ":cost")) r.cost = t[f + ":cost"];
+          if (has(f + ":dim")) r.dim = t[f + ":dim"];
+          return r;
+        });
+      }
     } else {
       const slug = stopSlug(p.name || "");
       q._slug = slug;

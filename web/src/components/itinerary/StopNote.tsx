@@ -52,6 +52,9 @@ function NoteEditor({
         value={draft}
         onChange={(e) => setDraft(e.target.value)}
       />
+      <span className="mt-0.5 block text-[0.72rem] text-muted-soft">
+        пустое поле скрывает авторский текст
+      </span>
       <span className="mt-1 flex flex-wrap gap-1.5">
         <Button size="sm" variant="primary" onClick={() => onSave(draft)}>
           Сохранить
@@ -72,6 +75,7 @@ function NoteEditor({
 /** Текст остановки: авторский HTML либо сохранённая правка с пометкой «правка». */
 export function StopNote({ stopKey, original, edits, className }: StopNoteProps) {
   const note = edits.stopNotes[stopKey];
+  const hidden = !!note && note.body === "";
   const editing = edits.token !== null && edits.editing.stop === stopKey;
   const originalText = original ?? "";
 
@@ -85,6 +89,23 @@ export function StopNote({ stopKey, original, edits, className }: StopNoteProps)
           onReset={() => void edits.resetStopNote(stopKey)}
           onCancel={() => edits.setEditing({ stop: undefined })}
         />
+      </div>
+    );
+  }
+
+  if (hidden) {
+    if (!edits.token) return null;
+    return (
+      <div className={cn("mt-0.5 text-[0.82rem] leading-relaxed text-muted-soft", className)}>
+        <span>описание скрыто</span>
+        <EditNoteButton onClick={() => edits.setEditing({ stop: stopKey })} />
+        <button
+          type="button"
+          className="ml-2 text-[0.72rem] text-muted-soft underline decoration-dotted transition-colors hover:text-accent"
+          onClick={() => void edits.resetStopNote(stopKey)}
+        >
+          вернуть авторский текст
+        </button>
       </div>
     );
   }

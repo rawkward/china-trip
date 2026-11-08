@@ -279,15 +279,7 @@ async function handleListStopNotes(env) {
 async function handlePutStopNote(request, env, rawKey) {
   const stop_key = normalizeStopNoteKey(rawKey);
   const payload = await readJsonBody(request);
-  const raw = payload.body;
-
-  // Пустой текст — это откат к тексту из маршрута, то есть удаление правки.
-  if (typeof raw === 'string' && raw.trim() === '') {
-    await db.deleteStopNote(env.DB, stop_key);
-    return json({ deleted: true, stop_key });
-  }
-
-  const body = normalizeStopNoteBody(raw);
+  const body = normalizeStopNoteBody(payload.body);
   const { variant_id, day_date, stop_slug } = splitStopKey(stop_key);
   const stop_name = typeof payload.stop_name === 'string' ? payload.stop_name.slice(0, 160) : '';
   const note = await db.upsertStopNote(env.DB, { stop_key, variant_id, day_date, stop_slug, stop_name, body });
