@@ -12,7 +12,6 @@ test.describe("правки текстов и заметки", () => {
   });
 
   test("вход открывает карандаши, текст правится и остаётся после перезагрузки", async ({ page }) => {
-    const section = page.locator("#itinerary");
     const dayList = page.locator("#dayList");
     const firstDay = dayList.locator("button[aria-expanded]").first();
 
@@ -20,10 +19,10 @@ test.describe("правки текстов и заметки", () => {
     await expect(firstDay).toBeVisible();
     await expect(page.getByRole("button", { name: "править заголовок дня" })).toHaveCount(0);
 
-    // вход по паролю
-    await section.getByLabel("Пароль для правок").fill(PASSWORD);
-    await section.getByRole("button", { name: "Войти" }).click();
-    await expect(section.getByText(/Правка открыта/)).toBeVisible();
+    // вход по паролю — общая панель под шапкой
+    await page.getByLabel("Пароль для правок").fill(PASSWORD);
+    await page.getByRole("button", { name: "Войти" }).click();
+    await expect(page.getByText(/Правка открыта/)).toBeVisible();
 
     // раскрываем первый день
     await firstDay.click();
@@ -59,26 +58,26 @@ test.describe("правки текстов и заметки", () => {
     await expect(page.getByText("Проверка заметки из e2e")).toBeVisible();
 
     // выход снова прячет правки
-    await section.getByRole("button", { name: "Выйти" }).click();
+    await page.getByRole("button", { name: "Выйти" }).click();
     await expect(page.getByRole("button", { name: "править заголовок дня" })).toHaveCount(0);
   });
 
   test("неверный пароль не открывает правку", async ({ page }) => {
-    const section = page.locator("#itinerary");
-    await section.getByLabel("Пароль для правок").fill("definitely-wrong");
-    await section.getByRole("button", { name: "Войти" }).click();
+    await page.getByLabel("Пароль для правок").fill("definitely-wrong");
+    await page.getByRole("button", { name: "Войти" }).click();
     await expect(page.getByText(/неверный пароль/).first()).toBeVisible();
     await expect(page.getByRole("button", { name: "править заголовок дня" })).toHaveCount(0);
   });
 
   test("чек-лист скрыт без пароля и появляется после входа", async ({ page }) => {
+    await page.goto("/#/info", { waitUntil: "networkidle" });
+
     await expect(page.locator("#checklist")).toHaveCount(0);
     await expect(page.getByRole("link", { name: "Чек-лист" })).toHaveCount(0);
 
-    const section = page.locator("#itinerary");
-    await section.getByLabel("Пароль для правок").fill(PASSWORD);
-    await section.getByRole("button", { name: "Войти" }).click();
-    await expect(section.getByText(/Правка открыта/)).toBeVisible();
+    await page.getByLabel("Пароль для правок").fill(PASSWORD);
+    await page.getByRole("button", { name: "Войти" }).click();
+    await expect(page.getByText(/Правка открыта/)).toBeVisible();
 
     await expect(page.locator("#checklist")).toBeVisible();
     await expect(page.getByRole("link", { name: "Чек-лист" }).first()).toBeVisible();

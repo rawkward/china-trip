@@ -3,7 +3,7 @@ import { cn } from "../../lib/cn";
 import { variantDateRange } from "../../lib/days";
 import type { Variant } from "../../types";
 
-function leadSummary(summary: string): string {
+export function leadSummary(summary: string): string {
   const clean = summary.trim();
   if (!clean) return "";
   const sentences = clean.split(/(?<=[.!?])\s+/);

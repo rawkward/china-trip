@@ -29,13 +29,13 @@ test("бюджет: вход, итоги, правка параметра, до�
   );
   page.on("dialog", (dialog) => void dialog.accept());
 
-  await page.goto("/china-trip/");
+  await page.goto("/china-trip/#/budget");
   await page.locator("#budget").scrollIntoViewIfNeeded();
 
   const budget = page.locator("#budget");
   await expect(budget.getByText("Раздел закрыт паролем")).toBeVisible();
-  await budget.getByLabel("Пароль для правок").fill(password);
-  await budget.getByRole("button", { name: "Войти" }).click();
+  await page.getByLabel("Пароль для правок").fill(password);
+  await page.getByRole("button", { name: "Войти" }).click();
 
   await expect(page.locator('[data-summary="total"]')).toBeVisible({ timeout: 20_000 });
   const perPerson = page.locator('[data-summary-value="per-person"]');

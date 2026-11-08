@@ -110,7 +110,7 @@ describe("BudgetApp: доступ", () => {
 
     expect(screen.getByText("Раздел закрыт паролем")).toBeInTheDocument();
     expect(screen.getByText(/личный бюджет поездки/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Войти" })).toBeInTheDocument();
+    expect(screen.queryByLabelText("Пароль для правок")).not.toBeInTheDocument();
 
     const fetchMock = vi.mocked(fetch);
     const budgetCalls = fetchMock.mock.calls.filter(([input]) =>

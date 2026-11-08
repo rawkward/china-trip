@@ -14,6 +14,9 @@ if (!window.matchMedia) {
   })) as unknown as typeof window.matchMedia;
 }
 
+// jsdom не реализует прокрутку — роутер вкладок зовёт её при монтировании.
+Object.defineProperty(window, "scrollTo", { value: () => {}, writable: true });
+
 // Leaflet и intersection observer в юнит-тестах не нужны — глушим.
 if (!("IntersectionObserver" in window)) {
   class NoopObserver {

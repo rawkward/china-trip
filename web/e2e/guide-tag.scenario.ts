@@ -19,18 +19,21 @@ export function registerGuideTagScenario(): void {
       );
 
       await page.goto("/", { waitUntil: "networkidle" });
-
-      const itinerary = page.locator("#itinerary");
-      await expect(itinerary.getByRole("button", { name: "Войти" })).toBeVisible();
+      await page
+        .locator('header nav[aria-label="Вкладки"]')
+        .getByRole("link", { name: "Справочник" })
+        .click();
+      await expect(page.locator("#stay")).toBeVisible();
+      await expect(page.getByRole("button", { name: "Войти" })).toBeVisible();
 
       // без входа редактора тега нет
       await expect(
         page.locator("#g-victoria-peak").getByRole("button", { name: "альтернатива" }),
       ).toHaveCount(0);
 
-      await itinerary.getByLabel("Пароль для правок").fill("test");
-      await itinerary.getByRole("button", { name: "Войти" }).click();
-      await expect(itinerary.getByText(/Правка открыта/)).toBeVisible();
+      await page.getByLabel("Пароль для правок").fill("test");
+      await page.getByRole("button", { name: "Войти" }).click();
+      await expect(page.getByText(/Правка открыта/)).toBeVisible();
 
       const card = page.locator("#g-victoria-peak");
       await expect(card).toBeVisible();

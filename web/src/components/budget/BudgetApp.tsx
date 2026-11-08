@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo } from "react";
 import { Section } from "../layout/Section";
-import { AccessBar } from "../layout/AccessBar";
 import { toast } from "../ui/Toast";
 import { useAuth } from "../../edits/auth";
 import { computeTotals } from "../../lib/budget/calc";
@@ -105,10 +104,6 @@ export function BudgetApp() {
 
   return (
     <Section id="budget">
-      <div className="mb-3">
-        <AccessBar />
-      </div>
-
       {budget.cacheAt !== null && (budget.stale || budget.offline) && (
         <BudgetCacheNotice
           cacheAt={budget.cacheAt}

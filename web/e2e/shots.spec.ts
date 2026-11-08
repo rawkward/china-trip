@@ -30,9 +30,13 @@ test("скриншоты разделов", async ({ page }, testInfo) => {
     "tours",
     "links",
     "budget",
-    "notes",
   ];
   for (const id of ids) {
+    // Старые якоря водят по вкладкам и оставляют в адресе канонический раздел.
+    await page.goto(`/#${id}`, { waitUntil: "networkidle" });
+    await page.evaluate(() => document.fonts?.ready);
+    await page.waitForTimeout(150);
+
     const el = page.locator(`#${id}`);
     if (!(await el.count())) continue;
     await el.scrollIntoViewIfNeeded();

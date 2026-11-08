@@ -13,23 +13,28 @@ vi.mock("../../data", async (importOriginal) => {
   };
 });
 
-describe("VariantSection: вариант без фото", () => {
+describe("VariantSection: фото только у основного варианта", () => {
   beforeEach(() => {
     localStorage.clear();
   });
 
-  it("карточка без PHOTOS[key] не ломается и не рисует битую картинку", () => {
-    render(
+  it("рисует картинку у основного и ни одной у остальных строк", () => {
+    const { container } = render(
       <VariantProvider>
         <VariantSection />
       </VariantProvider>,
     );
 
-    const broken = screen.getByRole("button", { name: /Гонконг \+ день/ });
-    expect(broken.querySelector("img")).toBeNull();
-    expect(broken).toHaveTextContent("Гонконг + день");
+    const main = screen.getByRole("button", { name: /Гонконг → Фужун/ });
+    expect(main.querySelector("img")).not.toBeNull();
 
-    const withPhoto = screen.getByRole("button", { name: /Гонконг → Фужун/ });
-    expect(withPhoto.querySelector("img")).not.toBeNull();
+    const rows = container.querySelectorAll("details");
+    expect(rows.length).toBeGreaterThan(0);
+    rows.forEach((row) => expect(row.querySelector("img")).toBeNull());
+
+    const broken = screen.getByText(/Гонконг \+ день/).closest("details");
+    expect(broken).not.toBeNull();
+    expect(broken?.querySelector("img")).toBeNull();
+    expect(broken).toHaveTextContent("Гонконг + день");
   });
 });

@@ -6,7 +6,6 @@ import { CITIES, GUIDE_ITEMS } from "@/data";
 import { noteKey, nightsWord, routeGroups } from "@/lib/days";
 import { withTexts } from "@/lib/texts";
 import { cn } from "@/lib/cn";
-import { AccessBar } from "../layout/AccessBar";
 import { Section } from "../layout/Section";
 import { RouteMap } from "../map/RouteMap";
 import { Button } from "../ui";
@@ -87,8 +86,6 @@ export function ItinerarySection() {
         </Button>
       }
     >
-      <AccessBar />
-
       <div className="mb-4 flex flex-wrap items-center gap-1.5 text-[0.82rem] sm:gap-2">
         {summary.groups.map((group, i) => {
           const city = CITIES[group.city] ?? { label: group.city, color: "#8a8278" };

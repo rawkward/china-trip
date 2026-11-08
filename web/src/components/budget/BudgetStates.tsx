@@ -1,12 +1,11 @@
 import { Clock3 } from "lucide-react";
 import { Section } from "../layout/Section";
-import { AccessBar } from "../layout/AccessBar";
 import { Button } from "../ui";
 import { formatClock } from "../../lib/budget/numbers";
 
 const SKELETON_WIDTHS = ["36%", "78%", "64%", "88%", "52%"];
 
-/** Бюджет закрыт паролем — та же панель доступа, что и у остальной страницы. */
+/** Бюджет закрыт паролем: вход — в общей панели доступа под шапкой. */
 export function BudgetLocked() {
   return (
     <Section id="budget">
@@ -16,9 +15,6 @@ export function BudgetLocked() {
         <p className="mt-1.5 max-w-[60ch] text-[0.86rem] leading-relaxed text-muted">
           Это личный бюджет поездки. Введите общий пароль, чтобы открыть статьи и параметры.
         </p>
-        <div className="mt-4">
-          <AccessBar />
-        </div>
       </div>
     </Section>
   );
