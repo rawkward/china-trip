@@ -12,7 +12,7 @@ export const TABS: readonly TabDef[] = [
   { id: "guide", label: "Справочник", sections: ["stay", "food", "sights", "parks", "tips"] },
   {
     id: "info",
-    label: "Практика",
+    label: "Полезное",
     sections: ["booking", "checklist", "tours", "links"],
   },
   { id: "budget", label: "Бюджет", sections: [] },
