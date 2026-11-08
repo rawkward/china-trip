@@ -166,6 +166,9 @@ export const TRIP_PLACES = {
     "lat": 22.2791932,
     "lon": 114.1883258
   },
+  "victoria_park": {"name": "Victoria Park 維多利亞公園", "lat": 22.2812263, "lon": 114.1891144},
+  "fashion_walk": {"name": "Fashion Walk 名店坊", "lat": 22.2795, "lon": 114.186},
+  "causeway_bay_food": {"name": "Lee Garden Two · Paterson Street 銅鑼灣", "lat": 22.2798, "lon": 114.1863},
   "mong_kok": {
     "name": "Mong Kok",
     "lat": 22.319308,
