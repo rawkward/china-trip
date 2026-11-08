@@ -10,7 +10,6 @@ export interface SectionCopy {
 export interface PageCopy {
   brand: string;
   nav: { id: string; label: string; private?: boolean }[];
-  footer: string;
   sections: Record<string, SectionCopy>;
 }
 

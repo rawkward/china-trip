@@ -1,5 +1,4 @@
 import { AccessBar } from "./components/layout/AccessBar";
-import { Footer } from "./components/layout/Footer";
 import { Hero } from "./components/layout/Hero";
 import { Rule } from "./components/layout/Section";
 import { TopBar } from "./components/layout/TopBar";
@@ -73,13 +72,12 @@ export default function App() {
             К маршруту
           </a>
           <TopBar />
-          <main className="mx-auto w-full max-w-[1180px] px-4 sm:px-5">
+          <main className="mx-auto w-full max-w-[1180px] px-4 pb-10 sm:px-5 sm:pb-14">
             <div className="pt-3">
               <AccessBar />
             </div>
             <TabContent />
           </main>
-          <Footer />
           <Toaster />
         </TabsProvider>
       </EditsProvider>
