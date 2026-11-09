@@ -165,10 +165,10 @@ describe("fanOffsets", () => {
     expect(fanOffsets(cluster)).toEqual(fanOffsets(cluster));
   });
 
-  it("радиус сдвига — 18 px", () => {
+  it("радиус сдвига — 26 px", () => {
     const out = fanOffsets(cluster);
-    expect(Math.hypot(out[1].dx, out[1].dy)).toBeCloseTo(18, 6);
-    expect(Math.hypot(out[2].dx, out[2].dy)).toBeCloseTo(18, 6);
+    expect(Math.hypot(out[1].dx, out[1].dy)).toBeCloseTo(26, 6);
+    expect(Math.hypot(out[2].dx, out[2].dy)).toBeCloseTo(26, 6);
   });
 });
 

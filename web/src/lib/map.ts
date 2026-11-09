@@ -201,7 +201,7 @@ export function fanOffsets(points: MapPoint[]): { dx: number; dy: number }[] {
     origins.push(pt);
     if (!clash) return { dx: 0, dy: 0 };
     const a = clash * 2.399;
-    return { dx: Math.cos(a) * 18, dy: Math.sin(a) * 18 };
+    return { dx: Math.cos(a) * 26, dy: Math.sin(a) * 26 };
   });
 }
 
