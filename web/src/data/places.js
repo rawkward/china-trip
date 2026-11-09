@@ -354,6 +354,7 @@ export const TRIP_PLACES = {
   "fenghuang": {"name": "Fenghuang Ancient Town", "lat": 27.9486, "lon": 109.5984},
   "grand_canyon": {"name": "Zhangjiajie Grand Canyon", "lat": 29.304, "lon": 110.449},
   "tianmen": {"name": "Tianmen Mountain", "lat": 29.0513, "lon": 110.475},
+  "huanglong_cave": {"name": "Huanglong Cave (黄龙洞)", "lat": 29.3680313, "lon": 110.6146666},
   "lhasa": {"name": "Lhasa", "lat": 29.652, "lon": 91.1721},
   "potala_palace": {"name": "Potala Palace", "lat": 29.6578, "lon": 91.117},
   "jokhang": {"name": "Jokhang Temple", "lat": 29.653, "lon": 91.1319},
