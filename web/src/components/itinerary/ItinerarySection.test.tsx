@@ -113,7 +113,7 @@ describe("ItinerarySection", () => {
     expect(screen.queryByRole("region", { name: "День 1" })).not.toBeInTheDocument();
   });
 
-  it("показывает ссылку на список мест Гонконга без раскрытия дней", async () => {
+  it("показывает ссылки на списки мест без раскрытия дней", async () => {
     const main = VARIANTS.find((v) => v.main) ?? VARIANTS[0];
     const first = buildDays(main, DATES)[0];
     mockApi(noteKey(main.id, first), first.title);
@@ -121,10 +121,19 @@ describe("ItinerarySection", () => {
     renderSection();
 
     const links = await screen.findAllByRole("link", { name: /Список мест на карте/ });
-    expect(links).toHaveLength(1);
-    expect(links[0]).toHaveAttribute("href", "https://maps.app.goo.gl/WVb7ZLsr4ebW1hqM7");
-    expect(links[0]).toHaveAttribute("target", "_blank");
-    expect(links[0].getAttribute("rel")).toContain("noopener");
+    expect(links).toHaveLength(3);
+
+    const expectedHrefs = [
+      "https://maps.app.goo.gl/WVb7ZLsr4ebW1hqM7",
+      "https://maps.app.goo.gl/X79tTZuYo3U45ydN9",
+      "https://maps.app.goo.gl/MZMv96EnFznmL6B1A",
+    ];
+    expect(links.map((link) => link.getAttribute("href")).sort()).toEqual(expectedHrefs.slice().sort());
+
+    for (const link of links) {
+      expect(link).toHaveAttribute("target", "_blank");
+      expect(link.getAttribute("rel")).toContain("noopener");
+    }
     expect(screen.queryByRole("region", { name: "День 1" })).not.toBeInTheDocument();
   });
 

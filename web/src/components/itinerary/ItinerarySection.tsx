@@ -13,7 +13,11 @@ import { toast } from "../ui/Toast";
 import { DayCard } from "./DayCard";
 import { MissedBlock } from "./MissedBlock";
 
-const HK_MAP_URL = "https://maps.app.goo.gl/WVb7ZLsr4ebW1hqM7";
+const MAP_LIST_URLS: Record<string, string> = {
+  hk: "https://maps.app.goo.gl/WVb7ZLsr4ebW1hqM7",
+  zjj: "https://maps.app.goo.gl/X79tTZuYo3U45ydN9",
+  fr: "https://maps.app.goo.gl/MZMv96EnFznmL6B1A",
+};
 
 /**
  * «Маршрут по дням»: сводка ночей, аккордеон дней и колонка карты.
@@ -43,10 +47,18 @@ export function ItinerarySection() {
     [days, activeId, dayTexts],
   );
   const mapDays = useMemo(() => cards.map((c) => c.day), [cards]);
-  const firstHkIndex = useMemo(
-    () => cards.findIndex((c) => c.day.city === "hk"),
-    [cards],
-  );
+  const firstMapCityIndex = useMemo(() => {
+    const seen = new Set<string>();
+    const result = new Map<number, string>();
+    cards.forEach((c, i) => {
+      const city = c.day.city;
+      if (MAP_LIST_URLS[city] && !seen.has(city)) {
+        seen.add(city);
+        result.set(i, city);
+      }
+    });
+    return result;
+  }, [cards]);
 
   const toggleDay = (n: number) => {
     setOpenDays((prev) => {
@@ -136,35 +148,40 @@ export function ItinerarySection() {
 
       <div className="grid min-w-0 grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:items-start">
         <div id="dayList" className="flex min-w-0 flex-col gap-3">
-          {cards.map(({ day, key, texts }, i) => (
-            <Fragment key={activeId + "-" + day.n}>
-              {i === firstHkIndex && (
-                <div className="surface flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-line bg-paper-deep px-3 py-2 sm:px-4">
-                  <span className="eyebrow" style={{ color: CITIES.hk.color }}>
-                    Гонконг
-                  </span>
-                  <a
-                    href={HK_MAP_URL}
-                    target="_blank"
-                    rel="noopener"
-                    className="btn-soft min-w-0"
-                  >
-                    <MapPin className="size-3.5 shrink-0" aria-hidden="true" />
-                    <span className="truncate">Список мест на карте</span>
-                  </a>
-                </div>
-              )}
-              <DayCard
-                day={day}
-                dayKey={key}
-                texts={texts}
-                api={edits}
-                open={openDays.has(day.n)}
-                onToggle={() => toggleDay(day.n)}
-                onFocusDay={focusOnDay}
-              />
-            </Fragment>
-          ))}
+          {cards.map(({ day, key, texts }, i) => {
+            const mapCity = firstMapCityIndex.get(i);
+            const city = mapCity ? CITIES[mapCity] : null;
+            return (
+              <Fragment key={activeId + "-" + day.n}>
+                {city && (
+                  <div className="surface flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-line bg-paper-deep px-3 py-2 sm:px-4">
+                    <span className="eyebrow" style={{ color: city.color }}>
+                      {city.label}
+                    </span>
+                    <a
+                      href={MAP_LIST_URLS[mapCity!]}
+                      target="_blank"
+                      rel="noopener"
+                      aria-label={"Список мест на карте — " + city.label}
+                      className="btn-soft min-w-0"
+                    >
+                      <MapPin className="size-3.5 shrink-0" aria-hidden="true" />
+                      <span className="truncate">Список мест на карте</span>
+                    </a>
+                  </div>
+                )}
+                <DayCard
+                  day={day}
+                  dayKey={key}
+                  texts={texts}
+                  api={edits}
+                  open={openDays.has(day.n)}
+                  onToggle={() => toggleDay(day.n)}
+                  onFocusDay={focusOnDay}
+                />
+              </Fragment>
+            );
+          })}
         </div>
 
         <div
