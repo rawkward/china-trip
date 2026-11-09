@@ -158,7 +158,10 @@ export function stopNumbers(day: Day | undefined, places: Places): (number | nul
 
 /**
  * Остановки одного квартала делят координаты — разводим их по маленькой
- * окружности, иначе номера на карте прячутся друг под другом.
+ * окружности, иначе номера на карте прячутся друг под другом. Сдвиг — на
+ * десятки метров, а не на сотни: в плотном городе больший радиус уводит
+ * метку в соседнюю улицу или в воду, и она перестаёт указывать на своё
+ * заведение.
  */
 export function spreadOverlaps(points: MapPoint[]): MapPoint[] {
   // Считаем по ИСХОДНЫМ координатам: две остановки одного здания стоят в одной точке.
@@ -173,7 +176,7 @@ export function spreadOverlaps(points: MapPoint[]): MapPoint[] {
     const next = { ...pt };
     if (clash) {
       const a = clash * 2.399;
-      const r = 0.0022 + Math.floor(clash / 7) * 0.0012;
+      const r = 0.0004 + Math.floor(clash / 7) * 0.0004;
       next.lat += Math.sin(a) * r;
       next.lon += Math.cos(a) * r;
     }
