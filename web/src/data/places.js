@@ -153,8 +153,8 @@ export const TRIP_PLACES = {
   },
   "victoria_harbour": {
     "name": "Victoria Harbour",
-    "lat": 22.3235534,
-    "lon": 114.1145688
+    "lat": 22.2930,
+    "lon": 114.17355
   },
   "yau_ma_tei": {
     "name": "Yau Ma Tei",
@@ -450,6 +450,7 @@ export const TRIP_PLACES = {
   "peak_tram": {"name": "山頂纜車總站 Peak Tram, 花園道 33", "lat": 22.27820, "lon": 114.16000},
   "m_plus": {"name": "M+ 博物館, 38 Cultural Drive", "lat": 22.30100, "lon": 114.15914},
   "hk_museum_art": {"name": "香港藝術館 Hong Kong Museum of Art", "lat": 22.29353, "lon": 114.17203},
+  "kowloon_park": {"name": "Kowloon Park 九龍公園", "lat": 22.3005333, "lon": 114.1701152},
   "k11_musea": {"name": "K11 MUSEA, 18 Salisbury Road", "lat": 22.29459, "lon": 114.17495},
   "sogo_cwb": {"name": "崇光百貨 SOGO, 555 Hennessy Road", "lat": 22.28044, "lon": 114.18431},
   "hysan_place": {"name": "希慎廣場 Hysan Place, 500 Hennessy Road", "lat": 22.27999, "lon": 114.18356},

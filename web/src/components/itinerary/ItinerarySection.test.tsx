@@ -128,6 +128,25 @@ describe("ItinerarySection", () => {
     expect(screen.queryByRole("region", { name: "День 1" })).not.toBeInTheDocument();
   });
 
+  it("на узком окне кнопка «Карта» открывает карту и скроллит к ней", async () => {
+    const main = VARIANTS.find((v) => v.main) ?? VARIANTS[0];
+    const first = buildDays(main, DATES)[0];
+    mockApi(noteKey(main.id, first), first.title);
+    mockViewport(false);
+    const scrollSpy = mockScrollIntoView();
+
+    renderSection();
+    const button = await screen.findByRole("button", { name: /Карта/ });
+    expect(button).toHaveAttribute("aria-expanded", "false");
+
+    await userEvent.setup().click(button);
+
+    expect(button).toHaveAttribute("aria-expanded", "true");
+    await waitFor(() => expect(scrollSpy).toHaveBeenCalledTimes(1));
+    expect(scrollSpy.mock.instances[0]).toBe(document.getElementById("itinerary-map"));
+    expect(scrollSpy).toHaveBeenCalledWith({ behavior: "smooth", block: "start" });
+  });
+
   it("на узком окне скроллит к карте после «Показать на карте»", async () => {
     const main = VARIANTS.find((v) => v.main) ?? VARIANTS[0];
     const first = buildDays(main, DATES)[0];

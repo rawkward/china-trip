@@ -57,23 +57,27 @@ export function ItinerarySection() {
     });
   };
 
-  const focusOnDay = (n: number) => {
-    setFocusDay(n);
-    setMapOpen(true);
+  const scrollToMap = () => {
     if (typeof window === "undefined" || typeof window.matchMedia !== "function") return;
     if (window.matchMedia("(min-width: 1024px)").matches) return;
 
-    const scrollToMap = () => {
+    const scroll = () => {
       const el = document.getElementById("itinerary-map");
       if (el && typeof el.scrollIntoView === "function") {
         el.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     };
     if (typeof window.requestAnimationFrame === "function") {
-      window.requestAnimationFrame(scrollToMap);
+      window.requestAnimationFrame(scroll);
     } else {
-      window.setTimeout(scrollToMap, 0);
+      window.setTimeout(scroll, 0);
     }
+  };
+
+  const focusOnDay = (n: number) => {
+    setFocusDay(n);
+    setMapOpen(true);
+    scrollToMap();
   };
 
   return (
@@ -86,7 +90,14 @@ export function ItinerarySection() {
           className="lg:hidden"
           aria-expanded={mapOpen}
           aria-controls="itinerary-map"
-          onClick={() => setMapOpen((v) => !v)}
+          onClick={() => {
+            if (mapOpen) {
+              setMapOpen(false);
+            } else {
+              setMapOpen(true);
+              scrollToMap();
+            }
+          }}
         >
           {mapOpen ? <X className="size-3.5" aria-hidden="true" /> : <MapIcon className="size-3.5" aria-hidden="true" />}
           Карта
