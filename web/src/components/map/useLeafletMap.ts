@@ -7,6 +7,7 @@ import {
   boundsOf,
   buildMarkerRegistry,
   dayPoints,
+  fanOffsets,
   gmapsUrl,
   spreadOverlaps,
   TILE_SETS,
@@ -178,13 +179,15 @@ export function useLeafletMap({
         ).addTo(lineLayer);
       }
 
+      const offsets = fanOffsets(points);
       points.forEach((point, i) => {
+        const { dx, dy } = offsets[i];
         L.marker([point.lat, point.lon], {
           icon: L.divIcon({
             className: "daypin",
             html: dayPinHtml(i, color),
             iconSize: [24, 24],
-            iconAnchor: [12, 12],
+            iconAnchor: [12 - dx, 12 - dy],
           }),
         })
           .bindPopup(dayPopupHtml(i, point, day, gmapsUrl(point.lat, point.lon)))

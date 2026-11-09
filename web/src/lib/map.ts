@@ -185,6 +185,26 @@ export function spreadOverlaps(points: MapPoint[]): MapPoint[] {
   });
 }
 
+/**
+ * Точки, стоящие в пределах ~300–350 м друг от друга (0.003°), на мелком зуме
+ * всё равно наезжают друг на друга: маркер 24×24 px шире этого расстояния.
+ * Разводим ТОЛЬКО иконки по маленькой окружности в пикселях — координата,
+ * попап и линия маршрута остаются на настоящей точке.
+ */
+export function fanOffsets(points: MapPoint[]): { dx: number; dy: number }[] {
+  const origins: MapPoint[] = [];
+  return points.map((pt) => {
+    let clash = 0;
+    for (const o of origins) {
+      if (Math.abs(o.lat - pt.lat) < 0.003 && Math.abs(o.lon - pt.lon) < 0.003) clash++;
+    }
+    origins.push(pt);
+    if (!clash) return { dx: 0, dy: 0 };
+    const a = clash * 2.399;
+    return { dx: Math.cos(a) * 18, dy: Math.sin(a) * 18 };
+  });
+}
+
 export function gmapsUrl(lat: number, lon: number): string {
   return "https://www.google.com/maps/search/?api=1&query=" + lat + "," + lon;
 }

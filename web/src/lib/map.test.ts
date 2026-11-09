@@ -4,6 +4,7 @@ import {
   buildMarkerRegistry,
   dayMapsUrl,
   dayPoints,
+  fanOffsets,
   gmapsUrl,
   mapKindLabel,
   MAP_KINDS,
@@ -113,6 +114,61 @@ describe("spreadOverlaps", () => {
     const out = spreadOverlaps(pts);
     expect(out[1]).toEqual(pts[1]);
     expect(pts[1].lat).toBe(29.56);
+  });
+});
+
+describe("fanOffsets", () => {
+  const k11 = { name: "K11 Musea", tag: "" as const, lat: 22.29459, lon: 114.17495 };
+  const symphony = { name: "Symphony of Lights", tag: "" as const, lat: 22.293, lon: 114.17355 };
+  const avenue = { name: "Avenue of Stars", tag: "" as const, lat: 22.2941468, lon: 114.1757887 };
+  const cluster = [k11, symphony, avenue];
+
+  it("разводит иконки близких точек разными ненулевыми сдвигами", () => {
+    const out = fanOffsets(cluster);
+    expect(out[0]).toEqual({ dx: 0, dy: 0 });
+    for (let i = 1; i < out.length; i++) {
+      expect(Math.hypot(out[i].dx, out[i].dy)).toBeGreaterThan(0);
+    }
+    expect(out[1]).not.toEqual(out[2]);
+  });
+
+  it("считает близкой пару 0.00159° по широте и 0.00224° по долготе", () => {
+    const latPair = fanOffsets([k11, symphony]);
+    expect(Math.abs(k11.lat - symphony.lat)).toBeCloseTo(0.00159, 5);
+    expect(Math.hypot(latPair[1].dx, latPair[1].dy)).toBeGreaterThan(0);
+
+    const lonPair = fanOffsets([avenue, symphony]);
+    expect(Math.abs(avenue.lon - symphony.lon)).toBeCloseTo(0.00224, 5);
+    expect(Math.hypot(lonPair[1].dx, lonPair[1].dy)).toBeGreaterThan(0);
+  });
+
+  it("не трогает точки с разницей 0.011° по долготе", () => {
+    const pts = [
+      { name: "a", tag: "" as const, lat: 22.3, lon: 114.17 },
+      { name: "b", tag: "" as const, lat: 22.3, lon: 114.181 },
+    ];
+    expect(fanOffsets(pts)).toEqual([
+      { dx: 0, dy: 0 },
+      { dx: 0, dy: 0 },
+    ]);
+  });
+
+  it("не трогает далёкие точки и детерминирован", () => {
+    const pts = [
+      { name: "a", tag: "" as const, lat: 22.3, lon: 114.17 },
+      { name: "b", tag: "" as const, lat: 29.56, lon: 106.55 },
+    ];
+    expect(fanOffsets(pts)).toEqual([
+      { dx: 0, dy: 0 },
+      { dx: 0, dy: 0 },
+    ]);
+    expect(fanOffsets(cluster)).toEqual(fanOffsets(cluster));
+  });
+
+  it("радиус сдвига — 18 px", () => {
+    const out = fanOffsets(cluster);
+    expect(Math.hypot(out[1].dx, out[1].dy)).toBeCloseTo(18, 6);
+    expect(Math.hypot(out[2].dx, out[2].dy)).toBeCloseTo(18, 6);
   });
 });
 
