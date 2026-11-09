@@ -379,7 +379,15 @@ const TRIP_GUIDE = {
      hours:"примерно до 22:00",
      note:"Соевая лавка старой школы на Jardine's Bazaar: соевое молоко, тофу-пудинг 豆腐花, жареный тофу с креветкой. HK$20–40 с человека, всё быстро, можно на вынос. Номер дома в источниках расходится (49 и 55) — ориентир вывеска 人和荳品廠 и улица Jardine's Bazaar у выхода F1.",
      maps:"Yan Wo Dou Bun Chong 人和荳品廠 Jardine's Bazaar Causeway Bay Hong Kong",
-     match:["荳品廠 Yan Wo"]},
+     match:["荳品廠 Yan Wo","人和荳品廠"]},
+
+    {kind:"food", city:"hk", id:"fook-yuen",
+     en:"Fook Yuen", zh:"福元湯圓",
+     addr:"Shop I-1, G/F, Lido Building, 7 Fook Yuen Street, Fortress Hill 炮台山福元街7號利都樓地下I-1舖",
+     hours:"С обеда до поздней ночи, часы сверить на месте",
+     note:"Лавка сладких супов почти на тридцать лет: 湯圓 — клейкие рисовые шарики с кунжутной или арахисовой начинкой в имбирном сиропе, лепят руками, начинка вытекает при первом укусе. В мишленовском гиде с 2021 года. Миска ~HK$30–50, берут на месте или на вынос; выход B станции 炮台山, дальше три минуты. От отеля в Causeway Bay 12–15 минут пешком по 英皇道 или одна остановка метро 天后 → 炮台山.",
+     maps:"Fook Yuen Dessert 福元湯圓 7 Fook Yuen Street Fortress Hill Hong Kong",
+     match:["福元湯圓","Fook Yuen"]},
 
     {kind:"food", city:"hk", id:"donki-cwb", badge:"магазин",
      en:"DON DON DONKI (Causeway Bay)", zh:"驚安の殿堂 名珠城店",

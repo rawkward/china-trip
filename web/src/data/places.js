@@ -435,5 +435,10 @@ export const TRIP_PLACES = {
   "mak_man_kee": {"name": "Mak Man Kee 麥文記麵家, Parkes Street Jordan", "lat": 22.3046800, "lon": 114.1704400},
   "ying_kee": {"name": "Ying Kee Noodle Shop 英記麵家, High Street Sai Ying Pun", "lat": 22.2850754, "lon": 114.1442905},
   "colour_harbour": {"name": "7-Colour Harbour 彩虹禮巷, Cochrane Street Central", "lat": 22.2834871, "lon": 114.1548371},
-  "man_wa_lane": {"name": "Man Wa Lane 文華里, Sheung Wan", "lat": 22.2859600, "lon": 114.1524200}
+  "man_wa_lane": {"name": "Man Wa Lane 文華里, Sheung Wan", "lat": 22.2859600, "lon": 114.1524200},
+  "wan_chai_pier": {"name": "Star Ferry Pier 灣仔碼頭, Hung Hing Road", "lat": 22.2821030, "lon": 114.1760260},
+  "tst_star_ferry": {"name": "Star Ferry Pier 尖沙咀天星碼頭, Salisbury Road", "lat": 22.2935410, "lon": 114.1679870},
+  "times_square": {"name": "Times Square 時代廣場, 1 Matheson Street", "lat": 22.2783590, "lon": 114.1821060},
+  "fook_yuen": {"name": "Fook Yuen 福元湯圓, 7 Fook Yuen Street Fortress Hill", "lat": 22.2879500, "lon": 114.1932000},
+  "yan_wo": {"name": "Yan Wo Dou Bun Chong 人和荳品廠, Jardine's Bazaar", "lat": 22.2797600, "lon": 114.1838400}
 };
