@@ -113,6 +113,21 @@ describe("ItinerarySection", () => {
     expect(screen.queryByRole("region", { name: "День 1" })).not.toBeInTheDocument();
   });
 
+  it("показывает ссылку на список мест Гонконга без раскрытия дней", async () => {
+    const main = VARIANTS.find((v) => v.main) ?? VARIANTS[0];
+    const first = buildDays(main, DATES)[0];
+    mockApi(noteKey(main.id, first), first.title);
+
+    renderSection();
+
+    const links = await screen.findAllByRole("link", { name: /Список мест на карте/ });
+    expect(links).toHaveLength(1);
+    expect(links[0]).toHaveAttribute("href", "https://maps.app.goo.gl/WVb7ZLsr4ebW1hqM7");
+    expect(links[0]).toHaveAttribute("target", "_blank");
+    expect(links[0].getAttribute("rel")).toContain("noopener");
+    expect(screen.queryByRole("region", { name: "День 1" })).not.toBeInTheDocument();
+  });
+
   it("на узком окне скроллит к карте после «Показать на карте»", async () => {
     const main = VARIANTS.find((v) => v.main) ?? VARIANTS[0];
     const first = buildDays(main, DATES)[0];

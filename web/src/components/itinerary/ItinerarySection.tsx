@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
-import { Map as MapIcon, X } from "lucide-react";
+import { Map as MapIcon, MapPin, X } from "lucide-react";
 import { useEdits } from "@/edits/EditsContext";
 import { useVariant } from "@/hooks/useVariant";
 import { CITIES, GUIDE_ITEMS } from "@/data";
@@ -12,6 +12,8 @@ import { Button } from "../ui";
 import { toast } from "../ui/Toast";
 import { DayCard } from "./DayCard";
 import { MissedBlock } from "./MissedBlock";
+
+const HK_MAP_URL = "https://maps.app.goo.gl/WVb7ZLsr4ebW1hqM7";
 
 /**
  * «Маршрут по дням»: сводка ночей, аккордеон дней и колонка карты.
@@ -41,6 +43,10 @@ export function ItinerarySection() {
     [days, activeId, dayTexts],
   );
   const mapDays = useMemo(() => cards.map((c) => c.day), [cards]);
+  const firstHkIndex = useMemo(
+    () => cards.findIndex((c) => c.day.city === "hk"),
+    [cards],
+  );
 
   const toggleDay = (n: number) => {
     setOpenDays((prev) => {
@@ -119,17 +125,34 @@ export function ItinerarySection() {
 
       <div className="grid min-w-0 grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)] lg:items-start">
         <div id="dayList" className="flex min-w-0 flex-col gap-3">
-          {cards.map(({ day, key, texts }) => (
-            <DayCard
-              key={activeId + "-" + day.n}
-              day={day}
-              dayKey={key}
-              texts={texts}
-              api={edits}
-              open={openDays.has(day.n)}
-              onToggle={() => toggleDay(day.n)}
-              onFocusDay={focusOnDay}
-            />
+          {cards.map(({ day, key, texts }, i) => (
+            <Fragment key={activeId + "-" + day.n}>
+              {i === firstHkIndex && (
+                <div className="surface flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-line bg-paper-deep px-3 py-2 sm:px-4">
+                  <span className="eyebrow" style={{ color: CITIES.hk.color }}>
+                    Гонконг
+                  </span>
+                  <a
+                    href={HK_MAP_URL}
+                    target="_blank"
+                    rel="noopener"
+                    className="btn-soft min-w-0"
+                  >
+                    <MapPin className="size-3.5 shrink-0" aria-hidden="true" />
+                    <span className="truncate">Список мест на карте</span>
+                  </a>
+                </div>
+              )}
+              <DayCard
+                day={day}
+                dayKey={key}
+                texts={texts}
+                api={edits}
+                open={openDays.has(day.n)}
+                onToggle={() => toggleDay(day.n)}
+                onFocusDay={focusOnDay}
+              />
+            </Fragment>
           ))}
         </div>
 
