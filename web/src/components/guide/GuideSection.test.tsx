@@ -1,4 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { EditsProvider } from "../../edits/EditsContext";
 import { isPark } from "../../lib/guide";
@@ -70,6 +71,22 @@ describe("GuideSection", () => {
     expect(screen.queryByRole("button", { name: "рекомендация" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "выбор" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "альтернатива" })).not.toBeInTheDocument();
+  });
+
+  it("фильтрует города быстрыми чипами", async () => {
+    renderGuide("stay", "stay");
+
+    const cqChip = screen.getByRole("button", { name: "Чунцин" });
+    await userEvent.setup().click(cqChip);
+
+    expect(screen.queryByRole("region", { name: "Гонконг" })).not.toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "Чунцин" })).toBeInTheDocument();
+    expect(cqChip).toHaveAttribute("aria-pressed", "true");
+
+    await userEvent.setup().click(screen.getByRole("button", { name: "Все города" }));
+
+    expect(screen.getByRole("region", { name: "Гонконг" })).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "Чунцин" })).toBeInTheDocument();
   });
 
   it("раздел парков показывает только карточки с флагом park", () => {

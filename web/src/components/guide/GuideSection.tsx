@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { CITIES, GUIDE, GUIDE_ITEMS } from "../../data";
 import { useEdits } from "../../edits/EditsContext";
 import { cn } from "../../lib/cn";
@@ -25,15 +26,45 @@ const GRID: Record<GuideKind, string> = {
 export function GuideSection({ id, kind, only, anchorPrefix = "g-" }: GuideSectionProps) {
   const { token, guideTags, saveGuideTag } = useEdits();
   const groups = groupGuideByCity(GUIDE_ITEMS, GUIDE.cityOrder, CITIES, kind, guideTags, only);
+  const [cityFilter, setCityFilter] = useState<string>("all");
+
+  const visibleGroups = cityFilter === "all" ? groups : groups.filter((g) => g.city === cityFilter);
 
   const handleTag = (key: string, tag: GuideTagValue) => {
     void saveGuideTag(key, tag);
   };
 
+  const handleCity = (city: string) => {
+    setCityFilter((current) => (current === city ? "all" : city));
+  };
+
   return (
     <Section id={id}>
       <div className="grid gap-6">
-        {groups.map((group) => (
+        {groups.length > 1 ? (
+          <div className="flex gap-1.5 overflow-x-auto pb-1 [scrollbar-width:none]">
+            <button
+              type="button"
+              className={cn("chip shrink-0", cityFilter === "all" && "chip-on")}
+              aria-pressed={cityFilter === "all"}
+              onClick={() => setCityFilter("all")}
+            >
+              Все города
+            </button>
+            {groups.map((group) => (
+              <button
+                key={group.city}
+                type="button"
+                className={cn("chip shrink-0", cityFilter === group.city && "chip-on")}
+                aria-pressed={cityFilter === group.city}
+                onClick={() => handleCity(group.city)}
+              >
+                {group.label}
+              </button>
+            ))}
+          </div>
+        ) : null}
+        {visibleGroups.map((group) => (
           <section key={group.city} aria-label={group.label}>
             <div className="mb-3 flex items-baseline gap-2">
               <span className="font-display text-[1.08rem] font-semibold sm:text-[1.2rem]">
