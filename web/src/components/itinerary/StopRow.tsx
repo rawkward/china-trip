@@ -145,6 +145,7 @@ export function StopRow({
             picks={stop.picks ?? []}
             texts={texts}
             api={api}
+            layout={stop.layout}
           />
 
           {timeEditor}
