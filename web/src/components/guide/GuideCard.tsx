@@ -91,7 +91,7 @@ export function GuideCard({ item, tag, kind, token, onTag, anchorPrefix = "g-" }
               rel="noopener noreferrer"
               className="link-quiet font-medium"
             >
-              сайт ↗
+              {kind === "stay" && item.site?.includes("trip.com") ? "Trip.com ↗" : "сайт ↗"}
             </a>
           ) : null}
           {showMaps ? (

@@ -54,6 +54,33 @@ describe("GuideCard: неполные данные", () => {
     expect(container.textContent).not.toContain("—");
   });
 
+  it("у отеля со ссылкой на Trip.com подпись ссылки — Trip.com", () => {
+    const { container } = render(
+      <GuideCard
+        item={{ ...bare, kind: "stay", site: "https://ru.trip.com/hotels/detail/?hotelId=1" }}
+        tag="choice"
+        kind="stay"
+        token={null}
+        onTag={vi.fn()}
+      />,
+    );
+    expect(screen.getByRole("link", { name: "Trip.com ↗" })).toBeInTheDocument();
+    expect(container.textContent).not.toContain("сайт");
+  });
+
+  it("у отеля с другим сайтом подпись остаётся «сайт»", () => {
+    render(
+      <GuideCard
+        item={{ ...bare, kind: "stay", site: "https://example.com" }}
+        tag="choice"
+        kind="stay"
+        token={null}
+        onTag={vi.fn()}
+      />,
+    );
+    expect(screen.getByRole("link", { name: "сайт ↗" })).toBeInTheDocument();
+  });
+
   it("кастомный badge важнее подписи тега", () => {
     render(
       <GuideCard
