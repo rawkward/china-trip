@@ -70,7 +70,6 @@ export function DayCard({ day, dayKey, texts, api, open, onToggle, onFocusDay, a
       className={cn(
         "surface min-w-0 overflow-hidden",
         isFest && "border-accent/35 bg-accent-soft/20",
-        anchorId && "scroll-mt-20",
       )}
     >
       <div className="flex items-stretch gap-0.5 pr-1">

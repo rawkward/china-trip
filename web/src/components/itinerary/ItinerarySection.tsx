@@ -177,7 +177,7 @@ export function ItinerarySection() {
                 {city && (
                   <div
                     id={"city-" + i}
-                    className="surface flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-line bg-paper-deep px-3 py-2 scroll-mt-20 sm:px-4"
+                    className="surface flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-line bg-paper-deep px-3 py-2 sm:px-4"
                   >
                     <span className="eyebrow" style={{ color: city.color }}>
                       {city.label}
