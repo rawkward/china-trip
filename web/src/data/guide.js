@@ -51,7 +51,7 @@ const TRIP_GUIDE = {
      addr:"239 Queen's Road West, Sai Ying Pun 西營盤皇后大道西239號",
      site:"https://ru.trip.com/hotels/detail/?hotelId=425090&checkIn=2026-12-05&checkOut=2026-12-10&adult=2&children=0&crn=1&curr=RUB",
      hours:"Стойка 24 ч · заезд с 15:00, выезд до 12:00",
-     note:"Отель, в котором Женя уже жила в Гонконге: 38 этажей, 432 номера, у части номеров окна на гавань. Sai Ying Pun — запад острова, две остановки Island Line до Central (~8 минут); от аэропорта — Airport Express до Hong Kong Station и метро, либо автобусом A11. Район тише и дешевле Джордана, под окнами 皇后大道西 с трамваем и рынком. По ссылке Жени на Klook было от ~50 $ за ночь — вдвое ниже Eaton и Panda, ценой 10–15 минут дороги; цену за 5–10.12 сверять <a href=\"https://ru.trip.com/hotels/detail/?hotelId=425090&checkIn=2026-12-05&checkOut=2026-12-10&adult=2&children=0&crn=1&curr=RUB\" target=\"_blank\" rel=\"noopener\">на Trip.com</a>.",
+     note:"Отель в Сай-Ин-Пун: 38 этажей, 432 номера, у части номеров окна на гавань. Sai Ying Pun — запад острова, две остановки Island Line до Central (~8 минут); от аэропорта — Airport Express до Hong Kong Station и метро, либо автобусом A11. Район тише и дешевле Джордана, под окнами 皇后大道西 с трамваем и рынком. На Klook в прошлом поиске было от ~50 $ за ночь — вдвое ниже Eaton и Panda, ценой 10–15 минут дороги; цену за 5–10.12 сверять <a href=\"https://ru.trip.com/hotels/detail/?hotelId=425090&checkIn=2026-12-05&checkOut=2026-12-10&adult=2&children=0&crn=1&curr=RUB\" target=\"_blank\" rel=\"noopener\">на Trip.com</a>.",
      maps:"Ramada Hong Kong Harbour View 香港華美達海景酒店 239 Queen's Road West Sai Ying Pun Hong Kong"},
 
     /* ==================== ГОНКОНГ · ДОСТОПРИМЕЧАТЕЛЬНОСТИ ==================== */
