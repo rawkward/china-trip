@@ -211,6 +211,8 @@ export function StopRow({
 
         <StopNote stopKey={stopKey(dayKey, stopOriginal)} original={stop.note} edits={api} />
 
+        {stop.map && <CollapsedMap map={stop.map} />}
+
         {timeEditor}
         {admin}
         {refPicker}
@@ -243,5 +245,29 @@ function StopIcon({ tag }: { tag?: Stop["tag"] }) {
     <span aria-hidden="true" className="w-5 shrink-0 pt-0.5 text-center text-[1rem] sm:w-6">
       {tagIcon(tag)}
     </span>
+  );
+}
+
+/** Картинка-карта под остановкой: по умолчанию свёрнута в кнопку. */
+function CollapsedMap({ map }: { map: NonNullable<Stop["map"]> }) {
+  return (
+    <details className="mt-1.5 rounded-lg border border-line bg-paper-deep/30 px-2 py-1">
+      <summary className="cursor-pointer list-none text-[0.76rem] font-semibold text-accent select-none marker:text-accent">
+        Карта маршрута ▾
+      </summary>
+      <figure className="mt-1.5 mb-1">
+        <img
+          src={map.src}
+          alt={map.caption ?? "карта маршрута"}
+          loading="lazy"
+          className="w-full rounded-md border border-line"
+        />
+        {map.caption && (
+          <figcaption className="mt-1 text-[0.72rem] leading-snug text-muted-soft">
+            {map.caption}
+          </figcaption>
+        )}
+      </figure>
+    </details>
   );
 }

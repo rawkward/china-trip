@@ -31,6 +31,12 @@ export interface Pick {
   _name?: string;
 }
 
+/** Сворачиваемая картинка-карта под остановкой (кнопка «Карта маршрута»). */
+export interface StopMap {
+  src: string;
+  caption?: string;
+}
+
 /** Остановка дня. Либо обычная (`name`), либо группа вариантов (`picks`). */
 export interface Stop {
   k: string;
@@ -40,6 +46,8 @@ export interface Stop {
   note?: string;
   cost?: string;
   picks?: Pick[];
+  /** сворачиваемая карта под текстом остановки */
+  map?: StopMap;
   // --- производные поля, которые добавляет слой правок (lib/texts.ts) ---
   _name?: string;
   _title?: string;
