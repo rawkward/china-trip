@@ -19,6 +19,7 @@ export interface DayCardProps {
   open: boolean;
   onToggle: () => void;
   onFocusDay: (n: number) => void;
+  anchorId?: string;
 }
 
 function stopCountWord(n: number): string {
@@ -31,7 +32,7 @@ function stopCountWord(n: number): string {
 }
 
 /** Карточка дня: шапка-аккордеон, остановки, карта и заметка. */
-export function DayCard({ day, dayKey, texts, api, open, onToggle, onFocusDay }: DayCardProps) {
+export function DayCard({ day, dayKey, texts, api, open, onToggle, onFocusDay, anchorId }: DayCardProps) {
   const city = CITIES[day.city] ?? { label: day.city, color: "#8a8278" };
   const isFest = day.places.some((p) => p.tag === "festival");
   const count = day.places.length;
@@ -65,9 +66,11 @@ export function DayCard({ day, dayKey, texts, api, open, onToggle, onFocusDay }:
 
   return (
     <article
+      id={anchorId}
       className={cn(
         "surface min-w-0 overflow-hidden",
         isFest && "border-accent/35 bg-accent-soft/20",
+        anchorId && "scroll-mt-20",
       )}
     >
       <div className="flex items-stretch gap-0.5 pr-1">

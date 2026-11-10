@@ -46,6 +46,17 @@ export function ItinerarySection() {
       }),
     [days, activeId, dayTexts],
   );
+  const groupStart = useMemo(() => {
+    const out: number[] = [];
+    let prev = "";
+    cards.forEach((c, i) => {
+      if (c.day.city !== prev) {
+        out.push(i);
+        prev = c.day.city;
+      }
+    });
+    return out;
+  }, [cards]);
   const mapDays = useMemo(() => cards.map((c) => c.day), [cards]);
   const firstMapCityIndex = useMemo(() => {
     const seen = new Set<string>();
@@ -92,6 +103,13 @@ export function ItinerarySection() {
     scrollToMap();
   };
 
+  const scrollToCity = (cardIndex: number) => {
+    const el = document.getElementById("city-" + cardIndex);
+    if (el && typeof el.scrollIntoView === "function") {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
     <Section
       id="itinerary"
@@ -116,7 +134,7 @@ export function ItinerarySection() {
         </Button>
       }
     >
-      <div className="mb-4 flex flex-wrap items-center gap-1.5 text-[0.82rem] sm:gap-2">
+      <div data-route-chain className="mb-4 flex flex-wrap items-center gap-1.5 text-[0.82rem] sm:gap-2">
         {summary.groups.map((group, i) => {
           const city = CITIES[group.city] ?? { label: group.city, color: "#8a8278" };
           return (
@@ -126,8 +144,11 @@ export function ItinerarySection() {
                   →
                 </span>
               )}
-              <span
-                className="inline-flex max-w-full items-baseline gap-1 rounded-full border border-line bg-surface px-2.5 py-1 font-semibold"
+              <button
+                type="button"
+                onClick={() => scrollToCity(groupStart[i])}
+                title={"Перейти к дням: " + city.label}
+                className="inline-flex max-w-full cursor-pointer items-baseline gap-1 rounded-full border border-line bg-surface px-2.5 py-1 font-semibold transition-colors hover:bg-paper-deep"
                 style={{ color: city.color }}
               >
                 <span className="truncate">{city.label}</span>
@@ -137,7 +158,7 @@ export function ItinerarySection() {
                     ? group.nights + " " + nightsWord(group.nights)
                     : "вылет домой"}
                 </span>
-              </span>
+              </button>
             </Fragment>
           );
         })}
@@ -154,7 +175,10 @@ export function ItinerarySection() {
             return (
               <Fragment key={activeId + "-" + day.n}>
                 {city && (
-                  <div className="surface flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-line bg-paper-deep px-3 py-2 sm:px-4">
+                  <div
+                    id={"city-" + i}
+                    className="surface flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-line bg-paper-deep px-3 py-2 scroll-mt-20 sm:px-4"
+                  >
                     <span className="eyebrow" style={{ color: city.color }}>
                       {city.label}
                     </span>
@@ -178,6 +202,7 @@ export function ItinerarySection() {
                   open={openDays.has(day.n)}
                   onToggle={() => toggleDay(day.n)}
                   onFocusDay={focusOnDay}
+                  anchorId={!city && groupStart.includes(i) ? "city-" + i : undefined}
                 />
               </Fragment>
             );

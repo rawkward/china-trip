@@ -171,6 +171,28 @@ describe("ItinerarySection", () => {
     expect(scrollSpy).toHaveBeenCalledWith({ behavior: "smooth", block: "start" });
   });
 
+  it("клик по городу в схеме скроллит к первому дню этого города", async () => {
+    const main = VARIANTS.find((v) => v.main) ?? VARIANTS[0];
+    const first = buildDays(main, DATES)[0];
+    mockApi(noteKey(main.id, first), first.title);
+    const scrollSpy = mockScrollIntoView();
+
+    renderSection();
+
+    const chain = await waitFor(() => {
+      const el = document.querySelector("[data-route-chain]");
+      expect(el).not.toBeNull();
+      return el as HTMLElement;
+    });
+    await userEvent.setup().click(within(chain).getByRole("button", { name: /Чжанцзяцзе/ }));
+
+    await waitFor(() => expect(scrollSpy).toHaveBeenCalledTimes(1));
+    const target = scrollSpy.mock.instances[0] as HTMLElement;
+    expect(target.id).toMatch(/^city-\d+$/);
+    expect(document.getElementById("dayList")?.contains(target)).toBe(true);
+    expect(scrollSpy).toHaveBeenCalledWith({ behavior: "smooth", block: "start" });
+  });
+
   it("на широком окне не скроллит к карте", async () => {
     const main = VARIANTS.find((v) => v.main) ?? VARIANTS[0];
     const first = buildDays(main, DATES)[0];
