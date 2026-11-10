@@ -139,6 +139,17 @@ export function StopRow({
             />
           )}
 
+          {stop.url && (
+            <a
+              href={stop.url}
+              target="_blank"
+              rel="noopener"
+              className="mt-1 inline-flex items-center rounded-full border border-accent/30 bg-accent-soft px-2.5 py-1 text-[0.74rem] font-semibold text-accent-ink transition-colors hover:border-accent"
+            >
+              расписание и билеты на Trip.com →
+            </a>
+          )}
+
           <PickCarousel
             dayKey={dayKey}
             groupSlug={slug}
