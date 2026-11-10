@@ -101,6 +101,17 @@ export function PickCarousel({ dayKey, groupSlug, picks, texts, api }: PickCarou
         </div>
       )}
 
+      {pick.url && (
+        <a
+          href={pick.url}
+          target="_blank"
+          rel="noopener"
+          className="mt-1.5 inline-flex items-center rounded-full border border-accent/30 bg-accent-soft px-2.5 py-1 text-[0.74rem] font-semibold text-accent-ink transition-colors hover:border-accent"
+        >
+          открыть на Trip.com →
+        </a>
+      )}
+
       <div className="mt-2 flex flex-wrap items-center gap-1.5">
         <button
           type="button"

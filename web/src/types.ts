@@ -27,6 +27,8 @@ export interface Pick {
   cost?: string;
   rec?: boolean;
   dim?: string;
+  /** ссылка на страницу бронирования (Trip.com) */
+  url?: string;
   /** снимок исходного имени: правка текста адресуется по нему */
   _name?: string;
 }
