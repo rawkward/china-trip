@@ -209,3 +209,44 @@ describe("withTexts: скрытие остановок", () => {
     expect(out._hidden).toHaveLength(base.places.length);
   });
 });
+
+describe("withTexts: добавленные остановки", () => {
+  const added = JSON.stringify([
+    { s: "a1b2c3", n: "Новый музей", t: "sight", d: "заметка", g: "mplus" },
+  ]);
+
+  it("добавленная остановка появляется в конце дня и сохраняет _guide", () => {
+    const out = withTexts(day(), { add: added }, guide);
+    expect(out.places.map((p) => p.name)).toEqual(["Хунъядун", "Ужин", "Новый музей"]);
+    const stop = out.places[2];
+    expect(stop._slug).toBe("a1b2c3");
+    expect(stop._guide).toBe("mplus");
+    expect(stop._added).toBe(true);
+    expect(stop.note).toBe("заметка");
+  });
+
+  it("order ставит добавленную остановку в нужное место", () => {
+    const base = withTexts(day(), {}, guide);
+    const order = ["a1b2c3", base.places[0]._slug, base.places[1]._slug].join(",");
+    const out = withTexts(day(), { add: added, order }, guide);
+    expect(out.places.map((p) => p.name)).toEqual(["Новый музей", "Хунъядун", "Ужин"]);
+  });
+
+  it("hide скрывает добавленную остановку и кладёт её в _hidden", () => {
+    const out = withTexts(day(), { add: added, hide: "a1b2c3" }, guide);
+    expect(out.places.map((p) => p.name)).toEqual(["Хунъядун", "Ужин"]);
+    expect(out._hidden?.map((p) => p.name)).toEqual(["Новый музей"]);
+  });
+
+  it("битый add игнорируется", () => {
+    const out = withTexts(day(), { add: "не json" }, guide);
+    expect(out.places.map((p) => p.name)).toEqual(["Хунъядун", "Ужин"]);
+  });
+
+  it("добавленная остановка с уже существующим slug не дублируется", () => {
+    const base = withTexts(day(), {}, guide);
+    const duplicate = JSON.stringify([{ s: base.places[0]._slug, n: "Дубль" }]);
+    const out = withTexts(day(), { add: duplicate }, guide);
+    expect(out.places.map((p) => p.name)).toEqual(["Хунъядун", "Ужин"]);
+  });
+});

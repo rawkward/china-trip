@@ -211,3 +211,22 @@ describe("StopRow: удаление из маршрута", () => {
     expect(onDelete).toHaveBeenCalledWith("lunch");
   });
 });
+
+describe("StopRow: добавленная остановка", () => {
+  it("по _guide показывает ссылку «в справочнике»", () => {
+    renderStop({
+      k: "",
+      name: "Моя остановка",
+      tag: "sight",
+      _slug: "a1b2c3",
+      _name: "Моя остановка",
+      _guide: "victoria-peak",
+      _added: true,
+    });
+
+    expect(screen.getByRole("link", { name: "в справочнике" })).toHaveAttribute(
+      "href",
+      "#g-victoria-peak",
+    );
+  });
+});

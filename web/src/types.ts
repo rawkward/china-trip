@@ -59,6 +59,10 @@ export interface Stop {
   _title?: string;
   _slug?: string;
   _time?: string;
+  /** id карточки справочника у добавленной остановки */
+  _guide?: string;
+  /** остановка добавлена в день правкой `add`, а не пришла из данных */
+  _added?: boolean;
 }
 
 /** Блок дня в данных (без номера и даты). */

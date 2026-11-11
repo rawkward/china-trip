@@ -1,5 +1,7 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+import { GUIDE_ITEMS } from "@/data";
+import { stopSlug } from "@/lib/slug";
 import type { Day } from "@/types";
 import { DayCard } from "./DayCard";
 import type { ItineraryEditApi } from "./EditableText";
@@ -193,5 +195,129 @@ describe("DayCard: удаление остановок из дня", () => {
     );
     expect(screen.getByText(/убрано из маршрута/)).toBeInTheDocument();
     expect(screen.getAllByText("Ужин").length).toBeGreaterThan(0);
+  });
+});
+
+describe("DayCard: добавление остановок", () => {
+  it("кнопка добавления есть только с токеном", () => {
+    const { rerender } = renderCard({ api: makeApi({ token: null }) });
+    expect(screen.queryByRole("button", { name: "добавить остановку" })).not.toBeInTheDocument();
+
+    rerender(
+      <DayCard
+        day={day}
+        dayKey="hk|07.12"
+        texts={{}}
+        api={makeApi()}
+        open
+        onToggle={vi.fn()}
+        onFocusDay={vi.fn()}
+      />,
+    );
+    expect(screen.getByRole("button", { name: "добавить остановку" })).toBeInTheDocument();
+  });
+
+  it("своя остановка сохраняется в add компактным JSON", () => {
+    const api = makeApi();
+    renderCard({ api });
+
+    fireEvent.click(screen.getByRole("button", { name: "добавить остановку" }));
+    fireEvent.change(screen.getByLabelText("название новой остановки"), {
+      target: { value: "Новый музей" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "добавить" }));
+
+    expect(api.saveText).toHaveBeenCalledWith(
+      "hk|07.12",
+      "add",
+      JSON.stringify([{ s: stopSlug("Новый музей"), n: "Новый музей" }]),
+    );
+    expect(screen.getByLabelText("название новой остановки")).toBeInTheDocument();
+  });
+
+  it("карточка справочника даёт id карточки и тег", () => {
+    const peak = GUIDE_ITEMS.find((it) => it.id === "victoria-peak")!;
+    const api = makeApi();
+    renderCard({ api });
+
+    fireEvent.click(screen.getByRole("button", { name: "добавить остановку" }));
+    fireEvent.change(screen.getByLabelText("поиск по справочнику"), { target: { value: "Victoria" } });
+    fireEvent.click(screen.getByRole("button", { name: /Victoria Peak & Peak Tram/ }));
+
+    expect(api.saveText).toHaveBeenCalledWith(
+      "hk|07.12",
+      "add",
+      JSON.stringify([
+        {
+          s: stopSlug(peak.en),
+          n: peak.en,
+          t: "sight",
+          d: peak.note?.slice(0, 300),
+          g: peak.id,
+        },
+      ]),
+    );
+  });
+
+  it("уже добавленная в день карточка недоступна для повторного выбора", () => {
+    const peak = GUIDE_ITEMS.find((it) => it.id === "victoria-peak")!;
+    const texts = { add: JSON.stringify([{ s: stopSlug(peak.en), n: peak.en, g: peak.id }]) };
+    renderCard({ texts });
+
+    fireEvent.click(screen.getByRole("button", { name: "добавить остановку" }));
+    fireEvent.change(screen.getByLabelText("поиск по справочнику"), { target: { value: "Victoria" } });
+    const button = screen.getByRole("button", { name: /Victoria Peak & Peak Tram/ });
+    expect(button).toBeDisabled();
+    expect(button).toHaveTextContent("уже в дне");
+  });
+
+  it("удаление добавленной остановки убирает её из add, а не пишет hide", () => {
+    const api = makeApi();
+    const added = { k: "", s: "a1b2c3", n: "Новый музей", tag: "sight" as const, _slug: "a1b2c3", _name: "Новый музей", _added: true };
+    const withAdded: Day = { ...day, places: [...day.places, added] };
+    renderCard({ api, day: withAdded, texts: { add: JSON.stringify([{ s: "a1b2c3", n: "Новый музей" }]) } });
+
+    fireEvent.click(
+      within(screen.getByRole("region", { name: "День 1" })).getAllByRole("button", {
+        name: "убрать из маршрута",
+      })[3],
+    );
+
+    expect(api.saveText).toHaveBeenCalledWith("hk|07.12", "add", "");
+    expect(api.saveText).not.toHaveBeenCalledWith("hk|07.12", "hide", expect.anything());
+  });
+
+  it("повторное добавление своей остановки не пишет дубль и показывает подсказку", () => {
+    const api = makeApi();
+    renderCard({ api });
+
+    fireEvent.click(screen.getByRole("button", { name: "добавить остановку" }));
+    const input = screen.getByLabelText("название новой остановки");
+    fireEvent.change(input, { target: { value: "Новый музей" } });
+    fireEvent.click(screen.getByRole("button", { name: "добавить" }));
+
+    expect(api.saveText).toHaveBeenCalledTimes(1);
+
+    fireEvent.change(input, { target: { value: "Новый музей" } });
+    expect(screen.getByRole("button", { name: "добавить" })).toBeDisabled();
+    expect(screen.getByRole("status")).toHaveTextContent("уже в дне");
+
+    fireEvent.keyDown(input, { key: "Enter" });
+    expect(api.saveText).toHaveBeenCalledTimes(1);
+  });
+
+  it("своя остановка не дублирует уже добавленную в текстах дня", () => {
+    const api = makeApi();
+    const texts = { add: JSON.stringify([{ s: stopSlug("Новый музей"), n: "Новый музей" }]) };
+    renderCard({ api, texts });
+
+    fireEvent.click(screen.getByRole("button", { name: "добавить остановку" }));
+    const input = screen.getByLabelText("название новой остановки");
+    fireEvent.change(input, { target: { value: "Новый музей" } });
+    expect(screen.getByRole("button", { name: "добавить" })).toBeDisabled();
+
+    fireEvent.keyDown(input, { key: "Enter" });
+    expect(api.saveText).not.toHaveBeenCalled();
+    expect(screen.getByRole("status")).toHaveTextContent("уже в дне");
   });
 });

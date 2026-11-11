@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { ChevronDown, MapPin, Pencil } from "lucide-react";
 import { CITIES, PLACES } from "@/data";
 import type { Day } from "@/types";
 import { cn } from "@/lib/cn";
+import { parseAddedStops, serializeAddedStops } from "@/lib/added-stops";
 import { stopNumbers } from "@/lib/map";
 import { moveInOrder } from "@/lib/texts";
 import { Button, IconButton } from "../ui";
+import { AddStopPicker } from "./AddStopPicker";
 import { InlineEditor, hasText, type ItineraryEditApi } from "./EditableText";
 import { DayNote } from "./DayNote";
 import { StopRow } from "./StopRow";
@@ -33,6 +36,7 @@ function stopCountWord(n: number): string {
 
 /** Карточка дня: шапка-аккордеон, остановки, карта и заметка. */
 export function DayCard({ day, dayKey, texts, api, open, onToggle, onFocusDay, anchorId }: DayCardProps) {
+  const [adding, setAdding] = useState(false);
   const city = CITIES[day.city] ?? { label: day.city, color: "#8a8278" };
   const isFest = day.places.some((p) => p.tag === "festival");
   const count = day.places.length;
@@ -43,6 +47,7 @@ export function DayCard({ day, dayKey, texts, api, open, onToggle, onFocusDay, a
       : null;
   const order = day.places.map(slugOfStop);
   const mapNums = stopNumbers(day, PLACES);
+  const existingSlugs = order.concat(parseAddedStops(texts.add).map((a) => a.s));
 
   const handleMove = (slug: string, dir: "up" | "down") => {
     const next = moveInOrder(order, slug, dir);
@@ -54,6 +59,12 @@ export function DayCard({ day, dayKey, texts, api, open, onToggle, onFocusDay, a
   const hiddenList = () => (texts.hide ?? "").split(",").filter((slug) => slug.length > 0);
 
   const handleDelete = (slug: string) => {
+    const added = parseAddedStops(texts.add);
+    const rest = added.filter((item) => item.s !== slug);
+    if (rest.length !== added.length) {
+      void api.saveText(dayKey, "add", serializeAddedStops(rest));
+      return;
+    }
     const list = hiddenList();
     if (list.indexOf(slug) === -1) list.push(slug);
     void api.saveText(dayKey, "hide", list.join(","));
@@ -214,6 +225,30 @@ export function DayCard({ day, dayKey, texts, api, open, onToggle, onFocusDay, a
                     </li>
                   ))}
                 </ul>
+              </div>
+            )}
+
+            {api.token && (
+              <div className="mt-2">
+                <Button
+                  variant="soft"
+                  size="sm"
+                  aria-label="добавить остановку"
+                  aria-expanded={adding}
+                  onClick={() => setAdding((value) => !value)}
+                >
+                  ＋ добавить остановку
+                </Button>
+                {adding && (
+                  <AddStopPicker
+                    dayKey={dayKey}
+                    city={day.city}
+                    texts={texts}
+                    api={api}
+                    existingSlugs={existingSlugs}
+                    onClose={() => setAdding(false)}
+                  />
+                )}
               </div>
             )}
 

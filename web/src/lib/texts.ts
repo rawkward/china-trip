@@ -1,4 +1,5 @@
 import { guideItemByKey } from "./guide";
+import { addedStopToStop, parseAddedStops } from "./added-stops";
 import { stopSlug } from "./slug";
 import type { Day, DayTextsMap, GuideItem, Pick, Stop } from "../types";
 
@@ -89,6 +90,16 @@ export function withTexts(
     }
     return q;
   });
+
+  const seen = new Set<string>();
+  for (const p of out.places) {
+    if (p._slug) seen.add(p._slug);
+  }
+  for (const added of parseAddedStops(t.add)) {
+    if (seen.has(added.s)) continue;
+    seen.add(added.s);
+    out.places.push(addedStopToStop(added));
+  }
 
   const order = t.order;
   if (order) {

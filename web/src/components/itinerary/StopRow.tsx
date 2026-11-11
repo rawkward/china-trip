@@ -168,7 +168,8 @@ export function StopRow({
   }
 
   const stopOriginal = stop._name ?? stop.name ?? "";
-  const guideId = guideIdFor(GUIDE_ITEMS, stop.name) || guideIdFor(GUIDE_ITEMS, stop._name);
+  const guideId =
+    guideIdFor(GUIDE_ITEMS, stop.name) || guideIdFor(GUIDE_ITEMS, stop._name) || stop._guide || "";
   const ref = texts[fields.ref] ?? "";
   const refId = ref.split("|")[2] ?? "";
   const refHref = refId && GUIDE_ITEMS.some((it) => it.id === refId) ? "#g-" + refId : "";

@@ -192,3 +192,84 @@ test('пустая строка сбрасывает hide', () => {
   assert.deepEqual(normalizeDayTexts({ hide: '   ' }), {});
   assert.deepEqual(normalizeDayTexts({ hide: '', title: 'День' }), { title: 'День' });
 });
+
+test('add принимает массив остановок и нормализует поля', () => {
+  const raw = JSON.stringify([
+    { s: 'a1b2c3', n: '  Название  ', t: 'food', c: ' ¥50 ', d: ' заметка ', g: ' hotel-id ' },
+    { s: 'd4e5f6', n: 'Второе', t: '', c: '', d: '', g: '' },
+  ]);
+  const out = normalizeDayTexts({ add: raw });
+  assert.deepEqual(JSON.parse(out.add), [
+    { s: 'a1b2c3', n: 'Название', t: 'food', c: '¥50', d: 'заметка', g: 'hotel-id' },
+    { s: 'd4e5f6', n: 'Второе' },
+  ]);
+  assert.equal(out.add, JSON.stringify(JSON.parse(out.add)));
+});
+
+test('add: битый JSON — bad_value с именем поля', () => {
+  assert.throws(
+    () => normalizeDayTexts({ add: '[{"s":"a1b2c3"' }),
+    (err) =>
+      err instanceof DayTextError &&
+      err.code === 'bad_value' &&
+      err.field === 'add' &&
+      err.message === 'добавленные остановки — это JSON-массив',
+  );
+  assert.throws(() => normalizeDayTexts({ add: '{"s":"a1b2c3"}' }), DayTextError);
+});
+
+test('add: неизвестный тег и битый slug — bad_value', () => {
+  assert.throws(
+    () => normalizeDayTexts({ add: JSON.stringify([{ s: 'a1b2c3', n: 'Место', t: 'party' }]) }),
+    (err) => err instanceof DayTextError && err.code === 'bad_value' && err.field === 'add',
+  );
+  for (const s of ['abc', 'A1B2C3', 'a'.repeat(11), 'a b c d']) {
+    assert.throws(
+      () => normalizeDayTexts({ add: JSON.stringify([{ s, n: 'Место' }]) }),
+      (err) => err instanceof DayTextError && err.code === 'bad_value' && err.field === 'add',
+    );
+  }
+});
+
+test('add: больше 8 остановок и длинное описание отвергаются', () => {
+  const many = Array.from({ length: 9 }, (_, i) => ({ s: 's' + String(i).padStart(5, '0'), n: 'Место ' + i }));
+  assert.throws(
+    () => normalizeDayTexts({ add: JSON.stringify(many) }),
+    (err) => err instanceof DayTextError && err.code === 'bad_value' && err.field === 'add',
+  );
+  assert.throws(
+    () => normalizeDayTexts({ add: JSON.stringify([{ s: 'a1b2c3', n: 'Место', d: 'я'.repeat(301) }]) }),
+    (err) => err instanceof DayTextError && err.code === 'bad_value' && err.field === 'add',
+  );
+});
+
+test('add: пустая строка и пустой массив сбрасывают поле', () => {
+  assert.deepEqual(normalizeDayTexts({ add: '   ', title: 'День' }), { title: 'День' });
+  assert.deepEqual(normalizeDayTexts({ add: '' }), {});
+  assert.deepEqual(normalizeDayTexts({ add: '[]' }), {});
+});
+
+test('add: общий лимит 1200 не применяется, но сериализованная строка ограничена 4000', () => {
+  const long = Array.from({ length: 5 }, (_, i) => ({
+    s: 's' + String(i).padStart(5, '0'),
+    n: 'Место ' + i,
+    d: 'я'.repeat(300),
+  }));
+  const raw = JSON.stringify(long);
+  assert.ok(raw.length > DAY_TEXT_MAX_LEN);
+  assert.ok(raw.length < 4000);
+  assert.doesNotThrow(() => normalizeDayTexts({ add: raw }));
+
+  const huge = Array.from({ length: 8 }, (_, i) => ({
+    s: 's' + String(i).padStart(5, '0'),
+    n: 'я'.repeat(160),
+    c: 'я'.repeat(40),
+    d: 'я'.repeat(300),
+    g: 'я'.repeat(40),
+  }));
+  assert.ok(JSON.stringify(huge).length > 4000);
+  assert.throws(
+    () => normalizeDayTexts({ add: JSON.stringify(huge) }),
+    (err) => err instanceof DayTextError && err.code === 'body_too_long' && err.field === 'add',
+  );
+});
