@@ -17,6 +17,7 @@ const MAP_LIST_URLS: Record<string, string> = {
   hk: "https://maps.app.goo.gl/WVb7ZLsr4ebW1hqM7",
   zjj: "https://maps.app.goo.gl/X79tTZuYo3U45ydN9",
   fr: "https://maps.app.goo.gl/MZMv96EnFznmL6B1A",
+  cq: "https://maps.app.goo.gl/RiwcPz5Q99wdBdZKA",
 };
 
 /**
@@ -172,9 +173,11 @@ export function ItinerarySection() {
           {cards.map(({ day, key, texts }, i) => {
             const mapCity = firstMapCityIndex.get(i);
             const city = mapCity ? CITIES[mapCity] : null;
+            const listUrl = mapCity ? MAP_LIST_URLS[mapCity] : undefined;
+            const showCityBar = Boolean(city && listUrl);
             return (
               <Fragment key={activeId + "-" + day.n}>
-                {city && (
+                {city && listUrl && (
                   <div
                     id={"city-" + i}
                     className="surface flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-line bg-paper-deep px-3 py-2 sm:px-4"
@@ -183,7 +186,7 @@ export function ItinerarySection() {
                       {city.label}
                     </span>
                     <a
-                      href={MAP_LIST_URLS[mapCity!]}
+                      href={listUrl}
                       target="_blank"
                       rel="noopener"
                       aria-label={"Список мест на карте — " + city.label}
@@ -202,7 +205,7 @@ export function ItinerarySection() {
                   open={openDays.has(day.n)}
                   onToggle={() => toggleDay(day.n)}
                   onFocusDay={focusOnDay}
-                  anchorId={!city && groupStart.includes(i) ? "city-" + i : undefined}
+                  anchorId={!showCityBar && groupStart.includes(i) ? "city-" + i : undefined}
                 />
               </Fragment>
             );

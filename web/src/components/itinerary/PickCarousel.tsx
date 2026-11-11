@@ -13,11 +13,77 @@ export interface PickCarouselProps {
   picks: Pick[];
   texts: Record<string, string>;
   api: ItineraryEditApi;
-  layout?: "carousel" | "list";
+  layout?: "carousel" | "list" | "booked";
 }
 
 function isRecommended(pick: Pick, index: number): boolean {
   return pick.rec === true || (index === 0 && pick.rec !== false);
+}
+
+interface PickItemProps {
+  dayKey: string;
+  groupSlug: string;
+  item: Pick;
+  index: number;
+  texts: Record<string, string>;
+  api: ItineraryEditApi;
+}
+
+function PickItem({ dayKey, groupSlug, item, index, texts, api }: PickItemProps) {
+  const f = stopFieldSet(groupSlug, index) as { name: string; cost: string };
+  const otherGuide = guideIdFor(GUIDE_ITEMS, item.name) || guideIdFor(GUIDE_ITEMS, item._name);
+  return (
+    <li className="border-b border-dashed border-line pb-1.5 last:border-b-0 last:pb-0">
+      <div className="flex flex-wrap items-baseline gap-x-2">
+        <span className="text-[0.9rem] font-semibold leading-snug text-ink">
+          <EditableText
+            dayKey={dayKey}
+            field={f.name}
+            value={item.name}
+            edited={hasText(texts, f.name)}
+            api={api}
+            ariaLabel="название варианта"
+          />
+        </span>
+        {item.rec === true && (
+          <span className="rounded-full border border-accent/25 bg-accent-soft px-1.5 py-0.5 text-[0.6rem] font-bold uppercase tracking-wide text-accent-ink">
+            наш выбор
+          </span>
+        )}
+        {otherGuide && (
+          <a
+            href={"#g-" + otherGuide}
+            className="whitespace-nowrap text-[0.72rem] font-semibold text-accent underline decoration-dotted underline-offset-2"
+          >
+            в справочнике
+          </a>
+        )}
+        {item.cost && (
+          <span className="ml-auto shrink-0 text-[0.78rem] font-semibold tabular-nums text-accent">
+            <EditableText
+              dayKey={dayKey}
+              field={f.cost}
+              value={item.cost}
+              edited={hasText(texts, f.cost)}
+              api={api}
+              ariaLabel="цена варианта"
+            />
+          </span>
+        )}
+      </div>
+      {item.note && <StopNote stopKey={stopKey(dayKey, item._name ?? item.name)} original={item.note} edits={api} />}
+      {item.url && (
+        <a
+          href={item.url}
+          target="_blank"
+          rel="noopener"
+          className="mt-1 inline-flex items-center rounded-full border border-accent/30 bg-accent-soft px-2.5 py-1 text-[0.72rem] font-semibold text-accent-ink transition-colors hover:border-accent"
+        >
+          открыть на Trip.com →
+        </a>
+      )}
+    </li>
+  );
 }
 
 /**
@@ -35,64 +101,59 @@ export function PickCarousel({ dayKey, groupSlug, picks, texts, api, layout }: P
           все варианты ({picks.length}) ▾
         </summary>
         <ul className="m-0 list-none space-y-1.5 p-0">
-          {picks.map((item, i) => {
-            const f = stopFieldSet(groupSlug, i) as { name: string; cost: string };
-            const otherGuide = guideIdFor(GUIDE_ITEMS, item.name) || guideIdFor(GUIDE_ITEMS, item._name);
-            return (
-              <li key={i} className="border-b border-dashed border-line pb-1.5 last:border-b-0 last:pb-0">
-                <div className="flex flex-wrap items-baseline gap-x-2">
-                  <span className="text-[0.9rem] font-semibold leading-snug text-ink">
-                    <EditableText
-                      dayKey={dayKey}
-                      field={f.name}
-                      value={item.name}
-                      edited={hasText(texts, f.name)}
-                      api={api}
-                      ariaLabel="название варианта"
-                    />
-                  </span>
-                  {item.rec === true && (
-                    <span className="rounded-full border border-accent/25 bg-accent-soft px-1.5 py-0.5 text-[0.6rem] font-bold uppercase tracking-wide text-accent-ink">
-                      наш выбор
-                    </span>
-                  )}
-                  {otherGuide && (
-                    <a
-                      href={"#g-" + otherGuide}
-                      className="whitespace-nowrap text-[0.72rem] font-semibold text-accent underline decoration-dotted underline-offset-2"
-                    >
-                      в справочнике
-                    </a>
-                  )}
-                  {item.cost && (
-                    <span className="ml-auto shrink-0 text-[0.78rem] font-semibold tabular-nums text-accent">
-                      <EditableText
-                        dayKey={dayKey}
-                        field={f.cost}
-                        value={item.cost}
-                        edited={hasText(texts, f.cost)}
-                        api={api}
-                        ariaLabel="цена варианта"
-                      />
-                    </span>
-                  )}
-                </div>
-                {item.note && <StopNote stopKey={stopKey(dayKey, item._name ?? item.name)} original={item.note} edits={api} />}
-                {item.url && (
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener"
-                    className="mt-1 inline-flex items-center rounded-full border border-accent/30 bg-accent-soft px-2.5 py-1 text-[0.72rem] font-semibold text-accent-ink transition-colors hover:border-accent"
-                  >
-                    открыть на Trip.com →
-                  </a>
-                )}
-              </li>
-            );
-          })}
+          {picks.map((item, i) => (
+            <PickItem
+              key={i}
+              dayKey={dayKey}
+              groupSlug={groupSlug}
+              item={item}
+              index={i}
+              texts={texts}
+              api={api}
+            />
+          ))}
         </ul>
       </details>
+    );
+  }
+
+  if (layout === "booked") {
+    const mainIndex = Math.max(0, picks.findIndex((item) => item.rec === true));
+    return (
+      <div className="mt-1.5 min-w-0 border-l-2 border-accent/25 pl-2.5 sm:pl-3">
+        <ul className="m-0 list-none space-y-1.5 p-0">
+          <PickItem
+            dayKey={dayKey}
+            groupSlug={groupSlug}
+            item={picks[mainIndex]}
+            index={mainIndex}
+            texts={texts}
+            api={api}
+          />
+        </ul>
+        {picks.length > 1 && (
+          <details className="mt-1.5 min-w-0">
+            <summary className="cursor-pointer list-none text-[0.76rem] font-semibold text-accent select-none marker:text-accent">
+              остальные варианты ({picks.length - 1}) ▾
+            </summary>
+            <ul className="m-0 list-none space-y-1.5 p-0">
+              {picks.map((item, i) =>
+                i === mainIndex ? null : (
+                  <PickItem
+                    key={i}
+                    dayKey={dayKey}
+                    groupSlug={groupSlug}
+                    item={item}
+                    index={i}
+                    texts={texts}
+                    api={api}
+                  />
+                ),
+              )}
+            </ul>
+          </details>
+        )}
+      </div>
     );
   }
 

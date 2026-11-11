@@ -189,6 +189,11 @@ export const TRIP_PLACES = {
     "lat": 30.05518,
     "lon": 107.8748712
   },
+  "theatre_1949": {
+    "name": "Chongqing 1949 Theatre",
+    "lat": 29.5837741,
+    "lon": 106.4432107
+  },
   "ciqikou": {
     "name": "Ciqikou Ancient Town",
     "lat": 29.5833399,
@@ -228,6 +233,21 @@ export const TRIP_PLACES = {
     "name": "Jiefangbei",
     "lat": 29.5601078,
     "lon": 106.5733671
+  },
+  "deyi_world": {
+    "name": "Deyi World 得意世界",
+    "lat": 29.55623,
+    "lon": 106.57175
+  },
+  "sense_scene_cq": {
+    "name": "SENSE SCENE San Shi Sen Yin Hotel (Чунцин, Цзефанбэй)",
+    "lat": 29.559469,
+    "lon": 106.575534
+  },
+  "shibati": {
+    "name": "Shibati traditional street",
+    "lat": 29.5541255,
+    "lon": 106.568959
   },
   "wulong": {
     "name": "Wulong District",
@@ -320,21 +340,13 @@ export const TRIP_PLACES = {
     "lon": 114.1757887
   },
   "nanbinlu": {"name": "Nanbin Road, Nan'an", "lat": 29.5522, "lon": 106.5886},
-  "huangjueya": {
-    "name": "Huangjueya Old Street, Nanshan",
-    "lat": 29.5408,
-    "lon": 106.601
-  },
+  "huangjueya": {"name": "Huangjueya Old Street, Nanshan", "lat": 29.539871, "lon": 106.598976},
   "jiangbeizui": {
     "name": "Jiangbeizui Riverside Park",
     "lat": 29.5749521,
     "lon": 106.5787915
   },
-  "nanshan_cq": {
-    "name": "Nanshan",
-    "lat": 29.5620786,
-    "lon": 106.6339531
-  },
+  "nanshan_cq": {"name": "Nanshan", "lat": 29.547948, "lon": 106.598835},
   "guanyinqiao": {
     "name": "Guanyinqiao",
     "lat": 29.5761428,
@@ -462,5 +474,15 @@ export const TRIP_PLACES = {
   "baofeng_lake": {"name": "Baofeng Lake (宝峰湖)", "lat": 29.3257585, "lon": 110.5469203},
   "bunker_hotpot": {"name": "Dixia zhi Cheng bunker hotpot (地下之城老火锅)", "lat": 29.58797, "lon": 106.54886},
   "jiangbeizui_park": {"name": "Jiangbeizui Central Park (江北嘴中央公园)", "lat": 29.57501, "lon": 106.57257},
-  "hongyadong_pier": {"name": "Hongyadong ferry pier (洪崖洞客运码头)", "lat": 29.56575, "lon": 106.57308}
+  "hongyadong_pier": {"name": "Hongyadong ferry pier (洪崖洞客运码头)", "lat": 29.56575, "lon": 106.57308},
+  "longmenhao": {"name": "Longmenhao Old Street, Nan'an", "lat": 29.558825, "lon": 106.591205},
+  "xiahaoli": {"name": "Xiahaoli quarter, Nan'an", "lat": 29.560463, "lon": 106.591627},
+  "ciyun_temple": {"name": "Ciyun Temple and Mishi Street", "lat": 29.569042, "lon": 106.591008},
+  "luo_ditan": {"name": "Luo Ditan, Tushan Rd 583, Danzishi", "lat": 29.575, "lon": 106.5968},
+  "shangxinjie": {"name": "Shangxinjie bus stop, Tushan Rd", "lat": 29.558943, "lon": 106.593665},
+  "laojundong": {"name": "Laojun Cave (Laojun Dong)", "lat": 29.545354, "lon": 106.597576},
+  "tongyuan_zhiguang": {"name": "Tongyuan Zhiguang deck, Subaiba", "lat": 29.536448, "lon": 106.552469},
+  "danzishi": {"name": "Danzishi Old Street", "lat": 29.582626, "lon": 106.584306},
+  "nanshan_bbq": {"name": "Huang Yuming BBQ, Yitianmen St 102", "lat": 29.559343, "lon": 106.596983},
+  "cableway_south": {"name": "Yangtze Cableway south station, Shangxinjie", "lat": 29.559, "lon": 106.59}
 };

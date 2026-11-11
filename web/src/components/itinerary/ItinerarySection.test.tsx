@@ -121,12 +121,13 @@ describe("ItinerarySection", () => {
     renderSection();
 
     const links = await screen.findAllByRole("link", { name: /Список мест на карте/ });
-    expect(links).toHaveLength(3);
+    expect(links).toHaveLength(4);
 
     const expectedHrefs = [
       "https://maps.app.goo.gl/WVb7ZLsr4ebW1hqM7",
       "https://maps.app.goo.gl/X79tTZuYo3U45ydN9",
       "https://maps.app.goo.gl/MZMv96EnFznmL6B1A",
+      "https://maps.app.goo.gl/RiwcPz5Q99wdBdZKA",
     ];
     expect(links.map((link) => link.getAttribute("href")).sort()).toEqual(expectedHrefs.slice().sort());
 
