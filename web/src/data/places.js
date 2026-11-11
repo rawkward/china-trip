@@ -185,9 +185,9 @@ export const TRIP_PLACES = {
     "lon": 114.1631454
   },
   "chongqing": {
-    "name": "Chongqing",
-    "lat": 30.05518,
-    "lon": 107.8748712
+    "name": "Chongqing (центр, 解放碑)",
+    "lat": 29.5598,
+    "lon": 106.5733
   },
   "theatre_1949": {
     "name": "Chongqing 1949 Theatre",
@@ -484,5 +484,25 @@ export const TRIP_PLACES = {
   "tongyuan_zhiguang": {"name": "Tongyuan Zhiguang deck, Subaiba", "lat": 29.536448, "lon": 106.552469},
   "danzishi": {"name": "Danzishi Old Street", "lat": 29.582626, "lon": 106.584306},
   "nanshan_bbq": {"name": "Huang Yuming BBQ, Yitianmen St 102", "lat": 29.559343, "lon": 106.596983},
-  "cableway_south": {"name": "Yangtze Cableway south station 长江索道南站, 上新街 4", "lat": 29.556170, "lon": 106.588724}
+  "cableway_south": {"name": "Yangtze Cableway south station 长江索道南站, 上新街 4", "lat": 29.556170, "lon": 106.588724},
+  "chongqing_east": {
+    "name": "Chongqingdong Railway Station 重庆东站, 开城大道 518",
+    "lat": 29.486931,
+    "lon": 106.669311
+  },
+  "wulong_south": {
+    "name": "Wulongnan Railway Station 武隆南站, 凤山街道 棉花坝",
+    "lat": 29.299089,
+    "lon": 107.8134
+  },
+  "xiannvshan_town": {
+    "name": "Wulong Karst Visitor Centre 游客接待中心, 仙女山镇",
+    "lat": 29.42015,
+    "lon": 107.76442
+  },
+  "chongqing_airport": {
+    "name": "Chongqing Jiangbei International Airport T3 重庆江北国际机场",
+    "lat": 29.71147,
+    "lon": 106.65137
+  }
 };
