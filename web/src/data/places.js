@@ -408,6 +408,7 @@ export const TRIP_PLACES = {
   "luohan_temple": {"name": "Luohan Temple, Chongqing", "lat": 29.5626, "lon": 106.5778},
   "art_gallery_cq": {"name": "Chongqing Art Gallery", "lat": 29.5602, "lon": 106.5771},
   "kuixinglou": {"name": "Kuixing Building", "lat": 29.5600, "lon": 106.5736},
+  "jialing_bridge": {"name": "Jialing River Bridge 嘉陵江大桥, Niujiaotuo", "lat": 29.56495, "lon": 106.53750},
   "raffles_city": {"name": "Raffles City Chongqing", "lat": 29.5676, "lon": 106.5831},
   "qiansimen_bridge": {"name": "Qiansimen Bridge", "lat": 29.5737, "lon": 106.5724},
   "west_kowloon": {"name": "Hong Kong West Kowloon Station", "lat": 22.3037, "lon": 114.1649},
