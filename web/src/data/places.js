@@ -226,8 +226,8 @@ export const TRIP_PLACES = {
   },
   "yangtze_cableway": {
     "name": "Yangtze River Cableway north station 长江索道北站, 新华路 151",
-    "lat": 29.560738,
-    "lon": 106.579203
+    "lat": 29.560581,
+    "lon": 106.579117
   },
   "jiefangbei": {
     "name": "Jiefangbei",
@@ -479,13 +479,13 @@ export const TRIP_PLACES = {
   "longmenhao": {"name": "Longmenhao Old Street, Nan'an", "lat": 29.558825, "lon": 106.591205},
   "xiahaoli": {"name": "Xiahaoli quarter, Nan'an", "lat": 29.560463, "lon": 106.591627},
   "ciyun_temple": {"name": "Ciyun Temple and Mishi Street", "lat": 29.569042, "lon": 106.591008},
-  "luo_ditan": {"name": "Luo Ditan, Tushan Rd 583, Danzishi", "lat": 29.575, "lon": 106.5968},
+  "luo_ditan": {"name": "Luo Ditan, Tushan Rd 583, Danzishi", "lat": 29.577350, "lon": 106.597894},
   "shangxinjie": {"name": "Shangxinjie bus stop, Tushan Rd", "lat": 29.558943, "lon": 106.593665},
   "laojundong": {"name": "Laojun Cave (Laojun Dong)", "lat": 29.545354, "lon": 106.597576},
-  "tongyuan_zhiguang": {"name": "Tongyuan Zhiguang deck, Subaiba", "lat": 29.536448, "lon": 106.552469},
+  "tongyuan_zhiguang": {"name": "Tongyuan Zhiguang deck, Subaiba", "lat": 29.536009, "lon": 106.547762},
   "danzishi": {"name": "Danzishi Old Street", "lat": 29.582626, "lon": 106.584306},
-  "nanshan_bbq": {"name": "Huang Yuming BBQ, Yitianmen St 102", "lat": 29.559343, "lon": 106.596983},
-  "cableway_south": {"name": "Yangtze Cableway south station 长江索道南站, 上新街 4", "lat": 29.556170, "lon": 106.588724},
+  "nanshan_bbq": {"name": "Huang Yuming BBQ, Yitianmen St 102", "lat": 29.556465, "lon": 106.593863},
+  "cableway_south": {"name": "Yangtze Cableway south station 长江索道南站, 上新街 4", "lat": 29.555500, "lon": 106.589759},
   "chongqing_east": {
     "name": "Chongqingdong Railway Station 重庆东站, 开城大道 518",
     "lat": 29.486931,
