@@ -418,7 +418,7 @@ export const TRIP_PLACES = {
   "nanshan_sanya": {"name": "Nanshan Guanyin, Sanya", "lat": 18.3030, "lon": 109.2100},
   "sanyaphx": {"name": "Sanya Phoenix Airport", "lat": 18.3029, "lon": 109.4123},
   "luohan_temple": {"name": "Luohan Temple, Chongqing", "lat": 29.5626, "lon": 106.5778},
-  "art_gallery_cq": {"name": "Chongqing Art Gallery", "lat": 29.5602, "lon": 106.5771},
+  "art_gallery_cq": {"name": "Guotai Arts Center / Chongqing Art Museum (国泰艺术中心)", "lat": 29.562716, "lon": 106.573429},
   "kuixinglou": {"name": "Kuixing Building", "lat": 29.5600, "lon": 106.5736},
   "jialing_bridge": {"name": "Jialing River Bridge 嘉陵江大桥, Niujiaotuo", "lat": 29.56495, "lon": 106.53750},
   "raffles_city": {"name": "Raffles City Chongqing", "lat": 29.5676, "lon": 106.5831},
