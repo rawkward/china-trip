@@ -157,6 +157,8 @@ export interface BookingRow {
   when: string;
   it: string;
   url?: string;
+  /** пункт уже куплен — галочка стоит по умолчанию */
+  done?: boolean;
 }
 
 export interface TourRow {

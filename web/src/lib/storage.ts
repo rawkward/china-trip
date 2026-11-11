@@ -46,6 +46,7 @@ export function writeJson(key: string, value: unknown): void {
 export const STORAGE_KEYS = {
   variant: "china-trip-variant-v5",
   checklist: "china-trip-checklist-v1",
+  booking: "china-trip-booking-v1",
   token: "chinatrip.budget.token",
   tokenExp: "chinatrip.budget.token_exp",
   budgetCache: "chinatrip.budget.cache",

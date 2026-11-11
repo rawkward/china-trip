@@ -225,9 +225,9 @@ export const TRIP_PLACES = {
     "lon": 106.5753425
   },
   "yangtze_cableway": {
-    "name": "Yangtze River Cableway",
-    "lat": 29.5580403,
-    "lon": 106.5844384
+    "name": "Yangtze River Cableway north station 长江索道北站, 新华路 151",
+    "lat": 29.560738,
+    "lon": 106.579203
   },
   "jiefangbei": {
     "name": "Jiefangbei",
@@ -484,5 +484,5 @@ export const TRIP_PLACES = {
   "tongyuan_zhiguang": {"name": "Tongyuan Zhiguang deck, Subaiba", "lat": 29.536448, "lon": 106.552469},
   "danzishi": {"name": "Danzishi Old Street", "lat": 29.582626, "lon": 106.584306},
   "nanshan_bbq": {"name": "Huang Yuming BBQ, Yitianmen St 102", "lat": 29.559343, "lon": 106.596983},
-  "cableway_south": {"name": "Yangtze Cableway south station, Shangxinjie", "lat": 29.559, "lon": 106.59}
+  "cableway_south": {"name": "Yangtze Cableway south station 长江索道南站, 上新街 4", "lat": 29.556170, "lon": 106.588724}
 };
