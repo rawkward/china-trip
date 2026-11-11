@@ -457,5 +457,9 @@ export const TRIP_PLACES = {
   "sogo_cwb": {"name": "崇光百貨 SOGO, 555 Hennessy Road", "lat": 22.28044, "lon": 114.18431},
   "hysan_place": {"name": "希慎廣場 Hysan Place, 500 Hennessy Road", "lat": 22.27999, "lon": 114.18356},
   "lee_garden_two": {"name": "利園二期 Lee Garden Two, 28 Yun Ping Road", "lat": 22.27867, "lon": 114.18560},
-  "wellcome_cwb": {"name": "惠康 Wellcome, 記利佐治街 25 (круглосуточно)", "lat": 22.28073, "lon": 114.18592}
+  "wellcome_cwb": {"name": "惠康 Wellcome, 記利佐治街 25 (круглосуточно)", "lat": 22.28073, "lon": 114.18592},
+  "baofeng_lake": {"name": "Baofeng Lake (宝峰湖)", "lat": 29.3257585, "lon": 110.5469203},
+  "bunker_hotpot": {"name": "Dixia zhi Cheng bunker hotpot (地下之城老火锅)", "lat": 29.58797, "lon": 106.54886},
+  "jiangbeizui_park": {"name": "Jiangbeizui Central Park (江北嘴中央公园)", "lat": 29.57501, "lon": 106.57257},
+  "hongyadong_pier": {"name": "Hongyadong ferry pier (洪崖洞客运码头)", "lat": 29.56575, "lon": 106.57308}
 };
