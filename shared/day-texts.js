@@ -24,11 +24,11 @@ const SLUGS_RE = /^[a-z0-9]{4,10}(,[a-z0-9]{4,10}){0,39}$/;
 // Замена остановки карточкой справочника: kind|city|id.
 const REF_RE = /^(stay|food|sight|tip)\|[a-z0-9_-]{1,20}\|[a-z0-9][a-z0-9_-]{0,39}$/;
 
-// Поля: title, sub, add, order, hide, stop:<slug>:(name|cost|time),
+// Поля: title, sub, add, order, hide, missed, stop:<slug>:(name|cost|time),
 // picks:<slug>:(title|note|cost|time), pick:<slug>:<i>:(name|cost|dim), ref:<slug>.
 const SLUG = '[a-z0-9]{4,10}';
 const FIELD_RE = new RegExp(
-  '^(title|sub|add|order|hide|stop:' + SLUG + ':(name|cost|time)|picks:' + SLUG + ':(title|note|cost|time)' +
+  '^(title|sub|add|order|hide|missed|stop:' + SLUG + ':(name|cost|time)|picks:' + SLUG + ':(title|note|cost|time)' +
     '|pick:' + SLUG + ':\\d{1,2}:(name|cost|dim)|ref:' + SLUG + ')$',
 );
 
@@ -162,8 +162,12 @@ export function normalizeDayTexts(value) {
       normalized = normalizeAddedStops(text);
       if (normalized.length === 0) continue; // пустой массив — тоже сброс поля
     } else {
-      if ((field === 'order' || field === 'hide') && !SLUGS_RE.test(text)) {
-        const message = field === 'hide' ? 'скрытые — это slug-и через запятую' : 'порядок — это slug-и через запятую';
+      if ((field === 'order' || field === 'hide' || field === 'missed') && !SLUGS_RE.test(text)) {
+        const message = field === 'hide'
+          ? 'скрытые — это slug-и через запятую'
+          : field === 'missed'
+            ? 'перенесённые — это slug-и через запятую'
+            : 'порядок — это slug-и через запятую';
         throw new DayTextError('bad_value', field, message);
       }
       if (field.startsWith('ref:') && !REF_RE.test(text)) {

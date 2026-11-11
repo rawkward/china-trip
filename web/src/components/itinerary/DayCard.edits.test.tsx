@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { GUIDE_ITEMS } from "@/data";
 import { stopSlug } from "@/lib/slug";
 import type { Day } from "@/types";
-import { DayCard } from "./DayCard";
+import { DayCard, restoredLists } from "./DayCard";
 import type { ItineraryEditApi } from "./EditableText";
 
 function makeApi(overrides: Partial<ItineraryEditApi> = {}): ItineraryEditApi {
@@ -174,6 +174,39 @@ describe("DayCard: удаление остановок из дня", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "вернуть Ужин" }));
 
+    expect(api.saveText).toHaveBeenCalledWith("hk|07.12", "hide", "");
+  });
+
+  it("у скрытой остановки есть кнопка переноса в «Можно посмотреть», она пишет missed", () => {
+    const api = makeApi();
+    const hiddenDay: Day = { ...day, places: [day.places[0]], _hidden: [day.places[1], day.places[2]] };
+    renderCard({ api, day: hiddenDay, texts: { hide: "b,c" } });
+
+    fireEvent.click(
+      screen.getByRole("button", { name: "перенести Трамвай на Пик в можно посмотреть" }),
+    );
+
+    expect(api.saveText).toHaveBeenCalledWith("hk|07.12", "missed", "b");
+    expect(api.saveText).not.toHaveBeenCalledWith("hk|07.12", "hide", expect.anything());
+  });
+
+  it("остановка из missed не показывается в блоке «убрано из маршрута»", () => {
+    const hiddenDay: Day = { ...day, places: [day.places[0]], _hidden: [day.places[1], day.places[2]] };
+    renderCard({ api: makeApi(), day: hiddenDay, texts: { hide: "b,c", missed: "b" } });
+
+    expect(screen.queryByText("Трамвай на Пик")).not.toBeInTheDocument();
+    expect(screen.getByText("Ужин")).toBeInTheDocument();
+  });
+
+  it("«вернуть» чистит и hide, и missed", () => {
+    expect(restoredLists("b,c", "b,c", "b")).toEqual({ hide: "c", missed: "c" });
+    expect(restoredLists("b", "", "b")).toEqual({ hide: "", missed: "" });
+
+    const api = makeApi();
+    const hiddenDay: Day = { ...day, places: [day.places[0]], _hidden: [day.places[1]] };
+    renderCard({ api, day: hiddenDay, texts: { hide: "b" } });
+
+    fireEvent.click(screen.getByRole("button", { name: "вернуть Трамвай на Пик" }));
     expect(api.saveText).toHaveBeenCalledWith("hk|07.12", "hide", "");
   });
 

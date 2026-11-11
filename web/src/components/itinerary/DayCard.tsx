@@ -25,6 +25,18 @@ export interface DayCardProps {
   anchorId?: string;
 }
 
+function withoutSlug(value: string, slug: string): string {
+  return value
+    .split(",")
+    .filter((item) => item.length > 0 && item !== slug)
+    .join(",");
+}
+
+/** Списки hide/missed после возврата остановки: slug уходит из обоих. */
+export function restoredLists(hide: string, missed: string, slug: string) {
+  return { hide: withoutSlug(hide, slug), missed: withoutSlug(missed, slug) };
+}
+
 function stopCountWord(n: number): string {
   const tail = n % 100;
   if (tail >= 11 && tail <= 14) return "остановок";
@@ -57,6 +69,10 @@ export function DayCard({ day, dayKey, texts, api, open, onToggle, onFocusDay, a
   };
 
   const hiddenList = () => (texts.hide ?? "").split(",").filter((slug) => slug.length > 0);
+  const missedList = () => (texts.missed ?? "").split(",").filter((slug) => slug.length > 0);
+  const visibleHidden = (day._hidden ?? []).filter(
+    (stop) => missedList().indexOf(slugOfStop(stop)) === -1,
+  );
 
   const handleDelete = (slug: string) => {
     const added = parseAddedStops(texts.add);
@@ -71,8 +87,17 @@ export function DayCard({ day, dayKey, texts, api, open, onToggle, onFocusDay, a
   };
 
   const handleRestore = (slug: string) => {
-    const list = hiddenList().filter((item) => item !== slug);
-    void api.saveText(dayKey, "hide", list.join(","));
+    const next = restoredLists(texts.hide ?? "", texts.missed ?? "", slug);
+    void api.saveText(dayKey, "hide", next.hide);
+    if (next.missed !== (texts.missed ?? "")) {
+      void api.saveText(dayKey, "missed", next.missed);
+    }
+  };
+
+  const handleMoveToMissed = (slug: string) => {
+    const list = missedList();
+    if (list.indexOf(slug) === -1) list.push(slug);
+    void api.saveText(dayKey, "missed", list.join(","));
   };
 
   return (
@@ -202,28 +227,41 @@ export function DayCard({ day, dayKey, texts, api, open, onToggle, onFocusDay, a
               <p className="mt-2 text-[0.82rem] text-muted">в этом дне не осталось остановок</p>
             )}
 
-            {api.token && !!day._hidden?.length && (
+            {api.token && visibleHidden.length > 0 && (
               <div className="mt-2 rounded-lg border border-dashed border-line bg-paper-deep/30 px-2.5 py-2">
                 <p className="m-0 text-[0.7rem] font-bold uppercase tracking-wide text-muted">
                   убрано из маршрута · справочник не меняется
                 </p>
                 <ul className="m-0 mt-1 list-none p-0">
-                  {day._hidden.map((stop, i) => (
-                    <li
-                      key={slugOfStop(stop) + "-" + i}
-                      className="flex items-center justify-between gap-2 py-0.5 text-[0.8rem] text-muted"
-                    >
-                      <span className="min-w-0 truncate">{stop.title ?? stop.name ?? ""}</span>
-                      <button
-                        type="button"
-                        className="shrink-0 rounded-md border border-line bg-surface px-1.5 py-0.5 text-[0.72rem] font-semibold text-muted transition-colors hover:border-line-strong hover:text-accent"
-                        aria-label={"вернуть " + (stop.title ?? stop.name ?? "")}
-                        onClick={() => handleRestore(slugOfStop(stop))}
+                  {visibleHidden.map((stop, i) => {
+                    const name = stop.title ?? stop.name ?? "";
+                    return (
+                      <li
+                        key={slugOfStop(stop) + "-" + i}
+                        className="flex items-center justify-between gap-2 py-0.5 text-[0.8rem] text-muted"
                       >
-                        вернуть
-                      </button>
-                    </li>
-                  ))}
+                        <span className="min-w-0 truncate">{name}</span>
+                        <span className="flex shrink-0 items-center gap-1">
+                          <button
+                            type="button"
+                            className="shrink-0 rounded-md border border-line bg-surface px-1.5 py-0.5 text-[0.72rem] font-semibold text-muted transition-colors hover:border-line-strong hover:text-accent"
+                            aria-label={"вернуть " + name}
+                            onClick={() => handleRestore(slugOfStop(stop))}
+                          >
+                            вернуть
+                          </button>
+                          <button
+                            type="button"
+                            className="shrink-0 rounded-md border border-line bg-surface px-1.5 py-0.5 text-[0.72rem] font-semibold text-muted transition-colors hover:border-line-strong hover:text-accent"
+                            aria-label={"перенести " + name + " в можно посмотреть"}
+                            onClick={() => handleMoveToMissed(slugOfStop(stop))}
+                          >
+                            в «Можно посмотреть»
+                          </button>
+                        </span>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             )}

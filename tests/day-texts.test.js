@@ -193,6 +193,31 @@ test('пустая строка сбрасывает hide', () => {
   assert.deepEqual(normalizeDayTexts({ hide: '', title: 'День' }), { title: 'День' });
 });
 
+test('missed принимает валидные slug-и через запятую', () => {
+  assert.deepEqual(normalizeDayTexts({ missed: '  k3f9qa,9x2b1c,p7d4e2  ' }), {
+    missed: 'k3f9qa,9x2b1c,p7d4e2',
+  });
+});
+
+test('мусор в missed — bad_value с именем поля', () => {
+  for (const bad of ['АБВ', 'k3f9qa, 9x2b1c', 'k3f9qa,,9x2b1c', 'abc', 'k3f9qa,', 'a'.repeat(11)]) {
+    assert.throws(
+      () => normalizeDayTexts({ missed: bad }),
+      (err) =>
+        err instanceof DayTextError &&
+        err.code === 'bad_value' &&
+        err.field === 'missed' &&
+        err.message === 'перенесённые — это slug-и через запятую',
+      `должен отвергнуть ${JSON.stringify(bad)}`,
+    );
+  }
+});
+
+test('пустая строка сбрасывает missed', () => {
+  assert.deepEqual(normalizeDayTexts({ missed: '   ' }), {});
+  assert.deepEqual(normalizeDayTexts({ missed: '', title: 'День' }), { title: 'День' });
+});
+
 test('add принимает массив остановок и нормализует поля', () => {
   const raw = JSON.stringify([
     { s: 'a1b2c3', n: '  Название  ', t: 'food', c: ' ¥50 ', d: ' заметка ', g: ' hotel-id ' },
