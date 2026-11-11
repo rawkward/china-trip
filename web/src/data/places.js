@@ -405,6 +405,7 @@ export const TRIP_PLACES = {
   "nanjing_road": {"name": "Nanjing Road East", "lat": 31.2377, "lon": 121.4753},
   "yuyuan": {"name": "Yuyuan Bazaar", "lat": 31.2289, "lon": 121.4880},
   "former_french": {"name": "Former French Concession", "lat": 31.2100, "lon": 121.4450},
+  "wukang_road": {"name": "Wukang Road", "lat": 31.2102, "lon": 121.4436},
   "tianzifang": {"name": "Tianzifang", "lat": 31.2107, "lon": 121.4644},
   "shanghai_museum": {"name": "Power Station of Art", "lat": 31.2088, "lon": 121.4969},
   "suzhou": {"name": "Suzhou", "lat": 31.2989, "lon": 120.5853},
