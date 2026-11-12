@@ -5,10 +5,11 @@ import { useEdits } from "@/edits/EditsContext";
 import { useVariant } from "@/hooks/useVariant";
 import { parseAddedStops, serializeAddedStops, tagForGuideKind } from "@/lib/added-stops";
 import type { AddedStop } from "@/lib/added-stops";
-import { noteKey } from "@/lib/days";
+import { noteKey, variantMetaKey } from "@/lib/days";
 import { guideIdFor, tagOf } from "@/lib/guide";
 import { stopSlug } from "@/lib/slug";
 import type { Day, DayTag, GuideItem, GuideKind } from "@/types";
+import { toast } from "../ui/Toast";
 import { slugOfStop, tagIcon } from "./stopMeta";
 
 const KIND_ORDER: GuideKind[] = ["stay", "food", "sight", "tip"];
@@ -58,6 +59,7 @@ export function MissedBlock() {
     (value ?? "").split(",").filter((slug) => slug.length > 0);
   const missedSlugs = (day: Day) => slugsOf(textsFor(day).missed);
   const addedSlugs = (day: Day) => parseAddedStops(textsFor(day).add).map((a) => a.s);
+  const dropped = slugsOf(dayTexts[variantMetaKey(activeId)]?.drop);
 
   const inRoute = (slug: string) =>
     days.some(
@@ -66,7 +68,10 @@ export function MissedBlock() {
   const inAdd = (slug: string) => days.some((day) => addedSlugs(day).includes(slug));
 
   const alts = GUIDE_ITEMS.filter(
-    (item) => tagOf(item, guideTags) === "alt" && !inRoute(stopSlug(item.en)),
+    (item) =>
+      tagOf(item, guideTags) === "alt" &&
+      !inRoute(stopSlug(item.en)) &&
+      !dropped.includes(stopSlug(item.en)),
   );
 
   const moved: MissedCard[] = [];
@@ -74,7 +79,7 @@ export function MissedBlock() {
   for (const day of days) {
     const key = noteKey(activeId, day);
     for (const slug of missedSlugs(day)) {
-      if (inAdd(slug)) continue;
+      if (inAdd(slug) || dropped.includes(slug)) continue;
       const stop = day.places.find((p) => slugOfStop(p) === slug);
       if (!stop) continue;
       const name = stop.title ?? stop.name ?? "";
@@ -177,6 +182,16 @@ export function MissedBlock() {
     setExpanded(null);
   };
 
+  const removeCard = async (card: MissedCard) => {
+    const confirmed = window.confirm(
+      "Удалить «" + card.name + "» из «Можно посмотреть ещё»? Вернуть будет нельзя.",
+    );
+    if (!confirmed) return;
+    const next = dropped.includes(card.slug) ? dropped : [...dropped, card.slug];
+    await saveText(variantMetaKey(activeId), "drop", next.join(","));
+    toast("Удалено: " + card.name, "success");
+  };
+
   return (
     <details id="missed" className="group surface mt-6 scroll-mt-24">
       <summary className="list-none cursor-pointer p-4 select-none sm:p-5 [&::-webkit-details-marker]:hidden">
@@ -260,6 +275,16 @@ export function MissedBlock() {
                               onClick={() => setExpanded(open ? null : card.key)}
                             >
                               в день
+                            </button>
+                            <button
+                              type="button"
+                              className="ml-1 rounded-md border border-line bg-surface px-1.5 py-0.5 text-[0.72rem] font-semibold text-muted transition-colors hover:border-line-strong hover:text-accent"
+                              aria-label={
+                                "удалить " + card.name + " из «Можно посмотреть ещё»"
+                              }
+                              onClick={() => void removeCard(card)}
+                            >
+                              удалить
                             </button>
                             {open ? (
                               <div className="mt-1.5 flex flex-wrap gap-1">

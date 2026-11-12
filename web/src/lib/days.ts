@@ -53,6 +53,11 @@ export function noteKey(variantId: string, day: Pick<Day, "date" | "n">): string
   return variantId + "|" + (m ? m[1] : "д" + day.n);
 }
 
+/** Ключ вариант-уровневых правок («удалённые» места): <вариант>|meta. */
+export function variantMetaKey(variantId: string): string {
+  return variantId + "|meta";
+}
+
 /** Диапазон дат варианта для карточки: «04.12–19.12». */
 export function variantDateRange(variant: Variant, dates: string[]): string {
   const axis = variant.dates && variant.dates.length ? variant.dates : dates;

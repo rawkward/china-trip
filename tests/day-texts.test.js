@@ -18,6 +18,15 @@ test('ключ дня принимает «вариант|ДД.ММ»', () => {
   assert.deepEqual(splitDayKey('hk-first|07.12'), { variant_id: 'hk-first', day_date: '07.12' });
 });
 
+test('ключ варианта «вариант|meta» принимается', () => {
+  assert.equal(isDayTextKey('hk-first|meta'), true);
+  assert.equal(normalizeDayTextKey('  hk-first|meta  '), 'hk-first|meta');
+  for (const bad of ['hk-first|meta1', 'hk-first|07.12x']) {
+    assert.equal(isDayTextKey(bad), false, `должен отвергнуть ${JSON.stringify(bad)}`);
+    assert.throws(() => normalizeDayTextKey(bad), DayTextError);
+  }
+});
+
 test('ключ дня отвергает чужие формы', () => {
   for (const bad of ['', 'hk-first', 'hk-first|7.12', 'hk-first|07.12.2026', '../../etc|07.12', 'hk first|07.12', 'hk-first|07/12']) {
     assert.equal(isDayTextKey(bad), false, `должен отвергнуть ${JSON.stringify(bad)}`);
@@ -216,6 +225,31 @@ test('мусор в missed — bad_value с именем поля', () => {
 test('пустая строка сбрасывает missed', () => {
   assert.deepEqual(normalizeDayTexts({ missed: '   ' }), {});
   assert.deepEqual(normalizeDayTexts({ missed: '', title: 'День' }), { title: 'День' });
+});
+
+test('drop принимает валидные slug-и через запятую', () => {
+  assert.deepEqual(normalizeDayTexts({ drop: '  k3f9qa,9x2b1c,p7d4e2  ' }), {
+    drop: 'k3f9qa,9x2b1c,p7d4e2',
+  });
+});
+
+test('мусор в drop — bad_value с именем поля', () => {
+  for (const bad of ['Bad Slug', 'АБВ', 'k3f9qa, 9x2b1c', 'k3f9qa,,9x2b1c', 'abc', 'k3f9qa,', 'a'.repeat(11)]) {
+    assert.throws(
+      () => normalizeDayTexts({ drop: bad }),
+      (err) =>
+        err instanceof DayTextError &&
+        err.code === 'bad_value' &&
+        err.field === 'drop' &&
+        err.message === 'удалённые — это slug-и через запятую',
+      `должен отвергнуть ${JSON.stringify(bad)}`,
+    );
+  }
+});
+
+test('пустая строка сбрасывает drop', () => {
+  assert.deepEqual(normalizeDayTexts({ drop: '   ' }), {});
+  assert.deepEqual(normalizeDayTexts({ drop: '', title: 'День' }), { title: 'День' });
 });
 
 test('add принимает массив остановок и нормализует поля', () => {

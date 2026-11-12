@@ -3,7 +3,7 @@ import { Map as MapIcon, MapPin, X } from "lucide-react";
 import { useEdits } from "@/edits/EditsContext";
 import { useVariant } from "@/hooks/useVariant";
 import { CITIES, GUIDE_ITEMS } from "@/data";
-import { noteKey, nightsWord, routeGroups } from "@/lib/days";
+import { noteKey, nightsWord, routeGroups, variantMetaKey } from "@/lib/days";
 import { withTexts } from "@/lib/texts";
 import { cn } from "@/lib/cn";
 import { Section } from "../layout/Section";
@@ -18,6 +18,7 @@ const MAP_LIST_URLS: Record<string, string> = {
   zjj: "https://maps.app.goo.gl/X79tTZuYo3U45ydN9",
   fr: "https://maps.app.goo.gl/MZMv96EnFznmL6B1A",
   cq: "https://maps.app.goo.gl/RiwcPz5Q99wdBdZKA",
+  sh: "https://maps.app.goo.gl/dXKtuhLmstmbq6WYA",
 };
 
 /**
@@ -28,6 +29,10 @@ export function ItinerarySection() {
   const { activeId, days } = useVariant();
   const edits = useEdits();
   const { token, dayTexts, error } = edits;
+
+  const dropped = (dayTexts[variantMetaKey(activeId)]?.drop ?? "")
+    .split(",")
+    .filter((slug) => slug.length > 0);
 
   const [openDays, setOpenDays] = useState<Set<number>>(() => new Set());
   const [mapOpen, setMapOpen] = useState(false);
@@ -115,24 +120,37 @@ export function ItinerarySection() {
     <Section
       id="itinerary"
       action={
-        <Button
-          variant="soft"
-          size="sm"
-          className="lg:hidden"
-          aria-expanded={mapOpen}
-          aria-controls="itinerary-map"
-          onClick={() => {
-            if (mapOpen) {
-              setMapOpen(false);
-            } else {
-              setMapOpen(true);
-              scrollToMap();
-            }
-          }}
-        >
-          {mapOpen ? <X className="size-3.5" aria-hidden="true" /> : <MapIcon className="size-3.5" aria-hidden="true" />}
-          Карта
-        </Button>
+        <div className="flex items-center gap-2">
+          <a
+            href="#missed"
+            className="btn-soft"
+            aria-label="Можно посмотреть ещё — что выпало из плана"
+            onClick={() => {
+              const el = document.getElementById("missed");
+              if (el instanceof HTMLDetailsElement) el.open = true;
+            }}
+          >
+            Что выпало
+          </a>
+          <Button
+            variant="soft"
+            size="sm"
+            className="lg:hidden"
+            aria-expanded={mapOpen}
+            aria-controls="itinerary-map"
+            onClick={() => {
+              if (mapOpen) {
+                setMapOpen(false);
+              } else {
+                setMapOpen(true);
+                scrollToMap();
+              }
+            }}
+          >
+            {mapOpen ? <X className="size-3.5" aria-hidden="true" /> : <MapIcon className="size-3.5" aria-hidden="true" />}
+            Карта
+          </Button>
+        </div>
       }
     >
       <div data-route-chain className="mb-4 flex flex-wrap items-center gap-1.5 text-[0.82rem] sm:gap-2">
@@ -206,6 +224,7 @@ export function ItinerarySection() {
                   onToggle={() => toggleDay(day.n)}
                   onFocusDay={focusOnDay}
                   anchorId={!showCityBar && groupStart.includes(i) ? "city-" + i : undefined}
+                  dropped={dropped}
                 />
               </Fragment>
             );

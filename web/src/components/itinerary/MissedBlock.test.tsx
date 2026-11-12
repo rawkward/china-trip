@@ -4,7 +4,7 @@ import { CITIES, DATES, GUIDE_ITEMS, VARIANTS } from "@/data";
 import { clearAuth, setAuth } from "@/edits/auth";
 import { EditsProvider } from "@/edits/EditsContext";
 import { VariantProvider } from "@/hooks/useVariant";
-import { buildDays, noteKey } from "@/lib/days";
+import { buildDays, noteKey, variantMetaKey } from "@/lib/days";
 import { tagOf } from "@/lib/guide";
 import { stopSlug } from "@/lib/slug";
 import { STORAGE_KEYS } from "@/lib/storage";
@@ -338,6 +338,81 @@ describe("MissedBlock", () => {
 
     await waitFor(() => expect(chip).not.toBeInTheDocument());
     expect(calls.some((call) => call.method === "PUT")).toBe(false);
+  });
+
+  it("с токеном показывает кнопку удаления у карточки", async () => {
+    setAuth("token", Math.floor(Date.now() / 1000) + 3600);
+    stubApi();
+    const { container } = renderMissed();
+    const details = openDetails(container);
+
+    const alt = GUIDE_ITEMS.find(
+      (item) => tagOf(item, {}) === "alt" && !inRoute(stopSlug(item.en)),
+    )!;
+    expect(
+      await within(details).findByRole("button", {
+        name: `удалить ${alt.en} из «Можно посмотреть ещё»`,
+      }),
+    ).toBeInTheDocument();
+  });
+
+  it("удаление по подтверждению пишет drop в ключ варианта", async () => {
+    setAuth("token", Math.floor(Date.now() / 1000) + 3600);
+    vi.spyOn(window, "confirm").mockReturnValue(true);
+    const { calls } = stubApi();
+    const { container } = renderMissed();
+    const details = openDetails(container);
+
+    const alt = GUIDE_ITEMS.find(
+      (item) => tagOf(item, {}) === "alt" && !inRoute(stopSlug(item.en)),
+    )!;
+    fireEvent.click(
+      await within(details).findByRole("button", {
+        name: `удалить ${alt.en} из «Можно посмотреть ещё»`,
+      }),
+    );
+
+    const key = variantMetaKey(MAIN.id);
+    await waitFor(() => {
+      const dropCall = calls.find(
+        (call) =>
+          call.method === "PUT" &&
+          call.url.includes("/api/day-texts/") &&
+          decodeURIComponent(call.url.split("/api/day-texts/")[1] ?? "") === key &&
+          typeof (call.body as { texts?: Record<string, string> })?.texts?.drop === "string",
+      );
+      expect(dropCall).toBeTruthy();
+    });
+    const dropCall = calls.find(
+      (call) =>
+        call.method === "PUT" &&
+        call.url.includes("/api/day-texts/") &&
+        decodeURIComponent(call.url.split("/api/day-texts/")[1] ?? "") === key,
+    )!;
+    expect((dropCall.body as { texts: Record<string, string> }).texts.drop).toBe(
+      stopSlug(alt.en),
+    );
+  });
+
+  it("не рисует карточку, slug которой есть в drop", async () => {
+    const key = variantMetaKey(MAIN.id);
+    stubApi([
+      {
+        day_key: SOURCE_KEY,
+        texts: { missed: MOVE_SLUG },
+        updated_at: 1,
+      },
+      {
+        day_key: key,
+        texts: { drop: MOVE_SLUG },
+        updated_at: 2,
+      },
+    ]);
+    const { container } = renderMissed();
+    const details = openDetails(container);
+
+    await within(details).findByText("Можно посмотреть ещё");
+    await waitFor(() => expect(screen.queryByText(MOVE_NAME)).not.toBeInTheDocument());
   });
 
   it("не показывает запись, которую уже добавили в маршрут через add", async () => {

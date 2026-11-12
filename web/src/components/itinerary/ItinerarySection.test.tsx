@@ -121,13 +121,14 @@ describe("ItinerarySection", () => {
     renderSection();
 
     const links = await screen.findAllByRole("link", { name: /Список мест на карте/ });
-    expect(links).toHaveLength(4);
+    expect(links).toHaveLength(5);
 
     const expectedHrefs = [
       "https://maps.app.goo.gl/WVb7ZLsr4ebW1hqM7",
       "https://maps.app.goo.gl/X79tTZuYo3U45ydN9",
       "https://maps.app.goo.gl/MZMv96EnFznmL6B1A",
       "https://maps.app.goo.gl/RiwcPz5Q99wdBdZKA",
+      "https://maps.app.goo.gl/dXKtuhLmstmbq6WYA",
     ];
     expect(links.map((link) => link.getAttribute("href")).sort()).toEqual(expectedHrefs.slice().sort());
 
@@ -136,6 +137,19 @@ describe("ItinerarySection", () => {
       expect(link.getAttribute("rel")).toContain("noopener");
     }
     expect(screen.queryByRole("region", { name: "День 1" })).not.toBeInTheDocument();
+  });
+
+  it("в шапке раздела есть ссылка на блок «Можно посмотреть ещё»", async () => {
+    const main = VARIANTS.find((v) => v.main) ?? VARIANTS[0];
+    const first = buildDays(main, DATES)[0];
+    mockApi(noteKey(main.id, first), first.title);
+
+    renderSection();
+
+    const link = await screen.findByRole("link", {
+      name: "Можно посмотреть ещё — что выпало из плана",
+    });
+    expect(link).toHaveAttribute("href", "#missed");
   });
 
   it("на узком окне кнопка «Карта» открывает карту и скроллит к ней", async () => {

@@ -23,6 +23,7 @@ export interface DayCardProps {
   onToggle: () => void;
   onFocusDay: (n: number) => void;
   anchorId?: string;
+  dropped?: string[];
 }
 
 function withoutSlug(value: string, slug: string): string {
@@ -47,7 +48,17 @@ function stopCountWord(n: number): string {
 }
 
 /** Карточка дня: шапка-аккордеон, остановки, карта и заметка. */
-export function DayCard({ day, dayKey, texts, api, open, onToggle, onFocusDay, anchorId }: DayCardProps) {
+export function DayCard({
+  day,
+  dayKey,
+  texts,
+  api,
+  open,
+  onToggle,
+  onFocusDay,
+  anchorId,
+  dropped,
+}: DayCardProps) {
   const [adding, setAdding] = useState(false);
   const city = CITIES[day.city] ?? { label: day.city, color: "#8a8278" };
   const isFest = day.places.some((p) => p.tag === "festival");
@@ -71,7 +82,9 @@ export function DayCard({ day, dayKey, texts, api, open, onToggle, onFocusDay, a
   const hiddenList = () => (texts.hide ?? "").split(",").filter((slug) => slug.length > 0);
   const missedList = () => (texts.missed ?? "").split(",").filter((slug) => slug.length > 0);
   const visibleHidden = (day._hidden ?? []).filter(
-    (stop) => missedList().indexOf(slugOfStop(stop)) === -1,
+    (stop) =>
+      missedList().indexOf(slugOfStop(stop)) === -1 &&
+      (dropped ?? []).indexOf(slugOfStop(stop)) === -1,
   );
 
   const handleDelete = (slug: string) => {
