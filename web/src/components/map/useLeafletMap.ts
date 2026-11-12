@@ -11,6 +11,7 @@ import {
   gmapsUrl,
   spreadOverlaps,
   TILE_SETS,
+  toTilePoint,
 } from "@/lib/map";
 import {
   allPopupHtml,
@@ -169,7 +170,9 @@ export function useLeafletMap({
 
     if (mode === "day") {
       const dayBlock = days.find((d) => d.n === day);
-      const points = spreadOverlaps(dayPoints(days, PLACES, day));
+      const wgsPoints = spreadOverlaps(dayPoints(days, PLACES, day));
+      const tileId = TILE_SETS[tileIdx]?.id ?? "google";
+      const points = wgsPoints.map((p) => toTilePoint(p, tileId));
       const color = cityColor(dayBlock?.city ?? "", CITIES);
 
       if (points.length > 1) {
@@ -182,6 +185,7 @@ export function useLeafletMap({
       const offsets = fanOffsets(points);
       points.forEach((point, i) => {
         const { dx, dy } = offsets[i];
+        const src = wgsPoints[i];
         L.marker([point.lat, point.lon], {
           icon: L.divIcon({
             className: "daypin",
@@ -190,7 +194,7 @@ export function useLeafletMap({
             iconAnchor: [12 - dx, 12 - dy],
           }),
         })
-          .bindPopup(dayPopupHtml(i, point, day, gmapsUrl(point.lat, point.lon)))
+          .bindPopup(dayPopupHtml(i, src, day, gmapsUrl(src.lat, src.lon)))
           .addTo(markerLayer);
       });
 
@@ -207,8 +211,11 @@ export function useLeafletMap({
     }
 
     const registry = filterMarkers(buildMarkerRegistry(days, PLACES), kind, city);
-    registry.forEach((record) => {
-      const marker = L.circleMarker([record.lat, record.lon], {
+    const tileId = TILE_SETS[tileIdx]?.id ?? "google";
+    const shown = registry.map((record) => toTilePoint(record, tileId));
+    shown.forEach((point, i) => {
+      const record = registry[i];
+      const marker = L.circleMarker([point.lat, point.lon], {
         radius: 7,
         color: "#fff",
         weight: 1.6,
@@ -221,14 +228,14 @@ export function useLeafletMap({
       marker.bringToFront();
     });
 
-    if (registry.length) {
-      map.fitBounds(boundsOf(registry)!, {
+    if (shown.length) {
+      map.fitBounds(boundsOf(shown)!, {
         padding: [24, 24],
         maxZoom: 13,
         animate: false,
       });
     }
-  }, [mapEpoch, days, mode, day, kind, city, resetToken]);
+  }, [mapEpoch, days, mode, day, kind, city, tileIdx, resetToken]);
 
   useEffect(() => {
     return () => {

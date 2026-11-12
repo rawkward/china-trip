@@ -11,6 +11,8 @@ import {
   spreadOverlaps,
   stopNumbers,
   TILE_SETS,
+  isMainlandChina,
+  toTilePoint,
 } from "./map";
 import type { Day, Places } from "../types";
 
@@ -237,5 +239,51 @@ describe("константы карты", () => {
     expect(MAP_KINDS).toHaveLength(8);
     expect(mapKindLabel("hotel")).toBe("Отели");
     expect(mapKindLabel("nope")).toBe("nope");
+  });
+});
+
+describe("GCJ-02 на подложке Google", () => {
+  const lonhaomen = { name: "龙门浩老街", tag: "sight" as const, lat: 29.558825, lon: 106.591205 };
+  const hk = { name: "Hong Kong", tag: "sight" as const, lat: 22.2813, lon: 114.1858 };
+
+  const meters = (
+    a: { lat: number; lon: number },
+    b: { lat: number; lon: number },
+  ): number => {
+    const rad = Math.PI / 180;
+    const dLat = (b.lat - a.lat) * rad;
+    const dLon = (b.lon - a.lon) * rad;
+    const h =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos(a.lat * rad) * Math.cos(b.lat * rad) * Math.sin(dLon / 2) ** 2;
+    return 2 * 6371000 * Math.asin(Math.sqrt(h));
+  };
+
+  it("материковый Китай — да, Гонконг/Макао/Тайвань — нет", () => {
+    expect(isMainlandChina(lonhaomen.lat, lonhaomen.lon)).toBe(true);
+    expect(isMainlandChina(hk.lat, hk.lon)).toBe(false);
+    expect(isMainlandChina(22.1987, 113.5439)).toBe(false);
+    expect(isMainlandChina(25.033, 121.5654)).toBe(false);
+  });
+
+  it("точка на google сдвигается на 400–550 м", () => {
+    const shifted = toTilePoint(lonhaomen, "google");
+    const d = meters(lonhaomen, shifted);
+    expect(d).toBeGreaterThan(400);
+    expect(d).toBeLessThan(550);
+    expect(shifted.name).toBe(lonhaomen.name);
+    expect(shifted.tag).toBe(lonhaomen.tag);
+  });
+
+  it("та же точка на osm не сдвигается", () => {
+    expect(toTilePoint(lonhaomen, "osm")).toEqual(lonhaomen);
+  });
+
+  it("гонконгская точка на google не сдвигается", () => {
+    expect(toTilePoint(hk, "google")).toEqual(hk);
+  });
+
+  it("чунцинская точка на yandex не сдвигается", () => {
+    expect(toTilePoint(lonhaomen, "yandex")).toEqual(lonhaomen);
   });
 });
