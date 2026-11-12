@@ -147,7 +147,7 @@ describe("ItinerarySection", () => {
     renderSection();
 
     const link = await screen.findByRole("link", {
-      name: "Можно посмотреть ещё — что выпало из плана",
+      name: "Можно посмотреть ещё — что не попало в план",
     });
     expect(link).toHaveAttribute("href", "#missed");
   });

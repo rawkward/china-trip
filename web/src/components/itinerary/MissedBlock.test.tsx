@@ -147,6 +147,7 @@ describe("MissedBlock", () => {
     expect(details).not.toHaveAttribute("open");
 
     expect(screen.getByText("Можно посмотреть ещё")).toBeInTheDocument();
+    expect(within(details as HTMLElement).getByText("Что не попало")).toBeInTheDocument();
     expect(within(details as HTMLElement).getByText(`· ${expected.length}`)).toBeInTheDocument();
 
     details!.setAttribute("open", "");

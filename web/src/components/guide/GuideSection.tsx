@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CITIES, GUIDE, GUIDE_ITEMS } from "../../data";
 import { useEdits } from "../../edits/EditsContext";
 import { cn } from "../../lib/cn";
@@ -22,13 +22,50 @@ const GRID: Record<GuideKind, string> = {
   tip: "grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-3",
 };
 
-/** Справочник одного вида: города в порядке маршрута, альтернативы под раскрывашкой. */
+/** Справочник одного вида: города в порядке маршрута, карточки — общим списком. */
 export function GuideSection({ id, kind, only, anchorPrefix = "g-" }: GuideSectionProps) {
   const { token, guideTags, saveGuideTag } = useEdits();
   const groups = groupGuideByCity(GUIDE_ITEMS, GUIDE.cityOrder, CITIES, kind, guideTags, only);
   const [cityFilter, setCityFilter] = useState<string>("all");
+  const detailsRefs = useRef(new Map<string, HTMLDetailsElement>());
+  const rootRef = useRef<HTMLDivElement>(null);
 
   const visibleGroups = cityFilter === "all" ? groups : groups.filter((g) => g.city === cityFilter);
+
+  useEffect(() => {
+    detailsRefs.current.forEach((el, city) => {
+      el.open = cityFilter !== "all" && city === cityFilter;
+    });
+  }, [cityFilter]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const revealByHash = () => {
+      const hash = window.location.hash.slice(1);
+      if (!hash) return;
+      let id = hash;
+      try {
+        id = decodeURIComponent(hash);
+      } catch {
+        return;
+      }
+      const target = document.getElementById(id);
+      const root = rootRef.current;
+      if (!target || !root || !root.contains(target)) return;
+
+      const details = target.closest("details");
+      if (details && !details.open) details.open = true;
+
+      if (typeof target.scrollIntoView === "function") {
+        target.scrollIntoView({ block: "start" });
+      }
+    };
+
+    revealByHash();
+    window.addEventListener("hashchange", revealByHash);
+    return () => window.removeEventListener("hashchange", revealByHash);
+  }, []);
 
   const handleTag = (key: string, tag: GuideTagValue) => {
     void saveGuideTag(key, tag);
@@ -40,7 +77,7 @@ export function GuideSection({ id, kind, only, anchorPrefix = "g-" }: GuideSecti
 
   return (
     <Section id={id}>
-      <div className="grid gap-6">
+      <div ref={rootRef} className="grid gap-6">
         {groups.length > 1 ? (
           <div className="flex gap-1.5 overflow-x-auto pb-1 [scrollbar-width:none]">
             <button
@@ -65,51 +102,45 @@ export function GuideSection({ id, kind, only, anchorPrefix = "g-" }: GuideSecti
           </div>
         ) : null}
         {visibleGroups.map((group) => (
-          <section key={group.city} aria-label={group.label}>
-            <div className="mb-3 flex items-baseline gap-2">
+          <details
+            key={group.city}
+            ref={(el) => {
+              if (el) detailsRefs.current.set(group.city, el);
+              else detailsRefs.current.delete(group.city);
+            }}
+            className="group"
+          >
+            <summary className="flex cursor-pointer list-none items-baseline gap-2 select-none [&::-webkit-details-marker]:hidden">
               <span className="font-display text-[1.08rem] font-semibold sm:text-[1.2rem]">
                 {group.label}
               </span>
               <span className="text-[0.72rem] font-semibold text-muted-soft">
                 {group.total}
               </span>
-            </div>
+              <span className="ml-auto text-[0.78rem] font-semibold text-muted group-open:hidden">
+                развернуть
+              </span>
+              <span className="ml-auto hidden text-[0.78rem] font-semibold text-muted group-open:inline">
+                свернуть
+              </span>
+            </summary>
 
-            <div className={GRID[kind]}>
-              {group.main.map((item) => (
-                <GuideCard
-                  key={item.id}
-                  item={item}
-                  kind={kind}
-                  tag={tagOf(item, guideTags)}
-                  token={token}
-                  onTag={handleTag}
-                  anchorPrefix={anchorPrefix}
-                />
-              ))}
-            </div>
-
-            {group.alts.length > 0 ? (
-              <details className="mt-3">
-                <summary className="w-fit cursor-pointer text-[0.8rem] font-semibold text-muted transition-colors hover:text-accent">
-                  Альтернативы · {group.alts.length}
-                </summary>
-                <div className={cn(GRID[kind], "mt-3")}>
-                  {group.alts.map((item) => (
-                    <GuideCard
-                      key={item.id}
-                      item={item}
-                      kind={kind}
-                      tag={tagOf(item, guideTags)}
-                      token={token}
-                      onTag={handleTag}
-                      anchorPrefix={anchorPrefix}
-                    />
-                  ))}
-                </div>
-              </details>
-            ) : null}
-          </section>
+            <section aria-label={group.label} className="mt-3">
+              <div className={GRID[kind]}>
+                {[...group.main, ...group.alts].map((item) => (
+                  <GuideCard
+                    key={item.id}
+                    item={item}
+                    kind={kind}
+                    tag={tagOf(item, guideTags)}
+                    token={token}
+                    onTag={handleTag}
+                    anchorPrefix={anchorPrefix}
+                  />
+                ))}
+              </div>
+            </section>
+          </details>
         ))}
       </div>
     </Section>

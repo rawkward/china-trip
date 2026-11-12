@@ -48,7 +48,7 @@ function guideCard(item: GuideItem): MissedCard {
   };
 }
 
-/** «Что выпало»: альтернативы справочника и места, окончательно убранные из дней. */
+/** «Что не попало»: альтернативы справочника и места, окончательно убранные из дней. */
 export function MissedBlock() {
   const { token, dayTexts, saveText, guideTags } = useEdits();
   const { activeId, days } = useVariant();
@@ -195,7 +195,7 @@ export function MissedBlock() {
   return (
     <details id="missed" className="group surface mt-6 scroll-mt-24">
       <summary className="list-none cursor-pointer p-4 select-none sm:p-5 [&::-webkit-details-marker]:hidden">
-        <div className="eyebrow mb-1.5">Что выпало</div>
+        <div className="eyebrow mb-1.5">Что не попало</div>
         <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
           <h3 className="text-[1.15rem] transition-colors hover:text-accent sm:text-[1.3rem]">
             Можно посмотреть ещё

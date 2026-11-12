@@ -46,7 +46,7 @@ afterEach(() => {
 });
 
 describe("GuideSection: смена тега", () => {
-  it("переключение на «альтернатива» уводит карточку под раскрывашку", async () => {
+  it("переключение на «альтернатива» оставляет карточку в общей сетке города", async () => {
     setAuth("token", Math.floor(Date.now() / 1000) + 3600);
     const { calls } = stubApi();
 
@@ -58,17 +58,21 @@ describe("GuideSection: смена тега", () => {
 
     const card = document.getElementById("g-victoria-peak");
     expect(card).not.toBeNull();
-    expect(card?.closest("details")).toBeNull();
+    const cityDetails = card?.closest("details");
+    expect(cityDetails).not.toBeNull();
 
     const altButton = within(card as HTMLElement).getByRole("button", { name: "альтернатива" });
     await userEvent.setup().click(altButton);
 
     await waitFor(() => {
-      expect(document.getElementById("g-victoria-peak")?.closest("details")).not.toBeNull();
+      expect(document.getElementById("g-victoria-peak")).toBeInTheDocument();
+      expect(altButton).toHaveAttribute("aria-pressed", "true");
     });
 
-    const details = document.getElementById("g-victoria-peak")?.closest("details");
-    expect(details?.querySelector("summary")?.textContent).toMatch(/Альтернативы · \d+/);
+    const updated = document.getElementById("g-victoria-peak");
+    expect(updated?.closest("details")).toBe(cityDetails);
+    expect(cityDetails?.querySelectorAll("details")).toHaveLength(0);
+    expect(cityDetails?.querySelector("summary")?.textContent).not.toMatch(/Альтернативы · \d+/);
 
     const put = calls.find((c) => c.method === "PUT" && c.url.includes("/api/guide-tags/"));
     expect(put?.body).toEqual({ tag: "alt" });

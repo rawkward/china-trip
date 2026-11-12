@@ -124,13 +124,13 @@ export function ItinerarySection() {
           <a
             href="#missed"
             className="btn-soft"
-            aria-label="Можно посмотреть ещё — что выпало из плана"
+            aria-label="Можно посмотреть ещё — что не попало в план"
             onClick={() => {
               const el = document.getElementById("missed");
               if (el instanceof HTMLDetailsElement) el.open = true;
             }}
           >
-            Что выпало
+            Что не попало
           </a>
           <Button
             variant="soft"
