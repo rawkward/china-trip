@@ -1,12 +1,19 @@
 import { useState } from "react";
 import { ChevronDown, MapPin, Pencil } from "lucide-react";
-import { CITIES, PLACES } from "@/data";
-import type { Day } from "@/types";
+import { CITIES, GUIDE_ITEMS, PLACES } from "@/data";
+import type { Day, Stop } from "@/types";
 import { cn } from "@/lib/cn";
-import { parseAddedStops, serializeAddedStops } from "@/lib/added-stops";
+import {
+  addedStopFromStop,
+  parseAddedStops,
+  serializeAddedStops,
+} from "@/lib/added-stops";
+import type { DayTarget } from "@/lib/day-targets";
+import { guideIdFor } from "@/lib/guide";
 import { stopNumbers } from "@/lib/map";
 import { moveInOrder } from "@/lib/texts";
 import { Button, IconButton } from "../ui";
+import { toast } from "../ui/Toast";
 import { AddStopPicker } from "./AddStopPicker";
 import { InlineEditor, hasText, type ItineraryEditApi } from "./EditableText";
 import { DayNote } from "./DayNote";
@@ -24,6 +31,7 @@ export interface DayCardProps {
   onFocusDay: (n: number) => void;
   anchorId?: string;
   dropped?: string[];
+  dayTargets?: DayTarget[];
 }
 
 function withoutSlug(value: string, slug: string): string {
@@ -58,6 +66,7 @@ export function DayCard({
   onFocusDay,
   anchorId,
   dropped,
+  dayTargets = [],
 }: DayCardProps) {
   const [adding, setAdding] = useState(false);
   const city = CITIES[day.city] ?? { label: day.city, color: "#8a8278" };
@@ -77,6 +86,47 @@ export function DayCard({
     if (next === order) return;
     const hidden = (day._hidden ?? []).map(slugOfStop);
     void api.saveText(dayKey, "order", next.concat(hidden).join(","));
+  };
+
+  const guideIdOf = (stop: Stop) =>
+    guideIdFor(GUIDE_ITEMS, stop.name) || guideIdFor(GUIDE_ITEMS, stop._name) || stop._guide || "";
+
+  const dayOptionsFor = (slug: string) =>
+    dayTargets.map((target) => {
+      const taken = target.slugs.indexOf(slug) !== -1;
+      return {
+        key: target.key,
+        label: target.label,
+        taken,
+        hint: target.key === dayKey ? "этот день" : taken ? "уже тут" : undefined,
+      };
+    });
+
+  const handleMoveToDay = (stop: Stop, slug: string, targetKey: string) => {
+    if (!api.moveStop) return;
+    const target = dayTargets.find((it) => it.key === targetKey);
+    if (!target) return;
+    const addedList = parseAddedStops(texts.add);
+    const hideInSource = !addedList.some((item) => item.s === slug);
+    const added =
+      target.slugs.indexOf(slug) !== -1
+        ? null
+        : addedStopFromStop(stop, slug, guideIdOf(stop));
+    void api.moveStop({
+      fromKey: dayKey,
+      toKey: targetKey,
+      slug,
+      added,
+      hideInSource,
+    }).then((result) => {
+      if (result.ok) {
+        toast("перенесено в " + target.label, "success");
+        return;
+      }
+      if (result.reason === "limit") toast("в дне уже 8 добавленных остановок", "error");
+      else if (result.reason === "duplicate") toast("такая остановка уже есть в дне", "error");
+      else toast("не перенеслось", "error");
+    });
   };
 
   const hiddenList = () => (texts.hide ?? "").split(",").filter((slug) => slug.length > 0);
@@ -232,6 +282,12 @@ export function DayCard({
                   mapColor={city.color}
                   onMove={handleMove}
                   onDelete={handleDelete}
+                  dayOptions={dayOptionsFor(slugOfStop(stop))}
+                  onMoveToDay={
+                    dayTargets.length
+                      ? (targetKey) => handleMoveToDay(stop, slugOfStop(stop), targetKey)
+                      : undefined
+                  }
                 />
               ))}
             </ul>

@@ -2,6 +2,7 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { EditsProvider } from "../../edits/EditsContext";
+import { VariantProvider } from "../../hooks/useVariant";
 import { isPark } from "../../lib/guide";
 import { GuideSection } from "./GuideSection";
 
@@ -14,9 +15,11 @@ function stubApi() {
 
 function renderGuide(kind: "stay" | "food" | "sight" | "tip", id: string) {
   return render(
-    <EditsProvider>
-      <GuideSection id={id} kind={kind} />
-    </EditsProvider>,
+    <VariantProvider>
+      <EditsProvider>
+        <GuideSection id={id} kind={kind} />
+      </EditsProvider>
+    </VariantProvider>,
   );
 }
 
@@ -128,9 +131,11 @@ describe("GuideSection", () => {
 
   it("раздел парков показывает только карточки с флагом park", () => {
     render(
-      <EditsProvider>
-        <GuideSection id="parks" kind="sight" only={isPark} anchorPrefix="gp-" />
-      </EditsProvider>,
+      <VariantProvider>
+        <EditsProvider>
+          <GuideSection id="parks" kind="sight" only={isPark} anchorPrefix="gp-" />
+        </EditsProvider>
+      </VariantProvider>,
     );
 
     expect(document.getElementById("gp-nan-lian")).not.toBeNull();

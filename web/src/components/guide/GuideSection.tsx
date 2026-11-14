@@ -1,10 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { CITIES, GUIDE, GUIDE_ITEMS } from "../../data";
 import { useEdits } from "../../edits/EditsContext";
+import { useVariant } from "../../hooks/useVariant";
+import { addedStopFromGuide } from "../../lib/added-stops";
 import { cn } from "../../lib/cn";
+import { buildDayTargets } from "../../lib/day-targets";
 import { groupGuideByCity, tagOf } from "../../lib/guide";
+import { stopSlug } from "../../lib/slug";
 import type { GuideItem, GuideKind, GuideTagValue } from "../../types";
 import { Section } from "../layout/Section";
+import { toast } from "../ui/Toast";
+import type { DayTargetOption } from "../ui";
 import { GuideCard } from "./GuideCard";
 
 export interface GuideSectionProps {
@@ -24,8 +30,13 @@ const GRID: Record<GuideKind, string> = {
 
 /** Справочник одного вида: города в порядке маршрута, карточки — общим списком. */
 export function GuideSection({ id, kind, only, anchorPrefix = "g-" }: GuideSectionProps) {
-  const { token, guideTags, saveGuideTag } = useEdits();
+  const { token, guideTags, saveGuideTag, dayTexts, addStopToDay } = useEdits();
+  const { activeId, days } = useVariant();
   const groups = groupGuideByCity(GUIDE_ITEMS, GUIDE.cityOrder, CITIES, kind, guideTags, only);
+  const dayTargets = useMemo(
+    () => buildDayTargets(activeId, days, dayTexts, GUIDE_ITEMS),
+    [activeId, days, dayTexts],
+  );
   const [cityFilter, setCityFilter] = useState<string>("all");
   const detailsRefs = useRef(new Map<string, HTMLDetailsElement>());
   const rootRef = useRef<HTMLDivElement>(null);
@@ -73,6 +84,28 @@ export function GuideSection({ id, kind, only, anchorPrefix = "g-" }: GuideSecti
 
   const handleCity = (city: string) => {
     setCityFilter((current) => (current === city ? "all" : city));
+  };
+
+  const dayOptionsFor = (item: GuideItem): DayTargetOption[] => {
+    const slug = stopSlug(item.en);
+    return dayTargets.map((target) => ({
+      key: target.key,
+      label: target.label,
+      taken: target.slugs.indexOf(slug) !== -1,
+    }));
+  };
+
+  const handleAddToDay = async (item: GuideItem, dayKey: string): Promise<boolean> => {
+    const target = dayTargets.find((it) => it.key === dayKey);
+    if (!target) return false;
+    const result = await addStopToDay(dayKey, addedStopFromGuide(item));
+    if (result.ok) {
+      toast("добавлено в " + target.label, "success");
+      return true;
+    }
+    if (result.reason === "limit") toast("в дне уже 8 добавленных остановок", "error");
+    else if (result.reason === "duplicate") toast("такая остановка уже есть в дне", "error");
+    return false;
   };
 
   return (
@@ -136,6 +169,8 @@ export function GuideSection({ id, kind, only, anchorPrefix = "g-" }: GuideSecti
                     token={token}
                     onTag={handleTag}
                     anchorPrefix={anchorPrefix}
+                    dayOptions={dayOptionsFor(item)}
+                    onAddToDay={(dayKey) => handleAddToDay(item, dayKey)}
                   />
                 ))}
               </div>

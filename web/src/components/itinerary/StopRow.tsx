@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { GUIDE_ITEMS } from "@/data";
 import type { Day, Stop } from "@/types";
 import { guideIdFor } from "@/lib/guide";
 import { groupFieldSet, stopFieldSet, stopKey } from "@/lib/texts";
+import { DayTargetPicker, type DayTargetOption } from "../ui";
 import { EditableText, InlineEditor, hasText, type ItineraryEditApi } from "./EditableText";
 import { PickCarousel } from "./PickCarousel";
 import { RefPicker } from "./RefPicker";
@@ -24,6 +26,8 @@ export interface StopRowProps {
   mapColor?: string;
   onMove: (slug: string, dir: "up" | "down") => void;
   onDelete: (slug: string) => void;
+  dayOptions?: DayTargetOption[];
+  onMoveToDay?: (targetKey: string) => void;
 }
 
 /** Одна остановка дня или группа равноправных вариантов (карусель). */
@@ -39,9 +43,13 @@ export function StopRow({
   mapColor = "#8a8278",
   onMove,
   onDelete,
+  dayOptions,
+  onMoveToDay,
 }: StopRowProps) {
+  const [moveOpen, setMoveOpen] = useState(false);
   const slug = slugOfStop(stop);
   const isPicks = !!stop.picks && stop.picks.length > 0;
+  const canMove = !isPicks && Boolean(onMoveToDay && dayOptions && dayOptions.length);
   const fields = stopFieldSet(slug) as { name: string; cost: string; time: string; ref: string };
   const groupFields = groupFieldSet(slug);
   const timeField = isPicks ? groupFields.time : fields.time;
@@ -67,9 +75,22 @@ export function StopRow({
       onMoveDown={() => onMove(slug, "down")}
       onEditTime={() => api.setEditing({ time: timeField })}
       onToggleRef={() => api.setEditing({ ref: refOpen ? undefined : refField })}
+      onMoveToDay={canMove ? () => setMoveOpen((open) => !open) : undefined}
       onDelete={() => onDelete(slug)}
     />
   );
+
+  const movePicker = canMove && moveOpen ? (
+    <DayTargetPicker
+      options={dayOptions ?? []}
+      ariaLabel={"перенести «" + (stop.name ?? stop.title ?? "") + "» в другой день"}
+      onPick={(targetKey) => {
+        setMoveOpen(false);
+        onMoveToDay?.(targetKey);
+      }}
+      onClose={() => setMoveOpen(false)}
+    />
+  ) : null;
 
   const timeEditor = timeEditing ? (
     <InlineEditor
@@ -228,6 +249,7 @@ export function StopRow({
 
         {timeEditor}
         {admin}
+        {movePicker}
         {refPicker}
       </div>
     </li>

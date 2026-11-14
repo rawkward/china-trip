@@ -12,8 +12,10 @@ export const ADDED_STOP_NAME_MAX_LEN = 160;
 export const ADDED_STOP_COST_MAX_LEN = 40;
 export const ADDED_STOP_DESC_MAX_LEN = 300;
 export const ADDED_STOP_GUIDE_MAX_LEN = 40;
+export const ADDED_STOP_PLACE_MAX_LEN = 40;
 const ADDED_STOP_TAGS = ['sight', 'food', 'transport', 'hotel', 'shopping', 'spa', 'festival', 'optional'];
 const ADDED_STOP_SLUG_RE = /^[a-z0-9]{4,10}$/;
+const ADDED_STOP_PLACE_RE = /^[a-z0-9_]{1,40}$/;
 
 // Ключ дня: «<id варианта>|<ДД.ММ>», например hk-first|07.12, или «<id варианта>|meta».
 const DAY_KEY_RE = /^[a-z0-9][a-z0-9_-]{0,39}\|(\d{2}\.\d{2}|meta)$/;
@@ -94,6 +96,18 @@ function normalizeAddedStop(item) {
         throw badAddedStop('неизвестный тег добавленной остановки');
       }
       stop.t = tag;
+    }
+  }
+  if (item.k !== undefined && item.k !== null) {
+    if (typeof item.k !== 'string') {
+      throw badAddedStop('у добавленной остановки битый ключ места');
+    }
+    const place = item.k.trim();
+    if (place) {
+      if (!ADDED_STOP_PLACE_RE.test(place)) {
+        throw badAddedStop('у добавленной остановки битый ключ места');
+      }
+      stop.k = place;
     }
   }
   const cost = optionalAddedText(item, 'c', ADDED_STOP_COST_MAX_LEN, 'цена добавленной остановки слишком длинная');

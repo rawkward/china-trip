@@ -34,6 +34,7 @@ export interface StopAdminActionsProps {
   onMoveDown: () => void;
   onEditTime: () => void;
   onToggleRef: () => void;
+  onMoveToDay?: () => void;
   onDelete: () => void;
 }
 
@@ -47,6 +48,7 @@ export function StopAdminActions({
   onMoveDown,
   onEditTime,
   onToggleRef,
+  onMoveToDay,
   onDelete,
 }: StopAdminActionsProps) {
   if (!token) return null;
@@ -65,6 +67,11 @@ export function StopAdminActions({
       <AdminButton label="заменить на карточку из справочника" onClick={onToggleRef}>
         заменить
       </AdminButton>
+      {onMoveToDay ? (
+        <AdminButton label="перенести в другой день" onClick={onMoveToDay}>
+          → в день
+        </AdminButton>
+      ) : null}
       <AdminButton label="убрать из маршрута" onClick={onDelete}>
         ✕ убрать
       </AdminButton>
