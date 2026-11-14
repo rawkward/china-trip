@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { GUIDE_ITEMS } from "@/data";
+import { CITIES, GUIDE, GUIDE_ITEMS } from "@/data";
 import { serializeAddedStops, parseAddedStops, tagForGuideKind } from "@/lib/added-stops";
 import { cn } from "@/lib/cn";
 import { stopSlug } from "@/lib/slug";
@@ -17,11 +17,30 @@ interface AddStopPickerProps {
   onClose: () => void;
 }
 
+function cityLabel(city: string): string {
+  return CITIES[city]?.label ?? city;
+}
+
 function matchesQuery(item: GuideItem, query: string): boolean {
   if (!query) return true;
   const q = query.toLocaleLowerCase();
   return (item.en ?? "").toLocaleLowerCase().indexOf(q) !== -1 ||
-    (item.zh ?? "").toLocaleLowerCase().indexOf(q) !== -1;
+    (item.zh ?? "").toLocaleLowerCase().indexOf(q) !== -1 ||
+    cityLabel(item.city).toLocaleLowerCase().indexOf(q) !== -1;
+}
+
+/** Свои карточки — первыми, чужие — по порядку городов из справочника. */
+function orderItems(items: GuideItem[], ownCity: string): GuideItem[] {
+  const own = items.filter((item) => item.city === ownCity);
+  const others = items.filter((item) => item.city !== ownCity);
+  const known = new Map(GUIDE.cityOrder.map((city, i) => [city, i] as const));
+  const unknown = Array.from(new Set(others.map((item) => item.city)))
+    .filter((city) => !known.has(city))
+    .sort((a, b) => cityLabel(a).localeCompare(cityLabel(b), "ru"));
+  const rank = (city: string) =>
+    known.has(city) ? (known.get(city) as number) : GUIDE.cityOrder.length + unknown.indexOf(city);
+  others.sort((a, b) => rank(a.city) - rank(b.city));
+  return own.concat(others);
 }
 
 /** Добавление остановки в день: своя или карточкой справочника. */
@@ -56,9 +75,10 @@ export function AddStopPicker({ dayKey, city, texts, api, existingSlugs, onClose
     setName("");
   };
 
-  const items = GUIDE_ITEMS.filter(
-    (it) => it.kind !== "tip" && it.city === city && matchesQuery(it, query),
-  ).slice(0, 40);
+  const items = orderItems(
+    GUIDE_ITEMS.filter((it) => it.kind !== "tip" && matchesQuery(it, query)),
+    city,
+  ).slice(0, 60);
 
   return (
     <div className="mt-2 flex flex-col gap-2 rounded-xl border border-line bg-surface p-2">
@@ -121,12 +141,13 @@ export function AddStopPicker({ dayKey, city, texts, api, existingSlugs, onClose
             >
               {it.en}
               {it.zh ? " — " + it.zh : ""}
+              {it.city !== city ? " · " + cityLabel(it.city) : ""}
               {already ? " · уже в дне" : ""}
             </button>
           );
         })}
         {!items.length && (
-          <span className="px-1 py-0.5 text-[0.76rem] text-muted">в этом городе карточек нет</span>
+          <span className="px-1 py-0.5 text-[0.76rem] text-muted">карточек нет</span>
         )}
       </div>
 

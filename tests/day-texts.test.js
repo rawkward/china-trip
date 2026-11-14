@@ -265,6 +265,31 @@ test('add принимает массив остановок и нормализ
   assert.equal(out.add, JSON.stringify(JSON.parse(out.add)));
 });
 
+test('add принимает ключ места k и нормализует его', () => {
+  const raw = JSON.stringify([
+    { s: 'a1b2c3', n: 'Место', k: ' victoria_peak ' },
+    { s: 'd4e5f6', n: 'Без ключа' },
+  ]);
+  const out = normalizeDayTexts({ add: raw });
+  assert.deepEqual(JSON.parse(out.add), [
+    { s: 'a1b2c3', n: 'Место', k: 'victoria_peak' },
+    { s: 'd4e5f6', n: 'Без ключа' },
+  ]);
+});
+
+test('add: битый ключ места k — bad_value', () => {
+  for (const k of ['bad key!', 42, 'КЛЮЧ', 'a'.repeat(41)]) {
+    assert.throws(
+      () => normalizeDayTexts({ add: JSON.stringify([{ s: 'a1b2c3', n: 'Место', k }]) }),
+      (err) =>
+        err instanceof DayTextError &&
+        err.code === 'bad_value' &&
+        err.field === 'add' &&
+        err.message === 'у добавленной остановки битый ключ места',
+    );
+  }
+});
+
 test('add: битый JSON — bad_value с именем поля', () => {
   assert.throws(
     () => normalizeDayTexts({ add: '[{"s":"a1b2c3"' }),

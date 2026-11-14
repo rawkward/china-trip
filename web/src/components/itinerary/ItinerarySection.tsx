@@ -4,6 +4,7 @@ import { useEdits } from "@/edits/EditsContext";
 import { useVariant } from "@/hooks/useVariant";
 import { CITIES, GUIDE_ITEMS } from "@/data";
 import { noteKey, nightsWord, routeGroups, variantMetaKey } from "@/lib/days";
+import { buildDayTargets } from "@/lib/day-targets";
 import { withTexts } from "@/lib/texts";
 import { cn } from "@/lib/cn";
 import { Section } from "../layout/Section";
@@ -43,6 +44,10 @@ export function ItinerarySection() {
   }, [error]);
 
   const summary = useMemo(() => routeGroups(days), [days]);
+  const dayTargets = useMemo(
+    () => buildDayTargets(activeId, days, dayTexts, GUIDE_ITEMS),
+    [activeId, days, dayTexts],
+  );
   const cards = useMemo(
     () =>
       days.map((day) => {
@@ -225,6 +230,7 @@ export function ItinerarySection() {
                   onFocusDay={focusOnDay}
                   anchorId={!showCityBar && groupStart.includes(i) ? "city-" + i : undefined}
                   dropped={dropped}
+                  dayTargets={dayTargets}
                 />
               </Fragment>
             );

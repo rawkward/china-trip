@@ -1,6 +1,12 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { api, ApiError } from "../api/client";
+import {
+  parseAddedStops,
+  planStopMove,
+  serializeAddedStops,
+} from "../lib/added-stops";
+import type { AddedStop } from "../lib/added-stops";
 import { clearAuth, loginWithPassword, useAuth } from "./auth";
 import type { DayNote, DayTextsMap, GuideTagValue, StopNote } from "../types";
 
@@ -33,6 +39,17 @@ export interface EditsValue {
   saveStopNote: (key: string, body: string) => Promise<void>;
   resetStopNote: (key: string) => Promise<void>;
   saveText: (dayKey: string, field: string, value: string) => Promise<void>;
+  addStopToDay: (
+    dayKey: string,
+    added: AddedStop,
+  ) => Promise<{ ok: boolean; reason?: "limit" | "duplicate" }>;
+  moveStop: (input: {
+    fromKey: string;
+    toKey: string;
+    slug: string;
+    added: AddedStop | null;
+    hideInSource: boolean;
+  }) => Promise<{ ok: boolean; reason?: "limit" | "duplicate" }>;
   saveGuideTag: (key: string, tag: GuideTagValue) => Promise<void>;
   login: (password: string) => Promise<void>;
   logout: () => void;
@@ -250,6 +267,84 @@ export function EditsProvider({ children }: { children: ReactNode }) {
     [requireToken, commitTexts, enqueue, fail, setEditing],
   );
 
+  const addStopToDay = useCallback(
+    async (
+      dayKey: string,
+      added: AddedStop,
+    ): Promise<{ ok: boolean; reason?: "limit" | "duplicate" }> => {
+      const t = requireToken();
+      if (!t) return { ok: false };
+      const current = textsRef.current[dayKey] ?? {};
+      const list = parseAddedStops(current.add);
+      if (list.some((item) => item.s === added.s)) return { ok: false, reason: "duplicate" };
+      if (list.length >= 8) return { ok: false, reason: "limit" };
+
+      const optimistic: DayTextsMap = {
+        ...current,
+        add: serializeAddedStops([...list, added]),
+      };
+      commitTexts(dayKey, optimistic);
+      try {
+        const saved = await enqueue(dayKey, () => {
+          const body = textsRef.current[dayKey] ?? {};
+          return api.putDayTexts(dayKey, body, t);
+        });
+        const latest = textsRef.current[dayKey] ?? {};
+        const inFlight =
+          Object.keys(optimistic).length === Object.keys(latest).length &&
+          Object.entries(optimistic).every(([k, v]) => latest[k] === v);
+        if (inFlight) commitTexts(dayKey, saved);
+        setError("");
+        return { ok: true };
+      } catch (err) {
+        fail(err);
+        return { ok: false };
+      }
+    },
+    [requireToken, commitTexts, enqueue, fail],
+  );
+
+  const moveStop = useCallback(
+    async (input: {
+      fromKey: string;
+      toKey: string;
+      slug: string;
+      added: AddedStop | null;
+      hideInSource: boolean;
+    }) => {
+      const t = requireToken();
+      if (!t) return { ok: false };
+      const plan = planStopMove({
+        fromTexts: textsRef.current[input.fromKey] ?? {},
+        toTexts: textsRef.current[input.toKey] ?? {},
+        slug: input.slug,
+        added: input.added,
+        hideInSource: input.hideInSource,
+      });
+      if (plan.error) return { ok: false, reason: plan.error };
+
+      commitTexts(input.fromKey, plan.from);
+      commitTexts(input.toKey, plan.to);
+      try {
+        await enqueue(input.fromKey, () => {
+          const body = textsRef.current[input.fromKey] ?? {};
+          return api.putDayTexts(input.fromKey, body, t);
+        });
+        await enqueue(input.toKey, () => {
+          const body = textsRef.current[input.toKey] ?? {};
+          return api.putDayTexts(input.toKey, body, t);
+        });
+        setError("");
+        return { ok: true };
+      } catch (err) {
+        fail(err);
+        setReloadTick((n) => n + 1);
+        return { ok: false };
+      }
+    },
+    [requireToken, commitTexts, enqueue, fail],
+  );
+
   const saveGuideTag = useCallback(
     async (key: string, tag: GuideTagValue) => {
       const t = requireToken();
@@ -302,6 +397,8 @@ export function EditsProvider({ children }: { children: ReactNode }) {
       saveStopNote,
       resetStopNote,
       saveText,
+      addStopToDay,
+      moveStop,
       saveGuideTag,
       login,
       logout,
@@ -323,6 +420,8 @@ export function EditsProvider({ children }: { children: ReactNode }) {
       saveStopNote,
       resetStopNote,
       saveText,
+      addStopToDay,
+      moveStop,
       saveGuideTag,
       login,
       logout,

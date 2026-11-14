@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { clearAuth, setAuth } from "../../edits/auth";
 import { EditsProvider } from "../../edits/EditsContext";
+import { VariantProvider } from "../../hooks/useVariant";
 import { GuideSection } from "./GuideSection";
 
 function json(body: unknown): Response {
@@ -51,9 +52,11 @@ describe("GuideSection: смена тега", () => {
     const { calls } = stubApi();
 
     render(
-      <EditsProvider>
-        <GuideSection id="sights" kind="sight" />
-      </EditsProvider>,
+      <VariantProvider>
+        <EditsProvider>
+          <GuideSection id="sights" kind="sight" />
+        </EditsProvider>
+      </VariantProvider>,
     );
 
     const card = document.getElementById("g-victoria-peak");

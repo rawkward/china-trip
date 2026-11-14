@@ -144,3 +144,6 @@ export function Checkbox({ id, checked, onChange, children, className }: Checkbo
     </label>
   );
 }
+
+export { DayTargetPicker } from "./DayTargetPicker";
+export type { DayTargetOption, DayTargetPickerProps } from "./DayTargetPicker";

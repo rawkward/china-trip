@@ -24,7 +24,9 @@ export type ItineraryEditApi = Pick<
   | "deleteDayNote"
   | "saveStopNote"
   | "resetStopNote"
->;
+> & {
+  moveStop?: EditsValue["moveStop"];
+};
 
 export function hasText(texts: Record<string, string> | undefined, field: string): boolean {
   return !!texts && Object.prototype.hasOwnProperty.call(texts, field);

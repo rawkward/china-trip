@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { GUIDE_TAG_KEY_RE, GUIDE_TAG_LABELS, guideTagKey } from "../../lib/guide";
 import { cn } from "../../lib/cn";
 import type { GuideItem, GuideKind, GuideTagValue } from "../../types";
+import { DayTargetPicker, type DayTargetOption } from "../ui";
 
 export interface GuideCardProps {
   item: GuideItem;
@@ -9,6 +11,8 @@ export interface GuideCardProps {
   token: string | null;
   onTag: (key: string, tag: GuideTagValue) => void;
   anchorPrefix?: string;
+  dayOptions?: DayTargetOption[];
+  onAddToDay?: (dayKey: string) => Promise<boolean> | boolean;
 }
 
 const CARD_SHELL: Record<GuideKind, string> = {
@@ -35,7 +39,20 @@ const NOTE_SIZE: Record<GuideKind, string> = {
 const TAG_ORDER: GuideTagValue[] = ["rec", "choice", "alt"];
 
 /** Карточка справочника: имя, адрес, часы, заметка, ссылки и правка тега. */
-export function GuideCard({ item, tag, kind, token, onTag, anchorPrefix = "g-" }: GuideCardProps) {
+export function GuideCard({
+  item,
+  tag,
+  kind,
+  token,
+  onTag,
+  anchorPrefix = "g-",
+  dayOptions,
+  onAddToDay,
+}: GuideCardProps) {
+  const [dayOpen, setDayOpen] = useState(false);
+  const [addedLabel, setAddedLabel] = useState<string | null>(null);
+  const [pendingKey, setPendingKey] = useState<string | null>(null);
+  const [pendingLabel, setPendingLabel] = useState<string | null>(null);
   const key = guideTagKey(item);
   const canEdit = Boolean(token) && GUIDE_TAG_KEY_RE.test(key);
   const mapsUrl =
@@ -43,6 +60,8 @@ export function GuideCard({ item, tag, kind, token, onTag, anchorPrefix = "g-" }
     encodeURIComponent(item.maps || item.en);
   const showMaps = kind !== "tip" || Boolean(item.maps);
   const badgeText = item.badge || GUIDE_TAG_LABELS[tag];
+  const canAddToDay = canEdit && Boolean(dayOptions && dayOptions.length && onAddToDay);
+  const shortLabel = (label: string) => label.split(" · ")[0];
 
   return (
     <article
@@ -120,7 +139,47 @@ export function GuideCard({ item, tag, kind, token, onTag, anchorPrefix = "g-" }
               {GUIDE_TAG_LABELS[value]}
             </button>
           ))}
+          {canAddToDay ? (
+            <button
+              type="button"
+              aria-label={"добавить «" + item.en + "» в день"}
+              aria-expanded={dayOpen}
+              onClick={() => {
+                setDayOpen((open) => !open);
+                setAddedLabel(null);
+              }}
+              className="chip !px-2.5 !py-0.5 !text-[0.7rem]"
+            >
+              ＋ в день
+            </button>
+          ) : null}
         </div>
+      ) : null}
+
+      {canAddToDay && dayOpen ? (
+        <DayTargetPicker
+          options={dayOptions ?? []}
+          ariaLabel={"куда добавить «" + item.en + "»"}
+          onPick={(targetKey) => {
+            if (pendingKey || pendingLabel) return;
+            const option = (dayOptions ?? []).find((it) => it.key === targetKey);
+            const label = option ? shortLabel(option.label) : null;
+            setDayOpen(false);
+            setAddedLabel(null);
+            setPendingKey(targetKey);
+            setPendingLabel(label);
+            void Promise.resolve(onAddToDay?.(targetKey)).then((ok) => {
+              setPendingKey(null);
+              setPendingLabel(null);
+              if (ok) setAddedLabel(label);
+            });
+          }}
+          onClose={() => setDayOpen(false)}
+        />
+      ) : null}
+
+      {addedLabel ? (
+        <p className="mt-1.5 text-[0.72rem] font-semibold text-accent">добавлено в {addedLabel}</p>
       ) : null}
     </article>
   );
