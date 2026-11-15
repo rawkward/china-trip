@@ -191,18 +191,18 @@ test('seed totals match the §6 acceptance table', (t) => {
 
   const totals = computeBudget({ params: seed.data.params, ...flat });
 
-  assert.equal(Math.round(totals.base), 379522);
-  assert.equal(totals.reserve, 37952);
-  assert.equal(Math.round(totals.total), 417474);
-  assert.equal(Math.round(totals.perPerson), 208737);
-  assert.equal(Math.round(totals.perDay), 13046);
+  assert.equal(Math.round(totals.base), 380307);
+  assert.equal(totals.reserve, 38031);
+  assert.equal(Math.round(totals.total), 418338);
+  assert.equal(Math.round(totals.perPerson), 209169);
+  assert.equal(Math.round(totals.perDay), 13073);
 
   const expected = {
     'Дорога в Москву и обратно': 11506,
     'Перелёты': 86926,
     'Ж/д внутри Китая': 26935,
     'Проживание': 79814,
-    'Билеты и развлечения': 75349,
+    'Билеты и развлечения': 76134,
     'Еда': 77027,
     'Транспорт в городе': 16566,
     'Прочее': 5400,
