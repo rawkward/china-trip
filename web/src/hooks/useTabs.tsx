@@ -11,8 +11,25 @@ interface TabsValue {
 
 const TabsContext = createContext<TabsValue | null>(null);
 
+let scrollRetryTimers: number[] = [];
+
+function clearScrollRetries() {
+  for (const timer of scrollRetryTimers) window.clearTimeout(timer);
+  scrollRetryTimers = [];
+}
+
+function openDetailsAround(target: HTMLElement) {
+  const details = target.closest("details");
+  if (details && !details.open) details.open = true;
+}
+
 function scrollToAnchor(anchor: string | null) {
   if (typeof window === "undefined") return;
+
+  // Новый переход отменяет «догоняющие» прокрутки предыдущего.
+  clearScrollRetries();
+
+  let lastTop: number | null = null;
 
   const run = () => {
     if (!anchor) {
@@ -27,12 +44,13 @@ function scrollToAnchor(anchor: string | null) {
     const target = document.getElementById(anchor);
     if (!target) return;
 
-    const details = target.closest("details");
-    if (details && !details.open) details.open = true;
+    openDetailsAround(target);
 
     if (typeof target.scrollIntoView === "function") {
       target.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+
+    lastTop = target.getBoundingClientRect().top;
   };
 
   // Даём React дорисовать раздел новой вкладки, и только потом прокручиваем.
@@ -40,6 +58,32 @@ function scrollToAnchor(anchor: string | null) {
     window.requestAnimationFrame(run);
   } else {
     window.setTimeout(run, 0);
+  }
+
+  if (!anchor) return;
+
+  // Разделы «Полезного» дорисовываются после первого кадра (чек-лист, картинки,
+  // шрифты), страница становится выше и цель уезжает вниз. Догоняем её без
+  // плавности, но только если она действительно сместилась.
+  const retry = () => {
+    const target = document.getElementById(anchor);
+    if (!target) return;
+
+    openDetailsAround(target);
+
+    const top = target.getBoundingClientRect().top;
+    if (lastTop !== null && Math.abs(top - lastTop) <= 4) return;
+
+    if (typeof target.scrollIntoView === "function") {
+      target.scrollIntoView({ behavior: "instant", block: "start" });
+    }
+
+    const settled = document.getElementById(anchor);
+    lastTop = settled ? settled.getBoundingClientRect().top : top;
+  };
+
+  for (const delay of [150, 400, 900]) {
+    scrollRetryTimers.push(window.setTimeout(retry, delay));
   }
 }
 
@@ -73,6 +117,7 @@ export function TabsProvider({ children }: { children: ReactNode }) {
     return () => {
       window.removeEventListener("hashchange", onHashChange);
       window.removeEventListener("popstate", onHashChange);
+      clearScrollRetries();
     };
   }, [applyHash]);
 
