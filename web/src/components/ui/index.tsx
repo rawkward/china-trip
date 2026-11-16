@@ -147,3 +147,5 @@ export function Checkbox({ id, checked, onChange, children, className }: Checkbo
 
 export { DayTargetPicker } from "./DayTargetPicker";
 export type { DayTargetOption, DayTargetPickerProps } from "./DayTargetPicker";
+export { ZoomImage } from "./ImageZoom";
+export type { ZoomImageProps } from "./ImageZoom";

@@ -3,7 +3,7 @@ import { GUIDE_ITEMS } from "@/data";
 import type { Day, Stop } from "@/types";
 import { guideIdFor } from "@/lib/guide";
 import { groupFieldSet, stopFieldSet, stopKey } from "@/lib/texts";
-import { DayTargetPicker, type DayTargetOption } from "../ui";
+import { DayTargetPicker, ZoomImage, type DayTargetOption } from "../ui";
 import { EditableText, InlineEditor, hasText, type ItineraryEditApi } from "./EditableText";
 import { PickCarousel } from "./PickCarousel";
 import { RefPicker } from "./RefPicker";
@@ -291,12 +291,7 @@ function CollapsedMap({ map }: { map: NonNullable<Stop["map"]> }) {
         Карта маршрута ▾
       </summary>
       <figure className="mt-1.5 mb-1">
-        <img
-          src={map.src}
-          alt={map.caption ?? "карта маршрута"}
-          loading="lazy"
-          className="w-full rounded-md border border-line"
-        />
+        <ZoomImage src={map.src} alt={map.caption ?? "карта маршрута"} />
         {map.caption && (
           <figcaption className="mt-1 text-[0.72rem] leading-snug text-muted-soft">
             {map.caption}
