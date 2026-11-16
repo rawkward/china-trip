@@ -357,6 +357,7 @@ export const TRIP_PLACES = {
     "lat": 22.2839043,
     "lon": 114.1625083
   },
+  "observation_wheel": {"name": "香港摩天輪 Hong Kong Observation Wheel, 民光街 33", "lat": 22.2853165, "lon": 114.1617716},
   "furong_cave": {
     "name": "Furong Cave (芙蓉洞)",
     "lat": 29.2289158,
