@@ -8,6 +8,7 @@ import { ItinerarySection } from "./components/itinerary/ItinerarySection";
 import { GuideSection } from "./components/guide/GuideSection";
 import { BookingSection } from "./components/sections/BookingSection";
 import { ChecklistGate } from "./components/sections/ChecklistGate";
+import { DishesSection } from "./components/sections/DishesSection";
 import { ToursSection } from "./components/sections/ToursSection";
 import { LinksSection } from "./components/sections/LinksSection";
 import { BudgetApp } from "./components/budget/BudgetApp";
@@ -41,6 +42,9 @@ function TabContent() {
         <BookingSection />
         <Rule />
         <ChecklistGate />
+        <Rule />
+        <DishesSection />
+        <Rule />
         <ToursSection />
         <Rule />
         <LinksSection />

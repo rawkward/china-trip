@@ -13,6 +13,7 @@ describe("parseHash: новые адреса", () => {
     expect(parseHash("#/guide/stay")).toEqual({ tab: "guide", anchor: "stay" });
     expect(parseHash("#/guide/sights")).toEqual({ tab: "guide", anchor: "sights" });
     expect(parseHash("#/info/checklist")).toEqual({ tab: "info", anchor: "checklist" });
+    expect(parseHash("#/info/dish-fr")).toEqual({ tab: "info", anchor: "dish-fr" });
     expect(parseHash("#/route/itinerary")).toEqual({ tab: "route", anchor: "itinerary" });
   });
 
@@ -50,6 +51,7 @@ describe("hrefFor", () => {
     expect(hrefFor("guide", null)).toBe("#/guide");
     expect(hrefFor("guide", "sights")).toBe("#/guide/sights");
     expect(hrefFor("info", "checklist")).toBe("#/info/checklist");
+    expect(hrefFor("info", "dish-hk")).toBe("#/info/dish-hk");
     expect(hrefFor("route", "variants")).toBe("#/route/variants");
     expect(hrefFor("budget", "budget")).toBe("#/budget");
     expect(hrefFor("route", "top")).toBe("#/route");
@@ -64,6 +66,8 @@ describe("hrefFor", () => {
     expect(hrefFor("route", "sights")).toBe("#/guide/sights");
     expect(tabForSection("sights")).toBe("guide");
     expect(tabForSection("checklist")).toBe("info");
+    expect(tabForSection("dishes")).toBe("info");
+    expect(tabForSection("dish-zjj")).toBe("info");
     expect(tabForSection("unknown")).toBeNull();
   });
 });

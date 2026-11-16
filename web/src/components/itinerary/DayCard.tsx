@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronDown, MapPin, Pencil } from "lucide-react";
 import { CITIES, GUIDE_ITEMS, PLACES } from "@/data";
+import { DISHES } from "@/content/dishes";
 import type { Day, Stop } from "@/types";
 import { cn } from "@/lib/cn";
 import {
@@ -9,8 +10,10 @@ import {
   serializeAddedStops,
 } from "@/lib/added-stops";
 import type { DayTarget } from "@/lib/day-targets";
+import { dishCountLabel } from "@/lib/dishes";
 import { guideIdFor } from "@/lib/guide";
 import { stopNumbers } from "@/lib/map";
+import { hrefFor } from "@/lib/tabs";
 import { moveInOrder } from "@/lib/texts";
 import { Button, IconButton } from "../ui";
 import { toast } from "../ui/Toast";
@@ -55,6 +58,15 @@ function stopCountWord(n: number): string {
   return "остановок";
 }
 
+/** Название города в предложном падеже — для «что поесть в …». */
+const CITY_IN_PREPOSITIONAL: Record<string, string> = {
+  hk: "Гонконге",
+  fr: "Фужуне",
+  zjj: "Чжанцзяцзе",
+  cq: "Чунцине",
+  sh: "Шанхае",
+};
+
 /** Карточка дня: шапка-аккордеон, остановки, карта и заметка. */
 export function DayCard({
   day,
@@ -79,6 +91,7 @@ export function DayCard({
       : null;
   const order = day.places.map(slugOfStop);
   const mapNums = stopNumbers(day, PLACES);
+  const cityDishes = DISHES.find((item) => item.city === day.city);
   const existingSlugs = order.concat(parseAddedStops(texts.add).map((a) => a.s));
 
   const handleMove = (slug: string, dir: "up" | "down") => {
@@ -267,6 +280,22 @@ export function DayCard({
       {open && (
         <div id={bodyId} role="region" aria-label={"День " + day.n}>
           <div className="border-t border-line px-3 pb-3 pt-2 sm:px-4">
+            {cityDishes && (
+              <a
+                href={hrefFor("info", "dish-" + day.city)}
+                className="mb-2 flex items-center justify-between gap-2 rounded-lg border border-line bg-paper-deep/30 px-2.5 py-2 text-[0.8rem] font-semibold text-accent transition-colors hover:border-line-strong"
+                aria-label={
+                  "что поесть в " + (CITY_IN_PREPOSITIONAL[day.city] ?? city.label)
+                }
+              >
+                <span>
+                  🍜 что поесть в {CITY_IN_PREPOSITIONAL[day.city] ?? city.label}
+                </span>
+                <span className="text-[0.72rem] text-muted">
+                  {cityDishes.dishes.length} {dishCountLabel(cityDishes.dishes.length)} →
+                </span>
+              </a>
+            )}
             <ul className="m-0 list-none p-0">
               {day.places.map((stop, i) => (
                 <StopRow

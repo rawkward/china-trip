@@ -175,6 +175,40 @@ describe("DayCard", () => {
     expect(screen.queryByTitle(/точка \d+ на карте/)).not.toBeInTheDocument();
   });
 
+  it("ведёт из раскрытого дня к блюдам своего города", () => {
+    render(
+      <DayCard
+        day={day}
+        dayKey="hk|07.12"
+        texts={{}}
+        api={makeApi()}
+        open
+        onToggle={vi.fn()}
+        onFocusDay={vi.fn()}
+      />,
+    );
+
+    const link = screen.getByRole("link", { name: "что поесть в Гонконге" });
+    expect(link).toHaveAttribute("href", "#/info/dish-hk");
+    expect(link).toHaveTextContent("9 блюд");
+  });
+
+  it("не показывает ссылку на блюда для дня в пути", () => {
+    render(
+      <DayCard
+        day={{ ...day, city: "air" }}
+        dayKey="air|07.12"
+        texts={{}}
+        api={makeApi()}
+        open
+        onToggle={vi.fn()}
+        onFocusDay={vi.fn()}
+      />,
+    );
+
+    expect(screen.queryByRole("link", { name: /что поесть в/ })).not.toBeInTheDocument();
+  });
+
   it("зовёт карту с номером дня", async () => {
     const user = userEvent.setup();
     const onFocusDay = vi.fn();

@@ -13,7 +13,7 @@ export const TABS: readonly TabDef[] = [
   {
     id: "info",
     label: "Полезное",
-    sections: ["booking", "checklist", "tours", "links"],
+    sections: ["booking", "checklist", "dishes", "tours", "links"],
   },
   { id: "budget", label: "Бюджет", sections: [] },
 ];
@@ -39,6 +39,7 @@ export function tabDef(tab: TabId): TabDef {
 /** Вкладка, которой принадлежит якорь; null — якорь неизвестен. */
 export function tabForSection(section: string): TabId | null {
   if (section.startsWith("g-") || section.startsWith("gp-")) return "guide";
+  if (section.startsWith("dish-")) return "info";
   return SECTION_TAB[section] ?? null;
 }
 
