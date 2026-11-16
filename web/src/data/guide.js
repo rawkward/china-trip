@@ -108,6 +108,15 @@ const TRIP_GUIDE = {
      maps:"PMQ 元創方 35 Aberdeen Street Central Hong Kong",
      match:["PMQ"]},
 
+    {kind:"sight", city:"hk", id:"observation-wheel",
+     en:"Hong Kong Observation Wheel", zh:"香港摩天輪",
+     addr:"33 Man Kwong Street, Central 中環民光街33號",
+     site:"https://www.hkow.hk",
+     hours:"Пн–чт 12:00–22:00 · пт–вс и праздники 11:00–23:00 · последний вход за 30 минут до закрытия",
+     note:"Колесо обозрения на набережной Central Harbourfront, 60 метров и 42 кабины с кондиционером: катание 15–20 минут, два-три оборота, сверху гавань, Star Ferry, оба берега и весь Централ. Билет взрослый HK$20, льготный HK$10, отдельная кабина до восьми человек HK$160. Очередь к кассе бывает длинной в выходные, онлайн-билет экономит время, цена та же. В сильный ветер катание приостанавливают. Ставить в день Централа и Пика — по желанию, только если после вершины останутся силы и время: от нижней станции трамвая на Пик 10 минут пешком вниз через IFC к пирсам. Отдельная опция — прогулка по AIA Vitality Park у подножия.",
+     maps:"Hong Kong Observation Wheel 香港摩天輪 33 Man Kwong Street Central",
+     match:["колесо обозрения"]},
+
     {kind:"sight", city:"hk", id:"hkmoa",
      en:"Hong Kong Museum of Art", zh:"香港藝術館",
      addr:"10 Salisbury Road, Tsim Sha Tsui 尖沙咀梳士巴利道10號",
