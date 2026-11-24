@@ -506,5 +506,9 @@ export const TRIP_PLACES = {
     "name": "Chongqing Jiangbei International Airport T3 重庆江北国际机场",
     "lat": 29.71147,
     "lon": 106.65137
-  }
+  },
+  "meta_tree_hotel": {"name": "美利居酒店 Meta Tree Hotel", "lat": 31.2295, "lon": 121.4600},
+  "dongsheng_huaihai": {"name": "東盛自助料理 淮海中路755号", "lat": 31.21893, "lon": 121.46459},
+  "huaihai_road": {"name": "淮海中路 Huaihai Road Middle", "lat": 31.2210, "lon": 121.4680},
+  "waitanyuan": {"name": "外滩源 圆明园路 Waitanyuan", "lat": 31.24454, "lon": 121.48360}
 };
