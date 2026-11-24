@@ -49,6 +49,14 @@ describe("withTexts", () => {
     expect(out.places[0].name).toBe("Хунъядун");
   });
 
+  it("замороженный slug держит правки дня после переименования", () => {
+    const d = day();
+    d.places = [{ k: "cq", name: "Вайтань, набережная (The Bund, 外滩)", slug: "1ghv1k", tag: "sight" }];
+    const out = withTexts(d, { "stop:1ghv1k:name": "Вайтань" }, guide);
+    expect(out.places[0].name).toBe("Вайтань");
+    expect(out.places[0]._slug).toBe("1ghv1k");
+  });
+
   it("подставляет карточку справочника вместо названия", () => {
     const slug = withTexts(day(), {}, guide).places[0]._slug!;
     const out = withTexts(day(), { [`ref:${slug}`]: "food|cq|hotpot" }, guide);

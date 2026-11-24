@@ -50,7 +50,7 @@ export function withTexts(
     const q: Stop = { ...p };
 
     if (p.picks && p.picks.length) {
-      const slug = stopSlug(p.title || p.name || "");
+      const slug = p.slug || stopSlug(p.title || p.name || "");
       q._slug = slug;
       q._title = p.title;
       q._name = p.name;
@@ -79,7 +79,7 @@ export function withTexts(
         });
       }
     } else {
-      const slug = stopSlug(p.name || "");
+      const slug = p.slug || stopSlug(p.name || "");
       q._slug = slug;
       q._name = p.name;
       const base = "stop:" + slug;
