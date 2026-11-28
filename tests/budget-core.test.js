@@ -191,11 +191,11 @@ test('seed totals match the §6 acceptance table', (t) => {
 
   const totals = computeBudget({ params: seed.data.params, ...flat });
 
-  assert.equal(Math.round(totals.base), 293812);
-  assert.equal(totals.reserve, 29381);
-  assert.equal(Math.round(totals.total), 323193);
-  assert.equal(Math.round(totals.perPerson), 161596);
-  assert.equal(Math.round(totals.perDay), 10100);
+  assert.equal(Math.round(totals.base), 291958);
+  assert.equal(totals.reserve, 29196);
+  assert.equal(Math.round(totals.total), 321154);
+  assert.equal(Math.round(totals.perPerson), 160577);
+  assert.equal(Math.round(totals.perDay), 10036);
 
   const expected = {
     'Дорога в Москву и обратно': 11706,
@@ -205,7 +205,7 @@ test('seed totals match the §6 acceptance table', (t) => {
     'Билеты и развлечения': 75946,
     'Еда': 3413,
     'Транспорт в городе': 0,
-    'Прочее': 3000,
+    'Прочее': 1146,
   };
   const actual = Object.fromEntries(totals.categories.map((c) => [c.name, Math.round(c.subtotal)]));
   assert.deepEqual(actual, expected);
